@@ -1,0 +1,133 @@
+% cGENIE QuickStartGuide document
+
+% Andy Ridgwell, August 2014
+%
+% ---------------------------------------------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------------------------------------------------------------
+
+\documentclass[10pt,twoside]{article}
+\usepackage[paper=a4paper,portrait=true,margin=1.5cm,ignorehead,footnotesep=1cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{paralist}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{wasysym}
+
+\linespread{1.1}
+\setlength{\pltopsep}{2.5pt}
+\setlength{\plparsep}{2.5pt}
+\setlength{\partopsep}{2.5pt}
+\setlength{\parskip}{2.5pt}
+
+%\addtolength{\oddsidemargin}{1.0cm}
+%\addtolength{\bottommargin}{1.0cm}
+
+\title{cGENIE Quick-start Guide: 'muffin' version [Mac]}
+\author{Andy Ridgwell}
+\date{\today}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+%=================================================================================================================================
+%=== BEGIN DOCUMENT ==============================================================================================================
+%=================================================================================================================================
+
+\maketitle
+
+%---------------------------------------------------------------------------------------------------------------------------------
+%--- Quick-start guide for cGENIE ---------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------
+
+\noindent \textbf{This is the Quick-start Guide for installing cGENIE-muffin on a Mac.}
+
+\noindent To install the muffin release of cGENIE on a Mac you will need NetCDF and its associated C\(^{++}\) and Fortran libraries, and the best way to get these is using MacPorts, which allows clean installation (and un-installation) of a wide range of software. In detail:
+
+\begin{compactenum}
+
+\item First of all, you will need XCode, which can be downloaded from the app store, or here... 
+\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads} \\After installing XCode, it is necessary to enable command line tools, by entering 
+\texttt{xcode-select --install}
+
+\item Get MacPorts by following the instructions here:
+\\\href{https://www.macports.org/install.php}{https://www.macports.org/install.php}
+\\Don't forget to synchronize the installation at the end...
+\\\texttt{sudo port -v selfupdate} 
+
+\item Install Netcdf and related C\(^{++}\) and Fortran libraries at the command line using MacPorts, as follows:
+
+\vspace{-5pt}\begin{verbatim}
+sudo port install netcdf
+sudo port install netcdf-cxx
+sudo port install netcdf-fortran
+\end{verbatim}
+
+Download precompiled fortran and C\(^{++}\)  binaries appropriate to your operating system (Mavericks, Yosemite, etc.) from \href{http://hpc.sourceforge.net}{http://hpc.sourceforge.net} and install as follows ...
+
+\vspace{-5pt}\begin{verbatim}
+cd ~/Downloads/
+gunzip gcc-4.9-bin.tar.gz
+sudo tar -xvf gcc-4.9-bin.tar -C /.
+gunzip gfortran-4.9-bin.tar.gz 
+sudo tar -xvf gfortran-4.9-bin.tar -C /.
+\end{verbatim}
+
+This installs everything in \texttt{/usr/local}. You can invoke the Fortran 95 compiler by simply typing gfortran at the command line.
+
+\item Get hold of a (read-only) copy of the current 'muffin' branch of \textit{c}GENIE source code via the command:
+\vspace{-5pt}\begin{verbatim}
+svn co https://svn.ggy.bris.ac.uk/subversion/genie/branches/cgenie.muffin
+--username=genie-user cgenie.muffin
+\end{verbatim}\vspace{-5pt}
+for the 'head' (current development version).
+NOTE: All this must be typed continuously on ONE LINE, with a S P A C E before `\texttt{--username}', and before `\texttt{cgenie}'.
+Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
+
+\item Adjust the cGENIE environment variables for your installation by editing
+\\\texttt{cgenie.muffin/genie-main/user.mak} and setting:
+\vspace{-5pt}\begin{verbatim}
+MACHINE=OSX
+\end{verbatim}\vspace{-5pt}
+and
+\vspace{-5pt}\begin{verbatim}
+NETCDF_DIR=/opt/local
+\end{verbatim}
+
+\item Finally, in cgenie.muffin/genie-main/makefile.arc, comment out:
+\vspace{-5pt}\begin{verbatim}
+#NETCDF=
+   $(LIB_SEARCH_FLAG)$(PATH_QUOTE)$(NETCDF_DIR)/lib$(PATH_QUOTE) $(LIB_FLAG)$(NETCDF_NAME)
+\end{verbatim}\vspace{-5pt}
+and un-comment 
+\vspace{-5pt}\begin{verbatim}
+NETCDF_NAMEF=$(NETCDF_NAME)f
+NETCDF=$(LIB_SEARCH_FLAG)$(PATH_QUOTE)$(NETCDF_DIR)/lib$(PATH_QUOTE) 
+   $(LIB_FLAG)$(NETCDF_NAME) $(LIB_FLAG)$(NETCDF_NAME) $(LIB_FLAG)$(NETCDF_NAMEF)
+\end{verbatim}
+
+\item To test the code installation -- change directory to \texttt{cgenie.muffin/genie-main} and type:
+\vspace{-5pt}\begin{verbatim}
+make testbiogem
+\end{verbatim}\vspace{-5pt}
+This compiles a carbon cycle enabled configuration of \textit{c}GENIE and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. If you are unsuccessful here ... double-check the software and directory environment settings in \texttt{user.mak} (or \texttt{user.sh}) and for a netCDF error, check the value of the \texttt{NETCDF\_DIR} environment variable. (Refer to the User Manual for addition fault-finding tips.) If environment variables are changed: before re-trying the test, you will need to type:
+\vspace{-5pt}\begin{verbatim}
+make cleanall
+\end{verbatim}\vspace{-5pt}
+
+\item In order to run the model, open runmuffin.sh (in \texttt{cgenie.muffin/genie-main}), and comment out line \texttt{314}, by inserting a \# at the beginning of the line (\texttt{\#dos2unix \$GOIN}). If you want to be very careful, another line can be inserted below to replace it...
+\vspace{-5pt}\begin{verbatim}
+tr ‘\r’ ‘\n’ < $GOIN
+\end{verbatim}
+
+\end{compactenum}
+
+\noindent That is is for the basic installation. To run the model it is a simple matter of calling the  '\texttt{runmuffin.sh}'  shell script from \texttt{genie-main} and supplying a couple of parameter values, e.g.:
+\vspace{-5pt}\small\begin{verbatim}./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}\normalsize\vspace{-5pt}
+Refer to the \textit{c}GENIE \texttt{User\_manual} for more information regarding installing, running, and analyzing model output, and \textit{c}GENIE \texttt{Examples} for more information on this specific example.\footnote{latex source for all the documents can be found in the \texttt{genie-docs} directory, with recent PDF versions at www.seao2.info/mycgenie.html.} \uline{Read the \textit{c}GENIE \texttt{READ-ME}}.
+
+%=================================================================================================================================
+%=== END DOCUMENT ================================================================================================================
+%=================================================================================================================================
+
+\end{document}
