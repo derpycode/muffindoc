@@ -23,8 +23,8 @@
 %\addtolength{\oddsidemargin}{1.0cm}
 %\addtolength{\bottommargin}{1.0cm}
 
-\title{cGENIE Quick-start Guide: 'muffin' version [Mac]}
-\author{Andy Ridgwell}
+\title{cGENIE Quick-start Guide: `muffin' version [Mac]}
+\author{Ben Ward}
 \date{\today}
 \usepackage[normalem]{ulem}
 
@@ -42,38 +42,29 @@
 
 \noindent \textbf{This is the Quick-start Guide for installing cGENIE-muffin on a Mac.}
 
-\noindent To install the muffin release of cGENIE on a Mac you will need NetCDF and its associated C\(^{++}\) and Fortran libraries, and the best way to get these is using MacPorts, which allows clean installation (and un-installation) of a wide range of software. In detail:
+\noindent To install the muffin release of cGENIE on a Mac you will need a number of software packages, including Fortran, C++ and NetCDF. The best way to get hold of these is via a package management system, such as Homebrew (\href{}{https://brew.sh}) or MacPorts (\href{}{https://www.macports.org}). This guide is based on Homebrew, because it is slightly more user friendly than MacPorts, and is kept more up-to-date with changes in the Apple operating system. (If you are already a MacPorts user, please see Appendix A.)
 
 \begin{compactenum}
 
 \item First of all, you will need XCode, which can be downloaded from the app store, or here... 
-\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads} \\After installing XCode, it is necessary to enable command line tools, by entering 
-\texttt{xcode-select --install}
+\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads} \\After installing XCode, it is necessary to enable command line tools, by entering at the command line...\\
+\texttt{xcode-select --install} 
 
-\item Get MacPorts by following the instructions here:
-\\\href{https://www.macports.org/install.php}{https://www.macports.org/install.php}
-\\Don't forget to synchronize the installation at the end...
-\\\texttt{sudo port -v selfupdate} 
 
-\item Install Netcdf and related C\(^{++}\) and Fortran libraries at the command line using MacPorts, as follows:
+\item Get Homebrew by pasting the following at the terminal command line...
+\\ \texttt{/usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"}
+\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesn’t, see Appendix B. 
 
-\vspace{-5pt}\begin{verbatim}
-sudo port install netcdf
-sudo port install netcdf-cxx
-sudo port install netcdf-fortran
-\end{verbatim}
-
-Download precompiled fortran and C\(^{++}\)  binaries appropriate to your operating system (Mavericks, Yosemite, etc.) from \href{http://hpc.sourceforge.net}{http://hpc.sourceforge.net} and install as follows ...
+\item Install Fortran, C++, NetCDF and some other useful libraries at the command line (using Homebrew) as follows:
 
 \vspace{-5pt}\begin{verbatim}
-cd ~/Downloads/
-gunzip gcc-4.9-bin.tar.gz
-sudo tar -xvf gcc-4.9-bin.tar -C /.
-gunzip gfortran-4.9-bin.tar.gz 
-sudo tar -xvf gfortran-4.9-bin.tar -C /.
+brew tap homebrew/science
+brew install cmake
+brew install gcc
+brew install hdf5 --with-fortran
+brew install netcdf
+brew install wget
 \end{verbatim}
-
-This installs everything in \texttt{/usr/local}. You can invoke the Fortran 95 compiler by simply typing gfortran at the command line.
 
 \item Get hold of a (read-only) copy of the current 'muffin' branch of \textit{c}GENIE source code via the command:
 \vspace{-5pt}\begin{verbatim}
@@ -91,7 +82,7 @@ MACHINE=OSX
 \end{verbatim}\vspace{-5pt}
 and
 \vspace{-5pt}\begin{verbatim}
-NETCDF_DIR=/opt/local
+NETCDF_DIR=/usr/local/Cellar/netcdf/4.5.0
 \end{verbatim}
 
 \item Finally, in cgenie.muffin/genie-main/makefile.arc, comment out:
@@ -115,19 +106,84 @@ This compiles a carbon cycle enabled configuration of \textit{c}GENIE and runs a
 make cleanall
 \end{verbatim}\vspace{-5pt}
 
-\item In order to run the model, open runmuffin.sh (in \texttt{cgenie.muffin/genie-main}), and comment out line \texttt{314}, by inserting a \# at the beginning of the line (\texttt{\#dos2unix \$GOIN}). If you want to be very careful, another line can be inserted below to replace it...
-\vspace{-5pt}\begin{verbatim}
-tr ë\rí ë\ní < $GOIN
-\end{verbatim}
-
 \end{compactenum}
 
 \noindent That is is for the basic installation. To run the model it is a simple matter of calling the  '\texttt{runmuffin.sh}'  shell script from \texttt{genie-main} and supplying a couple of parameter values, e.g.:
 \vspace{-5pt}\small\begin{verbatim}./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}\normalsize\vspace{-5pt}
 Refer to the \textit{c}GENIE \texttt{User\_manual} for more information regarding installing, running, and analyzing model output, and \textit{c}GENIE \texttt{Examples} for more information on this specific example.\footnote{latex source for all the documents can be found in the \texttt{genie-docs} directory, with recent PDF versions at www.seao2.info/mycgenie.html.} \uline{Read the \textit{c}GENIE \texttt{READ-ME}}.
 
+
+
+\newpage
+\section*{Appendix A}
+
+You are here because you have already installed MacPorts, presumably by following the instructions here:
+\\\href{https://www.macports.org/install.php}{https://www.macports.org/install.php}.
+You now have two options, either remove MacPorts entirely, replacing it with Homebrew, or install the required packages through MacPorts and a number of precompiled binaries.
+
+\subsection*{Option 1: Remove MacPorts from your system... (to be replaced by Homebrew)}
+
+\begin{compactenum}
+
+\item Back up your system (i.e. using Time Machine).
+
+\item To uninstall MacPorts, enter at the terminal:\\
+\texttt{sudo port -f uninstall installed}
+ 
+Then remove everything that is left from MacPorts: \\
+\texttt{sudo rm -rf /opt/local} \\
+\texttt{sudo rm -rf /Applications/DarwinPorts} \\
+\texttt{sudo rm -rf /Applications/MacPorts} \\
+\texttt{sudo rm -rf /Library/LaunchDaemons/org.macports.*} \\
+\texttt{sudo rm -rf /Library/Receipts/DarwinPorts*.pkg}\\
+\texttt{sudo rm -rf /Library/Receipts/MacPorts*.pkg} \\
+\texttt{sudo rm -rf /Library/StartupItems/DarwinPortsStartup} \\
+\texttt{sudo rm -rf /Library/Tcl/darwinports1.0} \\
+\texttt{sudo rm -rf /Library/Tcl/macports1.0} \\
+\texttt{sudo rm -rf \textasciitilde/.macports}
+
+Note that the \texttt{sudo} command is inserted before the \texttt{rm} (i.e. remove) command in order to enable the correct permissions.
+
+\item You may now continue with your installation as described in the main text. You may have to delete some files (using \texttt{sudo rm}), as recommended by \texttt{brew doctor}. 
+
+\end{compactenum}
+
+
+\subsection*{Option 2: Install required packages through MacPorts and precompiled binaries...}
+
+\begin{compactenum}
+
+\item First of all, synchronize your installation of MacPorts:
+\\\texttt{sudo port -v selfupdate} 
+
+\item Then install Netcdf and related C\(^{++}\) and Fortran libraries at the command line using MacPorts, as follows:
+
+\vspace{-5pt}\begin{verbatim}
+sudo port install netcdf
+sudo port install netcdf-cxx
+sudo port install netcdf-fortran
+\end{verbatim}
+
+\item Download precompiled fortran and C\(^{++}\)  binaries appropriate to your operating system (El Capitan \& Sierra, etc.) from \href{http://hpc.sourceforge.net}{http://hpc.sourceforge.net}. Install as follows, amending the file number to match your version of OSX (e.g. El Capitan \& Sierra are associated with the 7.1 binaries).
+
+\vspace{-5pt}\begin{verbatim}
+cd ~/Downloads/
+gunzip gcc-7.1-bin.tar.gz
+sudo tar -xvf gcc-7.1-bin.tar -C /.
+gunzip gfortran-7.1-bin.tar.gz 
+sudo tar -xvf gfortran-7.1-bin.tar -C /.
+\end{verbatim}
+
+If your operating system is not listed here, you will either have to wait until it is, or install Homebew.
+
+\end{compactenum}
+
+
+\section*{Appendix B}
+
+Errors identified by `\texttt{brew doctor}' are most likely associated with some incompatible files in your software libraries, perhaps from a previous installation of MacPorts. Try to follow the suggestions given to you by `\texttt{brew doctor}', deleting any problematic files (using \texttt{sudo rm} to overcome any permission issues). Note that you may wish to do a system backup first.
+
 %=================================================================================================================================
 %=== END DOCUMENT ================================================================================================================
 %=================================================================================================================================
-
 \end{document}
