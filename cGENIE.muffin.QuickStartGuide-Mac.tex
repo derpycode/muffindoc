@@ -50,10 +50,10 @@
 \\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads} \\After installing XCode, it is necessary to enable command line tools, by entering at the command line...\\
 \texttt{xcode-select --install} 
 
-
+% I think XCode automatically comes with Homebrew and command line tools enabled
 \item Get Homebrew by pasting the following at the terminal command line...
 \\ \texttt{/usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"}
-\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesn�t, see Appendix B. 
+\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesnÕt, see Appendix B. 
 
 \item Install Fortran, C++, NetCDF and some other useful libraries at the command line (using Homebrew) as follows:
 
@@ -61,7 +61,7 @@
 brew tap homebrew/science
 brew install cmake
 brew install gcc
-brew install hdf5 --with-fortran
+brew install hdf5 --with-fortran %I got an error: no --with-fortran option 
 brew install netcdf
 brew install wget
 \end{verbatim}
@@ -73,7 +73,7 @@ svn co https://svn.ggy.bris.ac.uk/subversion/genie/branches/cgenie.muffin
 \end{verbatim}\vspace{-5pt}
 for the 'head' (current development version).
 NOTE: All this must be typed continuously on ONE LINE, with a S P A C E before `\texttt{--username}', and before `\texttt{cgenie}'.
-Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
+If you are asked about a ‘certificate’ – enter ‘p’ to accept ‘permanently’ ('a' makes it grumpy). Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
 
 \item Adjust the cGENIE environment variables for your installation by editing
 \\\texttt{cgenie.muffin/genie-main/user.mak} and setting:
@@ -83,6 +83,11 @@ MACHINE=OSX
 and
 \vspace{-5pt}\begin{verbatim}
 NETCDF_DIR=/usr/local/Cellar/netcdf/4.5.0
+\end{verbatim}
+
+Verify the netcdf version number in the directory above, it's currently at 4.6.0, i.e.:\\
+\vspace{-5pt}\begin{verbatim}
+NETCDF_DIR=/usr/local/Cellar/netcdf/4.6.0
 \end{verbatim}
 
 \item Finally, in cgenie.muffin/genie-main/makefile.arc, comment out:
