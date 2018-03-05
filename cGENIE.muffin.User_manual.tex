@@ -1942,7 +1942,7 @@ and follow the links: 'Cluster Status (Ganglia)', and then 'Job Queue' to get to
 
 If, when using the \texttt{old\_rungenie.sh} shell script to run a GENIE-1 experiment, it all goes horribly pear-shaped ... 
 
-\begin{compactenum}
+\begin{enumerate}
 
         \item The experiment dies absolutely immediately.
         Check that the \texttt{old\_rungenie.sh} shell script has executable permissions. Also check that the directory you are trying to run the model from is your home directory (\texttt{\~{}}).
@@ -1954,19 +1954,19 @@ If, when using the \texttt{old\_rungenie.sh} shell script to run a GENIE-1 exper
 before dropping dead.
         \noindent If so, there should be an error message telling you that a particular file or directory cannot be found. Check:
         
-\begin{compactitem}
+\begin{itemize}
         \item All the files and directories you have specified exist.
                 \item You have not omitted spaces where you should not have, nor added spaces where a '\texttt{\_}' separator was required.
                                 \item You have not misspelt anything -- a common cause of problems is in reading the number one ('\texttt{1}') for the letter el ('\texttt{l}'), or \textit{vice versa} in the computer font (Courier).
-        \end{compactitem}
+        \end{itemize}
         
-\end{compactenum}
+\end{enumerate}
 
 \noindent These first two sorts of pain and suffering are due to mis-configuration of the \texttt{old\_rungenie.sh} shell script.
 
 \noindent Other sources of error are due to the configuration of GENIE-1 (or more rarely, due to the model itself):
                 
-\begin{compactenum}
+\begin{enumerate}
 
         \item As GENIE initializes, files may be reported as not being found. One possible cause of this is that '\texttt{\~{}}' may not necessarily get expanded into the path of your home directory (e.g., '\texttt{/home/mushroom}'. In this situation, '\texttt{\~{}}' can simply be replaced with '\texttt{\$HOME}'. Note that as well as making this substitution at the command line, the user config file may also contain instances of '\texttt{\~{}}' (such as in specifying particular forcings.
         
@@ -1979,7 +1979,7 @@ $ dos2unix FILENAME
         
         \item If the model starts running, but dies with a reported failure to solve the aqueous carbonate system, it may be that you need to force a re-compile. Running GENIE with array dimensions which do not match the number of tracers selected is a common cause of failures to solve the aqueous carbonate system, as often calcium ion or other tracer concentrations become 'corrupted' and get assigned nutty and all but impossible values.
 
-\end{compactenum}
+\end{enumerate}
 
 %---------------------------------------------------------------------------------------------------------------------------------
 %---------------------------------------------------------------------------------------------------------------------------------
@@ -2111,7 +2111,6 @@ However, you will still get the advantage of adapting time-stepping depending on
 
 If you have prescribed changing pCO2, e.g. a continual ramp upwards, \texttt{GEMlite} is not appropriate in the first place, as the atmosphere is intrinsically assumed to be in equilibrium with the ocean surface and steady-state geochemcial gradients in the ocean have been established. (This assumption is broken if CO2 is rapidly invading the ocean.)
 Acceleration (and \texttt{GEMlite}) is also not appropriate if  ocean circulation and carbon cycling have not yet been spun-up, unless at least 5 to 10 kyr of 'normal' time-stepping forms part of the total spin-up including acceleration. 
-
 %---------------------------------------------------------------------------------------------------------------------------------
 
 \subsubsection{Separate solubility (SST) related changes from stratification and circulation changes}
