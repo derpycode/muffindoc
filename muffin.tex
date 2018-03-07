@@ -161,7 +161,7 @@ If you plan on using your own laptop to remote access the model and visualize re
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
-\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac – I am told that Cyberduck is OK (there are bound to be many other alternatives). For linux, maybe FileZilla.
+\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: Cyberduck, TextWrangler, FileZilla. Also for linux, maybe FileZilla.
 \item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
 (Note that you will need Java installed!)
 \item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
@@ -215,7 +215,7 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 \subsection{linux ...}
 
-For some of you, the mechanics of running the model will be about as much fun as sticking you tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
+For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
 
 \textbf{cGENIE} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or Mac equivalent, which is sort of linux also) operating system. The command line is a place where you type text and when you press Return, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
@@ -297,6 +297,19 @@ You will also need a terminal window. This can be opened by clicking on the ‘O
 
 You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 
+On a Mac, if your current directory doesn't look something like this
+
+\begin{verbatim}
+[username@sprout ~]$
+\end{verbatim}
+
+Try typing this into your terminal:
+
+\begin{verbatim}
+ssh username@sprout.ggy.bris.ac.uk
+\end{verbatim}
+
+And enter your sprout account password, and tell it whether or not you want this password stored.
 %------------------------------------------------
 
 \subsection{Installing and testing the model code}
@@ -541,14 +554,14 @@ We will primarily consider only results saved by the ocean biogeochemical module
 \begin{verbatim}
 ~/cgenie_output/LAB_0.EXAMPLE/biogem
 \end{verbatim}
-\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, in order to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc
+\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
 
 %------------------------------------------------
 
 \subsection{Time-slice output}
 
-One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g. a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
-Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed time-slices. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM} then assumes that the specified time point represents the mid-point of the annual (by default) average with the results that output years end up being reported as e.g.
+One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g., a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
+Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed time-slices. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM} then assumes that the specified time point represents the mid-point of the annual (by default) average with the results that output years end up being reported as e.g.,
 \begin{verbatim}
 0.5
 1.5
@@ -607,7 +620,7 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-One way of viewing the contents of files is the change directory to the experiment results directory and opening the file in the vi editor. But that is not so much fun.
+One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the vi editor. But that is not so much fun.
 
 Instead – change to the experiment results directory and then to the \textbf{BIOGEM} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
@@ -619,7 +632,7 @@ Note: The Secure File Transfer Client does not automatically refresh the directo
 
 For your information and edification (only): Excel, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
 
-In Excel: Chose File then Open. You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
+In Excel: Choose File then Open.  You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
 
 \textbf{MUTLAB} will ignore lines starting with a \%, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \%. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
 
