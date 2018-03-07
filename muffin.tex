@@ -161,7 +161,7 @@ If you plan on using your own laptop to remote access the model and visualize re
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
-\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: Cyberduck, TextWrangler, FileZilla. Also for linux, maybe FileZilla.
+\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. Also for linux, maybe FileZilla.
 \item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
 (Note that you will need Java installed!)
 \item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
@@ -620,7 +620,7 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the vi editor. But that is not so much fun.
+One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
 
 Instead – change to the experiment results directory and then to the \textbf{BIOGEM} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
@@ -647,20 +647,23 @@ For the time-slice NetCDF (*.nc) files you will be using a program called ‘Pan
 \vspace{2mm}
 
 When you open the NetCDF file, you will be presented with a ‘Datasets and Variables’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘Long Name’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘Longitude-Latitude’ or ‘Latitude-Vertical’ plot (for the 2-D fields, the plot display will immediately open).
-For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean of data that can be plotted, form the surface to the abyssal ocean.
+For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
 For the ‘Latitude-Vertical plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
 There is also an option for ‘Longitude-Vertical plots (which we will not use).
 For all three: there may be multiple time-slices (i.e., you can plot data saved from different years).
 You can interpolate the data or not (often you may find that it is clearer not to interpolate the data but to leave it as ‘blocky’ colors corresponding to the resolution of the model), change the scale and colors, overlay continental outline, change the projection, etc etc. Grey cells represent ‘dry’ grid points, i.e., continental or oceanic crust.
+
+\begin{enumerate}
 NOTE: The default settings in Panoply can mislead:
-(1) By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
-(2) By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
-(3) By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
-(4) By listing all ‘Plottable variables’ (option at the bottom of the window), when what you ideally want is to ‘Show’ is the shorter and less confusing list of ‘Georeferenced variables’. 
-(5) In Longitude-Latitude plots, by overlaying the modern continental output. (GENIE land is marked in grey.)
-(6) By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g. time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘Scale’ tab. 
+\item By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
+\item By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
+\item By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
+\item By listing all ‘Plottable variables’ (option at the bottom of the window), when what you \textit{ideally} want is to ‘Show’ the shorter and less confusing list of ‘Georeferenced variables’. 
+\item In Longitude-Latitude plots, by overlaying the modern continental output. (GENIE land is marked in grey.)
+\item By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g., time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘Scale’ tab. 
 So be careful when opening a new plot that you are looking at what you *think* you are looking at …
 All the defaults can be changed via the ‘Edit’ drop-down menu and ‘Preferences’.
+\end{enumerate}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
