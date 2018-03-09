@@ -343,6 +343,8 @@ Change directory (see: Appendix I and also Figure \ref{fig:directories}) to:
 cgenie.muffin/genie-main
 \end{verbatim}
 
+Note: the model is *always* run from cgenie.muffin/genie-main
+
 \noindent If you are not ‘linux-friendly’ – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
 
 \begin{verbatim}
@@ -705,7 +707,7 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 
 \noindent The alternative is to submit your experiment as a ‘job’ to a queuing system which then manages what compute resources are used to run the model. Once you have submitted the experiment, that is it – you can go straight to the pub :)
 
-Unless you want to read the cGENIE User Manual, for now, take the following suggested way of submitting jobs on trust: to run the same experiment to before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) by submitting the experiment as a job to the cluster queue, type:
+Unless you want to read the cGENIE User Manual, for now, take the following suggested way of submitting jobs on trust: to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) by submitting the experiment as a job to the cluster queue, type:
 \small\begin{verbatim}
 $ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
@@ -825,7 +827,7 @@ Finally, change directory back to cgenie.muffin and then genie-main so that you 
 \vspace{2mm}
 
 \noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the runmuffin.sh command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
-Create a new (user config) experiment configuration file by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g. LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the user-config file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g. via the Windoz file-manager (e.g. to LAB\_0.NEW), and drag it back to the cluster directory again.
+Create a new (user config) experiment configuration file in the \texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the user-config file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to LAB\_0.NEW), and drag it back to the cluster directory  (\texttt{~/cgenie.muffin/genie-userconfigs/LABS}) again.
 You specify the use of the restart state by adding the restart experiment name as the 5th parameter, e.g.:
 
 \small\begin{verbatim}
@@ -899,7 +901,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.
   
 but rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE}, why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time. Also, be especially careful not to have 2 (or more) experiments running simultaneously with exactly the same name as they try and over-write each other in a somewhat entertaining way.
 
-Overall: you task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
+Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
 
 Useful 2-D (netCDF—Panoply) variables to view are surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D NetCDF results file (apologies for ocean temperature being in units of K ...).
 
@@ -933,7 +935,7 @@ Other questions to think about with regards to numerical modeling (and this expe
 
 To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
 ‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’
-you are going to edit the file that controls the specific details of the experiment. This is the user-config file. From the genie-userconfigs/LABS directory, open one of the snowball experiments in the SciTE text editor. At the top of the file you should see something like:
+you are going to edit the file that controls the specific details of the experiment, the user-config file. From the genie-userconfigs/LABS directory, open one of the snowball experiments in the SciTE text editor. At the top of the file you should see something like:
 
 \small\begin{verbatim}
 #
