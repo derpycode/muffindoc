@@ -986,9 +986,9 @@ In answering the question think about what an appropriate degree of accuracy mig
 
 \noindent \textbf{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
 
-If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). You can fine-tune the number of years the experiment is run for to achieve this. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
+If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
 
-HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice si always reported at 100% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the biogem_series_misc_seaice.res time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume).Note that you can open and review the results of this file at *any* time during the experiment as the lines are written as and when the data for each time point is generated.
+HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the biogem_series_misc_seaice.res time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). Note that you can open and review the results of this file at *any* time during the experiment as the lines are written while the data for each time point is generated.
 
 Overall: think critically about the model configuration, the experimental design, and the nature of the scientific question (based on your background reading of snowball Earth). Some of the exploration/testing suggestions (above) may not necessarily give substantially different results. Such a finding would be as valid and interesting as determining an important dependence of a certain assumption, and would for instance indicate that the associated paleo uncertainties are not critical to model assessment of the question.
 
@@ -1006,17 +1006,17 @@ Always be prepared to justify all your choices for experimental design and model
 
 \subsection{Feedback loop analysis}
 
-In order to quantify the snowball Earth hysteresis loop in cGENIE as per Figure 2 in Hyde et al. [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in cGENIE, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: Myhre et al. [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or IPCC [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence ~130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
+To quantify the snowball Earth hysteresis loop in cGENIE as per Figure 2 in Hyde et al. [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in cGENIE, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: Myhre et al. [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or IPCC [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence $~$130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
 
 For coming out of a snowball, because the \(CO_{2}\) and hence radiative forcing threshold is so high as compared to going in, you may want to be creative in the plotting (assuming attempting to combine both thresholds into a single plot) and, for instance, one might break the scale between the low radiative forcing interval spanning going in and the high one spanning coming out.
 
-Another example is as per Figures 3,4 in Stone and Yao [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to Stone and Yao [2004].
+Another example is as per Figures 3 and 4 in Stone and Yao [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to Stone and Yao [2004].
 
 %------------------------------------------------
 
 \subsection{Continental configuration}
 
-It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative base-configs are provided which each define a different continental configuration:
+It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative base-configs are provided, each defining a different continental configuration:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -1050,7 +1050,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.xxxxx.NONE LABS LAB_1.EXAMPLE 100
 
 Note that you are using a different base-config file name: cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE where xxxxx is one of: wopol1, wopol2, woreq1, or woreq2. 
 Also note that no restarts are provided for these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the restart experiments for to achieve as close to steady-state as you think is ‘sufficient’). Remember that restarts are just ‘normal’ experiments that have already been run.
-Be careful that when changing from one base-config to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue. i.e. do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
+Be careful that when changing from one base-config to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue - i.e., do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
 
 %------------------------------------------------
 
@@ -1065,9 +1065,9 @@ bg_ctrl_force_GOLDSTEInTS=.TRUE.
 bg_par_Fgeothermal=100.0E-3
 \end{verbatim}
 
-The first enables the temperature and/or salinity of the ocean to be modified by processes other than redistribution via ocean circulation and exchange with sea-ice and atmosphere (i.e. to impose external forcings). The second sets the geothermal flux in units of W m-2. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much? A question for Google…)
+The first enables the temperature and/or salinity of the ocean to be modified by processes other than redistribution via ocean circulation and exchange with sea-ice and atmosphere (i.e., to impose external forcings). The second sets the geothermal flux in units of W m$^{-2}$. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much higher? A question for Google…)
 
-An appropriate research question might be to determine in radiative forcing vs. geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster): the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short workshop: How much of a difference to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? e.g what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability)?
+An appropriate research question might be to determine in radiative forcing \textit{vs.} geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster): the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short exercise: How much of a difference, to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? E.g., what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability)?
 
 %------------------------------------------------
 
@@ -1229,7 +1229,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
   LAB_2.colorinjection 20 LAB_2.SPIN
 \end{verbatim}
 
-View the results – how the Red tracer distribution evolves – in the time-slice files (full ocean (/atmosphere) properties saved in the netCDF format (.nc) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D netCDF file. Note that Panoply appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
+View the results – how the Red tracer distribution evolves – in the time-slice files (full ocean/atmosphere) properties saved in the netCDF format (.nc) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D netCDF file. Note that Panoply appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
 
 You can also view the tracer distributions in terms of a water-column integrated tracer inventory (netCDF variable name: ocn\_int\_colr; long name: colr water-column integrated tracer inventory) in the 2D netCDF output. (See: Sabine et al. [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file 
 
@@ -1247,7 +1247,7 @@ Spend a little while altering the flux (bg\_par\_ocn\_force\_scale\_val\_48) and
 
 An interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the cGENIE ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
 
-Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g. 20 or 50 years (from the provided spin-up). Then:
+Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g., 20 or 50 years (from the provided spin-up). Then:
 
 \begin{enumerate}[noitemsep]
 \item View the dye-tagged plume of Mediterranean Intermediate Water by plotting a lat-lon slice (from the 3D netCDF file). This will give you the depth of the plume. How does this compare with salinity observations (salinity observations and appropriate global datasets can be found on the web with a little patience)? You can also view the water-column integrated distribution (2D netCDF).
@@ -1264,11 +1264,11 @@ Simply specify a dye injection somewhere in the Mediterranean (be careful with t
 
 Instead of adding a dye tracer, you could add fresh water to assess the sensitivity of the Atlantic Meridional Overturning Circulation (AMOC) to collapse in a classic ‘hosing’ experiment.
 
-The user-config file for this is called: LAB.0001.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)! 
+The user-config file for this is called: LAB.2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)! 
 
-To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr-1) and fresh water flux (in m3 s-1 or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
+To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3} s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
 
-To run the model for e.g. 20 years using the same restart:
+To run the model for e.g., 20 years using the same restart:
 
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
@@ -1281,7 +1281,7 @@ The most obvious property of the Earth system to follow is the Atlantic overturn
 
 There are also important impacts on surface air temperatures and maybe sea-ice extent (in fields\_biogem\_2d.nc). Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
 
-Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e. running multiple experiments at once in the background).
+Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e., running multiple experiments at once in the background).
 
 \hfill \break
 \noindent\rule{4cm}{0.1mm}
@@ -1304,7 +1304,7 @@ Note that you can switch off the auto-scaling feature (Always fit to data) and c
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-amoc1.png}\centering
 \vspace{-0mm}
-\caption{Example plot of (normal/default modern) overturning streamfunction (2D netCDF file). (e.g. for Atlantic: netCDF parameter name: phys\_opsia, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
+\caption{Example plot of (normal/default modern) overturning streamfunction (2D netCDF file). (e.g., for Atlantic: netCDF parameter name: phys\_opsia, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
 \label{fig:ch3-amoc1}
 \end{figure}
 
@@ -1324,12 +1324,12 @@ You can also plot ocean current fields which is sort-of fun and maybe even infor
 \begin{enumerate}[noitemsep]
 \item  In the 3D netCDF file, the three components of ocean velocity are represented by the variables: ocean velocity – u (Eastwards), ocean velocity – v (Northwards), and ocean velocity – w (upwards). 2. Open up velocity – u. Chose ‘lon-lat’.
 \item Select/highlight velocity – v. and click on the ‘Combine Plot’ icon (as per before).
-\item Rather than a difference map, which is what you get by default, i.e. ‘Array 1 – Array 2’ – from the drop-down menu (next to the ‘Interpolate’ button) select ‘Vector Magnitude’.
-\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g. 0.1. When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
-\item You can repeat this for deeper depth levels in the ocean – e.g. between about 1500 and 2000 m is a good place to go looking for the Western boundary current (and AMOC return) in the model (such as it exists at this low resolution) but you’ll need to re-scale the velocity vectors again (e.g. to 0.01 to less).
+\item Rather than a difference map, which is what you get by default, i.e., ‘Array 1 – Array 2’ – from the drop-down menu (next to the ‘Interpolate’ button) select ‘Vector Magnitude’.
+\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g., 0.1. (On a Mac, look under the ‘Vectors’ tab for a ‘Reference Value’ to something like 0.1.)  When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
+\item You can repeat this for deeper depth levels in the ocean – e.g., between about 1500 and 2000 m is a good place to go looking for the Western boundary current (and AMOC return) in the model (such as it exists at this low resolution) but you’ll need to re-scale the velocity vectors again (e.g., to 0.01 to less).
 \end{enumerate}
 
-2 example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
+Two example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
 
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-currents1.png}\centering
@@ -1355,7 +1355,7 @@ Start, by thinking of a value of \texttt{bg\_par\_ocn\_force\_scale\_val\_2} of 
 
 So, in the example earlier (\texttt{bg\_par\_ocn\_force\_scale\_val\_2=-1.0E18}), the freshwater flux is \(1.0\times10^{18}/3.49\times10^{4} = 2.8653\times10^{13} m^{3} yr^{-1}\).
 
-The literature invariably gives freshwater fluxes in units of \(Sv\) (\(10^{6} m^{3} s^{-1}\)). So in the example, the freshwater flux is: \(9.0797\times10^{5} m^{3} s^{-1}\) (\(365.25\times24\times3600 = 31557600 s yr^{-1}\)). Or \(0.9 Sv\). Read the literature … but generally, fluxes of ca. \(0.05 Sv\) and larger (and to quite specific places) are applied in models in order to induce a collapse of the AMOC.
+The literature invariably gives freshwater fluxes in units of \(Sv\) (\(10^{6} m^{3} s^{-1}\)). So in the example, the freshwater flux is: \(9.0797\times10^{5} m^{3} s^{-1}\) (\(365.25\times24\times3600 = 31557600 s yr^{-1}\)). Or \(0.9 Sv\). Read the literature … but generally, fluxes of ca. \(0.05 Sv\) and larger (and to quite specific places) are applied in models to induce an AMOC collapse.
 
 %------------------------------------------------
 
@@ -1379,7 +1379,7 @@ Are any other major regions of deep water formation (where are they) sensitive t
 
 \subsection{‘Anti-hosing’ investigations}
 
-There are questions concerning past changes in the AMOC as to whether it is ‘pushed’ or ‘pulled’. i.e. if the AMOC shoals in depth and/or weakens, is it because its production has weakened, or as Antarctic Bottom water (AABW) strengthened and ‘pushed’ it out of the way (to shallower depths)?
+There are questions concerning past changes in the AMOC as to whether it is ‘pushed’ or ‘pulled’. i.e., if the AMOC shoals in depth and/or weakens, is it because its production has weakened, or as Antarctic Bottom water (AABW) strengthened and ‘pushed’ it out of the way (to shallower depths)?
 
 What you might try then is to inject salt in the Southern Ocean as opposed to fresh water in the North Atlantic. All you need do is pick an appropriate grid point (this is worth thinking about carefully and maybe testing different locations) and rather than giving the parameter \texttt{bg\_par\_ocn\_force\_scale\_val\_2} a negative value, you give it a positive one. (Start by trying similar magnitudes of value as before and see what happens.) 
 
@@ -1518,7 +1518,7 @@ ea_radfor_scl_ch4=1.0
 \end{verbatim}
 specifies a radiative forcing of climate by \(CH_{4}\) equivalent to \(1\) times modern \(CH_{4}\) (i.e., \(1\times700 ppb\)).\footnote{But effectively, this is going to do exactly the same as changing radiative forcing due to \(CO_{2}\).}
 
-\item[\textbf{(ii)}] cGENIE, as configured here, does not have a land surface scheme (no snow cover) nor clouds nor ice sheets, so a planetary albedo is prescribed (see Figure). This varies with latitude and is parameterized after a fully coupled GCM simulation. There is a parameter which controls how the albedo varies as a function of latitude, which can be adjusted: 
+\item[\textbf{(ii)}] cGENIE, as configured here, does not have a land surface scheme (no snow cover) nor clouds nor ice sheets, so a planetary albedo is prescribed (see Figure 4.1). This varies with latitude and is parameterized after a fully coupled GCM simulation. There is a parameter which controls how the albedo varies as a function of latitude, which can be adjusted: 
 \begin{verbatim}
 ea_albedop_amp=0.260
 \end{verbatim}
