@@ -1555,7 +1555,7 @@ The latitudinal (from 90$^{\circ}$S (-90$^{\circ}$N) on the left, to 90$^{\circ}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent You can also try tracing and analyzing the patterns of ocean circulation in the Cretaceous world, in the same way as you did for the modern climate system. And in fact, it would be a useful exercise to directly compare your previous modern results vs. Cretaceous results, or even better, carry out a set of paired experiments (e.g. similar locations and fluxes of dye injection) for both modern and Cretaceous. (Note that if you do this and swap back and forth between modern and Cretaceous configurations, you cannot submit straight away to the cluster but must first briefly run the experiment at the command line in order that cGENIE is compiled into the new continental configuration.)
+\noindent You can also try tracing and analyzing the patterns of ocean circulation in the Cretaceous world, in the same way as you did for the modern climate system. And in fact, it would be a useful exercise to directly compare your previous modern results vs. Cretaceous results, or even better, carry out a set of paired experiments (e.g., similar locations and fluxes of dye injection) for both modern and Cretaceous. (Note that if you do this and swap back and forth between modern and Cretaceous configurations, you cannot submit straight away to the cluster but must first briefly run the experiment at the command line in order that cGENIE is compiled into the new continental configuration.)
 
 A new \textit{user-config} (\texttt{LAB\_5.colorinjection}) that continues on from this climate state, can be run: 
 \begin{verbatim}
@@ -1606,9 +1606,9 @@ Available from the website, on the LH side of the page under ‘got data?’ at 
 
 These netCDF files can be opened and visualized in exactly the same way in exactly the same way as per the cGENIE output files. You’ll see a few (there are not many!) data points, in a sea of grey (which stands for ‘no value’). (Note that it is best to turn data interpolation OFF.)
 
-More useful … is that the data distribution can be combined with the model ocean temperature output filed, in a difference map (see earlier for notes on creating difference maps). You can thus visualize the pattern of model-data mismatch. (Note you might want to hit ‘Fit to data’ to autoscale the plot, or simply pick and manually enter a +/- limit for the data plotting, perhaps ensuring it is symmetrical about zero such that red anomalies could represent proxy SST values higher than min the model, and blue point data being lower than in the model.)
+More useful … is that the data distribution can be combined with the model ocean temperature output field, in a difference map (see earlier for notes on creating difference maps). You can thus visualize the pattern of model-data mismatch. (Note you might want to hit ‘Fit to data’ to autoscale the plot, or simply pick and manually enter a +/- limit for the data plotting, perhaps ensuring it is symmetrical about zero such that red anomalies could represent proxy SST values higher than in the model, and blue point data being lower than in the model.)
 
-Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather than a Map view. (It is probably easier to visualize the model-data misfit in this way.)
+Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather than a Map view (...it is probably easier to visualize the model-data misfit in this way.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -1652,7 +1652,7 @@ Refer to the \textbf{muffingen} \textit{user-manual} as your primary source of i
 
 \subsubsection{Zonal wind-stress}
 
-For non GCM-based configurations, not prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'chose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
+For non GCM-based configurations, not prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'choose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
 
 \begin{itemize}
 \item \texttt{par\_tauopt=0;}
@@ -2037,7 +2037,7 @@ ea_36=y
 
 \noindent as well as having a rate of calcification by plankton at the surface ocean that is responsive to ocean acidification and saturation state (i.e., it takes into account \(CO_{2}\)-calcification feedbacks, which will additionally interact with climate – see \textit{Ridgwell et al.} [2007b, 2009] from http://www.seao2.info/pubs.html). Anything could happen!!!
 
-In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set for just 1 PgC over an interval of a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay rapidly away, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional \textbf{netCDF} output has also been prescribed (\texttt{bg\_par\_data\_save\_level=10}) so that more information relevant to assessing ocean acidification is saved.
+In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set for just 1 PgC over an interval of a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay away rapidly, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional \textbf{netCDF} output has also been prescribed (\texttt{bg\_par\_data\_save\_level=10}) so that more information relevant to assessing ocean acidification is saved.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2047,7 +2047,7 @@ In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is 
 
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
- LAB_3.\(CO_{2}\)emissions 20 LAB_3.SPIN
+ LAB_3.\CO2emissions 20 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
 
 As for what model results variables to consider … think about the climate change and ocean acidification literature and which environmental properties are considered either critical for ecosystems or are simply helpful and illustrative. Refer to the Ocean acidification output supplement (S1) for a summary of some of the key ocean acidification variables saved by the model. 
