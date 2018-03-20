@@ -2102,7 +2102,7 @@ Here – the user-config defining the control experiment (\texttt{LAB\_3.CONTROL
 
 If everything is OK, atmospheric \(CO_{2}\) (and climate) should be stable and there should be little (or no) drift in any of the output variables (because the spin-up should have been run to an equilibrium state and you have not changed anything in the control experiment, right?).
 
-It is good practice (i.e. do it!) to always run a control experiment for each different type of experiments – e.g. ideally run one control experiment for each set of \(CO_{2}\) emissions experiments. 
+It is good practice (i.e., do it!) to always run a control experiment for each different type of experiments – e.g., ideally run one control experiment for each set of \(CO_{2}\) emissions experiments. 
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2146,7 +2146,7 @@ then specifies a uniform flux of 1.0 (scaled to PgC yr-1) over the first full ye
     10.0  1.0
     10.0  0.0
 \end{verbatim}\vspace{-2pt}
-would result in a uniform flux lasting 10 years (i.e. once scaled by the parameter in the user-config – 1 PgC yr-1 over 10 years – 10 PgC total emissions). In contrast; 
+would result in a uniform flux lasting 10 years (i.e., once scaled by the parameter in the user-config – 1 PgC yr-1 over 10 years – 10 PgC total emissions). In contrast; 
 \vspace{-2pt}\begin{verbatim}
      0.0  0.0
     10.0  1.0
@@ -2190,11 +2190,11 @@ Don’t forget: you could submit this experiment to the cluster and do more (ide
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g. Sabine et al. [2004]) and having run a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\), you are in a position to critically evaluate the model’s ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
+\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g., Sabine et al. [2004]) and having run a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\), you are in a position to critically evaluate the model’s ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
 
-In the 2D netCDF output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e. to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A time-slice centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g. 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: Cao et al. [2009])
+In the 2D netCDF output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e., to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A time-slice centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g., 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: Cao et al. [2009])
 
-Observational data, re-gridded to the cGENIE grid and in netCDF format can be downloaded from the ‘usual place’ (http://www.seao2.org/mycgenie.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D netCDF) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the Sabine paper … unless you are MATLAB-friendly and you use the 3D BIOGEM MATLAB plotting scripts (genie-matlab) whose use is somewhat described in the cGENIE user-manual. Examples of MATLAB plotting of the model vs. observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
+Observational data, re-gridded to the cGENIE grid and in netCDF format can be downloaded from the ‘usual place’ (http://www.seao2.org/mycgenie.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D netCDF) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the Sabine paper … unless you are MATLAB-friendly and you use the 3D BIOGEM MATLAB plotting scripts (genie-matlab; https://github.com/derpycode/muffinplot) whose use is somewhat described in the cGENIE user-manual. Examples of MATLAB plotting of the model vs. observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
 
 \begin{figure}[ht]
 \begin{center}
