@@ -655,8 +655,8 @@ There is also an option for ‘Longitude-Vertical plots (which we will not use).
 For all three: there may be multiple time-slices (i.e., you can plot data saved from different years).
 You can interpolate the data or not (often you may find that it is clearer not to interpolate the data but to leave it as ‘blocky’ colors corresponding to the resolution of the model), change the scale and colors, overlay continental outline, change the projection, etc etc. Grey cells represent ‘dry’ grid points, i.e., continental or oceanic crust.
 
-\begin{enumerate}
 NOTE: The default settings in Panoply can mislead:
+\begin{enumerate}
 \item By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
 \item By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
 \item By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
@@ -713,7 +713,8 @@ $ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
 \end{verbatim}\normalsize
 
-(Again: SINGLE, CONTINUOUS LINE.)
+\noindent(Again: SINGLE, CONTINUOUS LINE.)
+
 Note that now you should omit the ‘./’ bit before runmuffin.sh.
 (If you are interested (I know that you are not): the options following qsub and before runmuffin.sh do things like re-directing screen output and error messaging to a file and specify which linux ‘shell’ to assume. It is even possible to receive an email when the job is done :) )
 The status of the cluster queue and how you experiment job is getting on (e.g., “Is it finished yet?”) can be checked by typing: 
@@ -820,14 +821,14 @@ This downloads an archived/compressed copy of the restart from a location on the
 $ tar xfzv LAB_0.SPIN.tar.gz
 \end{verbatim}
 
-Finally, change directory back to cgenie.muffin and then genie-main so that you are ready to run the model (the model is *always* run from cgenie.muffin/genie-main).
+Finally, change directory back to \texttt{cgenie.muffin} and then \texttt{genie-main} so that you are ready to run the model (the model is *always* run from \texttt{cgenie.muffin/genie-main}).
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the runmuffin.sh command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
-Create a new (user config) experiment configuration file in the \texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the user-config file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to LAB\_0.NEW), and drag it back to the cluster directory  (\texttt{~/cgenie.muffin/genie-userconfigs/LABS}) again.
+\noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the \texttt{runmuffin.sh} command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
+Create a new (\textit{user-config}) experiment configuration file in the: \\\texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the \textit{user-config} file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to LAB\_0.NEW), and drag it back to the cluster directory \footnote{\texttt{~/cgenie.muffin/genie-userconfigs/LABS}} again.
 You specify the use of the restart state by adding the restart experiment name as the 5th parameter, e.g.:
 
 \small\begin{verbatim}
@@ -988,7 +989,7 @@ In answering the question think about what an appropriate degree of accuracy mig
 
 If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
 
-HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the biogem_series_misc_seaice.res time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). Note that you can open and review the results of this file at *any* time during the experiment as the lines are written while the data for each time point is generated.
+HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the \texttt{biogem\_series\_misc\_seaice.res} time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). Note that you can open and review the results of this file at *any* time during the experiment as the lines are written while the data for each time point is generated.
 
 Overall: think critically about the model configuration, the experimental design, and the nature of the scientific question (based on your background reading of snowball Earth). Some of the exploration/testing suggestions (above) may not necessarily give substantially different results. Such a finding would be as valid and interesting as determining an important dependence of a certain assumption, and would for instance indicate that the associated paleo uncertainties are not critical to model assessment of the question.
 
@@ -1264,9 +1265,9 @@ Simply specify a dye injection somewhere in the Mediterranean (be careful with t
 
 Instead of adding a dye tracer, you could add fresh water to assess the sensitivity of the Atlantic Meridional Overturning Circulation (AMOC) to collapse in a classic ‘hosing’ experiment.
 
-The user-config file for this is called: LAB.2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)! 
+The user-config file for this is called: LAB.2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)!
 
-To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3} s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
+To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3}$ s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
 
 To run the model for e.g., 20 years using the same restart:
 
@@ -2065,11 +2066,11 @@ bg_par_atm_force_scale_val_3=8.3333e+013
 \end{verbatim}\vspace{-2pt}
 scales the \(CO_{2}\) flux given in the forcing file 
 \vspace{-2pt}\begin{verbatim}
-biogem_force_flux_atm_p\(CO_{2}\)_sig.dat
+biogem_force_flux_atm_pCO2_sig.dat
 \end{verbatim}\vspace{-2pt}
 which can be found in the directory:
 \vspace{-2pt}\begin{verbatim}
-cgenie.muffin/genie_forcings/pyyyyz.Fp\(CO_{2}\)_Fp13\(CO_{2}\)
+cgenie.muffin/genie_forcings/pyyyyz.FpCO2_Fp13CO2
 \end{verbatim}\vspace{-2pt}
 The format of this file is:
 \vspace{-2pt}\begin{verbatim}
