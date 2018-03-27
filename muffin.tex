@@ -161,7 +161,7 @@ If you plan on using your own laptop to remote access the model and visualize re
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
-\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac – I am told that Cyberduck is OK (there are bound to be many other alternatives). For linux, maybe FileZilla.
+\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. Also for linux, maybe FileZilla.
 \item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
 (Note that you will need Java installed!)
 \item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
@@ -215,7 +215,7 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 \subsection{linux ...}
 
-For some of you, the mechanics of running the model will be about as much fun as sticking you tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
+For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
 
 \textbf{cGENIE} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or Mac equivalent, which is sort of linux also) operating system. The command line is a place where you type text and when you press Return, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
@@ -297,6 +297,19 @@ You will also need a terminal window. This can be opened by clicking on the ‘O
 
 You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 
+On a Mac, if your current directory doesn't look something like this
+
+\begin{verbatim}
+[username@sprout ~]$
+\end{verbatim}
+
+Try typing this into your terminal:
+
+\begin{verbatim}
+ssh username@sprout.ggy.bris.ac.uk
+\end{verbatim}
+
+And enter your sprout account password, and tell it whether or not you want this password stored.
 %------------------------------------------------
 
 \subsection{Installing and testing the model code}
@@ -329,6 +342,8 @@ Change directory (see: Appendix I and also Figure \ref{fig:directories}) to:
 \begin{verbatim}
 cgenie.muffin/genie-main
 \end{verbatim}
+
+Note: the model is *always* run from cgenie.muffin/genie-main
 
 \noindent If you are not ‘linux-friendly’ – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
 
@@ -541,14 +556,14 @@ We will primarily consider only results saved by the ocean biogeochemical module
 \begin{verbatim}
 ~/cgenie_output/LAB_0.EXAMPLE/biogem
 \end{verbatim}
-\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, in order to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc
+\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
 
 %------------------------------------------------
 
 \subsection{Time-slice output}
 
-One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g. a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
-Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed time-slices. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM} then assumes that the specified time point represents the mid-point of the annual (by default) average with the results that output years end up being reported as e.g.
+One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g., a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
+Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed time-slices. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM} then assumes that the specified time point represents the mid-point of the annual (by default) average with the results that output years end up being reported as e.g.,
 \begin{verbatim}
 0.5
 1.5
@@ -607,7 +622,7 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-One way of viewing the contents of files is the change directory to the experiment results directory and opening the file in the vi editor. But that is not so much fun.
+One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
 
 Instead – change to the experiment results directory and then to the \textbf{BIOGEM} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
@@ -619,7 +634,7 @@ Note: The Secure File Transfer Client does not automatically refresh the directo
 
 For your information and edification (only): Excel, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
 
-In Excel: Chose File then Open. You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
+In Excel: Choose File then Open.  You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
 
 \textbf{MUTLAB} will ignore lines starting with a \%, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \%. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
 
@@ -634,20 +649,23 @@ For the time-slice NetCDF (*.nc) files you will be using a program called ‘Pan
 \vspace{2mm}
 
 When you open the NetCDF file, you will be presented with a ‘Datasets and Variables’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘Long Name’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘Longitude-Latitude’ or ‘Latitude-Vertical’ plot (for the 2-D fields, the plot display will immediately open).
-For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean of data that can be plotted, form the surface to the abyssal ocean.
+For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
 For the ‘Latitude-Vertical plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
 There is also an option for ‘Longitude-Vertical plots (which we will not use).
 For all three: there may be multiple time-slices (i.e., you can plot data saved from different years).
 You can interpolate the data or not (often you may find that it is clearer not to interpolate the data but to leave it as ‘blocky’ colors corresponding to the resolution of the model), change the scale and colors, overlay continental outline, change the projection, etc etc. Grey cells represent ‘dry’ grid points, i.e., continental or oceanic crust.
+
+\begin{enumerate}
 NOTE: The default settings in Panoply can mislead:
-(1) By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
-(2) By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
-(3) By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
-(4) By listing all ‘Plottable variables’ (option at the bottom of the window), when what you ideally want is to ‘Show’ is the shorter and less confusing list of ‘Georeferenced variables’. 
-(5) In Longitude-Latitude plots, by overlaying the modern continental output. (GENIE land is marked in grey.)
-(6) By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g. time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘Scale’ tab. 
+\item By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
+\item By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
+\item By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
+\item By listing all ‘Plottable variables’ (option at the bottom of the window), when what you \textit{ideally} want is to ‘Show’ the shorter and less confusing list of ‘Georeferenced variables’. 
+\item In Longitude-Latitude plots, by overlaying the modern continental output. (GENIE land is marked in grey.)
+\item By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g., time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘Scale’ tab. 
 So be careful when opening a new plot that you are looking at what you *think* you are looking at …
 All the defaults can be changed via the ‘Edit’ drop-down menu and ‘Preferences’.
+\end{enumerate}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -689,7 +707,7 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 
 \noindent The alternative is to submit your experiment as a ‘job’ to a queuing system which then manages what compute resources are used to run the model. Once you have submitted the experiment, that is it – you can go straight to the pub :)
 
-Unless you want to read the cGENIE User Manual, for now, take the following suggested way of submitting jobs on trust: to run the same experiment to before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) by submitting the experiment as a job to the cluster queue, type:
+Unless you want to read the cGENIE User Manual, for now, take the following suggested way of submitting jobs on trust: to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) by submitting the experiment as a job to the cluster queue, type:
 \small\begin{verbatim}
 $ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
@@ -809,7 +827,7 @@ Finally, change directory back to cgenie.muffin and then genie-main so that you 
 \vspace{2mm}
 
 \noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the runmuffin.sh command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
-Create a new (user config) experiment configuration file by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g. LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the user-config file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g. via the Windoz file-manager (e.g. to LAB\_0.NEW), and drag it back to the cluster directory again.
+Create a new (user config) experiment configuration file in the \texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the user-config file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to LAB\_0.NEW), and drag it back to the cluster directory  (\texttt{~/cgenie.muffin/genie-userconfigs/LABS}) again.
 You specify the use of the restart state by adding the restart experiment name as the 5th parameter, e.g.:
 
 \small\begin{verbatim}
@@ -883,7 +901,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.
   
 but rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE}, why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time. Also, be especially careful not to have 2 (or more) experiments running simultaneously with exactly the same name as they try and over-write each other in a somewhat entertaining way.
 
-Overall: you task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
+Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
 
 Useful 2-D (netCDF—Panoply) variables to view are surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D NetCDF results file (apologies for ocean temperature being in units of K ...).
 
@@ -917,7 +935,7 @@ Other questions to think about with regards to numerical modeling (and this expe
 
 To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
 ‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’
-you are going to edit the file that controls the specific details of the experiment. This is the user-config file. From the genie-userconfigs/LABS directory, open one of the snowball experiments in the SciTE text editor. At the top of the file you should see something like:
+you are going to edit the file that controls the specific details of the experiment, the user-config file. From the genie-userconfigs/LABS directory, open one of the snowball experiments in the SciTE text editor. At the top of the file you should see something like:
 
 \small\begin{verbatim}
 #
@@ -968,9 +986,9 @@ In answering the question think about what an appropriate degree of accuracy mig
 
 \noindent \textbf{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
 
-If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). You can fine-tune the number of years the experiment is run for to achieve this. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
+If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
 
-HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice si always reported at 100% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the biogem_series_misc_seaice.res time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume).Note that you can open and review the results of this file at *any* time during the experiment as the lines are written as and when the data for each time point is generated.
+HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the biogem_series_misc_seaice.res time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). Note that you can open and review the results of this file at *any* time during the experiment as the lines are written while the data for each time point is generated.
 
 Overall: think critically about the model configuration, the experimental design, and the nature of the scientific question (based on your background reading of snowball Earth). Some of the exploration/testing suggestions (above) may not necessarily give substantially different results. Such a finding would be as valid and interesting as determining an important dependence of a certain assumption, and would for instance indicate that the associated paleo uncertainties are not critical to model assessment of the question.
 
@@ -988,17 +1006,17 @@ Always be prepared to justify all your choices for experimental design and model
 
 \subsection{Feedback loop analysis}
 
-In order to quantify the snowball Earth hysteresis loop in cGENIE as per Figure 2 in Hyde et al. [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in cGENIE, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: Myhre et al. [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or IPCC [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence ~130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
+To quantify the snowball Earth hysteresis loop in cGENIE as per Figure 2 in Hyde et al. [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in cGENIE, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: Myhre et al. [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or IPCC [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence $~$130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
 
 For coming out of a snowball, because the \(CO_{2}\) and hence radiative forcing threshold is so high as compared to going in, you may want to be creative in the plotting (assuming attempting to combine both thresholds into a single plot) and, for instance, one might break the scale between the low radiative forcing interval spanning going in and the high one spanning coming out.
 
-Another example is as per Figures 3,4 in Stone and Yao [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to Stone and Yao [2004].
+Another example is as per Figures 3 and 4 in Stone and Yao [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to Stone and Yao [2004].
 
 %------------------------------------------------
 
 \subsection{Continental configuration}
 
-It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative base-configs are provided which each define a different continental configuration:
+It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative base-configs are provided, each defining a different continental configuration:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -1032,7 +1050,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.xxxxx.NONE LABS LAB_1.EXAMPLE 100
 
 Note that you are using a different base-config file name: cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE where xxxxx is one of: wopol1, wopol2, woreq1, or woreq2. 
 Also note that no restarts are provided for these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the restart experiments for to achieve as close to steady-state as you think is ‘sufficient’). Remember that restarts are just ‘normal’ experiments that have already been run.
-Be careful that when changing from one base-config to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue. i.e. do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
+Be careful that when changing from one base-config to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue - i.e., do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
 
 %------------------------------------------------
 
@@ -1047,9 +1065,9 @@ bg_ctrl_force_GOLDSTEInTS=.TRUE.
 bg_par_Fgeothermal=100.0E-3
 \end{verbatim}
 
-The first enables the temperature and/or salinity of the ocean to be modified by processes other than redistribution via ocean circulation and exchange with sea-ice and atmosphere (i.e. to impose external forcings). The second sets the geothermal flux in units of W m-2. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much? A question for Google…)
+The first enables the temperature and/or salinity of the ocean to be modified by processes other than redistribution via ocean circulation and exchange with sea-ice and atmosphere (i.e., to impose external forcings). The second sets the geothermal flux in units of W m$^{-2}$. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much higher? A question for Google…)
 
-An appropriate research question might be to determine in radiative forcing vs. geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster): the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short workshop: How much of a difference to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? e.g what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability)?
+An appropriate research question might be to determine in radiative forcing \textit{vs.} geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster): the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short exercise: How much of a difference, to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? E.g., what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability)?
 
 %------------------------------------------------
 
@@ -1211,7 +1229,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
   LAB_2.colorinjection 20 LAB_2.SPIN
 \end{verbatim}
 
-View the results – how the Red tracer distribution evolves – in the time-slice files (full ocean (/atmosphere) properties saved in the netCDF format (.nc) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D netCDF file. Note that Panoply appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
+View the results – how the Red tracer distribution evolves – in the time-slice files (full ocean/atmosphere) properties saved in the netCDF format (.nc) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D netCDF file. Note that Panoply appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
 
 You can also view the tracer distributions in terms of a water-column integrated tracer inventory (netCDF variable name: ocn\_int\_colr; long name: colr water-column integrated tracer inventory) in the 2D netCDF output. (See: Sabine et al. [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file 
 
@@ -1229,7 +1247,7 @@ Spend a little while altering the flux (bg\_par\_ocn\_force\_scale\_val\_48) and
 
 An interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the cGENIE ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
 
-Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g. 20 or 50 years (from the provided spin-up). Then:
+Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g., 20 or 50 years (from the provided spin-up). Then:
 
 \begin{enumerate}[noitemsep]
 \item View the dye-tagged plume of Mediterranean Intermediate Water by plotting a lat-lon slice (from the 3D netCDF file). This will give you the depth of the plume. How does this compare with salinity observations (salinity observations and appropriate global datasets can be found on the web with a little patience)? You can also view the water-column integrated distribution (2D netCDF).
@@ -1246,11 +1264,11 @@ Simply specify a dye injection somewhere in the Mediterranean (be careful with t
 
 Instead of adding a dye tracer, you could add fresh water to assess the sensitivity of the Atlantic Meridional Overturning Circulation (AMOC) to collapse in a classic ‘hosing’ experiment.
 
-The user-config file for this is called: LAB.0001.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)! 
+The user-config file for this is called: LAB.2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)! 
 
-To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr-1) and fresh water flux (in m3 s-1 or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
+To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3} s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
 
-To run the model for e.g. 20 years using the same restart:
+To run the model for e.g., 20 years using the same restart:
 
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
@@ -1263,7 +1281,7 @@ The most obvious property of the Earth system to follow is the Atlantic overturn
 
 There are also important impacts on surface air temperatures and maybe sea-ice extent (in fields\_biogem\_2d.nc). Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
 
-Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e. running multiple experiments at once in the background).
+Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e., running multiple experiments at once in the background).
 
 \hfill \break
 \noindent\rule{4cm}{0.1mm}
@@ -1286,7 +1304,7 @@ Note that you can switch off the auto-scaling feature (Always fit to data) and c
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-amoc1.png}\centering
 \vspace{-0mm}
-\caption{Example plot of (normal/default modern) overturning streamfunction (2D netCDF file). (e.g. for Atlantic: netCDF parameter name: phys\_opsia, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
+\caption{Example plot of (normal/default modern) overturning streamfunction (2D netCDF file). (e.g., for Atlantic: netCDF parameter name: phys\_opsia, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
 \label{fig:ch3-amoc1}
 \end{figure}
 
@@ -1306,12 +1324,12 @@ You can also plot ocean current fields which is sort-of fun and maybe even infor
 \begin{enumerate}[noitemsep]
 \item  In the 3D netCDF file, the three components of ocean velocity are represented by the variables: ocean velocity – u (Eastwards), ocean velocity – v (Northwards), and ocean velocity – w (upwards). 2. Open up velocity – u. Chose ‘lon-lat’.
 \item Select/highlight velocity – v. and click on the ‘Combine Plot’ icon (as per before).
-\item Rather than a difference map, which is what you get by default, i.e. ‘Array 1 – Array 2’ – from the drop-down menu (next to the ‘Interpolate’ button) select ‘Vector Magnitude’.
-\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g. 0.1. When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
-\item You can repeat this for deeper depth levels in the ocean – e.g. between about 1500 and 2000 m is a good place to go looking for the Western boundary current (and AMOC return) in the model (such as it exists at this low resolution) but you’ll need to re-scale the velocity vectors again (e.g. to 0.01 to less).
+\item Rather than a difference map, which is what you get by default, i.e., ‘Array 1 – Array 2’ – from the drop-down menu (next to the ‘Interpolate’ button) select ‘Vector Magnitude’.
+\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g., 0.1. (On a Mac, look under the ‘Vectors’ tab for a ‘Reference Value’ to something like 0.1.)  When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
+\item You can repeat this for deeper depth levels in the ocean – e.g., between about 1500 and 2000 m is a good place to go looking for the Western boundary current (and AMOC return) in the model (such as it exists at this low resolution) but you’ll need to re-scale the velocity vectors again (e.g., to 0.01 to less).
 \end{enumerate}
 
-2 example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
+Two example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
 
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-currents1.png}\centering
@@ -1337,7 +1355,7 @@ Start, by thinking of a value of \texttt{bg\_par\_ocn\_force\_scale\_val\_2} of 
 
 So, in the example earlier (\texttt{bg\_par\_ocn\_force\_scale\_val\_2=-1.0E18}), the freshwater flux is \(1.0\times10^{18}/3.49\times10^{4} = 2.8653\times10^{13} m^{3} yr^{-1}\).
 
-The literature invariably gives freshwater fluxes in units of \(Sv\) (\(10^{6} m^{3} s^{-1}\)). So in the example, the freshwater flux is: \(9.0797\times10^{5} m^{3} s^{-1}\) (\(365.25\times24\times3600 = 31557600 s yr^{-1}\)). Or \(0.9 Sv\). Read the literature … but generally, fluxes of ca. \(0.05 Sv\) and larger (and to quite specific places) are applied in models in order to induce a collapse of the AMOC.
+The literature invariably gives freshwater fluxes in units of \(Sv\) (\(10^{6} m^{3} s^{-1}\)). So in the example, the freshwater flux is: \(9.0797\times10^{5} m^{3} s^{-1}\) (\(365.25\times24\times3600 = 31557600 s yr^{-1}\)). Or \(0.9 Sv\). Read the literature … but generally, fluxes of ca. \(0.05 Sv\) and larger (and to quite specific places) are applied in models to induce an AMOC collapse.
 
 %------------------------------------------------
 
@@ -1361,7 +1379,7 @@ Are any other major regions of deep water formation (where are they) sensitive t
 
 \subsection{‘Anti-hosing’ investigations}
 
-There are questions concerning past changes in the AMOC as to whether it is ‘pushed’ or ‘pulled’. i.e. if the AMOC shoals in depth and/or weakens, is it because its production has weakened, or as Antarctic Bottom water (AABW) strengthened and ‘pushed’ it out of the way (to shallower depths)?
+There are questions concerning past changes in the AMOC as to whether it is ‘pushed’ or ‘pulled’. i.e., if the AMOC shoals in depth and/or weakens, is it because its production has weakened, or as Antarctic Bottom water (AABW) strengthened and ‘pushed’ it out of the way (to shallower depths)?
 
 What you might try then is to inject salt in the Southern Ocean as opposed to fresh water in the North Atlantic. All you need do is pick an appropriate grid point (this is worth thinking about carefully and maybe testing different locations) and rather than giving the parameter \texttt{bg\_par\_ocn\_force\_scale\_val\_2} a negative value, you give it a positive one. (Start by trying similar magnitudes of value as before and see what happens.) 
 
@@ -1500,7 +1518,7 @@ ea_radfor_scl_ch4=1.0
 \end{verbatim}
 specifies a radiative forcing of climate by \(CH_{4}\) equivalent to \(1\) times modern \(CH_{4}\) (i.e., \(1\times700 ppb\)).\footnote{But effectively, this is going to do exactly the same as changing radiative forcing due to \(CO_{2}\).}
 
-\item[\textbf{(ii)}] cGENIE, as configured here, does not have a land surface scheme (no snow cover) nor clouds nor ice sheets, so a planetary albedo is prescribed (see Figure). This varies with latitude and is parameterized after a fully coupled GCM simulation. There is a parameter which controls how the albedo varies as a function of latitude, which can be adjusted: 
+\item[\textbf{(ii)}] cGENIE, as configured here, does not have a land surface scheme (no snow cover) nor clouds nor ice sheets, so a planetary albedo is prescribed (see Figure 4.1). This varies with latitude and is parameterized after a fully coupled GCM simulation. There is a parameter which controls how the albedo varies as a function of latitude, which can be adjusted: 
 \begin{verbatim}
 ea_albedop_amp=0.260
 \end{verbatim}
@@ -1537,7 +1555,7 @@ The latitudinal (from 90$^{\circ}$S (-90$^{\circ}$N) on the left, to 90$^{\circ}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent You can also try tracing and analyzing the patterns of ocean circulation in the Cretaceous world, in the same way as you did for the modern climate system. And in fact, it would be a useful exercise to directly compare your previous modern results vs. Cretaceous results, or even better, carry out a set of paired experiments (e.g. similar locations and fluxes of dye injection) for both modern and Cretaceous. (Note that if you do this and swap back and forth between modern and Cretaceous configurations, you cannot submit straight away to the cluster but must first briefly run the experiment at the command line in order that cGENIE is compiled into the new continental configuration.)
+\noindent You can also try tracing and analyzing the patterns of ocean circulation in the Cretaceous world, in the same way as you did for the modern climate system. And in fact, it would be a useful exercise to directly compare your previous modern results vs. Cretaceous results, or even better, carry out a set of paired experiments (e.g., similar locations and fluxes of dye injection) for both modern and Cretaceous. (Note that if you do this and swap back and forth between modern and Cretaceous configurations, you cannot submit straight away to the cluster but must first briefly run the experiment at the command line in order that cGENIE is compiled into the new continental configuration.)
 
 A new \textit{user-config} (\texttt{LAB\_5.colorinjection}) that continues on from this climate state, can be run: 
 \begin{verbatim}
@@ -1588,9 +1606,9 @@ Available from the website, on the LH side of the page under ‘got data?’ at 
 
 These netCDF files can be opened and visualized in exactly the same way in exactly the same way as per the cGENIE output files. You’ll see a few (there are not many!) data points, in a sea of grey (which stands for ‘no value’). (Note that it is best to turn data interpolation OFF.)
 
-More useful … is that the data distribution can be combined with the model ocean temperature output filed, in a difference map (see earlier for notes on creating difference maps). You can thus visualize the pattern of model-data mismatch. (Note you might want to hit ‘Fit to data’ to autoscale the plot, or simply pick and manually enter a +/- limit for the data plotting, perhaps ensuring it is symmetrical about zero such that red anomalies could represent proxy SST values higher than min the model, and blue point data being lower than in the model.)
+More useful … is that the data distribution can be combined with the model ocean temperature output field, in a difference map (see earlier for notes on creating difference maps). You can thus visualize the pattern of model-data mismatch. (Note you might want to hit ‘Fit to data’ to autoscale the plot, or simply pick and manually enter a +/- limit for the data plotting, perhaps ensuring it is symmetrical about zero such that red anomalies could represent proxy SST values higher than in the model, and blue point data being lower than in the model.)
 
-Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather than a Map view. (It is probably easier to visualize the model-data misfit in this way.)
+Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather than a Map view (...it is probably easier to visualize the model-data misfit in this way.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -1634,7 +1652,7 @@ Refer to the \textbf{muffingen} \textit{user-manual} as your primary source of i
 
 \subsubsection{Zonal wind-stress}
 
-For non GCM-based configurations, not prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'chose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
+For non GCM-based configurations, no prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'choose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
 
 \begin{itemize}
 \item \texttt{par\_tauopt=0;}
@@ -1711,7 +1729,7 @@ cgenie.muffin/genie-main/configs
 \end{enumerate}
 \vspace{2mm}
 
-\noindent Note that in using one of the template \textit{base-config} files, you have configured an ocean with just 2 tracers -- temperature and salinity (i.e. there is no carbon cycle or ocean nutrients etc. enabled at this point).
+\noindent Note that in using one of the template \textit{base-config} files, you have configured an ocean with just 2 tracers -- temperature and salinity (i.e., there is no carbon cycle or ocean nutrients \textit{etc.} enabled at this point).
 
 %------------------------------------------------
 
@@ -2019,7 +2037,7 @@ ea_36=y
 
 \noindent as well as having a rate of calcification by plankton at the surface ocean that is responsive to ocean acidification and saturation state (i.e., it takes into account \(CO_{2}\)-calcification feedbacks, which will additionally interact with climate – see \textit{Ridgwell et al.} [2007b, 2009] from http://www.seao2.info/pubs.html). Anything could happen!!!
 
-In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set for just 1 PgC over an interval of a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay rapidly away, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional \textbf{netCDF} output has also been prescribed (\texttt{bg\_par\_data\_save\_level=10}) so that more information relevant to assessing ocean acidification is saved.
+In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set for just 1 PgC over an interval of a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay away rapidly, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional \textbf{netCDF} output has also been prescribed (\texttt{bg\_par\_data\_save\_level=10}) so that more information relevant to assessing ocean acidification is saved.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2029,11 +2047,11 @@ In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is 
 
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
- LAB_3.\(CO_{2}\)emissions 20 LAB_3.SPIN
+ LAB_3.\CO2emissions 20 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
 
 As for what model results variables to consider … think about the climate change and ocean acidification literature and which environmental properties are considered either critical for ecosystems or are simply helpful and illustrative. Refer to the Ocean acidification output supplement (S1) for a summary of some of the key ocean acidification variables saved by the model. 
-In the 3-D \textbf{netCDF} time-slice file remember, for instance, that ocean surface waters in which aragonite becomes under-saturated (OHMEGA < 1.0) is regarded as a critical threshold for organisms making aragonite shells and skeletons and spells TROUBLE for some poor calcifying marine organism somewhere. (Temperature is also highly relevant to marine ecosystems under future global change.) Note that the calcification response is encoded in the model and described in Ridgwell et al. [2007a,b] (see: http://pubs.seao2.org) and may or may not reflect the real World.
+In the 3-D \textbf{netCDF} time-slice file remember, for instance, that ocean surface waters in which aragonite becomes under-saturated (OHMEGA < 1.0) is regarded as a critical threshold for organisms making aragonite shells and skeletons and spells TROUBLE for some poor calcifying marine organism somewhere. (Temperature is also highly relevant to marine ecosystems under future global change.) Note that the calcification response is encoded in the model and described in Ridgwell et al. [2007a,b] (see: http://pubs.seao2.org) and may or may not reflect the Real World.
 
 For climate change ... the variables of particular interest should be obvious. Remember that there are both time-series outputs, as well as special 2D and 3D fields which might be more helpful for relating impacts to specific ecosystems.
 
@@ -2063,7 +2081,7 @@ The format of this file is:
 -END-OF-DATA-
 \end{verbatim}\vspace{-2pt}
 
-and defines an emission of 1 mol C per year over the first 1 year of the model experiment (between year \texttt{0.0} and \texttt{1.0}), but which in the example user-config is then scaled by a value of 8.333*1013 (by the parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3}) to give a total of 1 PgC yr-1. (Year 999999.9 has no special meaning and is simply just way in the future …)
+and defines an emission of 1 mol C per year over the first year (year 1.0) of the model experiment (between year \texttt{0.0} and \texttt{1.0}), but which in the example user-config is then scaled by a value of 8.333*1013 (by the parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3}) to give a total of 1 PgC yr-1. (Year 999999.9 has no special meaning and is simply just way in the future …)
 
 Pause … and note briefly how the final \(CO_{2}\) flux is arrived at. \textbf{cGENIE.muffin} calculates it by multiplying the value in the forcing file (1.0) by a modifying parameter in the user config file (8.3333e+13). The total flux is hence: 1.0 X 8.333X1013 = 8.333X1013 mol \(CO_{2}\) yr-1. If you set both values as 1.0, you’d get very little carbon released (a single mole!). If you screw up and multiply 8.3333e+013 and 8.3333e+013 as the total flux, you’ll soon know it as you cook the Earth … But it does not matter which parameter has value 1.0 and which scales the units (8.3333e+013). For now, it is simply more convenient to be able to edit the forcing file with simple numbers (and leave the units conversion in the user config file).
 
@@ -2075,7 +2093,7 @@ Together, the scaling and forcing value gives a \(CO_{2}\) release of 1 PgC yr-1
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-Because ‘accidents can happen’ and the global environmental changes induced by the massive fossil fuel \(CO_{2}\) release can obscure mistakes made in the experiment configuration (parameter values) and/or the re-start used, you are strongly advised to first (or in parallel, as a job submitted to the cluster – refer to Lesson Zero to remind yourself of the commend line syntax needed for this) set a control experiment going:
+Because ‘accidents can happen’ and the global environmental changes induced by the massive fossil fuel \(CO_{2}\) release can obscure mistakes made in the experiment configuration (parameter values) and/or the re-start used, you are strongly advised to first (or in parallel, as a job submitted to the cluster – refer to Lesson Zero to remind yourself of the commend line syntax needed for this) set a control experiment:
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
  LAB_3.CONTROL 20 LAB_3.SPIN
@@ -2084,7 +2102,7 @@ Here – the user-config defining the control experiment (\texttt{LAB\_3.CONTROL
 
 If everything is OK, atmospheric \(CO_{2}\) (and climate) should be stable and there should be little (or no) drift in any of the output variables (because the spin-up should have been run to an equilibrium state and you have not changed anything in the control experiment, right?).
 
-It is good practice (i.e. do it!) to always run a control experiment for each different type of experiments – e.g. ideally run one control experiment for each set of \(CO_{2}\) emissions experiments. 
+It is good practice (i.e., do it!) to always run a control experiment for each different type of experiments – e.g., ideally run one control experiment for each set of \(CO_{2}\) emissions experiments. 
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2128,7 +2146,7 @@ then specifies a uniform flux of 1.0 (scaled to PgC yr-1) over the first full ye
     10.0  1.0
     10.0  0.0
 \end{verbatim}\vspace{-2pt}
-would result in a uniform flux lasting 10 years (i.e. once scaled by the parameter in the user-config – 1 PgC yr-1 over 10 years – 10 PgC total emissions). In contrast; 
+would result in a uniform flux lasting 10 years (i.e., once scaled by the parameter in the user-config – 1 PgC yr-1 over 10 years – 10 PgC total emissions). In contrast; 
 \vspace{-2pt}\begin{verbatim}
      0.0  0.0
     10.0  1.0
@@ -2164,7 +2182,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
  LAB_3.historical 245 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
 
-WARNING! Ignore the ‘WARNING’s at the start -- these are simply telling you that more tracer forcings have been specified than you have selected tracers for in the \textit{base-config} (cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASE). (A different \textit{base-config} with additional selected tracers could have been specified to make use of other historical changes in atmospheric composition, such as of radiocarbon (14C) and CFCs.) Also: from year 1765 onwards, changes in atmospheric \(CO_{2}\) only rise very s l o w l y initially. Don’t expect to see anything happen in 10 seconds flat because relatively few people and countries in the 1800s could be bothered to burn much more than a little local coal. You could potentially start your experiment at year 1850, changing the value of bg\_par\_misc\_t\_start and specifying shorter experiment duration if you are desperate for the End of the World to come.
+WARNING! Ignore the ‘WARNING’s at the start -- these are simply telling you that more tracer forcings have been specified than you have selected tracers for in the \textit{base-config} (cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASE). (A different \textit{base-config} with additional selected tracers could have been specified to make use of other historical changes in atmospheric composition, such as of radiocarbon ($^{14}$C) and CFCs.) Also: from year 1765 onwards, changes in atmospheric \(CO_{2}\) only rise very s l o w l y initially. Don’t expect to see anything happen in 10 seconds flat because relatively few people and countries in the 1800s could be bothered to burn much more than a little local coal. You could potentially start your experiment at year 1850, changing the value of bg\_par\_misc\_t\_start and specifying shorter experiment duration if you are desperate for the End of the World to come.
 
 Don’t forget: you could submit this experiment to the cluster and do more (idealized emissions) ‘playing’.
 
@@ -2172,18 +2190,18 @@ Don’t forget: you could submit this experiment to the cluster and do more (ide
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g. Sabine et al. [2004]) and having run a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\), you are in a position to critically evaluate the model’s ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
+\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g., Sabine et al. [2004]) and having run a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\), you are in a position to critically evaluate the model’s ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
 
-In the 2D netCDF output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e. to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A time-slice centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g. 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: Cao et al. [2009])
+In the 2D netCDF output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e., to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A time-slice centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g., 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: Cao et al. [2009])
 
-Observational data, re-gridded to the cGENIE grid and in netCDF format can be downloaded from the ‘usual place’ (http://www.seao2.org/mycgenie.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D netCDF) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the Sabine paper … unless you are MATLAB-friendly and you use the 3D BIOGEM MATLAB plotting scripts (genie-matlab) whose use is somewhat described in the cGENIE user-manual. Examples of MATLAB plotting of the model vs. observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
+Observational data, re-gridded to the cGENIE grid and in netCDF format can be downloaded from the ‘usual place’ (http://www.seao2.org/mycgenie.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D netCDF) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the Sabine paper … unless you are MATLAB-friendly and you use the 3D BIOGEM MATLAB plotting scripts (genie-matlab; https://github.com/derpycode/muffinplot) whose use is somewhat described in the cGENIE user-manual. Examples of MATLAB plotting of the model \textit{vs.} observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=0.5]{chx-co2uptake.eps}
 \end{center}
-\caption{Observed (top) vs. Model (bottom) anthropogenic \(CO_{2}\) inventories.
-Data and model water column integrals in units of mol \(CO_{2}\) m-2 and are nominally with respect to year 1994.}
+\caption{Observed (top) \textit{vs.} Model (bottom) anthropogenic \(CO_{2}\) inventories.
+Data and model water column integrals in units of mol \(CO_{2}\) m$^{-2}$ and are nominally with respect to year 1994.}
 \label{fig:chx-co2uptake}
 \end{figure}
 
@@ -2196,12 +2214,12 @@ Data and model water column integrals in units of mol \(CO_{2}\) m-2 and are nom
 worjh2.FeMahowald2006.Fp\(CO_{2}\)_Fp13\(CO_{2}\)_A2_02180PgC
 \end{verbatim}\vspace{-2pt}
 which gives you the IPCC ‘A2’ scenario (extended beyond year 2010 in this case to give a total cumulative fossil fuel burn of 2018 PgC, e.g. Ridgwell and Schmidt [2010]).
-Again, as this forcing has units of PgC yr-1 in its time-series file, you will need to add a scaling parameter to the user-config file to turn units of PgC yr-1 into mol yr-1, i.e.
+Again, as this forcing has units of PgC yr-1 in its time-series file, you will need to add a scaling parameter to the user-config file to turn units of PgC yr-1 into mol yr-1, i.e.,
 \vspace{-2pt}\begin{verbatim}
 bg_par_atm_force_scale_val_3=8.3333e+013
 \end{verbatim}\vspace{-2pt}
 
-For complete ‘realism’ you will need to run this experiment starting from the end of the historical transient experiment (Section 1.6), e.g.
+For complete ‘realism’ you will need to run this experiment starting from the end of the historical transient experiment (Section 1.6), e.g.,
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
  LAB_3.future 90 LAB_3.historical
@@ -2210,9 +2228,9 @@ and with the start from year now set to year 2010 (the end year of the historica
 \vspace{-2pt}\begin{verbatim}
 bg_par_misc_t_start=2010.0
 \end{verbatim}\vspace{-2pt}
-Note that the \textit{user-config} \texttt{LAB\_3.future} is not provided for you – create this (or a file named whatever you like) by copying e.g. \texttt{LAB\_3.EXAMPLE} and making the parameter changes described above (forcing specification parameter, emissions scaling parameter, and start year parameter).
+Note that the \textit{user-config} \texttt{LAB\_3.future} is not provided for you – create this (or a file named whatever you like) by copying e.g., \texttt{LAB\_3.EXAMPLE} and making the parameter changes described above (forcing specification parameter, emissions scaling parameter, and start year parameter).
 
-You can also easily replace the details of the emissions with other SRES scenarios – simply find the year vs. emissions rate information from the interweb (e.g. http://sres.ciesin.columbia.edu/final\_data.html) and edit or copy-and-paste) the flux values for each decade into the file \texttt{biogem\_force\_flux\_atm\_p\(CO_{2}\)\_sig.dat} in the forcing directory.\textbf{ cGENIE.muffin} will then automatically interpolate between the decadal tie-points to give a continuous change in emissions. Now you are able to make a rather more realistic/plausible assessment of when and where potential ecological impacts (via assumed ocean chemistry criteria) might occur.
+You can also easily replace the details of the emissions with other SRES scenarios – simply find the year \textit{vs.} emissions rate information from the interweb (e.g., http://sres.ciesin.columbia.edu/final\_data.html) and edit or copy-and-paste) the flux values for each decade into the file \texttt{biogem\_force\_flux\_atm\_p\(CO_{2}\)\_sig.dat} in the forcing directory.\textbf{ cGENIE.muffin} will then automatically interpolate between the decadal tie-points to give a continuous change in emissions. Now you are able to make a rather more realistic/plausible assessment of when and where potential ecological impacts (via assumed ocean chemistry criteria) might occur.
 
 %------------------------------------------------
 
@@ -2226,25 +2244,25 @@ You can also easily replace the details of the emissions with other SRES scenari
 
 \subsection{Assessing the importance of emissions rate}
 
-By editing the flux and/or timing information you can control the \(CO_{2}\) emissions trajectory and total fossil fuel burn. Explore different \(CO_{2}\) release assumptions and note their impact on climate and ocean biogeochemistry. Much more realistic and appropriate to our current global experimenting is a lower rate (order of 10 or 20 PgC yr-1) released over a longer interval (order 100 years) compared to the conceptual 1000 PgC near instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e. think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 PgC yr-1 for 1 yr, one of 10 PgC yr-1 for 10 years, and one of 1 PgC yr-1 for 100 years, and run them all for e.g. 100 years. (As jobs submitted to the queue, all can be run simultaneously.) (Don’t forget the control experiment!) But note that you should create 3 new forcings based on the original if you are editing the forcing and expecting to run different ones at the same time. Really, this is little from copying and renaming user-config files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
+By editing the flux and/or timing information you can control the \(CO_{2}\) emissions trajectory and total fossil fuel burned. Explore different \(CO_{2}\) release assumptions and note their impact on climate and ocean biogeochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 PgC yr-1) released over a longer interval (order of 100 years) compared to the conceptual 1000 PgC near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 PgC yr$^{-1}$ for 1 yr, one of 10 PgC yr$^{-1}$ for 10 years, and one of 1 PgC yr$^{-1}$ for 100 years, and run them all for e.g., 100 years. (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!) But note that you should create 3 new forcings based on the original if you are editing the forcing and expecting to run different ones at the same time. Really, this is little more than copying and renaming user-config files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
 
 %------------------------------------------------
 
 \subsection{Determining thresholds of environmental impact}
 
-There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\) emissions and a number of proposed climatic (e.g. the 2 degree C global warming limit often mentioned in policy documents) and ecological ‘tipping points’. You can assess the maximum allowable \(CO_{2}\) emissions to remain within particular global environmental limits in the model. For example:
+There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\) emissions and a number of proposed climatic (e.g., the 2 degree C global warming limit often mentioned in policy documents) and ecological ‘tipping points’. You can assess the maximum allowable \(CO_{2}\) emissions to remain within particular global environmental limits in the model. For example:
 
 \begin{itemize}[noitemsep]
 
 \item What is the maximum total \(CO_{2}\) release that can be made without inducing aragonite under-saturation at the ocean surface anywhere (or any season – see Section 5.2.3 in the User Manual for seasonal time-slice data saving)? How important is the time-scale of emissions in determining this? For total emissions above this: where in the ocean does the surface first become under-saturated? How large would the emissions have to be in order to induce under-saturation at the surface in the tropics (home to socio-economically important reef systems). These are questions that can be addressed with simple \(CO_{2}\) release experiments in ocean carbon cycle models and everyone seems to get a GRL paper out of it each and every time!
 
-\item How important are \(CO_{2}\)-cimate feedbacks in amplifying or diminishing future climate and ocean carbonate chemistry changes – e.g. is the same atmospheric p\(CO_{2}\) value reached with and without climate feedback (and surface warming) – if not, why? You can investigate this by contrasting an experiment made including \(CO_{2}\)-climate feedback with one made without. The \(CO_{2}\)-climate feedback can be turned off by setting: \texttt{ea\_36=n}.
+\item How important are \(CO_{2}\)-cimate feedbacks in amplifying or diminishing future climate and ocean carbonate chemistry changes – e.g., is the same atmospheric p\(CO_{2}\) value reached with and without climate feedback (and surface warming) – if not, why? You can investigate this by contrasting an experiment made including \(CO_{2}\)-climate feedback with one made without. The \(CO_{2}\)-climate feedback can be turned off by setting: \texttt{ea\_36=n}.
 
 \item Also: How much \(CO_{2}\) emission does it take to significantly ‘collapse’ the AMOC and over what time-scale? (Or alternatively: what is the atmospheric p\(CO_{2}\) threshold for collapse?) If the AMOC weakens or collapses … why in the absence of a prescribed freshwater perturbation does this happen? (Plotting appropriate ocean property anomalies between the \(CO_{2}\) release experiment and a control experiment might help.)
 
 \end{itemize}
 
-Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g. starting in year 2010).
+Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g., starting in year 2010).
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
