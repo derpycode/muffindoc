@@ -190,16 +190,16 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 %%%\chapterimage{muffinplanet.gif} % Chapter heading image
 
-\chapter{Earth system modeling basics}
+\chapter{Model basics}
 
 \hfill \break
 
 \noindent Stuff to keep in mind:
 
 \begin{itemize}
-\item \textbf{cGENIE} is a \uline{model}. Models ARE NOT the ‘real World’. (Don’t get confused!)
-\item The very low resolution (for a 3-D ocean circulation model) of \textbf{cGENIE} limits its applicability for very short time-scale problems because the simplified atmospheric component does not simulate winds and there is no atmospheric dynamics or inter-annual variability.
-\item \textbf{cGENIE} is best thought of as a ‘discovery and exploring’ tool for learning how the Earth system (might) work rather than as a detailed ‘simulation’ tool.
+\item \textbf{(cGENIE.)muffin} is a \uline{model}. Models ARE NOT the ‘real World’. (Don’t get confused!)
+\item The very low resolution (for a 3-D ocean circulation model) of the \textbf{muffin} model limits its applicability for very short time-scale problems because the simplified atmospheric component does not simulate winds and there is no atmospheric dynamics or inter-annual variability.
+\item \textbf{muffin} is best thought of as a ‘discovery and exploring’ tool for learning how the Earth system (might) work rather than as a detailed ‘simulation’ tool.
 \item Have fun (or at least try).
 \end{itemize}
    
@@ -213,19 +213,35 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 %------------------------------------------------
 
-\subsection{linux ...}
+\subsection*{ReadMe}
+
+Some warnings and reminders are repeated over and over and over and … over again.
+Some warnings and reminders are repeated over and over and over and … over again.  
+This is because you will forget immediately each time! ;)
+
+%------------------------------------------------
+
+\subsection*{Version naming conventions}
+
+You will be using the current version of the cGENIE Earth system model, code-named ‘\textbf{muffin}’ (if Apple can have ‘Leopard’, ‘Lion’ etc., I can haz baked goods, right?). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’. For brevity, the \textbf{cGENIE.muffin} model will be referenced by just ‘\textbf{muffin}’.
+ 
+%------------------------------------------------
+
+\subsection*{linux ...}
+
+The \textbf{(cGENIE.)muffin} model currently compiles and runs only under linux (e.g. distributions such as Ubuntu) and unix-based operating systems (such as macOS).
 
 For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
 
-\textbf{cGENIE} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or Mac equivalent, which is sort of linux also) operating system. The command line is a place where you type text and when you press Return, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
+\textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or macOS equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press Return, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
-The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the username, computer name, and current directory, e.g.:
+The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the user-name, computer name, and current directory, e.g.:
 
 \begin{verbatim}
 [username@sprout ~]$
 \end{verbatim}
 
-\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer ‘\texttt{sprout}’ (Sprout will eventually appear under ‘cat-of-the-day’ on my homepage if you press \textsf{F5} enough times – all my computing clusters are named after my cats …) and the current directory is the ‘home’ directory (\texttt{\~}).
+\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer ‘\texttt{sprout}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (\texttt{\~}).
 
 If you are not or not very familiar with the linux/unix command line – Appendix 1 contains a quick summary of some of the more important/useful Commands you can use at the command line. Appendix 2 is a version of Appendix 1 for anyone especially nervous about linux.
 
@@ -237,37 +253,74 @@ Do what suits you best – you can view the instructions as mostly representing 
 
 %------------------------------------------------
 
-\subsection{ReadMe}
+\subsection*{Required computer hardware}
 
-Some warnings and reminders are repeated over and over and over and … over again.
-Some warnings and reminders are repeated over and over and over and … over again.  
-This is because you will forget immediately each time! ;)
+It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model on a linux box (e.g. Ubuntu) or a Mac.\footnote{Sets of detailed instructions (‘Quick-Start Guides’) are available from \href{http://www.seao2.info/mycgenie.html}{mycgenie} (in the ‘got muffin?’ box on the left).}\footnote{Note that it is not possible at this time to run \textbf{muffin} under Windows (at least, not without near infinite pain).} Otherwise, you will have to be provided with a cluster account (e.g. on a University of Bristol cluster such as \texttt{sprout}, or at UCR, such as \texttt{eevee}). In this case, you can use any platform (linux, macOS, Windoz, as well as ioS and Android (which is based on linux in any case)) to connect to the cluster (but see software requirements, below).
 
 %------------------------------------------------
 
-\subsection{Documentation}
+\subsection*{Required computer software}
 
-Additional documentation (of varying degrees of up-to-date-ness) lives on the interweb\footnote{http://www.seao2.info/mycgenie.html}:
+To run \textbf{muffin}, needed are:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item The \textbf{cGENIE} User Manual (the least up-to-date of all!)\footnote{\texttt{cGENIE.muffin.User\_manual.pdf}}.
-\item A set of Examples\footnote{\texttt{cGENIE.muffin.Examples.pdf}}.
-\item A HOW-TO (explanations of how to get useful stuff done)\footnote{\texttt{cGENIE.muffin.HOWTO.pdf}}.
-\item A table of model parameters\footnote{\texttt{cGENIE.muffin.Parameter\_reference\_guide.pdf}}.
-\item A Guide to installing \textbf{cGENIE}\footnote{\texttt{cGENIE.muffin.QuickStartGuide.pdf}}.
-\item A README that will inevitably remain un-read … \footnote{\texttt{cGENIE.muffin.README.pdf}}.
+\item A FORTRAN compiler.
+\\This should come with the operating system as standard, possibly \textbf{gfortran}.
+\item A git client.
+\\If not standard, this should be relatively easy to add and install.
+\item Compiled netCDF libraries.
+\end{enumerate}
+
+\noindent but only if \textbf{muffin} is being run locally and a cluster account is not provided (assuming that your cluster account is correctly configured ...).
+
+To edit files and visualize results, you will need some specific software. The exact software will depend on your operating system, but essential are:
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
+(Note that you will need Java installed!)
+\\(Or alternatively: MATLAB.)
+\item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
+notepad++ (https://notepad-plus-plus.org/)
+SciTE (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
+(linux and Mac users need no special/different editor compared with your standard editor – everything will display just fine). You can also use linux command line based editors such as \textbf{vi}.
+\end{enumerate}
+
+\noindent If operating \textbf{muffin} remotely (e.g. on a computing cluster), the you also will need:
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
+\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For macOS, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. For linux, maybe FileZilla.
+\end{enumerate}
+
+
+%------------------------------------------------
+
+\subsection*{Model documentation in general}
+
+Additional documentation (of varying degrees of up-to-date-ness) can be found:
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
+\\Here, the latex source lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the git repository. Make changes. Commit them locally. Make a 'pull request' ...}.
+\item On my \href{http://www.seao2.info/mycgenie.html}{website}.
+\\Here, are only compiled, PDF versions of the documentation and hence may be out-of-date.
 \end{enumerate}
 
 %------------------------------------------------
 
-\subsection{Version naming conventions}
+\subsection*{This document in particular}
 
-Note that you will be using the development branch of the model and a version code-named ‘muffin’ (if Apple can have ‘Leopard’, ‘Lion’ etc., I can haz baked goods, right?). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’.  Also note that the instructions in general may not be bug-free – use your judgment.
+The instructions in general may not be bug-free – use your judgment.
+
+\noindent But they are guaranteed to be out-of-date.
 
 %------------------------------------------------
 
-\subsection{Go!}
+\subsection*{Go!}
 
 OK – now we are ready to start …
 
@@ -279,71 +332,113 @@ OK – now we are ready to start …
 
 \section{Starting (dozing?) off …}
 
-You are going to be installing the model from scratch – why? Why not? Hell, it saves me installing it a dozen times. Actually, it will be a happy character-building experience for you – trust me.
+You are going to be installing the model from scratch – why? Why not? Hell, it saves me installing it. Actually, it will be a happy character-building experience for you – trust me.
 
 %------------------------------------------------
 
 \subsection{Logging in!}
 
-Log in to the account that has been created for you on the sprout.ggy.bris.ac.uk computing cluster. To do this – first start the WinSCP program. Under ‘Host Name’, enter:
+Log into your linux/macOS box!\footnote{If you fail at this step, you'll have to take up box-modelling instead.}
 
+\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a cluster account), log into the remote account from a terminal:
+
+\begin{itemize}
+\item If logging in via a linux/macOS box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
+then you are probably already logged in! Otherwise, it will look like: \texttt{username@localname:\(\sim\)\$}}, e.g.
 \begin{verbatim}
-sprout.ggy.bris.ac.uk
+$ ssh username@clustername
 \end{verbatim}
+(where \texttt{clustername}, the cluster name(!) might, for example, be \texttt{sprout.ggy.bris.ac.uk}) and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\item On a Windoz machine – first start the WinSCP program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{sprout.ggy.bris.ac.uk}):
+\\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
+\\You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
+\\(You can also log in directly from the shell/terminal window of e.g. PuTTY rather than first opening an sftp connection.)
+\end{itemize}
 
-The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
-
-You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. 
-
-You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
-
-On a Mac, if your current directory doesn't look something like this
-
-\begin{verbatim}
-[username@sprout ~]$
-\end{verbatim}
-
-Try typing this into your terminal:
-
-\begin{verbatim}
-ssh username@sprout.ggy.bris.ac.uk
-\end{verbatim}
-
-And enter your sprout account password, and tell it whether or not you want this password stored.
 %------------------------------------------------
 
 \subsection{Installing and testing the model code}
 
-The next step is to download a copy of the source code for the cGENIE model as follows (all this is done in the shell window of your sprout computer account and it installs the computer code in your sprout account rather than downloading it to your local computer/terminal):
+The next step is to download a copy of the source code for \textbf{muffin}.
 
-To get a copy of \textbf{cGENIE}: from your home directory type:
+As of 2018, the branch of the GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form svn to git). The address of the new (centralized) home for muffin is:
+
+\vspace{2mm}
+\href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
+\vspace{2mm}
+
+From here, there are 2 ways to get your mitts on the model code:
+
+\begin{enumerate}
+
+\vspace{1mm}
+\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\small{Clone or Download}} button, and select \textsf{\small{Download ZIP}}.
+\\You then unpack/unzip the files and directory structure where you want it.
+\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code.
+
+\vspace{1mm}
+\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}. While you can use GUI based git clients, easiest is the command line, using \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 
 \begin{verbatim}
-$ svn co
-  https://svn.ggy.bris.ac.uk/subversion/genie/branches/cgenie.muffin
-  --username=genie-user cgenie.muffin
+$ git clone https://github.com/derpycode/cgenie.muffin.git
 \end{verbatim}
 
-All this must be on a continuous line, with a S P A C E before \texttt{--username}, and before \texttt{cgenie.muffin}.
+By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (form your repository) a copy of the code. Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.
 
-(If you get asked about a ‘\texttt{certificate}’ – enter ‘\texttt{p}’ to accept ‘\texttt{permanently}’.)
-(Note … and you’ll ignore this reminder … the user-name (and password) for the code server is not the same as the user-name and password for the cluster account … different computers …)
-
-Depending on the weather and phase of the moon, you may (or may not!) be asked for a password. If so – it is: \texttt{g3n1e-user}. Again – don’t mix up the ONE (\texttt{1}) with an ’el’ (\texttt{l}). (The mystery character in question is a ‘one’ if you must know …) Watch out that under linux, the characters of the password are not displayed, nor replaced by a \texttt{*}. (It is OK then to ‘\texttt{store the password unencrypted}’ if asked.)
-
-Some of the files that are installed are quite large, and at times, it may appear like it is ‘stuck’. Be patient! Installation should be complete within about 2-3 minutes (longer if everyone else is trying to do this at exactly the same time).
+\end{enumerate}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-Change directory (see: Appendix I and also Figure \ref{fig:directories}) to:
+\noindent You then need to configure some local environment setting so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to).
+
+\begin{itemize}
+
+\vspace{1mm}
+\item \textbf{Ubuntu}. This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.}
+
+\vspace{1mm}
+\item \texttt{eevee} (UCR cluster). There are 2 files to edit (all of which live in the \texttt{genie-main} directory):
+\begin{enumerate}[noitemsep]
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then uncomment the line under the heading \texttt{\#\#\# eevee \#\#\#}.
+\item In \texttt{makefile} -- as a consequence of a currently incompelte netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
+\\On line 18 -- comment out (with a \texttt{\#}); the \texttt{nccompare} part of that line.
+\end{enumerate}
+
+\vspace{1mm}
+\item \texttt{sprout} (UoB cluster). There are 2 files to edit:
+\begin{enumerate}[noitemsep]
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then uncomment the line under the heading \texttt{\#\#\# sprout \#\#\#}.
+\item In \texttt{makefile.arc} -- towards the end of the file, under the heading:
+\\\texttt{\# === NetCDF paths ===}
+\\comment out the line under:
+\\\texttt{\#\#\# FOR COMBINED C+FORTRAN NETCDF LIBRARIES \#\#\#\#\#\#\#}
+\\and comment the 2 lines under:
+\\\texttt{\#\#\# FOR SEPERATE C AND FORTRAN NETCDF LIBRARIES \#\#\#}
+(so as to select, combined, rather than sperate, netCDF libraries). 
+\end{enumerate}
+
+\vspace{1mm}
+\item \texttt{almond} (UoB cluster). As per for \texttt{sprout}.
+
+\vspace{1mm}
+\item \textbf{macOS}. Please refer to the separate macOS Quick Start Guide.
+
+\end{itemize}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.1mm}
+\vspace{2mm}
+
+\noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
+
+
+Change directory (see: Appendix I and also Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 
 \begin{verbatim}
 cgenie.muffin/genie-main
 \end{verbatim}
-
-Note: the model is *always* run from cgenie.muffin/genie-main
 
 \noindent If you are not ‘linux-friendly’ – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
 
@@ -351,7 +446,7 @@ Note: the model is *always* run from cgenie.muffin/genie-main
 $ make testbiogem
 \end{verbatim}
 
-This compiles a carbon cycle enabled configuration of \textbf{cGENIE} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured.
+This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured.
 
 There may be some ’Warnings’ reported (== somepony’s sloppy programming) but these are not detrimental to the ultimate science results (we hope!). ‘Success’ of this test is indicated by:
 
@@ -359,7 +454,7 @@ There may be some ’Warnings’ reported (== somepony’s sloppy programming) b
 **TEST OK**
 \end{verbatim}
 
-You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{cGENIE}. Note that the model will pause for a l o n g time at the line: 
+You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line: 
 
 \begin{verbatim}
 ./genie.job -t -k -f configs/eb_go_gs_ac_bg_test.xml -o /home/genie00/cgenie_output ...
@@ -374,7 +469,7 @@ Ignore the compiler warnings … (reflecting my lack of adequate software engine
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-That is it as far basic installation goes.
+\noindent That is it as far basic installation goes.
 
 %------------------------------------------------
 
@@ -402,7 +497,7 @@ If you fiddle about with the settings under Options/Preferences in the WinSCP pr
 
 %------------------------------------------------
 
-\section{Running the model \#1}
+\section{Running the model}
 
 The overall sequence of configuring and running the \textbf{cGENIE.muffin} model, is shown in Figure \ref{fig:chx-jobcreation}.
 
