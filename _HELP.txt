@@ -1,0 +1,132 @@
+
+\begin{mdframed}[backgroundcolor=light-gray, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=5, innerrightmargin=5, innertopmargin=5,innerbottommargin=5, outerlinewidth=1, linecolor=light-gray]
+
+\marginnote{\begin{mdframed}[backgroundcolor=light-gray, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=5, innerrightmargin=5, innertopmargin=5,innerbottommargin=5, outerlinewidth=1, linecolor=light-gray]
+\end{mdframed}}
+
+SCIENCE [light blue]
+\marginnote{\begin{mdframed}[backgroundcolor=light-gray, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=5, innerrightmargin=5, innertopmargin=5,innerbottommargin=5, outerlinewidth=1, linecolor=light-gray]
+\end{mdframed}}
+
+MATLAB [grey]
+\marginnote{\begin{mdframed}[backgroundcolor=gray!10, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=5, innerrightmargin=5, innertopmargin=5,innerbottommargin=5, outerlinewidth=1, linecolor=light-gray]
+\end{mdframed}}
+
+HELP! [orange]
+\marginnote{\begin{mdframed}[backgroundcolor=gray!10, roundcorner=10pt,leftmargin=1, rightmargin=1, innerleftmargin=5, innerrightmargin=5, innertopmargin=5,innerbottommargin=5, outerlinewidth=1, linecolor=light-gray]
+\end{mdframed}}
+
+Figure \ref{fig:LABEL}
+
+\begin{marginfigure}[0.0in]
+\includegraphics[width=\linewidth]{FILENAME}
+\caption{CAPTION}
+\label{fig:LABEL}
+\end{marginfigure}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{FILENAME}
+\caption{CAPTION}
+\label{fig:LABEL}
+\end{figure}
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\setcounter{enumi}{4}
+\item 
+\end{enumerate}
+
+\setcounter{enumi}{7}
+
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\end{itemize}
+
+NO BULLET IN LIST ITEM
+\item[]
+
+\docenvdef{}
+
+\docenv{}
+
+\sidenote{}
+
+\marginnote{}
+
+\begin{docspec}
+\end{docspec}
+
+\begin{docspecmargin}
+\end{docspecmargin}
+
+\begin{docspecnormal}
+\end{docspecnormal}
+
+\begin{docspeclarge}
+\end{docspeclarge}
+
+\begin{verbatim}
+\end{verbatim}
+
+\newthought{}
+
+\begin{fullwidth}
+\end{fullwidth}
+
+DOTS
+\ldots
+
+DEGREE SYMBOL
+\(^{\(\circ\)}\)
+\degree 
+
+HAT (POWER) SYMBOL
+\(^{\wedge}\)
+
+~ SYMBOL
+\(\sim\)
+
+PERMIL
+\textperthousand
+
+\hfill \break
+
+\newlist{arrowlist}{itemize}{1}
+\setlist[arrowlist]{label=$\Rightarrow$}
+
+\begin{arrowlist}
+\item Line 1
+\item Line 2
+\end{arrowlist}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent\rule[0.0ex]{\linewidth}{0.5pt}
+\noindent\rule{\linewidth}{0.5pt}
+\noindent\rule{4cm}{0.5pt}
+
+\\ start a new paragraph.
+\\* start a new line but not a new paragraph.
+\- OK to hyphenate a word here.
+\cleardoublepage flush all material and start a new page, start new odd numbered page.
+\clearpage plush all material and start a new page.
+\hyphenation enter a sequence pf exceptional hyphenations.
+\linebreak allow to break the line here.
+\newline request a new line.
+\newpage request a new page.
+\nolinebreak no line break should happen here.
+\nopagebreak no page break should happen here.
+\pagebreak encourage page break.
+
+\tiny
+\scriptsize
+\footnotesize
+\small
+\normalsize
+\large
+\Large
+\LARGE
+\huge
+\Huge
