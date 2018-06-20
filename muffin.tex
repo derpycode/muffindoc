@@ -218,6 +218,7 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 Some warnings and reminders are repeated over and over and over and … over again.
 Some warnings and reminders are repeated over and over and over and … over again.  
 This is because you will forget immediately each time! ;)
+\\\textbf{!}\footnote{\textbf{Also read footnotes please.}}
 
 %------------------------------------------------
 
@@ -295,6 +296,17 @@ SciTE (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
 \item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For macOS, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. For linux, maybe FileZilla.
 \end{enumerate}
 
+%------------------------------------------------
+
+\subsection*{File editors ...}
+
+You will need to edit text-based configuration files, probably in installing \textbf{muffin}, and definitely in configuring model experiments. So now might be a good time to check that you can use the/an editor! (You will also be using the same editor to view some of the model output.)
+
+You have two alternative options for editing and viewing text files, depending on whether you are a UNIX nerd with no life, or prefer anything to do with computers to be wrapped in cotton wool and covered with dollops of treacle.
+EITHER: Use the linux vi (/vim) application (or similar e.g. emacs) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal … so I will not *make* you ;)
+OR ... Use a suitable linux-friendly text editor (NOT Micro\$oft Notepad) in conjunction with the Secure File Transfer Client. For example: ‘SciTE’ http://www.scintilla.org/SciTE.html is suitable or Notepad++.
+
+If you fiddle about with the settings under Options/Preferences in the WinSCP program and apply a little common sense, it should be possible to configure things so that you can simply double-click on a file in the remote (right-hand) window panel and it will open like magic (almost)! Saving the file after editing) should then result in the file being saved back to the cluster. Or you can select Edit With (and then SciTE) from right-mouse-button-clicking on the filename. Or ... a crude but workable approach is to use an sftp client to drag the file to your local machine (assuming \textbf{muffin} is installed remotely), edit it there, and then drag it back again.\footnote{Note that care still has to be taken to avoid certain Microsoft text editing programs under Windoz.)}
 
 %------------------------------------------------
 
@@ -332,7 +344,7 @@ OK – now we are ready to start …
 
 \section{Starting (dozing?) off …}
 
-You are going to be installing the model from scratch – why? Why not? Hell, it saves me installing it. Actually, it will be a happy character-building experience for you – trust me.
+You are going to be installing the model from scratch – why? Why not? It will be a happy character-building experience for you ... trust me ...
 
 %------------------------------------------------
 
@@ -340,7 +352,7 @@ You are going to be installing the model from scratch – why? Why not? Hell, it
 
 Log into your linux/macOS box!\footnote{If you fail at this step, you'll have to take up box-modelling instead.}
 
-\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a cluster account), log into the remote account from a terminal:
+\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a cluster account), log into the remote account from a suitable terminal\footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
 
 \begin{itemize}
 \item If logging in via a linux/macOS box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
@@ -348,11 +360,12 @@ then you are probably already logged in! Otherwise, it will look like: \texttt{u
 \begin{verbatim}
 $ ssh username@clustername
 \end{verbatim}
-(where \texttt{clustername}, the cluster name(!) might, for example, be \texttt{sprout.ggy.bris.ac.uk}) and enter your  account password (and tell it whether or not you want this password stored, if asked).
-\item On a Windoz machine – first start the WinSCP program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{sprout.ggy.bris.ac.uk}):
+where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
+\\  \texttt{sprout.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\item On a Windoz machine – first start e.g. the WinSCP program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{sprout.ggy.bris.ac.uk}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
 \\You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
-\\(You can also log in directly from the shell/terminal window of e.g. PuTTY rather than first opening an sftp connection.)
+\\ You can also log in directly from the shell/terminal window of e.g. PuTTY rather than first opening an sftp connection.
 \end{itemize}
 
 %------------------------------------------------
@@ -361,11 +374,19 @@ $ ssh username@clustername
 
 The next step is to download a copy of the source code for \textbf{muffin}.
 
-As of 2018, the branch of the GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form svn to git). The address of the new (centralized) home for muffin is:
+As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form svn to git -- a “distributed” version control systems (DVCS). The address of the new (centralized) home for muffin is:
 
 \vspace{2mm}
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
 \vspace{2mm}
+
+\noindent \textbf{IMPORTANT}: the default name of the installation (\texttt{cgenie.muffin}) is the same as under svn. If you already have a previous (svn version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename\footnote{Or simply delete: \texttt{rm -f -r cgenie.muffin}} the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
+
+\begin{verbatim}
+$ mv cgenie.muffin cgenie.muffin.svn
+\end{verbatim}
+
+\noindent will rename the installation directory, adding the extension \texttt{.svn} on the end.\footnote{You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
 
 From here, there are 2 ways to get your mitts on the model code:
 
@@ -374,16 +395,16 @@ From here, there are 2 ways to get your mitts on the model code:
 \vspace{1mm}
 \item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\small{Clone or Download}} button, and select \textsf{\small{Download ZIP}}.
 \\You then unpack/unzip the files and directory structure where you want it.
-\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code.
+\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
 \vspace{1mm}
-\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}. While you can use GUI based git clients, easiest is the command line, using \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
+\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can use a GUI based git client, easiest is at the command line, using \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
 \end{verbatim}
 
-By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (form your repository) a copy of the code. Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.
+By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.
 
 \end{enumerate}
 
@@ -401,15 +422,15 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{1mm}
 \item \texttt{eevee} (UCR cluster). There are 2 files to edit (all of which live in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then uncomment the line under the heading \texttt{\#\#\# eevee \#\#\#}.
-\item In \texttt{makefile} -- as a consequence of a currently incompelte netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# eevee \#\#\#}.
+\item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
 \\On line 18 -- comment out (with a \texttt{\#}); the \texttt{nccompare} part of that line.
 \end{enumerate}
 
 \vspace{1mm}
 \item \texttt{sprout} (UoB cluster). There are 2 files to edit:
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then uncomment the line under the heading \texttt{\#\#\# sprout \#\#\#}.
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# sprout \#\#\#}.
 \item In \texttt{makefile.arc} -- towards the end of the file, under the heading:
 \\\texttt{\# === NetCDF paths ===}
 \\comment out the line under:
@@ -420,7 +441,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \end{enumerate}
 
 \vspace{1mm}
-\item \texttt{almond} (UoB cluster). As per for \texttt{sprout}.
+\item \texttt{almond} (UoB cluster). As per for \texttt{sprout} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# almond \#\#\#}).
 
 \vspace{1mm}
 \item \textbf{macOS}. Please refer to the separate macOS Quick Start Guide.
@@ -432,9 +453,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{2mm}
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
-
-
-Change directory (see: Appendix I and also Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
+ First, change directory (see: Appendix I and also Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 
 \begin{verbatim}
 cgenie.muffin/genie-main
@@ -446,24 +465,30 @@ cgenie.muffin/genie-main
 $ make testbiogem
 \end{verbatim}
 
-This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured.
+\noindent This compiles a basic carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. There may be some ’Warnings’ reported (== somepony’s sloppy programming) but these are not detrimental to the ultimate science results (we hope!).
 
-There may be some ’Warnings’ reported (== somepony’s sloppy programming) but these are not detrimental to the ultimate science results (we hope!). ‘Success’ of this test is indicated by:
+‘Success’ of this test is indicated by:
 
 \begin{verbatim}
 **TEST OK**
 \end{verbatim}
 
-You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line: 
+\noindent You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line: 
 
 \begin{verbatim}
 ./genie.job -t -k -f configs/eb_go_gs_ac_bg_test.xml -o /home/genie00/cgenie_output ...
 -c /home/genie00/cgenie -g ../../cgenie -m "" > testbiogem.out;
 \end{verbatim}
 
-This is quite ‘normal’ – the model is thinking!
+\noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
 
-Ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
+If the test doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
+
+\begin{verbatim}
+$ make cleanall
+\end{verbatim}
+
+\noindent and then re-try the test. Refer to the FAQ section at the end of this book for further clues as to non-working model installations.
 
 \hfill \break
 \noindent\rule{4cm}{0.1mm}
@@ -473,15 +498,43 @@ Ignore the compiler warnings … (reflecting my lack of adequate software engine
 
 %------------------------------------------------
 
-\subsection{(Notes on file editing)}
+\subsection{Some brief notes on git and code working practices}
 
-Later on you will be editing some configuration files. So now might be a good time to check that you can use the/an editor! (You will also be using the same editor to view some of the model output.)
+\subsubsection*{The basic git clone}
 
-You have two alternative options for editing and viewing text files, depending on whether you are a UNIX nerd with no life, or prefer anything to do with computers to be wrapped in cotton wool and covered with dollops of treacle.
-EITHER: Use the linux vi (/vim) application (or similar e.g. emacs) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal … so I will not *make* you ;)
-OR ... Use a suitable linux-friendly text editor (NOT Micro\$oft Notepad) in conjunction with the Secure File Transfer Client. For example: ‘SciTE’ http://www.scintilla.org/SciTE.html is suitable or Notepad++.
+The simplest workable installation of \textbf{muffin}, as described above, is to use \texttt{git clone}. You end up with a carbon copy of the muffin code repo (I am too lazy to type out 'repository' again) which you have also automatically now 'checked out'. Changes and developments will occur to the code on the GitHub repo from time-to-time, and if may be that either you might benefit by using a more up-to-date code base, or specific changes may have been made that you absolutely need. To determine the status of your repo, type\footnote{Here, the -uno ensures that files (e.g. experiment configuration files) you have created, but not added and committed, are not listed.} (from \texttt{cgenie.muffin}):
 
-If you fiddle about with the settings under Options/Preferences in the WinSCP program and apply a little common sense, it should be possible to configure things so that you can simply double-click on a file in the remote (right-hand) window panel and it will open like magic (almost)! Saving the file after editing) should then result in the file being saved back to the cluster. Or you can select Edit With (and then SciTE) from right-mouse-button-clicking on the filename.
+\begin{verbatim}
+$ git status -uno
+\end{verbatim}
+
+\noindent However, git has not actually compared your repo with the one on GitHub, because this is apparently network expensive (as if you don't spend the rest of your life killing the internet by streaming Rick and Morty). So, use:
+
+\begin{verbatim}
+$ git fetch
+\end{verbatim}
+
+\noindent which will 'download [new and modified] remote content but not update your local repo's working state'. If you now type \texttt{git status -uno}, git can tell you if there is newer content (e.g. '\texttt{Your branch is behind 'origin/master}'\footnote{\texttt{origin} is the origin of the repo -- GitHub, and \texttt{master} is the name of the branch, in this case, the default branch name.}). To merge in the fetched content:
+
+\begin{verbatim}
+$ git merge
+\end{verbatim}
+
+Both these commands are also combined in a single command\footnote{If there are no changes (to \textit{fetch} and \textit{merge}), the you get the message: \texttt{Already up-to-date.}}:
+
+\begin{verbatim}
+$ git pull
+\end{verbatim}
+
+If you are not developing code, and hence not editing files in the repo (but e.g. only adding new model configuration files), your life should mostly be trouble-free with regards to updating your code via \texttt{pull}.\footnote{
+One exception is, if any of the model installation/configuration files that you might have edited, i.e. one or all of: \texttt{genie-main/user.mak}, \texttt{genie-main/makefile.arc}, and/or \texttt{genie-main/makefile}, have also changed on \texttt{origin/master}, then \texttt{pull} (or \texttt{merge}, after \texttt{fetch}) will fail (with the message: '\texttt{Please, commit your changes or stash them before you can merge. Aborting}'). The root issue is a conflict between remote file changes, and local ones that you had not committed to your repo.
+
+You probably want to keep your local configuration changes, otherwise you'll probably end up re-doing them all over again. One solution is to sneakily 'hide' (\textit{stash}) them out of sight, by:
+\$ git stash
+\noindent You can now pull, updating your repo with respect to \texttt{origin/master}. Then -- you want your changes back, so apply the stashed changes:
+\$ git stash apply
+If unlucky, there will be conflict as your stashed changed are merged back onto your local repo branch (master). If so, you'll need to edit the file, deciding which line(s) is correct, and delete the version you do not want, along with the ASCII tags/labels.
+}
 
 %------------------------------------------------
 
@@ -6359,6 +6412,90 @@ What follows are potted HOW-TO instructions for doing things.
 
 There is some overlap with the FAQ Chapter, so please read both!
 \normalsize
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... linux}\label{how-to-linux}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\subsubsection{Viewing directories; moving around the file system}
+
+When logging in, you always start from your 'home' directory. This is represented by a '\texttt{\~}'
+before the command prompt (\texttt{\$}).
+At the command line prompt in linux, you can view the current directory contents:
+\begin{verbatim}
+$ ls
+\end{verbatim}
+or for a more complete output:
+\begin{verbatim}
+$ ls -la
+\end{verbatim}
+To go down a directory (e.g. \texttt{cgenie\_output}) relative to where you already are:
+\begin{verbatim}
+$ cd cgenie_output
+\end{verbatim}
+and to go back up one is:
+\begin{verbatim}
+$ cd ..
+\end{verbatim}
+
+It is often safer/easier at first, if you need to change more than one directory level to do this in stages. e.g. to change to \texttt{cgenie\_output/exp0\_modern\_SPINUP}, change to \texttt{cgenie\_output} (\texttt{cd cgenie\_output}) but then check that you are in the place you think you are and/or remind yourself of the spelling of the next directory you need to change to by typing \texttt{ls}.
+
+You can always return to your home directory (\texttt{\~}) by typing:
+\begin{verbatim}
+$ cd
+$ cd $HOME
+\end{verbatim}
+(or \texttt{cd \~})
+
+%------------------------------------------------
+%
+\subsubsection{Copying and moving files}
+
+To copy a file \texttt{myconfig} to \texttt{myconfig\_new}, assuming you are in the same directory where both the old file is and the new file will be:
+\begin{verbatim}
+$ cp myconfig myconfig_new
+\end{verbatim}
+
+To move \texttt{myconfig} to the cGENIE user-config directory, assuming you are in the directory where the old file is but with the new file in a different directory, give the full path of the new directory:
+\begin{verbatim}
+$ mv myconfig ~/cgenie.muffin/genie-userconfigs/LABS/myconfig
+\end{verbatim}
+
+To rename \texttt{myconfig} to \texttt{useless\_config}:
+\begin{verbatim}
+$ mv myconfig useless_config
+\end{verbatim}
+
+%------------------------------------------------
+%
+\subsubsection{Creating directories}
+
+To create a directory \texttt{mydirectory}:
+\begin{verbatim}
+$ mkdir mydirectory
+\end{verbatim}
+
+%------------------------------------------------
+%
+\subsubsection{Repeating command lines}
+
+You do not have to re-enter lines of commands and options in their entirety each time – by pressing the UP cursor key you get the last command you issued. If you keep pressing the UP cursor key you can recover progressively older commands you have previously entered. When you have recovered a helpful line you can simply just edit it, navigating along with the LEFT and RIGHT cursor keys (press RETURN when you are done).
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... git}\label{how-to-git}
+\vspace{2mm}
 
 %------------------------------------------------
 
