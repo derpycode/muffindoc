@@ -496,6 +496,16 @@ $ make cleanall
 
 \noindent That is it as far basic installation goes.
 
+\noindent But ...
+
+\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From genie-main:
+
+\begin{verbatim}
+$ ./installmuffin
+\end{verbatim}
+
+\noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as wel as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
+
 %------------------------------------------------
 
 \subsection{Some brief notes on git and code working practices}
