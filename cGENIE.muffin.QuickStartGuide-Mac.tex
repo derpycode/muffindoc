@@ -44,7 +44,7 @@
 
 \noindent \textbf{This is the Quick-start Guide for installing cGENIE-muffin on a Mac.}
 
-\noindent To install the muffin release of cGENIE on a Mac you will need a number of software packages, including Fortran, C++ and NetCDF. The best way to get hold of these is via a package management system, such as Homebrew (\href{}{https://brew.sh}) or MacPorts (\href{}{https://www.macports.org}). This guide is based on Homebrew, because it is slightly more user friendly than MacPorts, and is kept more up-to-date with changes in the Apple operating system. (If you are already a MacPorts user, please see Appendix A.)
+\noindent To install the muffin release of cGENIE on a Mac you will need a number of software packages, including Fortran, C++ and NetCDF. The best way to get hold of these is via a package management system, such as Homebrew (\href{}{https://brew.sh}) or MacPorts (\href{}{https://www.macports.org}). This guide is based on Homebrew, because it is slightly more user friendly than MacPorts, and is kept more up-to-date with changes in the Apple operating system. (If you are already a MacPorts user, please see Appendix~A.)
 
 \begin{compactenum}
 
@@ -55,7 +55,7 @@
 % I think XCode automatically comes with Homebrew and command line tools enabled
 \item Get Homebrew by pasting the following at the terminal command line...
 \\ \texttt{/usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"}
-\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesnÕt, see Appendix B. 
+\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesn't, see Appendix~B. 
 
 \item Install Fortran, C++, NetCDF and some other useful libraries at the command line (using Homebrew) as follows:
 
@@ -75,7 +75,7 @@ svn co https://svn.ggy.bris.ac.uk/subversion/genie/branches/cgenie.muffin
 \end{verbatim}\vspace{-5pt}
 for the 'head' (current development version).
 NOTE: All this must be typed continuously on ONE LINE, with a S P A C E before `\texttt{--username}', and before `\texttt{cgenie}'.
-If you are asked about a ‘certificate’ – enter ‘p’ to accept ‘permanently’ ('a' makes it grumpy). Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
+If you are asked about a `certificate', enter `p' to accept `permanently' (`a' makes it grumpy). Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
 
 
 \item Check your netcdf version number by entering \texttt{brew info netcdf}\\
