@@ -13,6 +13,8 @@
 \usepackage{caption}
 \usepackage{float}
 \usepackage{wasysym}
+\usepackage{amssymb}
+
 
 \linespread{1.1}
 \setlength{\pltopsep}{2.5pt}
@@ -57,8 +59,8 @@
 
 \item Install Fortran, C++, NetCDF and some other useful libraries at the command line (using Homebrew) as follows:
 
+% brew tap homebrew/science % deprecated in homebrew
 \vspace{-5pt}\begin{verbatim}
-brew tap homebrew/science
 brew install cmake
 brew install gcc
 brew install hdf5 --with-fortran %I got an error: no --with-fortran option 
@@ -75,20 +77,24 @@ for the 'head' (current development version).
 NOTE: All this must be typed continuously on ONE LINE, with a S P A C E before `\texttt{--username}', and before `\texttt{cgenie}'.
 If you are asked about a ‘certificate’ – enter ‘p’ to accept ‘permanently’ ('a' makes it grumpy). Unless you have logged onto the \texttt{svn} server before from your computing account, you be asked for a password -- it is \texttt{g3n1e-user}.
 
-\item Adjust the cGENIE environment variables for your installation by editing
-\\\texttt{cgenie.muffin/genie-main/user.mak} and setting:
+
+\item Check your netcdf version number by entering \texttt{brew info netcdf}\\
+This will return several lines, but the key one gives the netcdf path, and should look something like:
+\vspace{-5pt}\begin{verbatim}
+/usr/local/Cellar/netcdf/4.6.1_2 (84 files, 6.2MB) *
+\end{verbatim}\vspace{-5pt}
+(This was from my most recent install, with version \texttt{4.6.1\_2})
+
+\item Adjust the cGENIE environment variables for your machine and netcdf installation by editing
+\\\texttt{cgenie.muffin/genie-main/user.mak}, setting:
 \vspace{-5pt}\begin{verbatim}
 MACHINE=OSX
 \end{verbatim}\vspace{-5pt}
 and
 \vspace{-5pt}\begin{verbatim}
-NETCDF_DIR=/usr/local/Cellar/netcdf/4.5.0
-\end{verbatim}
-
-Verify the netcdf version number in the directory above, it's currently at 4.6.0, i.e.:\\
-\vspace{-5pt}\begin{verbatim}
-NETCDF_DIR=/usr/local/Cellar/netcdf/4.6.0
-\end{verbatim}
+NETCDF_DIR=/usr/local/Cellar/netcdf/4.6.1_2
+\end{verbatim} \vspace{-5pt}
+to reflect your netcdf path (Step 5).
 
 \item Finally, in cgenie.muffin/genie-main/makefile.arc, comment out:
 \vspace{-5pt}\begin{verbatim}
