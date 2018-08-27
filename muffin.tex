@@ -128,61 +128,6 @@
 \pagestyle{fancy} % Print headers again
 
 %----------------------------------------------------------------------------------------
-%       COURSE INTRODUCTION
-%----------------------------------------------------------------------------------------
-
-\cleardoublepage
-\chapter*{About the cGENIE.muffin Model}
-
-\hfill \break
-
-\noindent 
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\section*{Logistics}
-
-The labs are based around using and analysing the ‘\textbf{cGENIE}’ Earth system model\footnote{http://www.seao2.info/mycgenie.html}. You will be working in groups of 2 (or 3) and will be remote accessing a computing cluster (where the model will actually run)). You will hence need some means of accessing the remote computer. Unless you are some sort of wizard, I suggest a lab desktop, or your own laptop, connected to the internet.
-
-In terms of group working dynamics -- if everyone each brings a laptop, then in a group of 2 it becomes easier to be e.g. managing configuring and running the model on one laptop, and analysing results or displaying instructions/documentation on another other.
-
-%------------------------------------------------
-
-\section*{Required software}
-
-If you chose to use a lab desktop, which will be a Windoz 10 based machine, all the software you need will be pre-installed.
-
-If you plan on using your own laptop to remote access the model and visualize results, you will need some specific software. The exact software will depend on your operating system, but everyone will need:
-
-\begin{enumerate}[noitemsep]
-\setlength{\itemindent}{.2in}
-\item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
-\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For the Mac, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. Also for linux, maybe FileZilla.
-\item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
-(Note that you will need Java installed!)
-\item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
-notepad++ (https://notepad-plus-plus.org/)
-SciTE (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
-(linux and Mac users need no special/different editor compared with your standard editor – everything will display just fine).
-\end{enumerate}
-
-%------------------------------------------------
-
-\section*{Running cGENIE.muffin on a laptop}
-
-It is also possible to install and run the ‘\textbf{cGENIE}’ Earth system model on a linux box (e.g. Ubuntu) or a Mac. Sets of instructions (‘Quick-Start Guides’) are available on my website\footnote{http://www.seao2.info/mycgenie.html} (in the ‘got muffin?’ box on the left).
-
-Note that it is not possible at this time to run \textbf{cGENIE} (‘muffin’ version) under Windows (at least, not without near infinite pain).
-
-Also note that if you have trouble installing and running \textbf{cGENIE} on your own linux box or Mac, there may not be time to sort out the problem (and in any case I have no clue at all about Macs). If so, you’ll have to access and run the model remotely. (There are also advantages to running on the remote cluster as you will see in due course.)
-
-%----------------------------------------------------------------------------------------
-
-%----------------------------------------------------------------------------------------
 %       CHAPTER 1
 %----------------------------------------------------------------------------------------
 
@@ -190,7 +135,7 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 %%%\chapterimage{muffinplanet.gif} % Chapter heading image
 
-\chapter{Model basics}
+\chapter{Installation, configuration, basic usage}
 
 \hfill \break
 
@@ -198,9 +143,9 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 \begin{itemize}
 \item \textbf{(cGENIE.)muffin} is a \uline{model}. Models ARE NOT the ‘real World’. (Don’t get confused!)
-\item The very low resolution (for a 3-D ocean circulation model) of the \textbf{muffin} model limits its applicability for very short time-scale problems because the simplified atmospheric component does not simulate winds and there is no atmospheric dynamics or inter-annual variability.
-\item \textbf{muffin} is best thought of as a ‘discovery and exploring’ tool for learning how the Earth system (might) work rather than as a detailed ‘simulation’ tool.
-\item Have fun (or at least try).
+\item The  low resolution (for a 3-D ocean circulation model) of the \textbf{muffin} model limits its applicability for very short time-scale problems.\ In configurations not incorporating the PLASIM atmospheric model,  there is no atmospheric dynamics or inter-annual variability in the ocean-atmosphere coupled system.
+\item \textbf{muffin} is best thought of as a ‘discovery and exploring’ tool for learning how the Earth system (might) work rather than necessarily as a detailed ‘simulation’ tool.
+\item It is possible to have fun. (Once the installation pain is over ...)
 \end{itemize}
    
 %------------------------------------------------
@@ -215,40 +160,36 @@ Also note that if you have trouble installing and running \textbf{cGENIE} on you
 
 \subsection*{ReadMe}
 
-Some warnings and reminders are repeated over and over and over and … over again.
+Some warnings and reminders in this manual are repeated over and over and over and … over again.
 Some warnings and reminders are repeated over and over and over and … over again.  
 This is because you will forget immediately each time! ;)
 \\\textbf{!}\footnote{\textbf{Also read footnotes please.}}
 
 %------------------------------------------------
 
-\subsection*{Version naming conventions}
+\subsection*{Software version naming conventions}
 
-You will be using the current version of the cGENIE Earth system model, code-named ‘\textbf{muffin}’ (if Apple can have ‘Leopard’, ‘Lion’ etc., I can haz baked goods, right?). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’. For brevity, the \textbf{cGENIE.muffin} model will be referenced by just ‘\textbf{muffin}’.
+You will be using the current version of the cGENIE Earth system model, code-named ‘\textbf{muffin}’ (if \textbf{Apple} can have ‘Leopard’, ‘Lion’ etc., I can haz a baked goods version naming convention, right?). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’. For brevity, the \textbf{cGENIE.muffin} model will be referenced by just ‘\textbf{muffin}’.
  
 %------------------------------------------------
 
 \subsection*{linux ...}
 
-The \textbf{(cGENIE.)muffin} model currently compiles and runs only under linux (e.g. distributions such as Ubuntu) and unix-based operating systems (such as macOS).
-
-For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)
-
-\textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or macOS equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press Return, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
+The \textbf{(cGENIE.)muffin} model currently compiles and runs only under \textbf{linux}\footnote{For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)} (e.g. distributions such as \textbf{Ubuntu}) and unix-like operating systems (such as \textbf{macOS}). Furthermore, \textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or macOS equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press \small\textsf{Return}\normalsize, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
 The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the user-name, computer name, and current directory, e.g.:
 
 \begin{verbatim}
-[username@sprout ~]$
+[username@host ~]$
 \end{verbatim}
 
-\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer ‘\texttt{sprout}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (\texttt{\~}).
+\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (represented by the \texttt{\~} symbol).
 
-If you are not or not very familiar with the linux/unix command line – Appendix 1 contains a quick summary of some of the more important/useful Commands you can use at the command line. Appendix 2 is a version of Appendix 1 for anyone especially nervous about linux.
+If you are not or not very familiar with the linux/unix command line – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see Section \ref{how-to-linux} (page \pageref{how-to-linux}).
 
-NOTE: Be VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
+NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
 
-NOTE-the-second: Text  in grey, represents instructions specific to using Windoz PCs, and hence may or will differ on different operating systems, e.g. if you have a Macbook. Other software choices for editing files or viewing results are possible as are other ways of configuring software and file editing/transferring methodologies.
+NOTE-the-second: In this manual, text  in grey represents instructions specific to using \textbf{Windoz} \textbf{PC}s, and hence may or will differ on different operating systems, e.g. if you have a \textbf{Macbook}. Other software choices for editing files or viewing results are possible as are other ways of configuring software and file editing/transferring methodologies.
 
 Do what suits you best – you can view the instructions as mostly representing an example methodology rather than a literal interpretation of the Constitution.
 
@@ -256,68 +197,65 @@ Do what suits you best – you can view the instructions as mostly representing 
 
 \subsection*{Required computer hardware}
 
-It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model on a linux box (e.g. Ubuntu) or a Mac.\footnote{Sets of detailed instructions (‘Quick-Start Guides’) are available from \href{http://www.seao2.info/mycgenie.html}{mycgenie} (in the ‘got muffin?’ box on the left).}\footnote{Note that it is not possible at this time to run \textbf{muffin} under Windows (at least, not without near infinite pain).} Otherwise, you will have to be provided with a cluster account (e.g. on a University of Bristol cluster such as \texttt{sprout}, or at UCR, such as \texttt{eevee}). In this case, you can use any platform (linux, macOS, Windoz, as well as ioS and Android (which is based on linux in any case)) to connect to the cluster (but see software requirements, below).
+It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model either on a linux box (e.g. \textbf{Ubuntu}) or on a \textbf{Mac} \footnote{Sets of detailed installation instructions are available in the HOW-TO section of this manual.}\footnote{Note that it is not possible at this time to run \textbf{muffin} under \textbf{Windows} (at least, not without near infinite pain).} Otherwise, you will need an account on a linux-based server or cluster. In this case, you can use any platform (\textbf{linux}, \textbf{macOS}, \textbf{Windoz}, as well as \textbf{ioS} and \textbf{Android} (which is based on \textbf{linux} in any case)) to connect to the cluster (but see software requirements, below).
 
 %------------------------------------------------
 
 \subsection*{Required computer software}
 
-To run \textbf{muffin}, needed are:
+To install and run \textbf{muffin}, at a minimum are needed\footnote{Only if \textbf{muffin} is being run locally and a cluster account is not provided (but assuming that your cluster account is correctly configured ...).}:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item A FORTRAN compiler.
-\\This should come with the operating system as standard, possibly \textbf{gfortran}.
-\item A git client.
-\\If not standard, this should be relatively easy to add and install.
-\item Compiled netCDF libraries.
+\item A FORTRAN (f90 and f77 combatable) compiler of some sort.
+\\This may come with the operating system as standard, possibly \textbf{gfortran}.
+\item A \textbf{git} client.
+\\If not standard, this is relatively easy to add and install.
+\item Compiled \textbf{netCDF} libraries (not so much fun ...).
 \end{enumerate}
-
-\noindent but only if \textbf{muffin} is being run locally and a cluster account is not provided (assuming that your cluster account is correctly configured ...).
 
 To edit files and visualize results, you will need some specific software. The exact software will depend on your operating system, but essential are:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item A viewer for netCDF format spatial data. A Java viewer called Panoply is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
-(Note that you will need Java installed!)
-\\(Or alternatively: MATLAB.)
-\item  A simple text editor, except not the rubbish default Windows one – you need one that can display unix ASCII text without screwing it up. Options for Windows users are:
-notepad++ (https://notepad-plus-plus.org/)
-SciTE (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
-(linux and Mac users need no special/different editor compared with your standard editor – everything will display just fine). You can also use linux command line based editors such as \textbf{vi}.
+\item A viewer for netCDF format spatial data. A \textbf{Java} viewer called \textbf{Panoply} is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
+(Note that you will need \textbf{Java} installed!)
+\\(Or alternatively: \textbf{MATLAB}.)
+\item  A simple text editor, except not the rubbish default \textbf{Windows} one – you need one that can display \textbf{unix} ASCII text without screwing it up. Options for \textbf{Windows} users are:
+\textbf{notepad++} (https://notepad-plus-plus.org/)
+\textbf{SciTE} (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
+(\textbf{linux} and \textbf{Mac} users need no special/different editor compared with your standard editor – everything will display just fine). You can also use \textbf{linux} command line based editors such as \textbf{vi}.
 \end{enumerate}
 
 \noindent If operating \textbf{muffin} remotely (e.g. on a computing cluster), the you also will need:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item A terminal (‘shell’) window. This is no problem for linux and Mac users (you already have one built in). For Windows, either download a simple (and old) SSH client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. PuTTY (http://www.putty.org/).
-\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (Windows, above) then a sftp client is already included as part of this software. If using PuTTY (Windows) you might try downloading WinSCP (http://winscp.net/eng/index.php). For macOS, you can connect to the server through the Terminal, but some sftp software for viewing/navigating server file structure include: FileZilla (use this one), Cyberduck, TextWrangler. For linux, maybe FileZilla.
+\item A terminal (‘shell’) window. This is no problem for \textbf{linux} and \textbf{Mac} users (you already have one built in). For \textbf{Windows}, either download a simple (and old) \textbf{SSH} client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. \textbf{PuTTY} (http://www.putty.org/).
+\item A sftp (secure file transfer) client for convenience (i.e. dragging and dropping files between local and remote computers, and opening files directly on the remote computer cluster). If you have installed ssh-client (\textbf{Windows}, above) then a sftp client is already included as part of this software. If using \textbf{PuTTY} (\textbf{Windows}) you might try downloading \textbf{WinSCP} (http://winscp.net/eng/index.php). For \textbf{macOS}, you can connect to the server through the \textbf{Terminal}, but some sftp software for viewing/navigating server file structure include: \textbf{FileZilla} (recommended), \textbf{Cyberduck}, \textbf{TextWrangler}. For linux, maybe \textbf{FileZilla}.
 \end{enumerate}
 
 %------------------------------------------------
 
 \subsection*{File editors ...}
 
-You will need to edit text-based configuration files, probably in installing \textbf{muffin}, and definitely in configuring model experiments. So now might be a good time to check that you can use the/an editor! (You will also be using the same editor to view some of the model output.)
+You will need to edit text-based configuration files, possibly in installing and configuring \textbf{muffin}, but definitely in configuring model experiments. So now might be a good time to check that you can use the/an editor! (You will also be using the same editor to view some of the model output.)
 
-You have two alternative options for editing and viewing text files, depending on whether you are a UNIX nerd with no life, or prefer anything to do with computers to be wrapped in cotton wool and covered with dollops of treacle.
-EITHER: Use the linux vi (/vim) application (or similar e.g. emacs) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal … so I will not *make* you ;)
-OR ... Use a suitable linux-friendly text editor (NOT Micro\$oft Notepad) in conjunction with the Secure File Transfer Client. For example: ‘SciTE’ http://www.scintilla.org/SciTE.html is suitable or Notepad++.
+You have two alternative options for editing and viewing text files, depending on whether you are a \textbf{unix} nerd with no life, or prefer anything to do with computers to be wrapped in cotton wool and covered with dollops of treacle.
+EITHER: Use the linux \textbf{vi} (/\textbf{vim}) application (or similar e.g. \textbf{emacs}) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal if you don't like this sort of thing … OR ... use a suitable linux-friendly text editor (NOT \textbf{Micro\$oft} \textbf{Notepad}) in conjunction with the \textbf{Secure File Transfer Client}. For example: \textbf{SciTE} http://www.scintilla.org/SciTE.html is suitable, or \textbf{Notepad++}.
 
-If you fiddle about with the settings under Options/Preferences in the WinSCP program and apply a little common sense, it should be possible to configure things so that you can simply double-click on a file in the remote (right-hand) window panel and it will open like magic (almost)! Saving the file after editing) should then result in the file being saved back to the cluster. Or you can select Edit With (and then SciTE) from right-mouse-button-clicking on the filename. Or ... a crude but workable approach is to use an sftp client to drag the file to your local machine (assuming \textbf{muffin} is installed remotely), edit it there, and then drag it back again.\footnote{Note that care still has to be taken to avoid certain Microsoft text editing programs under Windoz.)}
+If you fiddle about with the settings under Options/Preferences in the \textbf{WinSCP} program and apply a little common sense, it should be possible to configure things so that you can simply double-click on a file in the remote (right-hand) window panel and it will open like magic (almost)! Saving the file after editing) should then result in the file being saved back to the cluster. Or you can select Edit With (and then \textbf{SciTE}) from right-mouse-button-clicking on the filename. Or ... a crude but workable approach is to use an sftp client to drag the file to your local machine (assuming \textbf{muffin} is installed remotely), edit it there, and then drag it back again.\footnote{Note that care still has to be taken to avoid certain \textbf{Microsoft} text editing programs under \textbf{Windoz}.)}
 
 %------------------------------------------------
 
 \subsection*{Model documentation in general}
 
-Additional documentation (of varying degrees of up-to-date-ness) can be found:
+This, and additional documentation (of varying degrees of up-to-date-ness) can be found:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
-\\Here, the latex source lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the git repository. Make changes. Commit them locally. Make a 'pull request' ...}.
+\\Here, the \textbf{latex} source for the documentation lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the \textbf{git} repository. Make changes. Commit them locally. Make a 'pull request' ...}.
 \item On my \href{http://www.seao2.info/mycgenie.html}{website}.
 \\Here, are only compiled, PDF versions of the documentation and hence may be out-of-date.
 \end{enumerate}
@@ -350,22 +288,22 @@ You are going to be installing the model from scratch – why? Why not? It will 
 
 \subsection{Logging in!}
 
-Log into your linux/macOS box!\footnote{If you fail at this step, you'll have to take up box-modelling instead.}
+Log into your \textbf{linux}/\textbf{macOS} box!\footnote{If you fail at this step, you'll have to take up box-modelling instead.}
 
 \noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a cluster account), log into the remote account from a suitable terminal\footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
 
 \begin{itemize}
-\item If logging in via a linux/macOS box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
+\item If logging in via a \textbf{linux}/\textbf{macOS} box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
 then you are probably already logged in! Otherwise, it will look like: \texttt{username@localname:\(\sim\)\$}}, e.g.
 \begin{verbatim}
 $ ssh username@clustername
 \end{verbatim}
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
-\\  \texttt{sprout.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
-\item On a Windoz machine – first start e.g. the WinSCP program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{sprout.ggy.bris.ac.uk}):
+\\  \texttt{catname.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ggy.bris.ac.uk}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
 \\You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
-\\ You can also log in directly from the shell/terminal window of e.g. PuTTY rather than first opening an sftp connection.
+\\ You can also log in directly from the shell/terminal window of e.g. \textbf{PuTTY} rather than first opening an sftp connection.
 \end{itemize}
 
 %------------------------------------------------
@@ -417,7 +355,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \begin{itemize}
 
 \vspace{1mm}
-\item \textbf{Ubuntu}. This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.}
+\item \textbf{Ubuntu}. This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.} And you have also jumped the shark with a successful install of other libraries and softwares ... see Section \ref{how-to-ubuntu}.
 
 \vspace{1mm}
 \item \texttt{eevee} (UCR cluster). There are 2 files to edit (all of which live in the \texttt{genie-main} directory):
@@ -444,7 +382,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \item \texttt{almond} (UoB cluster). As per for \texttt{sprout} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# almond \#\#\#}).
 
 \vspace{1mm}
-\item \textbf{macOS}. Please refer to the separate macOS Quick Start Guide.
+\item \textbf{macOS}. Please refer to the separate macOS instructions in Section \ref{how-to-macos}.
 
 \end{itemize}
 
@@ -453,13 +391,13 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{2mm}
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
- First, change directory (see: Appendix I and also Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
+ First, change directory (see: Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 
 \begin{verbatim}
 cgenie.muffin/genie-main
 \end{verbatim}
 
-\noindent If you are not ‘linux-friendly’ – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
+\noindent If you are not ‘linux-friendly’ (see: Section \ref{how-to-linux} for \textbf{linux} basics) – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
 
 \begin{verbatim}
 $ make testbiogem
@@ -494,9 +432,7 @@ $ make cleanall
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-\noindent That is it as far basic installation goes.
-
-\noindent But ...
+\noindent That is it as far basic installation goes. But ...
 
 \noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From genie-main:
 
@@ -504,11 +440,11 @@ $ make cleanall
 $ ./installmuffin
 \end{verbatim}
 
-\noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as wel as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
+\noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as well as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
 
 %------------------------------------------------
 
-\subsection{Some brief notes on git and code working practices}
+\subsection{Brief notes on git and code}
 
 \subsubsection*{The basic git clone}
 
@@ -550,7 +486,7 @@ If unlucky, there will be conflict as your stashed changed are merged back onto 
 
 \begin{figure}
 \includegraphics[width=\linewidth]{directories.png}
-\caption{Directory structure of the cGENIE model. Highlighted in \textcolor{red}{red} are directories and sub-directories that you will need to access at some point. Vertical \textcolor[rgb]{0,0.501961,0}{green} lines designate directory levels, with example commands shown for moving between them.}
+\caption{Directory structure of the \textbf{muffin} model. Highlighted in \textcolor{red}{red} are directories and sub-directories that you will need to access at some point. Vertical \textcolor[rgb]{0,0.501961,0}{green} lines designate directory levels, with example commands shown for moving between them.}
 \label{fig:directories}
 \end{figure}
 
@@ -562,7 +498,7 @@ If unlucky, there will be conflict as your stashed changed are merged back onto 
 
 \section{Running the model}
 
-The overall sequence of configuring and running the \textbf{cGENIE.muffin} model, is shown in Figure \ref{fig:chx-jobcreation}.
+The overall sequence of configuring and running \textbf{muffin}, is shown in Figure \ref{fig:chx-jobcreation}.
 
 At the command-line (\texttt{\$}) in the genie-main directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
 
@@ -701,7 +637,7 @@ In this example, the output should look something like the following:
 
 \section{Model output}
 
-The first thing to note about output (i.e., saved results files) from \textbf{cGENIE} is that every science module saves its own results in its own sub-directory (and sometimes in very different and difficult-to-fathom ways …) – see Figure 1.1. All the sub-directories of results, plus copies of input parameters and the model executable, are gathered together in a directory that is assigned the same name as the experiment (= \textit{user-config} file name). The experiment results directories all live in:
+The first thing to note about output (i.e., saved results files) from \textbf{muffin} is that every science module saves its own results in its own sub-directory (and sometimes in very different and difficult-to-fathom ways …) – see Figure 1.1. All the sub-directories of results, plus copies of input parameters and the model executable, are gathered together in a directory that is assigned the same name as the experiment (= \textit{user-config} file name). The experiment results directories all live in:
 \begin{verbatim}
 ~/cgenie_output
 \end{verbatim}
@@ -865,7 +801,7 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 
 \noindent The alternative is to submit your experiment as a ‘job’ to a queuing system which then manages what compute resources are used to run the model. Once you have submitted the experiment, that is it – you can go straight to the pub :)
 
-Unless you want to read the cGENIE User Manual, for now, take the following suggested way of submitting jobs on trust: to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) by submitting the experiment as a job to the cluster queue, type:
+For example -- to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type:
 \small\begin{verbatim}
 $ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
@@ -945,7 +881,7 @@ Depending on the cluster setup, it may be possible to graphically check what is 
 $ firefox --no-remote &\end{verbatim}\vspace{-2pt}
 and follow the links: 'Cluster Status (Ganglia)', and then 'Job Queue' to get to the actual queue listing and cluster status.
 
-\noindent \textbf{NOTE}: It may be that the FORTRAN compiler is not accessible by the computer nodes. The implication of this is that \textbf{the \textit{c}GENIE executable must be already compiled BEFORE a job is submitted to the queue}.
+\noindent \textbf{NOTE}: It may be that the FORTRAN compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}.
 
 \noindent In other words; if you have just changed the model resolution or continental configuration, or number of tracers (i.e. changed the \textit{base-config}) or issued a \texttt{make cleanall} command you MUST briefly run your desired experiment (or equivalent) interactively (i.e., in the shell window) to ensure that everything is correctly compiled. For instance, either run the experiment for a couple of years or start the experiment for the desired full duration, but 'kill it' (Ctrl-C) once the experiment is running successfully.
 
@@ -6429,6 +6365,39 @@ There is some overlap with the FAQ Chapter, so please read both!
 
 %------------------------------------------------
 
+\section{HOW-TO ... get started with cGENIE.muffin (summary)}\label{how-to-0}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\subsubsection{Install \texttt{cGENIE}}\label{Install cGENIE}
+
+\vspace{1mm}
+See: \texttt{cGENIE} \textit{Quick-start Guide}. (Also refer to the \texttt{READ-ME} file for e.g., details of changes in configuring and running \texttt{cGENIE} compared to \texttt{GENIE}.)
+
+%------------------------------------------------
+%
+\subsubsection{Find configurations for \texttt{cGENIE}}\label{Find configurations for cGENIE}
+
+\vspace{1mm}
+A series of (example) \texttt{cGENIE} configurations are provided, many of which are detailed in full in the \texttt{cGENIE} \textit{Tutorial} document.
+Example configurations comprise \textit{base-config} and \textit{user-config} files, plus any \textit{forcings} needed.
+\begin{itemize}[noitemsep]
+\item\texttt{cGENIE} \textit{base-configs} are stored in:
+\\ \texttt{~/cgenie/genie-main/configs}
+\\and all start with '\texttt{cgenie\_}', for example: \\ \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_hadcm3l\_eocene\_36x36x16\_2i\_080928\_BASE.config}
+\item \texttt{cGENIE} user configs are stored in:
+\\ \texttt{~/cgenie/genie-userconfigs}
+\item \texttt{cGENIE} forcings are stored in:
+\\ \texttt{~/cgenie/genie-forcings}
+\end{itemize}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
 \section{HOW-TO ... linux}\label{how-to-linux}
 \vspace{2mm}
 
@@ -6509,36 +6478,329 @@ You do not have to re-enter lines of commands and options in their entirety each
 
 %------------------------------------------------
 
+%------------------------------------------------
+
 \newpage
 
 %------------------------------------------------
 
-\section{HOW-TO ... get started with cGENIE.muffin}\label{how-to-0}
+\section{HOW-TO ... Ubuntu muffin}\label{how-to-ubuntu}
 \vspace{2mm}
 
 %------------------------------------------------
-%
-\subsubsection{Install \texttt{cGENIE}}\label{Install cGENIE}
 
-\vspace{1mm}
-See: \texttt{cGENIE} \textit{Quick-start Guide}. (Also refer to the \texttt{READ-ME} file for e.g., details of changes in configuring and running \texttt{cGENIE} compared to \texttt{GENIE}.)
+This is a brief guide to installing \textbf{muffin} on \textbf{Ubuntu}. The example taken is for a generic \textbf{Ubuntu} distribution version 18.04 LTS ('Bionic Beaver') install that is fresh out of the box. For a more established installation, fewer components may need to be installed. Different/fewer components may also be necessary for an older \textbf{Ubuntu} distribution.
+
+Instructions are given step-by-step, although not all the components need be installed in this order. In brief: required installation components include: a \textbf{fortran} compiler, a \textbf{git} client, \textbf{netCDF} libraries.
 
 %------------------------------------------------
 %
-\subsubsection{Find configurations for \texttt{cGENIE}}\label{Find configurations for cGENIE}
+\subsection*{Preparation}
+
+Get hold of a computer with \textbf{Ubuntu} installed on it. Make sure you have plugged in the internet connection. Log in. Get a strong cup of coffee.
+
+%------------------------------------------------
+%
+\subsection*{Installation}
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{-.4in}
+
+\vspace{4pt}
+\item \textbf{gfortran} [FORTRAN compiler]
+
+\begin{verbatim}
+sudo apt install gfortran
+\end{verbatim}
+
+\item \textbf{g++} [C++ compiler]
+
+And ... also the \textbf{GNU} \textbf{C++} compiler\footnote{This could probably be worked-around by editing some of the \texttt{make} files ...}:
+
+\begin{verbatim}
+sudo apt install g++
+\end{verbatim}
+
+\item \textbf{netCDF} [graphics libraries]
+
+\noindent These come rather inconveniently in 2 parts ... first the \textbf{C} libraries need to be installed, and then the \textbf{FORTRAN} libraries ....
+
+The example is given for the most recent version of both libraries. For details/most recent version, see: \href{https://www.unidata.ucar.edu/software/netcdf/#}{https://www.unidata.ucar.edu/software/netcdf/}
+
+But first ... missing in the default \textbf{Ubuntu} 18.04 is the \textbf{m4} utility, which can be installed:
+
+\begin{verbatim}
+sudo apt install m4
+\end{verbatim}
+
+and also \textbf{make}:
+
+\begin{verbatim}
+sudo apt install make
+\end{verbatim}
+
+Now you are good to go ...
+
+\begin{verbatim}
+wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.6.1.tar.gz
+tar xzf netcdf-4.6.1.tar.gz
+cd netcdf-4.6.1
+./configure --disable-netcdf-4 --disable-dap
+make check 
+sudo make install
+\end{verbatim}
+
+Note that this installs the libraries in the default install location. Also disabling \textbf{netCDF-4} to avoid added complexities of needing an \textbf{HDF5} library built with \textbf{zlib} enabled (and hence the \textbf{zlib} library installed) ...
+
+\textbf{muffin} requires \textbf{netcdf-cxx} (legacy) \textbf{C++} libraries for \textbf{netCDF} that have since been retired\footnote{See: \href{https://www.unidata.ucar.edu/support/help/MailArchives/netcdf/msg12236.html}{link}} and hence requiring a sperate/additional installation step\footnote{'This version of the netCDF C++ library includes no changes since the 4.1.3 release, but is provided for backwards compatibility as a separate package. It was developed before key C++ concepts like templates, namespaces, and exceptions were widely supported. It's not recommended for new projects, but it still works.'} (first return back one directory level to where-ever you are downloading to and installing from):
+
+\begin{verbatim}
+wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-cxx-4.2.tar.gz
+tar netcdf-cxx-4.2.tar.gz
+cd netcdf-cxx-4.2
+./configure
+make check 
+sudo make install
+\end{verbatim}
+
+And then for the \textbf{FORTRAN} \textbf{netCDF} libraries. (At this point -- return back one directory level to where-ever you are downloading to and installing from.)
+
+\begin{verbatim}
+wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-fortran-4.4.4.tar.gz
+tar xzf netcdf-fortran-4.4.4.tar.gz
+cd netcdf-fortran-4.4.4
+./configure
+make check
+sudo make install
+\end{verbatim}
+
+NOTE: if for either or both libraries, you want them anywhere other than off of \texttt{/usr/local}, you'll need to specify the installation directory, set \texttt{NCDIR}, and pass this to \texttt{./configure --prefix=\$\{NCDIR\}}. And probably engage in additional unpleasantness.
+
+\vspace{4pt}
+\item \textbf{xsltproc} ['\textit{a command line tool for applying XSLT stylesheets to XML documents}']
+
+\begin{verbatim}
+sudo apt install xsltproc
+\end{verbatim}
+
+Why do we eve need this? :(
+
+\vspace{4pt}
+\item \textbf{git} [git client]
+
+You'll need a git client:
+
+\begin{verbatim}
+sudo apt install git
+\end{verbatim}
+
+\item \textbf{muffin} [the cGENIE.muffin course code]
+
+And finally, you can obtain the code.
+
+NOTE: Recommended is changing directory to your HOME directory (\texttt{cd}) as the default \textbf{muffin} directory settings assume this. 
+
+\begin{verbatim}
+git clone https://github.com/derpycode/cgenie.muffin
+\end{verbatim}
+
+\end{enumerate}
+
+%------------------------------------------------
+%
+\subsection*{Configuring muffin}
+
+The version of \textbf{muffin} available from GitHub is configured with default environmental settings that match the above instructions and require \uline{no} configuration changes. If not -- there are several  environment variables that may needd changing -- the compiler name, netCDF library name, and netCDF path. These are specified in the file \texttt{user.mak} (\texttt{genie-main} directory). If the \textbf{muffin} code tree (\texttt{cgenie.muffin}) and output directory (\texttt{cgenie\_output}) are installed anywhere other than in your account HOME directory, paths specifying this will have to be edited in: \texttt{user.mak} and \texttt{user.sh} (\texttt{genie-main} directory). If using the \texttt{runmuffin.sh} experiment configuration/launching scripts, you'll also have to set the home directory  and change every occurrence of \texttt{cgenie.muffin} to the model directory name you are using (if different). (Installing the model code under the default directory name (\texttt{cgenie.muffin}) in your \texttt{\$HOME} directory is hence by far the simplest and avoids incurring additional/unnecessary pain (configuration complexity) ...)
+
+%------------------------------------------------
+%
+\subsection*{Testing muffin}
+
+To test the code installation -- change directory to \texttt{cgenie.muffin/genie-main} and type:
+\vspace{-5pt}\begin{verbatim}
+make testbiogem
+\end{verbatim}\vspace{-5pt}
+This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. If you are unsuccessful here ... double-check the software and directory environment settings in \texttt{user.mak} (or \texttt{user.sh}) and for a \textbf{netCDF} error, check the value of the \texttt{NETCDF\_DIR} environment variable. (Refer to the FAQ section for addition fault-finding tips.) If environment variables are changed: before re-trying the test, you will need to type:
+\vspace{-5pt}\begin{verbatim}
+make cleanall
+\end{verbatim}\vspace{-5pt}
+
+\noindent That is is for the basic installation.
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... RedHat muffin}\label{how-to-redhat}
+\vspace{2mm}
+
+%------------------------------------------------
+
+No specific example is given at this time for \textbf{RedHat} ... refer to the installation instructions for \textbf{Ubuntu} in Section \ref{how-to-ubuntu}. Probably, not more installation will be needed. The \textbf{netCDF} requirements are the same.
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... macOS muffin}\label{how-to-macos}
+\vspace{2mm}
+
+This is a brief guide to installing \textbf{muffin} on a \textbf{Mac}. 
 
 \vspace{1mm}
-A series of (example) \texttt{cGENIE} configurations are provided, many of which are detailed in full in the \texttt{cGENIE} \textit{Tutorial} document.
-Example configurations comprise \textit{base-config} and \textit{user-config} files, plus any \textit{forcings} needed.
-\begin{itemize}[noitemsep]
-\item\texttt{cGENIE} \textit{base-configs} are stored in:
-\\ \texttt{~/cgenie/genie-main/configs}
-\\and all start with '\texttt{cgenie\_}', for example: \\ \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_hadcm3l\_eocene\_36x36x16\_2i\_080928\_BASE.config}
-\item \texttt{cGENIE} user configs are stored in:
-\\ \texttt{~/cgenie/genie-userconfigs}
-\item \texttt{cGENIE} forcings are stored in:
-\\ \texttt{~/cgenie/genie-forcings}
-\end{itemize}
+\noindent\rule{4cm}{0.1mm}
+\vspace{2mm}
+
+\noindent To install the \textbf{muffin} release of cGENIE on a Mac you will need a number of software packages, including Fortran, C++ and NetCDF. The best way to get hold of these is via a package management system, such as Homebrew (\href{}{https://brew.sh}) or MacPorts (\href{}{https://www.macports.org}). This guide is based on Homebrew, because it is slightly more user friendly than MacPorts, and is kept more up-to-date with changes in the Apple operating system. (If you are already a MacPorts user, please see Appendix~A.)
+
+\begin{enumerate}
+
+\item First of all, you will need XCode, which can be downloaded from the app store, or here... 
+\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads} \\After installing XCode, it is necessary to enable command line tools, by entering at the command line...\\
+\texttt{xcode-select --install} 
+
+% I think XCode automatically comes with Homebrew and command line tools enabled
+\item Get Homebrew by pasting the following at the terminal command line...
+\\ \texttt{/usr/bin/ruby -e "\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"}
+\\ Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesn't, see Appendix~B. 
+
+\item Install Fortran, C++, NetCDF and some other useful libraries at the command line (using Homebrew) as follows:
+
+% brew tap homebrew/science % deprecated in homebrew
+\vspace{-5pt}\begin{verbatim}
+brew install cmake
+brew install gcc
+brew install hdf5
+brew install netcdf
+brew install wget
+\end{verbatim}
+
+\item Get hold of a current copy of the \textbf{muffin} code:
+
+\begin{verbatim}
+git clone https://github.com/derpycode/cgenie.muffin
+\end{verbatim}
+
+\item Check your netcdf version number by entering \texttt{brew info netcdf}\\
+This will return several lines, but the key one gives the netcdf path, and should look something like:
+\vspace{-5pt}\begin{verbatim}
+/usr/local/Cellar/netcdf/4.6.1_2 (84 files, 6.2MB) *
+\end{verbatim}\vspace{-5pt}
+(This was from my most recent install, with version \texttt{4.6.1\_2})
+
+\item Adjust the cGENIE environment variables for your machine and netcdf installation by editing
+\\\texttt{cgenie.muffin/genie-main/user.mak}, setting:
+\vspace{-5pt}\begin{verbatim}
+MACHINE=OSX
+\end{verbatim}\vspace{-5pt}
+and
+\vspace{-5pt}\begin{verbatim}
+NETCDF_DIR=/usr/local/Cellar/netcdf/4.6.1_2
+\end{verbatim} \vspace{-5pt}
+to reflect your netcdf path (Step 5).
+
+\item Finally, in cgenie.muffin/genie-main/makefile.arc, comment out:
+\vspace{-5pt}\begin{verbatim}
+#NETCDF=
+   $(LIB_SEARCH_FLAG)$(PATH_QUOTE)$(NETCDF_DIR)/lib$(PATH_QUOTE) $(LIB_FLAG)$(NETCDF_NAME)
+\end{verbatim}\vspace{-5pt}
+and un-comment 
+\vspace{-5pt}\begin{verbatim}
+NETCDF_NAMEF=$(NETCDF_NAME)f
+NETCDF=$(LIB_SEARCH_FLAG)$(PATH_QUOTE)$(NETCDF_DIR)/lib$(PATH_QUOTE) 
+   $(LIB_FLAG)$(NETCDF_NAME) $(LIB_FLAG)$(NETCDF_NAME) $(LIB_FLAG)$(NETCDF_NAMEF)
+\end{verbatim}
+
+\item To test the code installation -- change directory to \texttt{cgenie.muffin/genie-main} and type:
+\vspace{-5pt}\begin{verbatim}
+make testbiogem
+\end{verbatim}\vspace{-5pt}
+This compiles a carbon cycle enabled configuration of \textit{c}GENIE and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. If you are unsuccessful here ... double-check the software and directory environment settings in \texttt{user.mak} (or \texttt{user.sh}) and for a netCDF error, check the value of the \texttt{NETCDF\_DIR} environment variable. (Refer to the User Manual for addition fault-finding tips.) If environment variables are changed: before re-trying the test, you will need to type:
+\vspace{-5pt}\begin{verbatim}
+make cleanall
+\end{verbatim}\vspace{-5pt}
+
+\end{enumerate}
+
+\noindent That is is for the basic installation.
+
+\newpage
+
+%------------------------------------------------
+%
+\subsection*{MacPorts}
+
+You are here because you have already installed MacPorts, presumably by following the instructions here:
+\\\href{https://www.macports.org/install.php}{https://www.macports.org/install.php}.
+You now have two options, either remove MacPorts entirely, replacing it with Homebrew, or install the required packages through MacPorts and a number of precompiled binaries.
+
+\subsubsection*{Option 1: Remove MacPorts from your system... (to be replaced by Homebrew)}
+
+\begin{enumerate}
+
+\item Back up your system (i.e. using Time Machine).
+
+\item To uninstall MacPorts, enter at the terminal:\\
+\texttt{sudo port -f uninstall installed}
+ 
+Then remove everything that is left from MacPorts: \\
+\texttt{sudo rm -rf /opt/local} \\
+\texttt{sudo rm -rf /Applications/DarwinPorts} \\
+\texttt{sudo rm -rf /Applications/MacPorts} \\
+\texttt{sudo rm -rf /Library/LaunchDaemons/org.macports.*} \\
+\texttt{sudo rm -rf /Library/Receipts/DarwinPorts*.pkg}\\
+\texttt{sudo rm -rf /Library/Receipts/MacPorts*.pkg} \\
+\texttt{sudo rm -rf /Library/StartupItems/DarwinPortsStartup} \\
+\texttt{sudo rm -rf /Library/Tcl/darwinports1.0} \\
+\texttt{sudo rm -rf /Library/Tcl/macports1.0} \\
+\texttt{sudo rm -rf \textasciitilde/.macports}
+
+Note that the \texttt{sudo} command is inserted before the \texttt{rm} (i.e. remove) command in order to enable the correct permissions.
+
+\item You may now continue with your installation as described in the main text. You may have to delete some files (using \texttt{sudo rm}), as recommended by \texttt{brew doctor}. 
+
+\end{enumerate}
+
+%------------------------------------------------
+%
+\subsubsection*{Option 2: Install required packages through MacPorts and precompiled binaries...}
+
+\begin{enumerate}
+
+\item First of all, synchronize your installation of MacPorts:
+\\\texttt{sudo port -v selfupdate} 
+
+\item Then install Netcdf and related C\(^{++}\) and Fortran libraries at the command line using MacPorts, as follows:
+
+\vspace{-5pt}\begin{verbatim}
+sudo port install netcdf
+sudo port install netcdf-cxx
+sudo port install netcdf-fortran
+\end{verbatim}
+
+\item Download precompiled fortran and C\(^{++}\)  binaries appropriate to your operating system (El Capitan \& Sierra, etc.) from \href{http://hpc.sourceforge.net}{http://hpc.sourceforge.net}. Install as follows, amending the file number to match your version of OSX (e.g. El Capitan \& Sierra are associated with the 7.1 binaries).
+
+\vspace{-5pt}\begin{verbatim}
+cd ~/Downloads/
+gunzip gcc-7.1-bin.tar.gz
+sudo tar -xvf gcc-7.1-bin.tar -C /.
+gunzip gfortran-7.1-bin.tar.gz 
+sudo tar -xvf gfortran-7.1-bin.tar -C /.
+\end{verbatim}
+
+If your operating system is not listed here, you will either have to wait until it is, or install Homebew.
+
+\end{enumerate}
+
+%------------------------------------------------
+%
+\subsection*{Errors}
+
+Errors identified by `\texttt{brew doctor}' are most likely associated with some incompatible files in your software libraries, perhaps from a previous installation of MacPorts. Try to follow the suggestions given to you by `\texttt{brew doctor}', deleting any problematic files (using \texttt{sudo rm} to overcome any permission issues). Note that you may wish to do a system backup first.
 
 %------------------------------------------------
 
