@@ -169,13 +169,13 @@ This is because you will forget immediately each time! ;)
 
 \subsection*{Software version naming conventions}
 
-You will be using the current version of the cGENIE Earth system model, code-named ‘\textbf{muffin}’ (if \textbf{Apple} can have ‘Leopard’, ‘Lion’ etc., I can haz a baked goods version naming convention, right?). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’. For brevity, the \textbf{cGENIE.muffin} model will be referenced by just ‘\textbf{muffin}’.
+You will be using the current version of the cGENIE Earth system model, code-named ‘\textbf{muffin}’ (if \textbf{Apple} can have ‘Leopard’, ‘Lion’ etc., I can haz a baked goods version naming convention). The documentation may not be fully consistent in this respect … and you may need to translate occurrences of e.g. a directory named ‘\texttt{cgenie}’ to ‘\texttt{cgenie.muffin}’. For brevity, the \textbf{cGENIE.muffin} model will be referenced by just ‘\textbf{muffin}’.
  
 %------------------------------------------------
 
 \subsection*{linux ...}
 
-The \textbf{(cGENIE.)muffin} model currently compiles and runs only under \textbf{linux}\footnote{For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)} (e.g. distributions such as \textbf{Ubuntu}) and unix-like operating systems (such as \textbf{macOS}). Furthermore, \textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or macOS equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press \small\textsf{Return}\normalsize, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
+The \textbf{(cGENIE.)muffin} model currently compiles and runs only under \textbf{linux}\footnote{For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)} (e.g. distributions such as \textbf{Ubuntu}) and unix-like operating systems (such as \textbf{macOS}). Furthermore, \textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or \textbf{macOS} equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press \small\textsf{Return}\normalsize, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
 The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the user-name, computer name, and current directory, e.g.:
 
@@ -183,15 +183,13 @@ The start of each line of the command line is indicated with something like: \te
 [username@host ~]$
 \end{verbatim}
 
-\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (represented by the \texttt{\~} symbol).
+\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer name ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (represented by the \texttt{\~} symbol).
 
 If you are not or not very familiar with the linux/unix command line – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see Section \ref{how-to-linux} (page \pageref{how-to-linux}).
 
 NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
 
-NOTE-the-second: In this manual, text  in grey represents instructions specific to using \textbf{Windoz} \textbf{PC}s, and hence may or will differ on different operating systems, e.g. if you have a \textbf{Macbook}. Other software choices for editing files or viewing results are possible as are other ways of configuring software and file editing/transferring methodologies.
-
-Do what suits you best – you can view the instructions as mostly representing an example methodology rather than a literal interpretation of the Constitution.
+NOTE-the-second: In places, instructions ma be given for specific programs and computer platforms and hence may differ slightly from the software reality in front of you. Use your judgement in translating such instructions. Many other alternative software choices exist for editing files or viewing results, as are other ways of configuring software and file editing/transferring methodologies. Do what suits you best – you can view such instructions where the occur as  representing an example methodology rather than a literal interpretation of the Constitution.
 
 %------------------------------------------------
 
@@ -257,7 +255,7 @@ This, and additional documentation (of varying degrees of up-to-date-ness) can b
 \item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
 \\Here, the \textbf{latex} source for the documentation lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the \textbf{git} repository. Make changes. Commit them locally. Make a 'pull request' ...}.
 \item On my \href{http://www.seao2.info/mycgenie.html}{website}.
-\\Here, are only compiled, PDF versions of the documentation and hence may be out-of-date.
+\\Here, are only compiled, PDF versions of the documentation are provided, and are likely to be somewhat out-of-date.
 \end{enumerate}
 
 %------------------------------------------------
@@ -265,8 +263,6 @@ This, and additional documentation (of varying degrees of up-to-date-ness) can b
 \subsection*{This document in particular}
 
 The instructions in general may not be bug-free – use your judgment.
-
-\noindent But they are guaranteed to be out-of-date.
 
 %------------------------------------------------
 
@@ -294,7 +290,7 @@ Log into your \textbf{linux}/\textbf{macOS} box!\footnote{If you fail at this st
 
 \begin{itemize}
 \item If logging in via a \textbf{linux}/\textbf{macOS} box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
-then you are probably already logged in! Otherwise, it will look like: \texttt{username@localname:\(\sim\)\$}}, e.g.
+then you are probably already logged in! Otherwise, it will look like: \texttt{username@localcomputername:\(\sim\)\$}}, e.g.
 \begin{verbatim}
 $ ssh username@clustername
 \end{verbatim}
@@ -308,17 +304,17 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 
 %------------------------------------------------
 
-\subsection{Installing and testing the model code}
+\subsection{Downloading the model code}
 
 The next step is to download a copy of the source code for \textbf{muffin}.
 
-As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form svn to git -- a “distributed” version control systems (DVCS). The address of the new (centralized) home for muffin is:
+As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form \textbf{svn} to \textbf{git} -- a “distributed” version control systems (DVCS). The address of the new (centralized) home for muffin is:
 
 \vspace{2mm}
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
 \vspace{2mm}
 
-\noindent \textbf{IMPORTANT}: the default name of the installation (\texttt{cgenie.muffin}) is the same as under svn. If you already have a previous (svn version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename\footnote{Or simply delete: \texttt{rm -f -r cgenie.muffin}} the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
+\noindent \textbf{IMPORTANT}: the default name of the installation (\texttt{cgenie.muffin}) is the same as under \textbf{svn}. If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename\footnote{Or simply delete: \texttt{rm -f -r cgenie.muffin}} the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
 
 \begin{verbatim}
 $ mv cgenie.muffin cgenie.muffin.svn
@@ -346,11 +342,11 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \end{enumerate}
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
+%------------------------------------------------
 
-\noindent You then need to configure some local environment setting so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to).
+\subsection{Configuring the code}
+
+\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to).
 
 \begin{itemize}
 
@@ -386,9 +382,9 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \end{itemize}
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
+%------------------------------------------------
+
+\subsection{Testing the model code}
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
  First, change directory (see: Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
@@ -413,10 +409,12 @@ $ make testbiogem
 
 \noindent You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line: 
 
+\small
 \begin{verbatim}
-./genie.job -t -k -f configs/eb_go_gs_ac_bg_test.xml -o /home/genie00/cgenie_output ...
--c /home/genie00/cgenie -g ../../cgenie -m "" > testbiogem.out;
+./genie.job -t -k -f configs/eb_go_gs_ac_bg_test.xml -o /home/genie00/cgenie_output
+   -c /home/genie00/cgenie -g ../../cgenie -m "" > testbiogem.out;
 \end{verbatim}
+\normalsize
 
 \noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
 
@@ -437,7 +435,7 @@ $ make cleanall
 \noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From genie-main:
 
 \begin{verbatim}
-$ ./installmuffin
+$ ./installmuffin.sh
 \end{verbatim}
 
 \noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as well as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
@@ -460,7 +458,7 @@ $ git status -uno
 $ git fetch
 \end{verbatim}
 
-\noindent which will 'download [new and modified] remote content but not update your local repo's working state'. If you now type \texttt{git status -uno}, git can tell you if there is newer content (e.g. '\texttt{Your branch is behind 'origin/master}'\footnote{\texttt{origin} is the origin of the repo -- GitHub, and \texttt{master} is the name of the branch, in this case, the default branch name.}). To merge in the fetched content:
+\noindent which will 'download [new and modified] remote content but not update your local repo's working state'. If you now type \texttt{git status -uno}, \textbf{git} can tell you if there is newer content (e.g. '\texttt{Your branch is behind 'origin/master}'\footnote{\texttt{origin} is the origin of the repo -- GitHub, and \texttt{master} is the name of the branch, in this case, the default branch name.}). To merge in the fetched content:
 
 \begin{verbatim}
 $ git merge
@@ -506,15 +504,18 @@ At the command-line (\texttt{\$}) in the genie-main directory (not your home dir
 $ ./runmuffin.sh #1 #2 #3 #4 (#5)
 \end{verbatim}
 
-In which you must list at least 4 parameters after ./runmuffin.sh, separated by S P A C E S and on a single continuous line (even if it ‘wraps’ around across 2 lines of the screen).
+\noindent(\uline{don't type it yet}!)
+
+The form of the command requires that you must list at least 4 parameters after \texttt{./runmuffin.sh}, separated by S P A C E S and on a single continuous line (even if it ‘wraps’ around across 2 lines of the screen).
 These parameters are:
 
+\vspace{2mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item ... is the name of the required base (or ‘basic’) configuration (‘base-config’) of the model.
-\item ... is the name of the subdirectory (if any) containing the user configuration (‘user-config’) file (i.e., the file containing the specification of a particular experiment). 
-\item ... is the name of the experiment itself. There must exist a file in the directory specified by parameter \#2 (LABS) with exactly the same name as you enter here for parameter \#3 (i.e. parameter \#3 points to a file in the directory given by parameter \#2).
-\item ... is the run length of the experiment in years – this must be entered as an integer.
+\item[\textbf{\#1}] ... is the name of the required base (or ‘basic’) configuration (‘\textit{base-config}’) of the model.
+\item[\textbf{\#2}] ... is the name of the subdirectory (if any) containing the user configuration (‘\textit{user-config}’) file (i.e., the file containing the specification of a particular experiment). 
+\item[\textbf{\#3}] ... is the name of the experiment itself. There must exist a file in the directory specified by parameter \#2 (\texttt{LABS}) with exactly the same name as you enter here for parameter \#3 (i.e. parameter \#3 points to a file in the directory given by parameter \#2).
+\item[\textbf{\#4}] ... is the run length of the experiment in years – this must be entered as an integer.
 \end{enumerate}
 
 There is also one optional (5th) parameter (described later).
@@ -523,17 +524,25 @@ There is also one optional (5th) parameter (described later).
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-As an example of running the cGENIE Earth system model:
-parameter \#1: The base config is: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worbe2.BASE}
-parameter \#2: The user config directory is: LABS
-parameter \#3: The user config file (the experiment name) is: \texttt{LAB\_0.EXAMPLE}
-parameter \#4: Run the experiment for ten years: 10
-parameter \#5: (There is no restart file, and so no 5th parameter needs to be passed …)
+As an example of running the \textbf{muffin} Earth system model:
+
+\vspace{2mm}
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item[\textbf{\#1}]: The base config is: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worbe2.BASE}
+\item[\textbf{\#2}]: The user config directory is: LABS
+\item[\textbf{\#3}]: The user config file (the experiment name) is: \texttt{LAB\_0.EXAMPLE}.
+\item[\textbf{\#4}]: Run the experiment for ten years: 10
+\item[\textbf{\#5}]: (There is no restart file, and so no 5th parameter needs to be passed …)
+\end{enumerate}
+
 The full command for your first example experiment, which you are going to issue from the \texttt{\~}\texttt{/cgenie.muffin/genie-main} directory, then looks like:
 
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 10
 \end{verbatim}
+
+\noindent(\uline{you can try it now}!)
 
 REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C E S are vital. Take care not to confuse an el (‘\texttt{l}’) with a one (‘\texttt{1}’) when typing this in ... (it is a ‘one’ here).
 
@@ -541,7 +550,7 @@ REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-What should happen is: First, you will end up twiddling your thumbs a while, as all the components of cGENIE are compiled from the raw source code (FORTRAN). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
+What should happen is: First, you will end up twiddling your thumbs a while, as all the components of \textbf{muffin} are compiled from the raw source code (\textbf{FORTRAN}). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
 
 \begin{itemize}
 \item[] \texttt{model year}  -- ... guess!
@@ -637,7 +646,7 @@ In this example, the output should look something like the following:
 
 \section{Model output}
 
-The first thing to note about output (i.e., saved results files) from \textbf{muffin} is that every science module saves its own results in its own sub-directory (and sometimes in very different and difficult-to-fathom ways …) – see Figure 1.1. All the sub-directories of results, plus copies of input parameters and the model executable, are gathered together in a directory that is assigned the same name as the experiment (= \textit{user-config} file name). The experiment results directories all live in:
+The first thing to note about output (i.e., saved results files) from \textbf{muffin} is that every science module saves its own results in its own sub-directory (and sometimes in very different and difficult-to-fathom ways …) – see Figure 1.1. All the sub-directories of results, plus copies of input parameters and the model executable, are gathered together in a directory that is assigned the same name as the experiment (== \textit{user-config} file name). The experiment results directories all live in:
 \begin{verbatim}
 ~/cgenie_output
 \end{verbatim}
@@ -677,7 +686,7 @@ The second data format for model output is much more closely spaced in time. Mod
 
 \subsection{File naming convention}
 
-The \textbf{BIOGEM} results directory will contain files with names of the form:
+The \texttt{biogem} results directory will contain files with names of the form:
 
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -700,7 +709,7 @@ The \textbf{BIOGEM} results directory will contain files with names of the form:
 
 \subsection{Time-series output}
 
-A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) data files is given in the \textbf{cGENIE} User Manual if you are really that bored. The files of most immediate use/relevance are:
+A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) data files is given in the \textbf{muffin} User Manual if you are really that bored. The files of most immediate use/relevance are:
 
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -718,7 +727,7 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 
 One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
 
-Instead – change to the experiment results directory and then to the \textbf{BIOGEM} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
+Instead – change to the experiment results directory and then to the \texttt{biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
 Note: The Secure File Transfer Client does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run 99 times out of 100, it is because the display of the Secure File Transfer Client needs to be refreshed -- there is an icon at the top of the program window or hit the ‘F5’ key.
 
@@ -728,7 +737,7 @@ Note: The Secure File Transfer Client does not automatically refresh the directo
 
 For your information and edification (only): Excel, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
 
-In Excel: Choose File then Open.  You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
+In \textbf{Excel}: Choose File then Open.  You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
 
 \textbf{MUTLAB} will ignore lines starting with a \%, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \%. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
 
@@ -736,13 +745,13 @@ In Excel: Choose File then Open.  You will want to select Files of Type ‘All F
 
 \subsection{2- and 3-D time-slice output}
 
-For the time-slice NetCDF (*.nc) files you will be using a program called ‘Panoply’. If you want your own (FREE!) copy of this utility, you can get it here (and is available for: Windoz, Mac, and linux operating systems): http://www.giss.nasa.gov/tools/panoply/.
+For the time-slice NetCDF (*.nc) files you will be using a program called \textbf{Panoply}. If you want your own (FREE!) copy of this utility, you can get it here (and is available for: \textbf{Windoz}, \textbf{Mac}, and linux operating systems): http://www.giss.nasa.gov/tools/panoply/.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-When you open the NetCDF file, you will be presented with a ‘Datasets and Variables’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘Long Name’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘Longitude-Latitude’ or ‘Latitude-Vertical’ plot (for the 2-D fields, the plot display will immediately open).
+\noindent When you open the NetCDF file, you will be presented with a ‘Datasets and Variables’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘Long Name’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘Longitude-Latitude’ or ‘Latitude-Vertical’ plot (for the 2-D fields, the plot display will immediately open).
 For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
 For the ‘Latitude-Vertical plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
 There is also an option for ‘Longitude-Vertical plots (which we will not use).
@@ -771,7 +780,7 @@ Explore different data fields and play with different ways of displaying them. A
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-To save plots in Panoply:
+To save plots in \textbf{Panoply}:
 File
 Save Image As …
 Then select the location, filename, and graphics format.
@@ -817,9 +826,9 @@ $ qstat -f
 \end{verbatim}\normalsize
 (\texttt{qstat -f -u "*"} will show all jobs on the cluster.)
 
-After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of 6 compute nodes, numbered 0-0 to 0-5), although it might briefly reside as a ‘PENDING JOB’. For each node, there are 24 processing cores, meaning that up to 24 instances of cGENIE can run simultaneously on each node (i.e., a total of 144 across the entire cluster). For an 8-level ocean based configuration of cGENIE, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a qstat –f command you can follow your job’s progress.
+After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of 6 compute nodes, numbered 0-0 to 0-5), although it might briefly reside as a ‘PENDING JOB’. For each node, there are 24 processing cores, meaning that up to 24 instances of \textbf{muffin} can run simultaneously on each node (i.e., a total of 144 across the entire cluster). For an 8-level ocean based configuration of \textbf{muffin}, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a qstat –f command you can follow your job’s progress.
 
-A rough rule of thumb is that 8-level ocean cGENIE @ a horizontal grid resolution of 36x36 will simulate about 1000 years per CPU hour. The 16-level version (which you will use later), runs at about 300-400 years per CPU hour.
+A rough rule of thumb is that 8-level ocean \textbf{muffin} @ a horizontal grid resolution of 36x36 will simulate about 1000 years per CPU hour. The 16-level version (which you will use later), runs at about 300-400 years per CPU hour.
 
 %------------------------------------------------
 
@@ -831,15 +840,15 @@ A rough rule of thumb is that 8-level ocean cGENIE @ a horizontal grid resolutio
 
 \vspace{2mm}
 
-For submitting jobs using Sun Grid Engine (SGE) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
+For submitting jobs using \textbf{Sun Grid Engine} (\textbf{SGE}) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
 \vspace{-2pt}\begin{verbatim}
 $ qsub -S /bin/bash runmuffin.sh <options>
 \end{verbatim}\vspace{-2pt}
-Here: the \texttt{-S /bin/bash} part is to ensure that SGE uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
+Here: the \texttt{-S /bin/bash} part is to ensure that \textbf{SGE} uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
 
-Take care that the installed FORTRAN compiler can be seen by the cluster nodes. If not, the \textit{c}GENIE executable must have already been built prior to submitting a job. The easiest way to do this is to run cGENIE interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
+Take care that the installed \textbf{FORTRAN} compiler can be seen by the cluster nodes. If not, the \textbf{muffin} executable must have already been built prior to submitting a job. The easiest way to do this is to run \textbf{muffin} interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
 
-Other useful submission options for SGE:
+Other useful submission options for \textbf{SGE}:
 
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -865,23 +874,24 @@ Other useful submission options for SGE:
         \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
         
         \item A complete example for one of the University of Bristol clusters would be:
+\small
         \vspace{-2pt}\begin{verbatim}$ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
         cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
+\normalsize
         which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
         Note that to redirect output as per in this particular example, the directory \texttt{\~{}cgenie\_log} \textbf{MUST} be present. I have no idea what happens if it is not ... but it can't be good ;)
         
 \end{itemize}
 
-\noindent You can check the status of the SGE job queue with the command:
+\noindent You can check the status of the \textbf{SGE} job queue\footnote{Depending on the cluster setup, it may be possible to graphically check what is going on via the www.} with the command:
 \vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
 and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
 
-Depending on the cluster setup, it may be possible to graphically check what is going on via the www. In an X window, enter:
-\vspace{-2pt}\begin{verbatim}$ ssh almond.ggy.bris.ac.uk
-$ firefox --no-remote &\end{verbatim}\vspace{-2pt}
-and follow the links: 'Cluster Status (Ganglia)', and then 'Job Queue' to get to the actual queue listing and cluster status.
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\noindent \textbf{NOTE}: It may be that the FORTRAN compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}.
+\noindent \textbf{NOTE}: It may be that the \textbf{FORTRAN} compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}.
 
 \noindent In other words; if you have just changed the model resolution or continental configuration, or number of tracers (i.e. changed the \textit{base-config}) or issued a \texttt{make cleanall} command you MUST briefly run your desired experiment (or equivalent) interactively (i.e., in the shell window) to ensure that everything is correctly compiled. For instance, either run the experiment for a couple of years or start the experiment for the desired full duration, but 'kill it' (Ctrl-C) once the experiment is running successfully.
 
@@ -903,10 +913,10 @@ It is important to note that there is nothing special about a restart – it is 
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent To experiment with using a restart, you will first need to download a file that has been created (a pre-run 10,000 year spin-up). To fetch this: Change to the \texttt{cgenie\_output} directory (perhaps by going ‘home’ first (cd <RETURN>), and then changing to \texttt{cgenie\_output} – refer to linux commands crib sheet and Figure 1.1), and type:
+\noindent To experiment with using a restart, you will first need to download a file that has been created (a pre-run 10,000 year spin-up). To fetch this: Change to the \texttt{cgenie\_output} directory (perhaps by going ‘home’ first (cd <RETURN>), and then changing to \texttt{cgenie\_output} – refer to linux commands HOW-TO and Figure 1.1), and type:
 
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie/labs/AWI.2017/LAB_0.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/LAB_0.SPIN.tar.gz
 \end{verbatim}
 
 This downloads an archived/compressed copy of the restart from a location on the interweb. Extract the contents of this archive by typing:
@@ -922,7 +932,7 @@ Finally, change directory back to \texttt{cgenie.muffin} and then \texttt{genie-
 \vspace{2mm}
 
 \noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the \texttt{runmuffin.sh} command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
-Create a new (\textit{user-config}) experiment configuration file in the: \\\texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., LAB\_0.EXAMPLE) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the \textit{user-config} file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to LAB\_0.NEW), and drag it back to the cluster directory \footnote{\texttt{~/cgenie.muffin/genie-userconfigs/LABS}} again.
+Create a new (\textit{user-config}) experiment configuration file in the: \\\texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., \texttt{LAB\_0.EXAMPLE}) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the \textit{user-config} file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to \texttt{LAB\_0.NEW}), and drag it back to the cluster directory \footnote{\texttt{~/cgenie.muffin/genie-userconfigs/LABS}} again.
 You specify the use of the restart state by adding the restart experiment name as the 5th parameter, e.g.:
 
 \small\begin{verbatim}
@@ -959,10 +969,10 @@ The run-time output should now look noticeably different. There should be no (or
 \section*{Readme}
 
 You will need to download a new restart file prior to embarking on the snowball Earth experiments.
-To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from the PDF ...):
+To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from this PDF ...):
 
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie/labs/AWI.2017/LAB_1.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
 \end{verbatim}
 
 This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has been run for 5,000 years for you. Extract the contents of this archive by typing:
@@ -971,9 +981,9 @@ This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN
 $ tar xfzv LAB_1.SPIN.tar.gz 
 \end{verbatim}
 
-A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself, and you could in fact have done so (remember to refresh the \textbf{WinSCP} directory view window).
+A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself, and you could in fact have done so (remember to refresh the \textbf{WinSCP} directory view window if you are using this particular software, or it might appear that nothing has been extracted).
 
-You’ll then need to change directory back to genie-main to run the model.
+You’ll then need to change directory back to \texttt{genie-main} to run the model.
 
 %------------------------------------------------
 
@@ -983,7 +993,7 @@ You’ll then need to change directory back to genie-main to run the model.
 
 \section{Brrrrrrrrrrrr – it’s chilly on ... snowball Earth!}
 
-To illustrate how ‘easy’ it can be to configure an Earth system model such as cGENIE and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of climate and see what happens. Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or CH4 in the atmosphere and hence presumably highly elevated compared to the modern World, so sort of the opposite of the problem we have today …
+To illustrate how ‘easy’ it can be to configure an Earth system model such as cGENIE and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of climate and see what happens. Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or \(CH_{4}\) in the atmosphere and hence presumably highly elevated compared to the modern World, so sort of the opposite of the problem we have today …
 
 \hfill \break
 \noindent\rule{4cm}{0.1mm}
@@ -994,7 +1004,7 @@ You are going to be running experiments similar to before and using the restart:
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.SPIN 
 \end{verbatim}\normalsize
   
-but rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE}, why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time. Also, be especially careful not to have 2 (or more) experiments running simultaneously with exactly the same name as they try and over-write each other in a somewhat entertaining way.
+\noindent but rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE} (which is provided for you), why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time. Also, be especially careful not to have 2 (or more) experiments running simultaneously with exactly the same name as they try and over-write each other in a somewhat entertaining way.
 
 Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
 
@@ -1010,7 +1020,7 @@ For this configuration, the solar constant is set weaker than modern to reflect 
 ma_genie_solar_constant= 1285.92
 \end{verbatim}
 
-\noindent(For reference, the modern value is 1368 W m-2.)
+\noindent and which is set at the top of the given \textit{user-config} file. (For reference, the modern value is 1368 W m-2.)
 
 Other questions to think about with regards to numerical modeling (and this experiment) are:
 
@@ -1028,9 +1038,9 @@ Other questions to think about with regards to numerical modeling (and this expe
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
+\noindent To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
 ‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’
-you are going to edit the file that controls the specific details of the experiment, the user-config file. From the genie-userconfigs/LABS directory, open one of the snowball experiments in the SciTE text editor. At the top of the file you should see something like:
+you are going to edit the file that controls the specific details of the experiment, the \textit{user-config} file. From the \texttt{genie-userconfigs/LABS} directory, open one of the snowball experiments in your preferred  text editor. At the top of the file you should see something like:
 
 \small\begin{verbatim}
 #
@@ -1038,11 +1048,11 @@ you are going to edit the file that controls the specific details of the experim
 # --- CLIMATE ---------------------------------------------------------
 #
 …
-# scaling for atmospheric \(CO_{2}\) radiative forcing, relative to 278 ppm
+# scaling for atmospheric CO2 radiative forcing, relative to 278 ppm
 ea_radfor_scl_co2=20.0
 \end{verbatim}\normalsize
 
-Each line that is not commented out (i.e., no \#) contains a parameter of the format:
+Each line that is not commented out (i.e., no \#) contains a parameter name and assigned value pair, with the format:
 \begin{verbatim}
 PARAMETER=VALUE
 \end{verbatim}
@@ -1054,7 +1064,7 @@ specifies a radiative forcing of climate by \(CO_{2}\) equivalent to x20 modern 
 \begin{verbatim}
 ea_radfor_scl_co2=1.0
 \end{verbatim}
-this would give you a modern (x1, or 1x278 = 278 ppm) radiative forcing. (Technically: pre-industrial rather than ‘modern’ per se.)
+this would give you a modern (x1, or 1x278 = 278 ppm) radiative forcing. (Technically: pre-industrial rather than ‘modern’ \textit{per se.})
 Note: \(CO_{2}\) is not being explicitly modeled in this experiment, but the long-wave radiative forcing associated with a specified concentration of \(CO_{2}\) (in ratio to modern) is being set instead.
 
 Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher) and save the file. Re-run the experiment to see whether sea-ice extent is approaching a new steady state. You may want to try even longer simulations (than 100 years) if it becomes clear that the model is still far from steady-state. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
@@ -1065,11 +1075,11 @@ HINT: By submitting the experiments to the cluster will allow you to run many ex
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-For each experiment you want to be assessing how far towards the Equator the sea-ice limit encroaches through some of the time-series and time-slice files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative time-series variables include (but not necessarily be limited to: atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
+\noindent For each experiment you want to be assessing how far towards the Equator the sea-ice limit encroaches through some of the time-series and time-slice files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative time-series variables include (but not necessarily be limited to: atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
 
-For the time-slice data: atmospheric and ocean surface temperature and sea-ice extent (2-D biogem NetCDF file) may be informative.
+For the time-slice data: atmospheric and ocean surface temperature and sea-ice extent (2-D biogem \textbf{NetCDF} file) may be informative.
 
-HINT: Be careful with the ‘Fit to data’ scaling feature in Panoply – at near complete sea-ice cover, you may find Panoply scaling min and max sea-ice between 99.1 and 99.9% or something. Specific fixed scale limits (e.g. 0 and 100) can be set instead.
+HINT: Be careful with the ‘Fit to data’ scaling feature in \textbf{Panoply} – at near complete sea-ice cover, you may find Panoply scaling min and max sea-ice between 99.1 and 99.9% or something. Specific fixed scale limits (e.g. 0 and 100) can be set instead.
 
 In answering the question think about what an appropriate degree of accuracy might be for your experiments. Just because computer models generally calculate to around 16 significant places of precision, does not mean you have 16 significant figures of accuracy (or realism). For instance – how many significant figures is the solar constant quoted to and what do you think is the uncertainty in this? Harder to judge is how the assumed (incorrect) continental configuration creates additional uncertainty, or the simple physics assumed in the ocean or sea-ice, or lack of snow on land … 
 
@@ -1079,7 +1089,9 @@ In answering the question think about what an appropriate degree of accuracy mig
 
 \noindent Once you are happy about the controls on the snowball threshold try and answer:
 
-\noindent \textbf{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
+\vspace{2mm}
+\noindent \textit{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
+\vspace{2mm}
 
 If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
 
@@ -1101,17 +1113,17 @@ Always be prepared to justify all your choices for experimental design and model
 
 \subsection{Feedback loop analysis}
 
-To quantify the snowball Earth hysteresis loop in cGENIE as per Figure 2 in Hyde et al. [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in cGENIE, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: Myhre et al. [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or IPCC [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence $~$130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
+To quantify the snowball Earth hysteresis loop in \textbf{muffin} as per Figure 2 in \textit{Hyde et al.} [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in \textbf{muffin}, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: \textit{Myhre et al.} [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or \textit{IPCC} [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence $~$130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
 
 For coming out of a snowball, because the \(CO_{2}\) and hence radiative forcing threshold is so high as compared to going in, you may want to be creative in the plotting (assuming attempting to combine both thresholds into a single plot) and, for instance, one might break the scale between the low radiative forcing interval spanning going in and the high one spanning coming out.
 
-Another example is as per Figures 3 and 4 in Stone and Yao [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to Stone and Yao [2004].
+Another example is as per Figures 3 and 4 in \textit{Stone and Yao} [2004] (Clim. Dyn. 22, 815–822) (although here it is the solar constant rather than long-wave radiation forcing that is being varied). So in fact, you could try varying the solar constant as an alternative to radiative forcing and hence be able to come up with a plot directly comparable to \textit{Stone and Yao} [2004].
 
 %------------------------------------------------
 
-\subsection{Continental configuration}
+\subsection{Continental configuration (1)}
 
-It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative base-configs are provided, each defining a different continental configuration:
+It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative \textit{base-configs} are provided, each defining a different continental configuration:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -1137,21 +1149,54 @@ cgenie.eb_go_gs_ac_bg.woreq2.NONE
  – two continents straddling the Equator, with an ocean resolution of 36x36 with 8 vertical levels.
 \end{enumerate}
    
-You can use the given user-config file (LAB\_1.EXAMPLE) as an experiment template and any of the alternative configurations can be run very similarly to as per before, i.e.:
+You can use the given \textit{user-config} file (\texttt{LAB\_1.EXAMPLE}) as an experiment template and any of the alternative configurations can be run very similarly to as per before, i.e.:
 
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.xxxxx.NONE LABS LAB_1.EXAMPLE 100
 \end{verbatim}
 
-Note that you are using a different base-config file name: cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE where xxxxx is one of: wopol1, wopol2, woreq1, or woreq2. 
+Note that you are using a different \textit{base-config} file name: \small\texttt{cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE}\normalsize \\where \texttt{xxxxx} is one of: wopol1, wopol2, woreq1, or woreq2. 
 Also note that no restarts are provided for these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the restart experiments for to achieve as close to steady-state as you think is ‘sufficient’). Remember that restarts are just ‘normal’ experiments that have already been run.
-Be careful that when changing from one base-config to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue - i.e., do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
+Be careful that when changing from one \textit{base-config} to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue - i.e., do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
+
+%------------------------------------------------
+
+\subsection{Continental configuration (2)}
+
+Although much useful can be learned from conceptual configurations and Worlds regarding climate dynamics, it is invariably aesthetically more 'pleasing' to also test ideas in a more paleogeographically realistic configuration. Provided is a set of \textit{base-config} and \textit{user-config} files (plus associated boundary conditions) for the position of the continents and climate 635 millions years ago (635 Ma).
+
+The \textit{base-config} is named: \texttt{muffin.CB.fm0635cb.NONE}
+
+The \textit{user-config }is: \texttt{muffin.CB.fm0635cb.NONE.EXAMPLE}
+
+A restart experiment is provided called \texttt{muffin.CB.fm0635cb.NONE.SPIN} and which can be downloaded as per before:
+
+\begin{verbatim}
+$ wget http://www.seao2.info/cgenie_output/muffin.CB.fm0635cb.NONE.SPIN.tar.gz
+\end{verbatim}
+
+\noindent and unpacked by:
+
+\begin{verbatim}
+$ tar xfzv muffin.CB.fm0635cb.NONE.SPIN.tar.gz
+\end{verbatim}
+
+\noindent (Remember: you should be in the \texttt{cgenie\_output} directory when you do this.)
+
+To run (e.g. for 100 years), following on from its restart experiment:
+
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CB.fm0635cb.NONE LABS muffin.CB.fm0635cb.NONE.EXAMPLE
+    100 muffin.CB.fm0635cb.NONE.SPIN
+\end{verbatim}
+
+\noindent (all one line)
 
 %------------------------------------------------
 
 \subsection{Geothermal heat input}
 
-Finally, cGENIE will fairly happily build up sea-ice, apparently without limit (with the remaining wet ocean becoming progressively colder and more saline). In the real world, one might expect some sort of limit to the maximum thickness achieved as the heat diffusion across a progressively greater thickness of sea-ice approaches the heat input at the bottom of the ocean from geothermal energy. Different modes of ocean circulation are also possible if one considers heating from the bottom as well as cooling (and brine rejection) from the top and which might affect the entry into or exit from a snowball state.
+Finally, \textbf{muffin} will fairly happily build up sea-ice, apparently without limit (with the remaining wet ocean becoming progressively colder and more saline). In the real world, one might expect some sort of limit to the maximum thickness achieved as the heat diffusion across a progressively greater thickness of sea-ice approaches the heat input at the bottom of the ocean from geothermal energy. Different modes of ocean circulation are also possible if one considers heating from the bottom as well as cooling (and brine rejection) from the top and which might affect the entry into or exit from a snowball state.
 
 In the experimental setup you have been given, a geothermal heat input is specified in the ocean circulation module via the following parameters:
 
@@ -1178,7 +1223,7 @@ gs_dosc=.true.
 
 The scientific question here in trying this would be whether or not taking into account a seasonally-varying climate substantially affects the entry (and/or exit) thresholds for a snowball climate state. (At least, whether it is important in the context of the resolution and physics of the model you are using.)
 
-You can also save the data seasonally if you like – see Section 5.2.3 in the User Manual (your configuration has 24 time-steps per year for the BIOGEM module for reference).
+You can also save the data seasonally if you like – see Section 12.2.3 in the User Manual (your configuration has 24 time-steps per year for the \textbf{BIOGEM} module for reference).
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER 3
@@ -1195,7 +1240,7 @@ You can also save the data seasonally if you like – see Section 5.2.3 in the U
 \noindent Stuff to keep in mind:
 
 \begin{itemize}
-\item Nothing at all – keep your mind completely empty and let the wonderful truths of \textbf{GENIE} permeate your entire being.
+\item Nothing at all – keep your mind completely empty and let the wonderful truths of \textbf{muffin} permeate your entire being.
 \end{itemize}
 
 \vspace{2mm}
@@ -1238,7 +1283,7 @@ You will need to download a new restart file prior to embarking on the experimen
 To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from the PDF ...):
 
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie/labs/AWI.2017/LAB_2.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/LAB_2.SPIN.tar.gz
 \end{verbatim}
 
 This downloads an archived/compressed copy of the 10,000 year \textit{spin-up} experiment \texttt{LAB\_2.SPIN}. Extract the contents of this archive by typing:
@@ -1257,9 +1302,9 @@ You’ll then need to change directory back to \texttt{genie-main} to run the mo
 
 \section{Tracing ocean circulation}
 
-The ocean biogeochemistry module (\textbf{BIOGEM}) in \textbf{cGENIE} provides a framework for applying time- and spatially-variable ‘forcings’ of the Earth system – fluxes or restored-to boundary conditions that can be prescribed for any gas, dissolved substance (including temperature and salinity), or particulate matter. Examples include freshwater input (== a negative salinity flux forcing) of the North Atlantic to alter ocean circulation, fossil fuel \(CO_{2}\) emissions to the atmosphere (== a \(CO_{2}\) gas flux forcing), or aeolian iron supply to the surface ocean (a 2-D dust flux forcing).
+The ocean biogeochemistry module (\textbf{BIOGEM}) in \textbf{muffin} provides a framework for applying time- and spatially-variable ‘forcings’ of the Earth system – fluxes or restored-to boundary conditions that can be prescribed for any gas, dissolved substance (including temperature and salinity), or particulate matter. Examples include freshwater input (== a negative salinity flux forcing) of the North Atlantic to alter ocean circulation, fossil fuel \(CO_{2}\) emissions to the atmosphere (== a \(CO_{2}\) gas flux forcing), or aeolian iron supply to the surface ocean (a 2-D dust flux forcing).
 
-For example: view the user-config file: \texttt{LAB\_2.colorinjection} – you will see the following lines (under the heading: ‘\texttt{\# --- FORCINGS ---}’)
+For example: view the \textit{user-config} file: \texttt{LAB\_2.colorinjection} – you will see the following lines (under the heading: ‘\texttt{\# --- FORCINGS ---}’)
 
 \begin{verbatim}
 bg_par_forcing_name="pyyyyz_Fred"
@@ -1269,21 +1314,20 @@ bg_par_force_point_k=8
 bg_par_ocn_force_scale_val_48=0.0
 \end{verbatim}
 
-The first line points \textbf{cGENIE} to a directory located in \texttt{cgenie.muffin/genie-forcings} that contains a set of files that define what geochemical property is going to be altered plus information about how the magnitude of the forcing changes with time.
+The first line points \textbf{muffin} to a directory located in \texttt{cgenie.muffin/genie-forcings} that contains a set of files that define what geochemical property is going to be altered plus information about how the magnitude of the forcing changes with time.
 
 There are then three lines (\texttt{bg\_par\_force\_point\_i=20}, ...) that specify the location in the ocean of the geochemical forcing is going to be applied. The point sources are specified in (i,j,k) coordinates, which in this case is (22,33,08). For the ocean model resolution we are using, the grid is 36x36x16, longitude (i) is counted from left-to-right (1 to 36); latitude (j) is counted from bottom-to-top (1 to 36); level depth (k) is counted from downwards top-to-bottom (16 down to 1). Thus, (22,33,08) is a release of tracer in the North Atlantic, a little south of Greenland, and intermediate depth (level = 8 out of 16). Refer to the Figures for how the horizontal (Figure \ref{fig:ch3-ijgrid}) and vertical (Figure \ref{fig:ch3-kgrid}) grid is specified.
 
 Finally, there is a scaling parameter (\texttt{bg\_par\_ocn\_force\_scale\_val\_48}) which modifies the magnitude of the flux to be applied (in units of \(mol yr^{-1}\)).
 
-(Section 4 in the User Manual describes the original and most flexible provision for applying time-dependent \textit{forcings}.)
+(See the '\textit{force the system}' HOW-TO for a description of the original and most flexible provision for applying time-dependent \textit{forcings}.)
 
 
 \begin{figure}
 \includegraphics[width=0.8\textwidth]{ch3-ijgrid.png}\centering
 \vspace{-0mm}
 \caption{
-\textbf{cGENIE grid (\(36\times36\) ‘worjh2’ configuration).} 
-Light blue numbers are the ‘i’ co-ordinates. Green numbers are the ‘j’ co-ordinates.
+\textbf{The  muffin grid for a modern \(36\times36\) ‘worjh2’ configuration.} Light blue numbers are the ‘i’ co-ordinates. Green numbers are the ‘j’ co-ordinates.
 The depth of the ocean at any location is indicated by its ‘k’ value – a number between 1 and 16, with 16 being the surface layer of the ocean, and 1 the maximum possible depth anywhere.
 Numbers > 90 (91, 92, 93, 94) and shaded grey are land (and specify the direction of run-off).
 Location (22,33,08) is highlighted in yellow.
@@ -1295,7 +1339,7 @@ The longitude of the western edge of the grid is at 260W, and the increments are
 \begin{figure}
 \includegraphics[width=0.4\textwidth]{ch3-kgrid.png}\centering
 \vspace{-0mm}
-\caption{\textbf{cGENIE ocean vertical level definitions.}}
+\caption{\textbf{The muffin ocean vertical level definitions for a modern 16-level ocean grid.}}
 \label{fig:ch3-kgrid}
 \end{figure}
 
@@ -1303,13 +1347,13 @@ The longitude of the western edge of the grid is at 260W, and the increments are
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-You are going to run a brief experiment in which you will be injecting a conservative ‘dye’ tracer in the ocean. BIOGEM has two tracers defined for this purpose – ‘blue’ and ‘red’. Open the user-config file: LAB\_2.colorinjection and edit the parameter controlling the flux of red dye to read:
+\noindent You are going to run a brief experiment in which you will be injecting a conservative ‘dye’ tracer in the ocean. \textbf{BIOGEM} has two tracers defined for this purpose – ‘blue’ and ‘red’. Open the \textit{user-config} file: \texttt{LAB\_2.colorinjection} and edit the parameter controlling the flux of red dye to read:
 
 \begin{verbatim}
 bg_par_ocn_force_scale_val_48=1.0E12
 \end{verbatim}
 
-\noindent which specifies a flux of 1.0x1012 (mol yr-1) rather than zero as given.
+\noindent which specifies a flux of \(1.0\times10^{12}\) ( \(mol yr^{-1}\)) rather than zero as given\footnote{i.e. don't leave the value as zero ... otherwise you'll have no flux forcing applied and will not see anything happen ...}.
 
 The \textit{base-config} you will be using is different from previously: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.rb} – this specifies a 16 vertical levels ocean and also includes seasonality of solar insolation.
 
@@ -1317,35 +1361,35 @@ The \textit{base-config} you will be using is different from previously: \texttt
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-Run the model for … whatever, 20 years will do. Use the restart experiment you have just downloaded to start from: 
+\noindent Run the model for … whatever, 20 years will do. Use the \textit{restart} experiment that you have just downloaded to start from: 
 
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
   LAB_2.colorinjection 20 LAB_2.SPIN
 \end{verbatim}
 
-View the results – how the Red tracer distribution evolves – in the time-slice files (full ocean/atmosphere) properties saved in the netCDF format (.nc) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D netCDF file. Note that Panoply appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
+View the results – for instance how the Red tracer distribution evolves with time – in the time-slice files (full ocean/atmosphere) properties saved in the \textbf{netCDF} format (\texttt{.nc}) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D \textbf{netCDF} file. Note that \textbf{Panoply} appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
 
-You can also view the tracer distributions in terms of a water-column integrated tracer inventory (netCDF variable name: ocn\_int\_colr; long name: colr water-column integrated tracer inventory) in the 2D netCDF output. (See: Sabine et al. [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file 
+You can also view the tracer distributions in terms of a water-column integrated tracer inventory (\textbf{netCDF} variable name: \texttt{ocn\_int\_colr}; long name: colr water-column integrated tracer inventory) in the 2D \textbf{netCDF} output. (See: \textit{Sabine et al.} [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file 
 
 \begin{verbatim}
 biogem_series_ocn_colr.res.
 \end{verbatim}
 
-You can also plot the overturning circulation from the 2D netCDF file – variable phys\_opsi == global overturning streamfunction, phys\_opsia == overturning in the Atlantic to provide a visualization of the large-scale ocean circulation that drives tracer movement.
+You can also plot the overturning circulation from the 2D netCDF file – variable phys\_opsi == global overturning streamfunction, \texttt{phys\_opsia} == overturning in the Atlantic to provide a visualization of the large-scale ocean circulation that drives tracer movement.
 
-Spend a little while altering the flux (bg\_par\_ocn\_force\_scale\_val\_48) and/or location (bg\_par\_force\_point\_i, bg\_par\_force\_point\_j, bg\_par\_force\_point\_k) of tracer input. Note how you can use ‘tracers’ to help diagnose (and better understand) the circulation of the ocean.
+Spend a little while altering the flux (\texttt{bg\_par\_ocn\_force\_scale\_val\_48}) and/or location (\texttt{bg\_par\_force\_point\_i}, \texttt{bg\_par\_force\_point\_j, bg\_par\_force\_point\_k}) of tracer input. Overall -- note how you can use numerical ‘tracers’ to help diagnose (and better understand) the circulation of the ocean.
 
 \hfill \break
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-An interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the cGENIE ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
+\noindent An interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the \textbf{muffin} ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
 
 Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g., 20 or 50 years (from the provided spin-up). Then:
 
 \begin{enumerate}[noitemsep]
-\item View the dye-tagged plume of Mediterranean Intermediate Water by plotting a lat-lon slice (from the 3D netCDF file). This will give you the depth of the plume. How does this compare with salinity observations (salinity observations and appropriate global datasets can be found on the web with a little patience)? You can also view the water-column integrated distribution (2D netCDF).
+\item View the dye-tagged plume of Mediterranean Intermediate Water by plotting a lat-lon slice (from the 3D \textbf{netCDF} file). This will give you the depth of the plume. How does this compare with salinity observations (salinity observations and appropriate global datasets can be found on the web with a little patience)? You can also view the water-column integrated distribution (2D \textbf{netCDF}).
 \item Try viewing the plume via a lat-depth slice. Refer to the figure to determine the ‘i’ value up the Atlantic that will just graze the edge of what passes for Spain at this low model resolution. Which direction does it head after exiting the Mediterranean? Is this ‘realistic’?
 \end{enumerate}
 
@@ -1359,9 +1403,9 @@ Simply specify a dye injection somewhere in the Mediterranean (be careful with t
 
 Instead of adding a dye tracer, you could add fresh water to assess the sensitivity of the Atlantic Meridional Overturning Circulation (AMOC) to collapse in a classic ‘hosing’ experiment.
 
-The user-config file for this is called: LAB.2.hosing. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)!
+The \textit{user-config} file for this is called: \texttt{LAB.2.hosing}. The default (i,j) location of the flux input is the same (as the dye tracer), but now the injection at the surface (level: k=16). Note that the forcing of the salinity tracer is negative (freshwater = negative salinity compared to sea-water)!
 
-To orientate you in freshwater forcing space: bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17 should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3}$ s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
+To orientate you in freshwater forcing space: \texttt{bg\_par\_ocn\_force\_scale\_val\_2=-2.0E17} should be sufficient to make ‘stuff happen’ and quickly. BUT, this is a pretty extreme flux (see overleaf for a rough conversion between salinity forcing units (mol yr$^{-1}$) and fresh water flux (in m$^{3}$ s$^{-1}$ or Sv). Much more than this and the model may crash or at the very least, you’ll be left with a large freshwater pond in the North Atlantic … (See later (Section 1.6e) for some exciting discussion on units!)
 
 To run the model for e.g., 20 years using the same restart:
 
@@ -1370,11 +1414,11 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
   LAB_2.hosing 20 LAB_2.SPIN
 \end{verbatim}
 
-20 years should be long enough to see a collapse start to occur, but you might want to run the model for longer (and it can be submitted as a job, of course). Running for longer will also allow you to have a smaller, less extreme (and maybe more realistic) freshwater input flux.
+\noindent 20 years should be long enough to see a collapse start to occur, but you might want to run the model for longer (and it can be submitted as a job, of course). Running for longer will also allow you to have a smaller, less extreme (and maybe more realistic) freshwater input flux.
 
-The most obvious property of the Earth system to follow is the Atlantic overturning strength (biogem\_series\_misc\_opsi.res). The AMOC stream-function (in fields\_biogem\_2d.nc 2-D time-slice netCDF results file, field: phys\_opsia) is also illustrative. You can also try and identify the salinity anomaly (see below) due to freshwater input in the 3D salinity tracer field.
+The most obvious property of the Earth system to follow is the Atlantic overturning strength (\texttt{biogem\_series\_misc\_opsi.res}). The AMOC stream-function (in \texttt{fields\_biogem\_2d.nc} 2-D time-slice \textbf{netCDF} results file, field: \texttt{phys\_opsia}) is also illustrative. You can also try and identify the salinity anomaly (see below) due to freshwater input in the 3D salinity tracer field.
 
-There are also important impacts on surface air temperatures and maybe sea-ice extent (in fields\_biogem\_2d.nc). Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
+There are also important impacts on surface air temperatures and maybe sea-ice extent (in \texttt{fields\_biogem\_2d.nc)}. Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
 
 Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e., running multiple experiments at once in the background).
 
@@ -1382,11 +1426,11 @@ Note that as the model is running rather s l o w e r than in the snowball config
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-To more easily assess some of these impacts (and for other sorts of analysis) it is possible to create an anomaly (difference) map in Panoply:
+\noindent To more easily assess some of these impacts (and for other sorts of analysis) it is possible to create an anomaly (difference) map in \textbf{Panoply}:
 
 \begin{enumerate}[noitemsep]
-\item  First open a dataset, e.g., atm\_temp (surface air temperature) in the 2D netCDF file. You can either double-click the variable name, or, with the variable name highlighted, click the ‘Create Plot’ icon.
-\item Now, with the atm\_temp still selected (and the first plot window still open), click on the ‘Combine Plot’ icon. A dialogue box will appear and ask you to select a plot to combine the new one with. Make sure the name of your first plot window is selected/highlighted. Click ‘Combine’. OR, simply drag a second dataset into the plot window of the first dataset.
+\item  First open a dataset, e.g., \texttt{atm\_temp} (surface air temperature) in the 2D \textbf{netCDF} file. You can either double-click the variable name, or, with the variable name highlighted, click the ‘Create Plot’ icon.
+\item Now, with the \texttt{atm\_temp} still selected (and the first plot window still open), click on the ‘Combine Plot’ icon. A dialogue box will appear and ask you to select a plot to combine the new one with. Make sure the name of your first plot window is selected/highlighted. Click ‘Combine’. OR, simply drag a second dataset into the plot window of the first dataset.
 \item You now have a plot window that by default it is showing you the difference between two identical (in time) slices. The two different slices are labeled Array 1 (LH side) and Array 2 (RH side).
 \end{enumerate}
 
@@ -1394,12 +1438,12 @@ Keep one array (Array 1) fixed to the initial (year 1 (centered on 0.5)) and var
 
 Note that you can switch off the auto-scaling feature (Always fit to data) and center the scale so that no change is white, with positive deviations = red and negative = blue by clicking on Center on 0 (an often used convention in climate field plotting).
 
-2 example plots (using Panoply) are shown in Figure \ref{fig:ch3-amoc1} and Figure \ref{fig:ch3-amoc2}. 
+2 example plots (using \textbf{Panoply}) are shown in Figure \ref{fig:ch3-amoc1} and Figure \ref{fig:ch3-amoc2}. 
 
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-amoc1.png}\centering
 \vspace{-0mm}
-\caption{Example plot of (normal/default modern) overturning streamfunction (2D netCDF file). (e.g., for Atlantic: netCDF parameter name: phys\_opsia, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
+\caption{Example plot of (normal/default modern) overturning streamfunction (2D \textbf{netCDF} file). (e.g., for Atlantic: \textbf{netCDF} parameter name: \texttt{phys\_opsia}, long-name: Atlantic streamfunction). Note that autoscaling has been turned off and the min and max plotting limits set manually. By convention, streamfunctions are plotted with their scale symmetrical around zero, giving red and ‘warm’ colors for positive value and clockwise overturning, and blues and ‘cold’ colors for negative values and anti-clockwise overturning. Also shown is the same for the Pacific. (The plots have been tart-ed up by overlaying solid contours plus contour labels.)}
 \label{fig:ch3-amoc1}
 \end{figure}
 
@@ -1414,17 +1458,17 @@ Note that you can switch off the auto-scaling feature (Always fit to data) and c
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-You can also plot ocean current fields which is sort-of fun and maybe even informative(!):
+\noindent You can also plot ocean current fields which is sort-of fun and maybe even informative(!):
 
 \begin{enumerate}[noitemsep]
-\item  In the 3D netCDF file, the three components of ocean velocity are represented by the variables: ocean velocity – u (Eastwards), ocean velocity – v (Northwards), and ocean velocity – w (upwards). 2. Open up velocity – u. Chose ‘lon-lat’.
+\item  In the 3D \textbf{netCDF} file, the three components of ocean velocity are represented by the variables: ocean velocity – u (Eastwards), ocean velocity – v (Northwards), and ocean velocity – w (upwards). 2. Open up velocity – u. Chose ‘lon-lat’.
 \item Select/highlight velocity – v. and click on the ‘Combine Plot’ icon (as per before).
 \item Rather than a difference map, which is what you get by default, i.e., ‘Array 1 – Array 2’ – from the drop-down menu (next to the ‘Interpolate’ button) select ‘Vector Magnitude’.
-\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g., 0.1. (On a Mac, look under the ‘Vectors’ tab for a ‘Reference Value’ to something like 0.1.)  When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
+\item You should have a color contoured (or not if you prefer plotting without contouring on) map of ocean current speed, with velocity vectors (direction and magnitude) overlain. You’ll need to re-scale the velocity vectors to properly see them – from the ‘Contours and Vectors’ tab – change the ‘Scale Length’ to e.g., 0.1. (On a \textbf{Mac}, look under the ‘Vectors’ tab for a ‘Reference Value’ to something like 0.1.)  When fresh-water hosing – look out for impacts on the N. Atlantic current system associated with the AMOC.
 \item You can repeat this for deeper depth levels in the ocean – e.g., between about 1500 and 2000 m is a good place to go looking for the Western boundary current (and AMOC return) in the model (such as it exists at this low resolution) but you’ll need to re-scale the velocity vectors again (e.g., to 0.01 to less).
 \end{enumerate}
 
-Two example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
+Two example plots (using \textbf{Panoply}) are shown in Figure \ref{fig:ch3-currents1} and Figure \ref{fig:ch3-currents2}. 
 
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{ch3-currents1.png}\centering
@@ -1444,7 +1488,7 @@ Two example plots (using Panoply) are shown in Figure \ref{fig:ch3-currents1} an
 \noindent\rule{4cm}{0.1mm}
 \hfill \break
 
-\noindent Finally, a brief note on units ... the freshwater forcing is implemented as negative salinity, just to really screw with your mind. The generic internal \textbf{cGENIE.muffin} model units for the forcing end up as \(PSU kg^{-1} yr^{-1}\). Which sort of does not make much sense ...
+\noindent Finally, a brief note on units ... the freshwater forcing is implemented as negative salinity, just to really screw with your mind. The generic internal \textbf{muffin} model units for the forcing end up as \(PSU kg^{-1} yr^{-1}\). Which sort of does not make much sense ...
 
 Start, by thinking of a value of \texttt{bg\_par\_ocn\_force\_scale\_val\_2} of \(-34.9\) as equivalent to taking all the salt out of \(1 kg\) of freshwater (since the mean global salinity is \(34.9 PSU\)). Or equivalently, since the ocean volume is fixed, an applied forcing value of \(-34.9\) is equivalent to adding \(1 kg\) of freshwater to a (surface) box. So, a value of \texttt{bg\_par\_ocn\_force\_scale\_val\_2} of \(-3.49\times10^{4}\) (\(-3.49E04)\) would be a flux of \(1 m^{3} yr^{-1}\) (\(1000 kg m^{-3}\)) of freshwater.
 
@@ -1492,6 +1536,51 @@ Potentially interesting properties of the Earth system to look at include sea-ic
 
 \textbf{How much radiative forcing is required to collapse the AMOC? What atmospheric \(CO_{2}\) value does this approximately correspond to?
 }
+
+%------------------------------------------------
+
+\subsection{Ventilation age tracers}
+
+\textbf{muffin} has the capability to employ/simulate a ventilation age tracer -- a number tracer in the ocean that tracks the time since a parcel of water last 'saw' the surface.
+
+To do this, requires both 'red' and 'blue' numerical tracers as before. However, \textbf{muffin} can be directly to automatically apply the forcings necessary in order to simulate water mass ventilation age.
+
+Under the '\textit{screw with and/or diagnose the climate system}' HOW-DO -- see '\textit{Add a water mass age tracer}' (and the 'easy'/automatic method described towards the end of that section).
+
+Provided is an additional \textit{user-config} file: \texttt{muffin.worjh2.NONE\_colage.EXAMPLE}
+
+A restart experiment is provided called \texttt{muffin.worjh2.NONE\_colage.SPIN} and which can be downloaded as per before:
+
+\small
+\begin{verbatim}
+$ wget http://www.seao2.info/cgenie_output/muffin.worjh2.NONE_colage.SPIN.tar.gz
+\end{verbatim}
+\normalsize
+
+\noindent and unpacked by:
+
+\begin{verbatim}
+$ tar xfzv muffin.worjh2.NONE_colage.SPIN.tar.gz
+\end{verbatim}
+
+\noindent (Remember: you should be in the \texttt{cgenie\_output} directory when you do this.)
+
+To run (e.g. for 10 years), following on from its restart experiment:
+
+\small
+\begin{verbatim}
+$ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS muffin.worjh2.NONE_colage.EXAMPLE
+    10 muffin.worjh2.NONE_colage.SPIN
+\end{verbatim}
+\normalsize
+
+\noindent (all one line)
+
+In the 3D netCDF output file -- \texttt{misc\_col\_Dage} is the output variable that is the calculated ventilation age.
+
+First -- explore the distribution of water mass age and think about the physical ocean circulations reasons for this. Are all the modelled distributions 'reasonable'? Are there indicators of facets of the simulated circulation that are not particularly realistic? Try plotting both lon-lat and lat-depth slices through the ocean.
+
+Secondly -- you could additionally combine this experiment configuration with fresh water hosing, or a prescribed radiative forcing (and warming), and explore how ocean ventilation responds as ocean circulation changes.
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER 4
