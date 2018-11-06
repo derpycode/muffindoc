@@ -7256,10 +7256,9 @@ Two possibilities:
 \vspace{1mm}
         \item \textbf{By just prescribing just the POC flux}
                 \\An alternative has been provided enabling a full biological productivity in the surface ocean, but controlled by prescribing just the particulate organic carbon export flux. This 'biological' scheme is selected with:
-\vspace{-5.1mm}\begin{verbatim}bg_par_bio_prodopt="bio_POCflux"\end{verbatim}\vspace{-5.1mm}
+\vspace{-2.5mm}\begin{verbatim}bg_par_bio_prodopt="bio_POCflux"\end{verbatim}\vspace{-2.5mm}
 What happens in practice is that the POC flux is used to calculate the equivalent PO4 change in the surface ocean, and then this is passed to the biological scheme and export production calculated 'as usual'. (The POC flux forcing is set to zero once the associated PO4 (uptake) flux has been calculated.)
-                \\A particulate (sediment tracer) flux forcing for POC in the surface ocean still has to be defined and selected, but no other \textit{forcings} (including the associated removed dissolved tracers) are required. An example forcing configuration is given in \texttt{worjh2.FPOC\_Caoetal2009} (and selected by:
-\vspace{-1mm}\begin{verbatim}bg_par_forcing_name="worjh2.FPOC_Caoetal2009"\end{verbatim}\vspace{-1mm})
+                \\A particulate (sediment tracer) flux forcing for POC in the surface ocean still has to be defined and selected, but no other \textit{forcings} (including the associated removed dissolved tracers) are required. An example forcing configuration is given in \texttt{worjh2.FPOC\_Caoetal2009} (and selected by: \texttt{bg\_par\_forcing\_name="worjh2.FPOC\_Caoetal2009"})
 An example \textit{user-config}: \texttt{EXAMPLE.worjh2.Caoetal2009\_FPOC} illustrating this is provided.
 
 \noindent \textbf{NOTE}: Take care with dissolved organic matter (DOM) production, as the specified POC flux is automatically increased to take into account DOM production. i.e. is 50\% of export is specified to be partitioned into dissolved rather than particulate organic matter export, whatever is specified in the POC export forcing would be internally doubled, before being partitioned into POM and DOM.
@@ -7273,8 +7272,6 @@ An example \textit{user-config}: \texttt{EXAMPLE.worjh2.Caoetal2009\_FPOC} illus
 \subsubsection{Include a R-DOM cycle in the ocean}
 \vspace{1mm}
 
-\subsubsection{R-DOM degradation}
-
 The parameter: \texttt{bg\_ctrl\_bio\_remin\_RDOM\_photolysis} determines whether RDOM degradation is restricted to the surface layer and occurs only by/associated with photolysis. It can be \texttt{.true.} or \texttt{.false.} and by default is set to:
 \vspace{-2pt}\begin{verbatim}
 bg_ctrl_bio_remin_RDOM_photolysis=.false.
@@ -7286,20 +7283,21 @@ When set \texttt{.true.}, RDOM degradation is set to zero everywhere in the ocea
 \subsubsection{Include a Cd cycle in the ocean}
 \vspace{1mm}
 
-In order to run cGENIE with ocean cadmium cycle, the following \textit{base config}: \\ \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_itfclsd\_16l\_JH\_BASEFeCd} is provided.
+In order to run cGENIE with ocean cadmium cycle, the following \textit{base config}: \\ 
+\texttt{cgenie\_eb\_go\_gs\_ac\_bg\_itfclsd\_16l\_JH\_BASEFeCd} is provided.
 
 A typical experiment command line, using the \textit{user config} file: \texttt{EXAMPLE\_worjh2\_PO4Fe\_Cd\_SPIN} (also provided under SVN), would look like:
-\vspace{-5.1mm}\begin{verbatim}
+\vspace{-4pt}\begin{verbatim}
 ./runCCgenie.sh cgenie_eb_go_gs_ac_bg_itfclsd_16l_JH_FeCdBASE /
   EXAMPLE_worjh2_FeCd_SPIN 11
-\end{verbatim}\vspace{-5.1mm}
+\end{verbatim}\vspace{-4pt}
 
 To submit this job to the cluster (from \$HOME):
-\vspace{-5.1mm}\begin{verbatim}
+\vspace{-4pt}\begin{verbatim}
 qsub -q kitten.q -j y -o cgenie_log -S
   /bin/bash subcgenie.sh cgenie_eb_go_gs_ac_bg_itfclsd_16l_JH_BASEFeCd /
   EXAMPLE_worjh2_PO4Fe_Cd_SPIN 10001
-\end{verbatim}\vspace{-5.1mm}
+\end{verbatim}\vspace{-4pt}
 
 %------------------------------------------------
 %
@@ -7314,7 +7312,7 @@ cgenie.eb_go_gs_ac_bg.worbe2.BASESI
 \end{verbatim}\vspace{-1mm}
 Of these, recommended is one of the 16-level ocean \texttt{worjh2} configurations\footnote{The difference between the two \texttt{worjh2} configurations is that one (with the '\texttt{S}' in '\texttt{BASESI}' also includes a sulphur cycle.} as the oxygen minimum zones in the 8-level ocean \texttt{worbe2} configuration are much more poorly developed (see \textit{Ridgwell et al.} [2007a]).
 
-Example configurations of several different levels of complexity of iodine cycling are given in the follow sesions. 
+Example configurations of several different levels of complexity of iodine cycling are given in the follow sections. 
 
 %------------------------------------------------
 %
@@ -7399,6 +7397,53 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
+
+%------------------------------------------------
+%
+\subsubsection{Include 'preformed' tracers}
+\vspace{1mm}
+
+Preformed tracers are selected via 2 modifications:
+
+\vspace{2mm}
+\begin{enumerate}
+\vspace{1mm}
+\item By setting the parameter:
+\\\texttt{bg\_ctrl\_bio\_preformed=.true.}
+\vspace{1mm}
+\item By including sufficient/appropriate color tracers in the \textit{base-config}.
+\end{enumerate}
+\vspace{2mm}
+
+A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
+
+\begin{table}[ht]
+%\caption{Preformed tracers} % title of Table
+%\centering % used for centering table
+\begin{tabular}{l l l} % left-hand alligned columns (3 columns)
+\hline\hline %inserts double horizontal lines
+Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+57 & \texttt{io\_col0} & \(DIC\) \\ 
+58 & \texttt{io\_col1} & \(ALK\) \\
+59 & \texttt{io\_col2} & \(O_{2}\) \\
+60 & \texttt{io\_col3} & \(PO_{4}\) \\
+61 & \texttt{io\_col4} & \(NO_{3}\) \\
+62 & \texttt{io\_col5} & \(Ca\) \\
+63 & \texttt{io\_col6} & \(SiO_{2}\) \\
+64 & \texttt{io\_col7} & \(\delta^{13}C\;of\;DIC\) \\
+65 & \texttt{io\_col8} & (NOT CURRENTLY USED) \\
+66 & \texttt{io\_col9} & (NOT CURRENTLY USED) \\
+[1pt] % [1ex] adds vertical space
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+\noindent (Obviously, you need to have the respective ocean tracer selected.)
+
+One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem tracer.
 
 %------------------------------------------------
 
