@@ -5,6 +5,7 @@
 % ---------------------------------------------------------------------------------------------------------------------------------
 % 10/12/05: tidying-up and minor fixes
 % 11/03/24: tidying-up and minor fixes
+% 18/12/01: JS updated ocean and sediment tracers
 % ---------------------------------------------------------------------------------------------------------------------------------
 
 \documentclass[english,10pt,twoside]{article}
@@ -25,7 +26,7 @@
 \usepackage{wasysym}
 
 \title{A brief guide to cGENIE parameters ('namelists')}
-\author{Babette Hoogakker}
+\author{Babette Hoogakker, Jun Shao}
 \date{\today}
 
 \begin{document}
@@ -84,7 +85,7 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    ia\_pN2O & 14 & .false. & logical & 0.0 & atm & nitrous oxide (N$_{2}$O) \\ \hline
    ia\_pN2O\_15N & 15 & .false. & logical & 0.0 & \permil & $^{15}$N of N$_{2}$O \\ \hline
    ia\_pH2S & 16 & .false. & logical & 0.0 & atm & hydrogen sulphide (H$_{2}$S) \\ \hline
-   ia-pH2S\_34S & 17 & .false. & logical & 0.0 & \permil & $^{32}$S of H$_{2}$S \\ \hline
+   ia-pH2S\_34S & 17 & .false. & logical & 0.0 & \permil & $^{34}$S of H$_{2}$S \\ \hline
    ia\_pCFC11 & 18 & .false. & logical & 0.0 & atm & CFC-11 \\ \hline
    ia\_pCFC12 & 19 & .false. & logical & 0.0 & atm & CFC-12 \\ \hline
    \end{tabular}
@@ -104,7 +105,6 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    io\_NO3 & 6 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved nitrate (NO$_{3}$) \\ \hline
    io\_NO3\_15N & 7 & .false. & logical & 0.0 &  \permil & d$^{15}$N of NO$_{3}$ \\ \hline
    io\_PO4 &8 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved phosphate (PO$_{4}$) \\ \hline
-   io\_Fe & 9 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved iron (Fe) \\ \hline
    io\_O2 & 10 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved oxygen (O$_{2}$) \\ \hline
    io\_O2\_18O & 11 & .false. & logical & 0.0 &  \permil & d$^{18}$O of O$_{2}$ \\ \hline
    io\_ALK & 12 & .false. & logical & 0.0 & mol kg$^{-1}$ & alkalinity (ALK) \\ \hline
@@ -117,34 +117,34 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    io\_DOM\_N\_15N & 19 & .false. & logical & 0.0 &  \permil & d$^{15}$N of DOM-N \\ \hline
    io\_DOM\_P & 20 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved organic matter; P \\ \hline
    io\_DOM\_Cd & 21 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved organic matter; cadmium \\ \hline
-   io\_DOM\_Cd\_114Cd & 52 & .false. & logical & 0.0 & mol kg$^{-1}$ & d$^{114}$Cd of DOM-Cd \\ \hline
+   io\_DOM\_Cd\_114Cd & 52 & .false. & logical & 0.0 & \permil & d$^{114}$Cd of DOM-Cd \\ \hline
    io\_DOM\_Fe & 22 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved organic matter; iron \\ \hline
-   io\_FeL & 23 & .false. & logical & 0.0 & mol kg$^{-1}$ & ligand-bound Fe \\ \hline
-   io\_L & 24 & .false. & logical & 0.0 & mol kg$^{-1}$ & free ligand (iron binding) \\ \hline
+   io\_DOM\_Fe\_56Fe & 81 & .false. & logical & 0.0 & \permil & d$^{56}$Fe of DOM-Fe  \\ \hline
+   io\_DOM\_I & 94 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved organic matter; iodine \\ \hline 
+   io\_RDOM\_C & 67 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter (RDOM); C \\ \hline
+   io\_RDOM\_C\_13C & 68 & .false. & logical & 0.0 &  \permil & d$^{13}$C of RDOM-C \\ \hline
+   io\_RDOM\_C\_14C & 69 & .false. & logical & 0.0 &  \permil  & d$^{14}$C of RDOM-C \\ \hline
+   io\_RDOM\_N & 70 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter; nitrogen \\ \hline
+   io\_RDOM\_N\_15N & 71 & .false. & logical & 0.0 &  \permil & d$^{15}$N of RDOM-N \\ \hline
+   io\_RDOM\_P & 72 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter; P \\ \hline
+   io\_RDOM\_Cd & 73 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter; cadmium \\ \hline
+   io\_RDOM\_Cd\_114Cd & 74 & .false. & logical & 0.0 & \permil & d$^{114}$Cd of RDOM-Cd \\ \hline
+   io\_RDOM\_Fe & 75 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter; iron \\ \hline
+   io\_RDOM\_Fe\_56Fe & 82 & .false. & logical & 0.0 & \permil & d$^{56}$Fe of RDOM-Fe  \\ \hline
+   io\_RDOM\_I & 95 & .false. & logical & 0.0 & mol kg$^{-1}$ & R dissolved organic matter; iodine \\ \hline  
    io\_CH4 & 25 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved methane (CH$_{4}$) \\ \hline
    io\_CH4\_13C & 26 & .false. & logical & 0.0 &  \permil & d$^{13}$C of CH$_{4}$ \\ \hline
    io\_CH4\_14C & 27 & .false. & logical & 0.0 &  \permil & d$^{14}$C of CH$_{4}$ \\ \hline
    io\_NH4 & 28 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved ammonium (NH$_{4}$) \\ \hline
-   io\_NH4\_15N & 29 & .false. & logical & 0.0 &  \permil & d$^{15}$ of NH$_{4}$ \\ \hline
+   io\_NH4\_15N & 29 & .false. & logical & 0.0 &  \permil & d$^{15}$N of NH$_{4}$ \\ \hline
    io\_N2 & 30 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved nitrogen (N$_{2}$) \\ \hline
-   io\_N2\_15N & 31 & .false. & logical & 0.0 &  \permil & d$^{15}$ of N$_{2}$ \\ \hline
+   io\_N2\_15N & 31 & .false. & logical & 0.0 &  \permil & d$^{15}$N of N$_{2}$ \\ \hline
    io\_N2O & 32 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved nitrous oxide (N$_{2}$O) \\ \hline
-   io\_N2O\_15N & 33 & .false. & logical & 0.0 &  \permil & d$^{15}$ of N$_{2}$O \\ \hline
+   io\_N2O\_15N & 33 & .false. & logical & 0.0 &  \permil & d$^{15}$N of N$_{2}$O \\ \hline
    io\_Cd & 34 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved cadmium (Cd) \\ \hline
-   io\_Cd\_114 & 51 & .false. & logical & 0.0 &  \permil & dissolved cadmium (Cd) \\ \hline
+   io\_Cd\_114 & 51 & .false. & logical & 0.0 &  \permil & d$^{114}$Cd of dissolved cadmium (Cd) \\ \hline
    io\_Ca & 35 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved calcium (Ca) \\ \hline
-   io\_B & 36 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved boron (B) \\ \hline
-   io\_F & 37 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved florine (F) \\ \hline
-   io\_SO4 & 38 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved sulphate (SO$_{4}$) \\ \hline
-   io\_SO4\_34S & 39 & .false. & logical & 0.0 &  \permil & d$^{32}$ of SO$_{4}$ \\ \hline
-   io\_H2S & 40 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved hydrogen sulphide (H$^{2}$) \\ \hline
-   io\_H2S\_34S & 41 & .false. & logical & 0.0 &  \permil  & d$^{32}$ of H$^{2}$ \\ \hline
-   io\_Ge & 42 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved germanium \\ \hline
-   io\_231Pa & 43 & .false. & logical & 0.0 & mol kg$^{-1}$ & $^{231}$Pa \\ \hline
-   io\_230Th & 44 & .false. & logical & 0.0 & mol kg$^{-1}$ & $^{230}$Th \\ \hline
-   io\_CFC11 & 45 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved CFC-11 \\ \hline
-   io\_CFC12 & 46 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved CFC-12 \\ \hline
-   io\_SF6 & 47 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved sulphur hexafloride (SF6) \\ \hline
+   io\_Ca\_44 & 76 & .false. & logical & 0.0 &  \permil & d$^{44}$Ca of dissolved calcium (Ca) \\ \hline
    \end{tabular}
    
    \begin{tabular}{ | l | l | l | l | l | l | l |}
@@ -154,13 +154,65 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    TRACER & INDEX & DEFAULT & UNITS & DEFAULT & UNITS & TRACER \\
    MNEMONIC & n & VALUE & & VALUE & & DESCRIPTION \\ \hline
    \multicolumn{7}{|l|}{OCEAN (DISSOLVED) TRACERS continued} \\ \hline
-   io\_colr & 48 & .false. & logical & 0.0 & n/a & RED numerical (color) tracer \\ \hline
-   io\_colb & 49 & .false. & logical & 0.0 & n/a & BLUE numerical (color) tracer \\ \hline
+   io\_B & 36 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved boron (B) \\ \hline
+   io\_F & 37 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved florine (F) \\ \hline
+   io\_SO4 & 38 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved sulphate (SO$_{4}$) \\ \hline
+   io\_SO4\_34S & 39 & .false. & logical & 0.0 &  \permil & d$^{34}$S of SO$_{4}$ \\ \hline
+   io\_H2S & 40 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved hydrogen sulphide (H$_{2}$) \\ \hline
+   io\_H2S\_34S & 41 & .false. & logical & 0.0 &  \permil  & d$^{34}$S of H$_{2}$S \\ \hline
+   io\_Ge & 42 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved germanium (Ge) \\ \hline
+   io\_Mo & 77 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved molybdenum (Mo) \\ \hline
+   io\_Mo\_98Mo & 78 & .false. & logical & 0.0 &  \permil & d$^{98}$Mo of Mo\\ \hline
+   io\_231Pa & 43 & .false. & logical & 0.0 & mol kg$^{-1}$ & $^{231}$Pa \\ \hline
+   io\_230Th & 44 & .false. & logical & 0.0 & mol kg$^{-1}$ & $^{230}$Th \\ \hline
+   io\_CFC11 & 45 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved CFC-11 \\ \hline
+   io\_CFC12 & 46 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved CFC-12 \\ \hline
    io\_Mg & 50 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved magnesium (Mg) \\ \hline
    io\_Li & 53 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved lithium (Li) \\ \hline
-   io\_li\_7 & 54 & .false. & logical & 0.0 &  \permil & $^{7}$Li of Li \\ \hline
+   io\_Li\_7 & 54 & .false. & logical & 0.0 &  \permil & $^{7}$Li of Li \\ \hline
    io\_Nd & 55 & .false. & logical & 0.0 & mol  kg$^{-1}$ & dissolved neodymium (Nd) \\ \hline
    io\_Nd\_144 & 56 & .false. & logical & 0.0 &  \permil & $^{144}$Nd of Nd \\ \hline
+   io\_SF6 & 47 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved sulphur hexafloride (SF6) \\ \hline
+   io\_colr & 48 & .false. & logical & 0.0 & n/a & RED numerical (color) tracer \\ \hline
+   io\_colb & 49 & .false. & logical & 0.0 & n/a & BLUE numerical (color) tracer \\ \hline
+   io\_col0 & 57 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col1 & 58 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col2 & 59 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col3 & 60 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col4 & 61 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col5 & 62 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col6 & 63 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col7 & 64 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col8 & 65 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_col9 & 66 & .false. & logical & 0.0 & n/a & numerical (color) tracer \\ \hline
+   io\_Fe & 9 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved iron III (Fe) \\ \hline
+   io\_Fe2 & 83 & .false. & logical & 0.0 & mol kg$^{-1}$ & dissolved iron II (Fe) \\ \hline
+   io\_L & 24 & .false. & logical & 0.0 & mol kg$^{-1}$ & free ligand (iron binding) \\ \hline
+   io\_L2 & 84 & .false. & logical & 0.0 & mol kg$^{-1}$ & free ligand 2 (iron binding) \\ \hline
+   io\_FeL & 23 & .false. & logical & 0.0 & mol kg$^{-1}$ & ligand-bound Fe \\ \hline
+   io\_FeL2 & 85 & .false. & logical & 0.0 & mol kg$^{-1}$ & ligand2-bound Fe \\ \hline
+   
+   io\_Fe\_56Fe & 86 & .false. & logical & 0.0 &  \permil & $^{56}$Fe of dissolved iron III (Fe) \\ \hline
+   io\_Fe2\_56 & 87 & .false. & logical & 0.0 &  \permil & $^{56}$Fe of dissolved iron II (Fe) \\ \hline
+   io\_L\_56 & 88 & .false. & logical & 0.0 &  \permil & $^{56}$Fe of free ligand (iron binding) \\ \hline
+   io\_L2\_56 & 89 & .false. & logical & 0.0 &  \permil & $^{56}$Fe of free ligand 2 (iron binding) \\ \hline
+   io\_TDFe\_56Fe & 90 & .false. & logical & 0.0 & mol kg$^{-1}$ & total dissolved Fe \\ \hline
+   io\_TDFe2\_56 & 91 & .false. & logical & 0.0 &  \permil & $^{56}$Fe of total dissolved Fe \\ \hline
+   
+   io\_TL & 42 & .false. & logical & 0.0 & mol kg$^{-1}$ & total dissolved ligand \\ \hline
+   
+   io\_I & 92 & .false. & logical & 0.0 & mol kg$^{-1}$ & iodide \\ \hline
+   io\_IO3 & 93 & .false. & logical & 0.0 & mol kg$^{-1}$ & iodate \\ \hline
+
+   io\_Ba & 96 & .false. & logical & 0.0 & mol  kg$^{-1}$ & dissolved barium (Ba) \\ \hline
+   io\_Ba\_138Ba & 97 & .false. & logical & 0.0 &  \permil & $^{138}$Ba of Ba \\ \hline
+   io\_Sr & 98 & .false. & logical & 0.0 & mol  kg$^{-1}$ & dissolved strontium (Sr) \\ \hline
+   io\_Sr\_87Sr & 99 & .false. & logical & 0.0 &  \permil & $^{87}$Sr of Sr \\ \hline
+   io\_Sr\_88Sr & 100 & .false. & logical & 0.0 &  \permil & $^{88}$Sr of Sr \\ \hline
+  
+   io\_H2O & 101 & .false. & logical & 0.0 & mol kg$^{-1}$ & water! \\ \hline
+   
+   
    \end{tabular}
 
    \begin{tabular}{ | l | l | l | l | l | l | l |}
@@ -176,7 +228,7 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    is\_POC\_13C & 4 & .false. & logical & 0.0 &  \permil & d$^{13}$C of POC \\ \hline
    is\_POC\_14C & 5 & .false. & logical & 0.0 &  \permil & d$^{14}$C of POC \\ \hline
    is\_PON & 6 & .false. & logical & 0.0 & wt\% & particulate organic nitrogen (PON) \\ \hline
-   is\_PON\_15N & 7 & .false. & logical & 0.0 &  \permil & d$^{15}$ of PON \\ \hline
+   is\_PON\_15N & 7 & .false. & logical & 0.0 &  \permil & d$^{15}$N of PON \\ \hline
    is\_POP & 8 & .false. & logical & 0.0 & wt\% & particulate organic phosphate \\
     & & & & & & (POP) \\ \hline
    is\_POCd & 9 & .false. & logical & 0.0 & wt\% & particulate organic cadmium \\
@@ -184,15 +236,32 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    is\_POCd\_114Cd & 43 & .false. & logical & 0.0 &  \permil & d$^{114}$Cd of POC inorporated \\
     & & & & & & cadmium \\ \hline
    is\_POFe & 10 & .false. & logical & 0.0 & wt\% & particulate organic iron (POFe) \\ \hline
+   is\_POI & 79 & .false. & logical & 0.0 & wt\% & particulate organic iodine (POI) \\ \hline
+   is\_POBa & 80 & .false. & logical & 0.0 & wt\% & particulate organic barium (POBa) \\ \hline
+   is\_POBa\_138Ba & 81 & .false. & logical & 0.0 & wt\% &d$^{138}$Ba pf particulate organic Ba (POBa) \\ \hline
+
+   
    is\_POM\_231Pa & 11 & .false. & logical & 0.0 & wt\% & POM scavenged $^{231}$Pa \\ \hline
    is\_POM\_230Th & 12 & .false. & logical & 0.0 & wt\% & POM scavenged $^{230}$Th \\ \hline
    is\_POM\_Fe & 13 & .false. & logical & 0.0 & wt\% & POM scavenged Fe \\ \hline
+   is\_POM\_Fe\_56Fe & 75 & .false. & logical & 0.0 &  \permil & d$^{56}$Fe of POM scavenged Fe\\ \hline
    is\_POM\_Nd & 47 & .false. & logical & 0.0 & wt\% & POM scavenged Nd \\ \hline
    is\_POM\_Nd\_144Nd & 48 & .false. & logical & 0.0 &  \permil & POM scavenged $^{144}$Nd \\ \hline
+   
+
+   is\_POM\_MoS2 & 58 & .false. & logical & 0.0 & wt\% & POM scavenged MoS2 \\ \hline
+   is\_POM\_MoS2\_98Mo & 59 & .false. & logical & 0.0 &  \permil & POM scavenged $^{98}$Mo \\ \hline
+   is\_POM\_MoS2\_34S & 60 & .false. & logical & 0.0 &  \permil & POM scavenged $^{34}$S \\ \hline
+   is\_POM\_S & 73 & .false. & logical & 0.0 & wt\% & POM scavenged S \\ \hline
+   is\_POM\_S\_34S & 74 & .false. & logical & 0.0 &  \permil & d$^{34}$S of POM scavenged S\\ \hline  
+   is\_POM\_BaSO4 & 82 & .false. & logical & 0.0 & wt\% & POM scavenged BaSO4 \\ \hline
+   is\_POM\_BaSO4\_138Ba & 83 & .false. & logical & 0.0 &  \permil & d$^{138}$Ba of POM scavenged BaSO4\\ \hline  
+   
    is\_CaCO3 & 14 & .false. & logical & 0.0 & wt\% & calcium carbonate (CaCO$_{3}$) \\ \hline
    is\_CaCO3\_13C & 15 & .false. & logical & 0.0 &  \permil & d$^{13}$C of CaCO$_{3}$ \\ \hline
    is\_CaCO3\_14C & 16 & .false. & logical & 0.0 &  \permil & d$^{14}$C of CaCO$_{3}$ \\ \hline
    is\_CaCO3\_18O & 17 & .false. & logical & 0.0 &  \permil & d$^{18}$O of CaCO$_{3}$ \\ \hline
+   is\_CaCO3\_44Ca & 17 & .false. & logical & 0.0 &  \permil & d$^{44}$Ca of CaCO$_{3}$ \\ \hline
    is\_CdCO3 & 18 & .false. & logical & 0.0 & wt\% & CaCO$_{3}$ incorporated cadmium \\ \hline
    is\_CdCO3\_114Cd & 44 & .false. & logical & 0.0 &  \permil & d$^{114}$Cd of CaCO$_{3}$ incorporated \\
     & & & & & & cadium \\ \hline
@@ -202,17 +271,15 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    is\_CaCO3\_231Pa & 19 & .false. & logical & 0.0 & wt\% & CaCO$_{3}$ scavenged $^{231}$Pa \\ \hline
    is\_CaCO3\_230Th & 20 & .false. & logical & 0.0 & wt\% & CaCO$_{3}$ scavenged $^{230}$Th \\ \hline
    is\_CaCO3\_Fe & 21 & .false. & logical & 0.0 & wt\% & CaCO$_{3}$ scavenged Fe \\ \hline
+   is\_CaCO3\_Fe\_56Fe & 76 & .false. & logical & 0.0 & wt\% & d$^{56}$Fe of CaCO3 scavenged Fe \\ \hline
    is\_CaCO3\_Nd & 49 & .false. & logical & 0.0 & wt\% & CaCO$_{3}$ scavenged Nd \\ \hline
    is\_CaCO3\_Nd\_144Nd & 50 & .false. & logical & 0.0 &  \permil & CaCO$_{3}$ scavenged $^{144}$Nd \\ \hline
-   is\_det & 22 & .false. & logical & 0.0 & wt\% & detrital (refractory) material \\ \hline
-   is\_det\_231Pa & 23 & .false. & logical & 0.0 & wt\% & detrital scavenged $^{231}$Pa \\ \hline
-   is\_det\_230Th & 24 & .false. & logical & 0.0 & wt\% & detrital scavenged $^{230}$Th \\ \hline
-   is\_det\_Fe & 25 & .false. & logical & 0.0 & wt\% & detrital scavenged Fe \\ \hline
-   is\_det\_Nd & 51 & .false. & logical & 0.0 & wt\% & detrital scavenged Nd \\ \hline
-   is\_det\_Nd\_144Nd & 52 & .false. & logical & 0.0 &  \permil & detrital scavenged $^{144}$Nd \\ \hline
-   is\_det\_Li & 55 & .false. & logical & 0.0 & wt\% & detrital scavanged lithium \\ \hline
-   is\_det\_Li\_7Li & 56 & .false. & logical & 0.0. &  \permil & detrital scavenged $^{7}$Li \\ \hline
-   is\_opal & 26 & .false. & logical & 0.0 & wt\% & opal \\ \hline
+   is\_CaCO3\_MoS2 & 61 & .false. & logical & 0.0 & wt\% & CaCO3 scavenged MoS2 \\ \hline
+   is\_CaCO3\_MoS2\_98Mo & 62 & .false. & logical & 0.0 &  \permil & CaCO3 scavenged $^{98}$Mo \\ \hline
+   is\_CaCO3\_MoS2\_34S & 63 & .false. & logical & 0.0 &  \permil & CaCO3 scavenged $^{34}$S \\ \hline
+   is\_SrCO3 & 84 & .false. & logical & 0.0 & wt\% & SrCO3 scavenged MoS2 \\ \hline
+   is\_SrCO3\_87Sr & 85 & .false. & logical & 0.0 &  \permil & SrCO3 scavenged $^{98}$Mo \\ \hline
+   
    \end{tabular}
 
    \begin{tabular}{ | l | l | l | l | l | l | l |}
@@ -222,17 +289,42 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
    TRACER & INDEX & DEFAULT & UNITS & DEFAULT & UNITS & TRACER \\
    MNEMONIC & n & VALUE & & VALUE & & DESCRIPTION \\ \hline
    \multicolumn{7}{|l|}{SEDIMENT (SOLID, PARTICULATE) TRACERS continued} \\ \hline
-   is\_opal\_30Si & 27 & .false. & logical & 0.0 &  \permil & d$^{30}$ of opal \\ \hline
+   is\_SrCO3\_MoS2\_34S & 86 & .false. & logical & 0.0 &  \permil & CaCO3 scavenged $^{34}$S \\ \hline
+
+   
+   is\_det & 22 & .false. & logical & 0.0 & wt\% & detrital (refractory) material \\ \hline
+   is\_det\_Li & 55 & .false. & logical & 0.0 & wt\% & detrital scavanged lithium \\ \hline
+   is\_det\_Li\_7Li & 56 & .false. & logical & 0.0. &  \permil & detrital scavenged $^{7}$Li \\ \hline
+   
+   is\_det\_231Pa & 23 & .false. & logical & 0.0 & wt\% & detrital scavenged $^{231}$Pa \\ \hline
+   is\_det\_230Th & 24 & .false. & logical & 0.0 & wt\% & detrital scavenged $^{230}$Th \\ \hline
+   is\_det\_Fe & 25 & .false. & logical & 0.0 & wt\% & detrital scavenged Fe \\ \hline
+   is\_det\_Fe\_56Fe & 77 & .false. & logical & 0.0 & wt\% & d$^{56}$Fe of detrital scavenged Fe \\ \hline
+   is\_det\_Nd & 51 & .false. & logical & 0.0 & wt\% & detrital scavenged Nd \\ \hline
+   is\_det\_Nd\_144Nd & 52 & .false. & logical & 0.0 &  \permil & detrital scavenged $^{144}$Nd \\ \hline
+   is\_det\_MoS2 & 64 & .false. & logical & 0.0 & wt\% & det scavenged MoS2 \\ \hline
+   is\_det\_MoS2\_98Mo & 65 & .false. & logical & 0.0 &  \permil & det scavenged $^{98}$Mo \\ \hline
+   is\_det\_MoS2\_34S & 66 & .false. & logical & 0.0 &  \permil & det scavenged $^{34}$S \\ \hline
+
+   is\_opal & 26 & .false. & logical & 0.0 & wt\% & opal \\ \hline
+   is\_opal\_30Si & 27 & .false. & logical & 0.0 &  \permil & d$^{30}$Si of opal \\ \hline
    is\_opal\_Ge & 28 & .false. & logical & 0.0 & wt\% & opal incorporated germanium \\ \hline
    is\_opal\_231Pa & 29 & .false. & logical & 0.0 & wt\% & opal scavenged $^{231}$Pa \\ \hline
    is\_opal\_230Th & 30 & .false. & logical & 0.0 & wt\% & opal scavenged $^{230}$Th \\ \hline
    is\_opal\_Fe & 31 & .false. & logical & 0.0 & wt\% & opal scavenged Fe \\ \hline
+   is\_opal\_Fe\_56Fe & 78 & .false. & logical & 0.0 & wt\% & d$^{56}$Fe of opal scavenged Fe \\ \hline
+ 
+   
    is\_opal\_Nd & 53 & .false. & logical & 0.0 & wt\% & opal scavenged Nd \\ \hline
    is\_opal\_Nd\_144Nd & 54 & .false. & logical & 0.0 &  \permil & opal scavenged $^{144}$Nd \\ \hline
+   
+   is\_opal\_MoS2 & 67 & .false. & logical & 0.0 & wt\% & opal scavenged MoS2 \\ \hline
+   is\_opal\_MoS2\_98Mo & 68 & .false. & logical & 0.0 &  \permil & opal scavenged $^{98}$Mo \\ \hline
+   is\_opal\_MoS2\_34S & 69 & .false. & logical & 0.0 &  \permil & opal scavenged $^{34}$S \\ \hline
    is\_ash & 32 & .false. & logical & 0.0 & wt\% & ash \\ \hline
-   is\_POC\_frac2 & 33 & .false. & logical & 0.0 & (ratio) & \\ \hline
-   is\_CaCO3\_frac2 & 34 & .false. & logical & 0.0 & (ratio) & \\ \hline
-   is\_opal\_frac2 & 35 & .false. & logical & 0.0 & (ratio) & \\ \hline
+   is\_POC\_frac2 & 33 & .false. & logical & 0.0 & (ratio) & n/a \\ \hline
+   is\_CaCO3\_frac2 & 34 & .false. & logical & 0.0 & (ratio) & n/a \\ \hline
+   is\_opal\_frac2 & 35 & .false. & logical & 0.0 & (ratio) & n/a\\ \hline
       
 %   \multicolumn{7}{|l|}{1- The ocean is initialized with no particulates in the ocean. Sediment composition is initialized with 100 wt percent ash in the surface sediment layer} & \\
 %& &\multicolumn{7}{|l|}{and 100 wt percent detrital material in the underlying stack layers, so as to enable the construction of a constant sedimentation rate chronology (based)} & \\
@@ -245,16 +337,14 @@ NOTE: There is no user-configurable initialization of deep-sea sediment composit
 %(in:~/genie/genie-sedgem/src/fortran/sedgem\_data.f90).\\
 %2- The units are given for sediment composition. Particulate tracers in the ocean are in units of mol kg$^{-1}$ and per mil (\permil), corresponding to
 %sediment units of wt percent and \permil, respectively.} \\ \hline
-   \end{tabular}
 
-   \begin{tabular}{ | l | l | l | l | l | l | l |}
-   \hline
-    & &\multicolumn{2}{|l|}{SELECTION} &\multicolumn{2}{|l|}{INITILIZATION} & \\
-    & &\multicolumn{2}{|l|}{gm\_sed\_select\_n} &\multicolumn{2}{|l|}{} & \\ \hline
-   TRACER & INDEX & DEFAULT & UNITS & DEFAULT & UNITS & TRACER \\
-   MNEMONIC & n & VALUE & & VALUE & & DESCRIPTION \\ \hline
-   \multicolumn{7}{|l|}{SEDIMENT (SOLID, PARTICULATE)} \\ \hline
-   is\_CaCO3\_age & 36 & .false. & logical & 0.0 &  & CaCO$_{3}$ numerical age tracer \\ \hline
+   is\_CaCO3\_age & 36 & .false. & logical & 0.0 & years & CaCO$_{3}$ numerical age tracer \\ \hline
+
+   is\_ash\_age & 70 & .false. & logical & 0.0 & years & det numerical age tracer \\ \hline
+   is\_POC\_size &  87 & .false. & logical & 0.0 & n/a & n/a \\ \hline
+   is\_CaCO3\_red & 71 & .false. & logical & 0.0 & n/a &red numerical (color) tracer  \\ \hline
+   is\_CaCO3\_blue & 72 & .false. & logical & 0.0 & n/a &blue numerical (color) tracer   \\ \hline
+   
    is\_foram\_p\_13C & 37 & .false. & logical & 0.0 &  \permil & planktic foraminiferal CaCO$_{3}$ d$^{13}$C \\ \hline
    is\_foram\_p\_14C & 38 & .false. & logical & 0.0 &  \permil & planktic foraminiferal CaCO$_{3}$ d$^{14}$C \\ \hline
    is\_foram\_p\_18O & 39 & .false. & logical & 0.0 &  \permil & planktic foraminiferal CaCO$_{3}$ d$^{18}$O \\ \hline
