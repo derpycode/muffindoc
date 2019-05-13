@@ -6447,7 +6447,7 @@ There is some overlap with the FAQ Chapter, so please read both!
 
 %------------------------------------------------
 
-\section{HOW-TO ... get started with cGENIE.muffin (summary)}\label{how-to-0}
+\section{HOW-TO ... get started with cGENIE.muffin}\label{how-to-0}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -6473,6 +6473,13 @@ Example configurations comprise \textit{base-config} and \textit{user-config} fi
 \item \texttt{cGENIE} forcings are stored in:
 \\ \texttt{~/cgenie/genie-forcings}
 \end{itemize}
+
+%------------------------------------------------
+%
+\subsubsection{Do some thing dumb}\label{Do some thing dumb}
+
+\vspace{1mm}
+Easy! Just close your eyes and change some parameter values at random. Better still, start using the model without reading the manual first ...
 
 %------------------------------------------------
 
@@ -6803,7 +6810,7 @@ make cleanall
 
 %------------------------------------------------
 %
-\subsection{MacPorts}\label{how-to-macports}
+\subsection*{MacPorts}\label{how-to-macports}
 
 You are here because you have already installed MacPorts, presumably by following the instructions here:
 \\\href{https://www.macports.org/install.php}{https://www.macports.org/install.php}.
@@ -6869,7 +6876,7 @@ If your operating system is not listed here, you will either have to wait until 
 
 %------------------------------------------------
 %
-\subsection{Errors}\label{how-to-macports-errors}
+\subsection*{Errors}\label{how-to-macports-errors}
 
 Errors identified by `\texttt{brew doctor}' are most likely associated with some incompatible files in your software libraries, perhaps from a previous installation of MacPorts. Try to follow the suggestions given to you by `\texttt{brew doctor}', deleting any problematic files (using \texttt{sudo rm} to overcome any permission issues). Note that you may wish to do a system backup first.
 
@@ -6892,23 +6899,7 @@ TBA ...
 
 %------------------------------------------------
 
-\section{HOW-TO ... (general)}\label{how-to-1}
-\vspace{2mm}
-
-%------------------------------------------------
-%
-\subsubsection{Do some thing dumb}\label{Do some thing dumb}
-
-\vspace{1mm}
-Easy! Just close your eyes and change some parameter values at random. Better still, start using the model without reading the manual first ...
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\section{HOW-TO ... change model output}\label{how-to-1}
+\section{HOW-TO ... modify model output}\label{how-to-1}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -6950,38 +6941,8 @@ The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the
 
 %------------------------------------------------
 
-\section{HOW-TO ... screw with and/or diagnose the climate system}
+\section{HOW-TO ... diagnose how the model works}
 \vspace{2mm}
-
-%------------------------------------------------
-%
-\subsubsection{Set/un-set seasonal insolation forcing}
-
-\vspace{1mm}
-Seasonal insolation forcing of the \textbf{EMBM}, \textbf{GOLDSTEIN} ocean, and sea-ice model, are set by the following parameters\footnote{These are typically set in the \textit{base-config} if needed (i.e. different from default).}:
-\vspace{-1mm}\begin{verbatim}
-ea_dosc=.true.
-go_dosc=.true.
-gs_dosc=.true.
-\end{verbatim}\vspace{-1mm}
-and are \texttt{.true.} by default.
-To set an annual average insolation forcing with no seasonality, simply set these to \texttt{.false.}.
-
-%------------------------------------------------
-%
-\subsubsection{Implement 'brine-rejection'}
-
-cGENIE.muffin has the capability to include this effect (at least crudely) and similarly to \textit{Bouttes et al.} [2010]. For this, three namelist parameter values need to be set:
-
-\vspace{-2mm}\begin{verbatim}
-bg_ctrl_force_GOLDSTEInTS=.TRUE.
-bg_par_misc_brinerejection_frac=0.1
-bg_par_misc_brinerejection_jmax=9
-\end{verbatim}\vspace{-2mm}
-
-The first, simply allows the \textbf{BIOGEM} biogeochem. module to directly influence ocean circulation. The second is the fraction of salt, rejected during sea-ice formation (e.g., see \textit{Bouttes et al.} [2010]) that is transferred directly to the bottom-most (underlying) ocean cell in the model. The third sets a latitude limit (counted in cells) to the effect -- on a \(18\times18\) grid, a value of 9 will restrict brine rejection to the southern hemisphere (and hence Southern Ocean); a value of 18 will allow it to take  place in the North Atlantic as well. (Note that in e.g., \textit{Bouttes et al.} [2010], the effect of brine-rejection is considered only in the Southern Ocean.)
-
-There is also option for treating all tracers the same way (including DIC ALK, PO4, etc.) and translocate biogeochem. tracers proportionally to salinity, by setting:
 
 %------------------------------------------------
 %
@@ -7037,6 +6998,92 @@ EXAMPLE.worjh2.NONE_colage.SPIN
 \end{verbatim}\vspace{-2pt}
 
 \noindent Note that the automatic approach (\texttt{EXAMPLE.worjh2.NONE\_colage.SPIN}) will handle experiments started from a \textit{re-start} (but not for the manual approach). The only advantage to the manual approach (\texttt{EXAMPLE.worjh2.NONE\_age.SPIN}), which is provided for backwards code/experiment compatibility, is that it is possible to specify a surface age for a specific region, e.g. North Atlantic, meaning that the ventilation age is the time since a parcel of water last saw the North Atlantic rather than anywhere at the surface (as in the automatic approach).
+
+%------------------------------------------------
+%
+\subsubsection{Include 'preformed' tracers}
+\vspace{1mm}
+
+Preformed tracers are selected via 2 modifications:
+
+\vspace{2mm}
+\begin{enumerate}
+\vspace{1mm}
+\item By setting the parameter:
+\\\texttt{bg\_ctrl\_bio\_preformed=.true.}
+\vspace{1mm}
+\item By including sufficient/appropriate color tracers in the \textit{base-config}.
+\end{enumerate}
+\vspace{2mm}
+
+A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
+
+\begin{table}[ht]
+%\caption{Preformed tracers} % title of Table
+%\centering % used for centering table
+\begin{tabular}{l l l} % left-hand alligned columns (3 columns)
+\hline\hline %inserts double horizontal lines
+Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ [0.5ex] % inserts table
+%heading
+\hline % inserts single horizontal line
+57 & \texttt{io\_col0} & \(DIC\) \\ 
+58 & \texttt{io\_col1} & \(ALK\) \\
+59 & \texttt{io\_col2} & \(O_{2}\) \\
+60 & \texttt{io\_col3} & \(PO_{4}\) \\
+61 & \texttt{io\_col4} & \(NO_{3}\) \\
+62 & \texttt{io\_col5} & \(Ca\) \\
+63 & \texttt{io\_col6} & \(SiO_{2}\) \\
+64 & \texttt{io\_col7} & \(\delta^{13}C\;of\;DIC\) \\
+65 & \texttt{io\_col8} & (NOT CURRENTLY USED) \\
+66 & \texttt{io\_col9} & (NOT CURRENTLY USED) \\
+[1pt] % [1ex] adds vertical space
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+\noindent (Obviously, you need to have the respective ocean tracer selected.)
+
+One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem tracer.
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... screw with the climate system}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\subsubsection{Set/un-set seasonal insolation forcing}
+
+\vspace{1mm}
+Seasonal insolation forcing of the \textbf{EMBM}, \textbf{GOLDSTEIN} ocean, and sea-ice model, are set by the following parameters\footnote{These are typically set in the \textit{base-config} if needed (i.e. different from default).}:
+\vspace{-1mm}\begin{verbatim}
+ea_dosc=.true.
+go_dosc=.true.
+gs_dosc=.true.
+\end{verbatim}\vspace{-1mm}
+and are \texttt{.true.} by default.
+To set an annual average insolation forcing with no seasonality, simply set these to \texttt{.false.}.
+
+%------------------------------------------------
+%
+\subsubsection{Implement 'brine-rejection'}
+
+cGENIE.muffin has the capability to include this effect (at least crudely) and similarly to \textit{Bouttes et al.} [2010]. For this, three namelist parameter values need to be set:
+
+\vspace{-2mm}\begin{verbatim}
+bg_ctrl_force_GOLDSTEInTS=.TRUE.
+bg_par_misc_brinerejection_frac=0.1
+bg_par_misc_brinerejection_jmax=9
+\end{verbatim}\vspace{-2mm}
+
+The first, simply allows the \textbf{BIOGEM} biogeochem. module to directly influence ocean circulation. The second is the fraction of salt, rejected during sea-ice formation (e.g., see \textit{Bouttes et al.} [2010]) that is transferred directly to the bottom-most (underlying) ocean cell in the model. The third sets a latitude limit (counted in cells) to the effect -- on a \(18\times18\) grid, a value of 9 will restrict brine rejection to the southern hemisphere (and hence Southern Ocean); a value of 18 will allow it to take  place in the North Atlantic as well. (Note that in e.g., \textit{Bouttes et al.} [2010], the effect of brine-rejection is considered only in the Southern Ocean.)
+
+There is also option for treating all tracers the same way (including DIC ALK, PO4, etc.) and translocate biogeochem. tracers proportionally to salinity.
 
 %------------------------------------------------
 
@@ -7397,53 +7444,6 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
-
-%------------------------------------------------
-%
-\subsubsection{Include 'preformed' tracers}
-\vspace{1mm}
-
-Preformed tracers are selected via 2 modifications:
-
-\vspace{2mm}
-\begin{enumerate}
-\vspace{1mm}
-\item By setting the parameter:
-\\\texttt{bg\_ctrl\_bio\_preformed=.true.}
-\vspace{1mm}
-\item By including sufficient/appropriate color tracers in the \textit{base-config}.
-\end{enumerate}
-\vspace{2mm}
-
-A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
-
-\begin{table}[ht]
-%\caption{Preformed tracers} % title of Table
-%\centering % used for centering table
-\begin{tabular}{l l l} % left-hand alligned columns (3 columns)
-\hline\hline %inserts double horizontal lines
-Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ [0.5ex] % inserts table
-%heading
-\hline % inserts single horizontal line
-57 & \texttt{io\_col0} & \(DIC\) \\ 
-58 & \texttt{io\_col1} & \(ALK\) \\
-59 & \texttt{io\_col2} & \(O_{2}\) \\
-60 & \texttt{io\_col3} & \(PO_{4}\) \\
-61 & \texttt{io\_col4} & \(NO_{3}\) \\
-62 & \texttt{io\_col5} & \(Ca\) \\
-63 & \texttt{io\_col6} & \(SiO_{2}\) \\
-64 & \texttt{io\_col7} & \(\delta^{13}C\;of\;DIC\) \\
-65 & \texttt{io\_col8} & (NOT CURRENTLY USED) \\
-66 & \texttt{io\_col9} & (NOT CURRENTLY USED) \\
-[1pt] % [1ex] adds vertical space
-\hline %inserts single line
-\end{tabular}
-\label{table:nonlin} % is used to refer this table in the text
-\end{table}
-
-\noindent (Obviously, you need to have the respective ocean tracer selected.)
-
-One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem tracer.
 
 %------------------------------------------------
 
@@ -8113,7 +8113,7 @@ In order to create a new '\textit{namelist}' parameter, i.e. a parameter whose v
 
 %------------------------------------------------
 %
-\subsection{Define a new tracer}\label{Define a new trace}
+\subsection*{Define a new tracer}\label{Define a new trace}
 
 You probably should not be doing this ... but ... just in case ...
 
@@ -8265,7 +8265,7 @@ sub_box_remin_part
 
 %------------------------------------------------
 %
-\subsection{Add additional results output}\label{Add new output}
+\subsection*{Add additional results output}\label{Add new output}
 
 If a new data field can be derived from an existing field, then creating additional results saving is relatively straightforward because no new time-averaging has to be carried out (i.e. you create the new field based on annual (or sub-annual) averages that are already calculated and available. (If not -- refer to the 'full' data saving sub-sections.) Note that new tracers are automatically saved.
 
