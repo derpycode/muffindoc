@@ -6693,7 +6693,7 @@ You'll need a git client:
 sudo apt install git
 \end{verbatim}
 
-\item \textbf{muffin} [the cGENIE.muffin course code]
+\item \textbf{muffin} [the cGENIE.muffin code]
 
 And finally, you can obtain the code.
 
@@ -6703,7 +6703,33 @@ NOTE: Recommended is changing directory to your HOME directory (\texttt{cd}) as 
 git clone https://github.com/derpycode/cgenie.muffin
 \end{verbatim}
 
+\vspace{4pt}
+\item \textbf{python} [python symbolic link]
+
+If an actual \textbf{muffin} experiment, rather than just \texttt{make testbiogem}, does not run, and e.g. in resposne to:
+
+\begin{verbatim}
+which python
+\end{verbatim}
+
+you get nothing (although you still get a response to \texttt{python -V} or \texttt{type -a python}), it maybe that you need a python symbolic link. It might also then not hurt to install python2.7 ...
+
+\begin{verbatim}
+sudo apt install python2.7
+\end{verbatim}
+
+to install python2.7, and:
+
+\begin{verbatim}
+sudo ln -s /usr/bin/python2.7 /usr/bin/python
+\end{verbatim}
+
+to create a symbolic link from python --> python2.7
+
 \end{enumerate}
+
+\vspace{4pt}
+\noindent\uline{Obviously, you are going to have configured \textbf{muffin} and got it running first (see next section) to even find out whether you need to muck about with python or not ...}
 
 %------------------------------------------------
 %
