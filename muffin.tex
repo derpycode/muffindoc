@@ -6136,6 +6136,48 @@ The converse experiment, is to have circulation and biological productivity not 
 
 %------------------------------------------------
 %
+\subsubsection{What is the difference between the different Fe configurations and schemes?}
+
+There is a parameter -- \texttt{bg\_opt\_geochem\_Fe} -- that specifies the Fe scheme (although note that you have to have the appropriate/required tracers selected):
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+
+\item \texttt{bg\_opt\_geochem\_Fe = 'OLD'}
+
+This is the very original scheme, based on 3 tracers -- Fe (free dissolved Fe), FeL (ligand-bound Fe), and L (free ligand).
+
+During scavenging, a new equilibrium partitioning between the 3 species is calculated and imposed on tracer concentrations via the remin array, but only at the surface.
+
+Entrains some completely unnecessary accounting for Fe addition at the surface as part of the equilibrium calculation, including a call to \texttt{sub\_calc\_geochem\_Fe} as part of the main (i,j) biogem subroutine array. All other schemes are free from this.
+
+\item \texttt{bg\_opt\_geochem\_Fe = 'ALT'}
+
+This is also based on 3 tracers -- Fe (free dissolved Fe), FeL (ligand-bound Fe), and L (free ligand).
+
+During scavenging, a new equilibrium partitioning between the 3 species is calculated and imposed on tracer concentrations via the remin array. This is carried out throughout the water column.
+
+\item \texttt{bg\_opt\_geochem\_Fe = 'FeFe2LFeL'}
+
+Based on the same 3 tracers -- Fe (free dissolved Fe), FeL (ligand-bound Fe), and L (free ligand),  but also, Fe2, which is ignored for the purposes of calculating scavening and Fe-FeL-L partitioning. Here, the tracer Fe is explicitly taken to be \(Fe^{3+}\).
+
+Scavenging and tracer concentration re-partitioning as per (2).
+
+\item \texttt{bg\_opt\_geochem\_Fe = 'hybrid'}
+
+This is based on the minimum  number of tracers required to describe the system -- TFe (total dissolved Fe) and TL (total dissolved ligand). The equilibrium partitioning between Fe, FeL, and L, is derived when required.
+
+\item \texttt{bg\_opt\_geochem\_Fe = 'lookup\_4D'}
+
+Also based on TFe (total dissolved Fe) and TL (total dissolved ligand), but with Fe calculated via a lookup table.
+
+\end{enumerate}
+
+In schemes 1+2+3, scavenged Fe is removed form the Fe tracer pool. For 4+5, scavenged Fe is removed from the TFe pool.
+
+
+%------------------------------------------------
+%
 \subsubsection{What is 'tracer auditing' -- should I have it switched on?}
 
 When developing a new model parameterization, it is of fundamental importance that careful track is kept of the total tracer inventory of the system in the face of internal mass transfer and any inputs (e.g., prescribed restoring or flux boundary conditions) or outputs (e.g., sedimentation). No spurious gain or loss of tracer mass must occur as a result of bugs introduced to the code. The tracer inventories of the ocean can be periodically calculated and compared to that predicted to have occurred on the basis of any net input (or output) occurring in the intervening time to help catch bugs. The simplest implementation would be an audit carried out at system start-up (before any transformation of tracer mass has taken place), and at the very end (after the last transformation of the tracer fields). However, integrating over over an extended time period can lead to the excessive accumulation of numerical (truncation) errors. Instead, the audits are carried out periodically during the model run. The periodicity of tracer auditing follows the times specified for time-series data saving (i.e., at time listed in the file specified by \texttt{bg\_par\_infile\_sig\_name}).
@@ -6243,7 +6285,7 @@ For these alternative options -- see earlier section on tracer forcings (Section
 %
 \subsubsection{Can I do carbon dioxide removal (CDR) experiments?}
 
-Yes! See HOW-TO.
+Yes! See geoengineering HOW-TO.
 
 %------------------------------------------------
 
