@@ -7024,7 +7024,7 @@ The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the
 
 %------------------------------------------------
 %
-\subsubsection{Add a water mass age tracer}
+\subsection{Add a water mass age tracer}
 \vspace{1mm}
 
 Water masses (and hence something of ocean circulation) can be tagged with a color (dye) tracer. However, on its own, this can tell you nothing about water mass age. A second color tracer can be added, however, and configured in such a way that by analysing the ratio of the two tracers, water mass age (time since a parcel of water last saw the surface ocean on average).
@@ -7079,7 +7079,7 @@ EXAMPLE.worjh2.NONE_colage.SPIN
 
 %------------------------------------------------
 %
-\subsubsection{Include 'preformed' tracers}
+\subsection{Include 'preformed' tracers}
 \vspace{1mm}
 
 Preformed tracers are selected via 2 modifications:
@@ -7123,6 +7123,117 @@ Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ 
 \noindent (Obviously, you need to have the respective ocean tracer selected.)
 
 One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem tracer.
+
+%------------------------------------------------
+%
+\subsection{Diagnose a Transport Matrix}
+\vspace{1mm}
+
+The physical circulation in GENIE can be diagnosed as a Transport Matrix: a representation of the steady-state average circulation as a sparse matrix (see \textit{Khatiwala et al.} [2005] Accelerated simulation of passive tracers in ocean circulation models. Ocean Modelling. 9 (1), pp. 51 - 69). There are a number of advantages of using a transport matrix such as finding preformed tracer distributions and using it as a surrogate circulation for a steady-state biogeochemical model (see \textit{Khatiwala} [2007] -- A computational framework for simulation of biogeochemical tracers in the ocean. Global Biogeochemical Cycles. 21 (3), GB3001).
+
+At its most simplest, the method sets a passive tracer (i.e., affected by ocean circulation only) to 1 $\mu$mol kg$^{-1}$ in a single grid-box, leaving every other grid-box as 0 $\mu$mol kg$^{-1}$. The model is then integrated for a single timestep. The whole grid is then vectorised, i.e., grid-boxes are stacked on top of each other, and this forms one column of the matrix. This process is repeated for the next grid-box along forming the second column. The columns of the matrix represent the distribution of the tracer from each grid-box individually after one timestep. To diagnose a matrix within GENIE, a few extra steps are taken: 6 tracers are used in a gridded pattern to diagnose one depth level simultaneously; each depth level is diagnosed and averaged in a year in turn as the number of grid-boxes affected by convection is not predictable. 
+
+%------------------------------------------------
+%
+\subsubsection{Diagnosing within a GENIE run} 
+\vspace{1mm}
+
+A full matrix can be diagnosed within a single run. To do so add the following six "colour" tracers selected to the \textit{base-config} file:
+\begin{verbatim}
+gm_ocn_select_57=.true.
+gm_ocn_select_58=.true.
+gm_ocn_select_59=.true.
+gm_ocn_select_60=.true.
+gm_ocn_select_61=.true.
+gm_ocn_select_62=.true.
+\end{verbatim}
+
+\noindent (and remembering to increase the total number of selected ocean tracers). Then in the \textit{user-config} file add the following parameters to diagnose a transport matrix:
+
+\vspace{2mm}
+\begin{enumerate}
+\vspace{1mm}
+\item By setting the parameter:
+\\\texttt{bg\_ctrl\_bio\_preformed=.true.}
+\vspace{1mm}
+\item By including sufficient/appropriate color tracers in the \textit{base-config}.
+\end{enumerate}
+\vspace{2mm}
+
+\begin{enumerate}
+\item Select the transport matrix flag.
+\begin{verbatim}
+bg_ctrl_data_diagnose_TM=.true.
+\end{verbatim}
+\item Select the year to start diagnosing the matrix. The matrix requires the same number of years to diagnose as there are depth levels in the configuration, e.g., 16 years with a 16-level configuration.
+\begin{verbatim}
+bg_par_data_TM_start=9980
+\end{verbatim}
+\item Select the averaging interval. Setting to 1 will give one annual average matrix, 4 will give four seasonally averaged matrices and 12 will give monthly averaged matrices.
+\begin{verbatim}
+bg_par_data_TM_avg_n=1
+\end{verbatim}
+\end{enumerate}
+
+\noindent There are also a few other things to consider. The model will try and warn you...
+
+\begin{enumerate}
+\item The "colour" tracers are used for other purposes such as preformed tracers. Diagnosing preformed tracers at the same time probably isn't a good idea.
+\begin{verbatim}
+bg_ctrl_bio_preformed=.false.
+\end{verbatim}
+\item If you want to diagnose seasonal or monthly matrices, ensure you have seasonal variability otherwise you get will get a number of identical matrices:
+\begin{verbatim}
+ea_dosc=.true.
+go_dosc=.true.
+gs_dosc=.true.
+\end{verbatim}
+\item If you want to diagnose seasonal or monthly matrices, you may want to save other output at the same intervals by setting the following (this is not the same as the matrix averaging parameter! Set to 24 for seasonal or 8 for monthly):
+\begin{verbatim}
+bg_par_data_save_slice_n=24
+\end{verbatim}
+\end{enumerate}
+
+\noindent Lastly, \textbf{biogem} needs to run with a 1:1 timestep ratio with \textbf{goldstein}. You can either edit the \texttt{runmuffin.sh} script yourself or better, use the \texttt{runmuffin\_TM.sh} script which sets this ratio to 1 automatically. 
+
+The transport matrix data will be written to a netCDF file named \texttt{transport\_matrix\_COO.nc} in the biogem output (COO stands for the specific format of the sparse matrix). See the next sections on what to do with it...
+
+%------------------------------------------------
+
+\subsubsection{Loading the Transport Matrix in MATLAB}
+
+To load the Transport Matrix into MATLAB, copy \texttt{transport\_matrix\_COO.nc} to a directory MATLAB can see. Use the  \texttt{load\_genie\_matrix.m}  script from \url{www.github.com/derpycode/muffindata/Transport_Matrix} to read the file and create the matrix in MATLAB and save it the matrices to a file naed whatever you specified. A matrix is conventionally called \texttt{A}. If there are multiple matrices, they are saved under one file as \texttt{A1}, \texttt{A2} etc...
+
+\begin{verbatim}
+load_genie_matrix ( 'transport_matrix_COO.nc' , 'output_filename')
+\end{verbatim}
+
+\noindent The script also saves a file called \texttt{matrix\_vars.mat} containing metadata:
+
+\vspace{2mm}
+\begin{enumerate}
+\item \texttt{v\_index} - a structure array with 4 vectors containing the indices for longitude (\texttt{i}), latitude (\texttt{j}) and depth (\texttt{k} with 16 as surface, \texttt{rk} with 1 as surface). These are required to convert between a 3-D grid to vector formats (see below).
+\item \texttt{nb} - the number of wet grid-boxes
+\item \texttt{Ib} and \texttt{Ii} - indices containing the location of the surface and interior ocean grid-boxes in the matrix
+\end{enumerate}
+\vspace{2mm}
+
+You should perform a basic check on the transport matrices before using them to check there were no issues in diagnosing them. Each row of the matrix must sum to 1.0 to ensure mass conservation. In practice, due to the way the matrix is averaged over a single run, this is never exact but should be close within several decimal places. Running \texttt{sum(A,2)} will find the sum of each row. \texttt{sum(sum(A,2))} should also equal the total number of boxes \texttt{nb}. Hopefully, it should be obvious that the circulation should be as close to steady state as possible in your run!
+
+%------------------------------------------------
+%
+\subsubsection{Useful MATLAB Functions}
+\vspace{1mm}
+
+Additional MATLAB functions to help process and use transport matrices can be found at \url{www.github.com/derpycode/muffindata/Transport_Matrix}.
+
+\vspace{2mm}
+\begin{enumerate}
+\item \texttt{v2f.m} and \texttt{f2v.m} - convert between vector and 3-D grid. Takes the vector indices in \texttt{v\_index} as arguments.
+\item \texttt{read\_genie\_netcdf.m} - reads one or multiple variables from a genie netCDF output file into your MATLAB workspace. It will read in a 3-D field or convert to a vector format.
+\item \texttt{split\_transport\_matrix.m} - splits a transport matrix into a boundary (surface grid-boxes only) and interior matrices, needed when solving for steady state solutions. The function takes the \texttt{Ib} variable as an argument.
+\end{enumerate}
+\vspace{2mm}
 
 %------------------------------------------------
 
