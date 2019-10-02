@@ -189,7 +189,7 @@ If you are not or not very familiar with the linux/unix command line – for a b
 
 NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
 
-NOTE-the-second: In places, instructions ma be given for specific programs and computer platforms and hence may differ slightly from the software reality in front of you. Use your judgement in translating such instructions. Many other alternative software choices exist for editing files or viewing results, as are other ways of configuring software and file editing/transferring methodologies. Do what suits you best – you can view such instructions where the occur as  representing an example methodology rather than a literal interpretation of the Constitution.
+NOTE-the-second: In places, instructions ma be given for specific programs and computer platforms and hence may differ slightly from the software reality in front of you. Use your judgement in translating such instructions. Many other alternative software choices exist for editing files or viewing results, as are other ways of configuring software and file editing/transferring methodologies. Do what suits you best – you can view such instructions where they occur, as  more representing an example methodology rather than a literal interpretation of the Constitution.
 
 %------------------------------------------------
 
@@ -221,7 +221,7 @@ To edit files and visualize results, you will need some specific software. The e
 \\(Or alternatively: \textbf{MATLAB}.)
 \item  A simple text editor, except not the rubbish default \textbf{Windows} one – you need one that can display \textbf{unix} ASCII text without screwing it up. Options for \textbf{Windows} users are:
 \textbf{notepad++} (https://notepad-plus-plus.org/)
-\textbf{SciTE} (http://prdownloads.sourceforge.net/scintilla/Sc372.exe)
+\textbf{SciTE} (https://www.scintilla.org/SciTE.html)
 (\textbf{linux} and \textbf{Mac} users need no special/different editor compared with your standard editor – everything will display just fine). You can also use \textbf{linux} command line based editors such as \textbf{vi}.
 \end{enumerate}
 
@@ -240,7 +240,7 @@ To edit files and visualize results, you will need some specific software. The e
 You will need to edit text-based configuration files, possibly in installing and configuring \textbf{muffin}, but definitely in configuring model experiments. So now might be a good time to check that you can use the/an editor! (You will also be using the same editor to view some of the model output.)
 
 You have two alternative options for editing and viewing text files, depending on whether you are a \textbf{unix} nerd with no life, or prefer anything to do with computers to be wrapped in cotton wool and covered with dollops of treacle.
-EITHER: Use the linux \textbf{vi} (/\textbf{vim}) application (or similar e.g. \textbf{emacs}) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal if you don't like this sort of thing … OR ... use a suitable linux-friendly text editor (NOT \textbf{Micro\$oft} \textbf{Notepad}) in conjunction with the \textbf{Secure File Transfer Client}. For example: \textbf{SciTE} http://www.scintilla.org/SciTE.html is suitable, or \textbf{Notepad++}.
+EITHER: Use the linux \textbf{vi} (/\textbf{vim}) application (or similar e.g. \textbf{emacs}) if you are familiar with it. I think that this pretty much sucks as a text editor and life is far too short and brutal if you don't like this sort of thing … OR ... use a suitable linux-friendly text editor (NOT \textbf{Micro\$oft} \textbf{Notepad}) in conjunction with the \textbf{Secure File Transfer Client}. For example: \textbf{SciTE} (http://www.scintilla.org/SciTE.html) is suitable, or \textbf{Notepad++}.
 
 If you fiddle about with the settings under Options/Preferences in the \textbf{WinSCP} program and apply a little common sense, it should be possible to configure things so that you can simply double-click on a file in the remote (right-hand) window panel and it will open like magic (almost)! Saving the file after editing) should then result in the file being saved back to the cluster. Or you can select Edit With (and then \textbf{SciTE}) from right-mouse-button-clicking on the filename. Or ... a crude but workable approach is to use an sftp client to drag the file to your local machine (assuming \textbf{muffin} is installed remotely), edit it there, and then drag it back again.\footnote{Note that care still has to be taken to avoid certain \textbf{Microsoft} text editing programs under \textbf{Windoz}.)}
 
@@ -254,8 +254,8 @@ This, and additional documentation (of varying degrees of up-to-date-ness) can b
 \setlength{\itemindent}{.2in}
 \item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
 \\Here, the \textbf{latex} source for the documentation lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the \textbf{git} repository. Make changes. Commit them locally. Make a 'pull request' ...}.
-\item On my \href{http://www.seao2.info/mycgenie.html}{website}.
-\\Here, are only compiled, PDF versions of the documentation are provided, and are likely to be somewhat out-of-date.
+\item On my \href{http://www.seao2.info/mymuffin.html}{website}.
+\\Here, are only compiled, PDF versions of the documentation are provided, and may be somewhat out-of-date.
 \end{enumerate}
 
 %------------------------------------------------
@@ -296,7 +296,7 @@ $ ssh username@clustername
 \end{verbatim}
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
 \\  \texttt{catname.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
-\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ggy.bris.ac.uk}):
+\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
 \\You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 \\ You can also log in directly from the shell/terminal window of e.g. \textbf{PuTTY} rather than first opening an sftp connection.
@@ -354,9 +354,15 @@ By doing this, you have created your own code repository (and an identical copy 
 \item \textbf{Ubuntu}. This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.} And you have also jumped the shark with a successful install of other libraries and softwares ... see Section \ref{how-to-ubuntu}.
 
 \vspace{1mm}
+\item \texttt{domino} (UCR cluster). There is a single file to edit (which lives in the \texttt{genie-main} directory):
+\begin{enumerate}[noitemsep]
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# domino \#\#\#}.
+\end{enumerate}
+
+\vspace{1mm}
 \item \texttt{eevee} (UCR cluster). There are 2 files to edit (all of which live in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# eevee \#\#\#}.
+\item In \texttt{user.mak} -- as per for \texttt{domino} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# eevee \#\#\#}).
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
 \\On line 18 -- comment out (with a \texttt{\#}); the \texttt{nccompare} part of that line.
 \end{enumerate}
@@ -432,7 +438,7 @@ $ make cleanall
 
 \noindent That is it as far basic installation goes. But ...
 
-\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From genie-main:
+\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From \texttt{genie-main}:
 
 \begin{verbatim}
 $ ./installmuffin.sh
@@ -725,21 +731,21 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
+\noindent One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
 
-Instead – change to the experiment results directory and then to the \texttt{biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the WinSCP preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
+Instead – change to the experiment results directory and then to the \texttt{biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the \textbf{WinSCP} preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
-Note: The Secure File Transfer Client does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run 99 times out of 100, it is because the display of the Secure File Transfer Client needs to be refreshed -- there is an icon at the top of the program window or hit the ‘F5’ key.
+Note: \textbf{WinSCP} does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run, 99 times out of 100, it is because the display of the \textbf{WinSCP} needs to be refreshed -- there is an icon at the top of the program window or hit the ‘\textsf{F5}’ key.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-For your information and edification (only): Excel, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
+\noindent For your information and edification (only): \textbf{Excel}, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
 
-In \textbf{Excel}: Choose File then Open.  You will want to select Files of Type ‘All Files (*.*)’. In the Text Import Wizard window you can request that Excel skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in Excel to ensure that the columns of data are correctly imported.
+In \textbf{Excel}: Choose \textsf{File} then \textsf{Open}.  You will want to select \textsf{Files of Type} ‘\textsf{All Files (*.*)}’. In the \textsf{Text Import Wizard} window you can request that \textbf{Excel} skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in \textbf{Excel} to ensure that the columns of data are correctly imported.
 
-\textbf{MUTLAB} will ignore lines starting with a \%, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \%. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
+\textbf{MUTLAB} will ignore lines starting with a \textsf{\%}, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \textsf{\%}. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
 
 %------------------------------------------------
 
@@ -751,39 +757,40 @@ For the time-slice NetCDF (*.nc) files you will be using a program called \textb
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent When you open the NetCDF file, you will be presented with a ‘Datasets and Variables’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘Long Name’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘Longitude-Latitude’ or ‘Latitude-Vertical’ plot (for the 2-D fields, the plot display will immediately open).
-For the ‘Longitude-Latitude’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
-For the ‘Latitude-Vertical plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
-There is also an option for ‘Longitude-Vertical plots (which we will not use).
+\noindent When you open the NetCDF file, you will be presented with a ‘\textsf{Datasets and Variables}’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘\textsf{Long Name}’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘\textsf{Longitude-Latitude}’ or ‘\textsf{Latitude-Vertical}’ plot (for the 2-D fields, the plot display will immediately open).
+For the ‘\textsf{Longitude-Latitude}’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
+For the ‘\textsf{Latitude-Vertical}' plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
+There is also an option for ‘\textsf{Longitude-Vertical}' plots (which we will not use).
 For all three: there may be multiple time-slices (i.e., you can plot data saved from different years).
 You can interpolate the data or not (often you may find that it is clearer not to interpolate the data but to leave it as ‘blocky’ colors corresponding to the resolution of the model), change the scale and colors, overlay continental outline, change the projection, etc etc. Grey cells represent ‘dry’ grid points, i.e., continental or oceanic crust.
 
-NOTE: The default settings in Panoply can mislead:
+NOTE: The default settings in \textbf{Panoply} can mislead:
 \begin{enumerate}
 \item By displaying the very 1st time-slice (often year mid-point 0.5) time-slice rather than the experiment end. (This can confuse as it can look like an experiment has not done anything!)
-\item By interpolating the data (not always misleading). To remove interpolation, untick ‘Interpolate’ in the ‘Arrays’ tab.
-\item By displaying a global zonal mean by default when selecting Latitude-Vertical plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘Grid’ tab, hit ‘Swap B/T’ (for swap bottom/top). 
-\item By listing all ‘Plottable variables’ (option at the bottom of the window), when what you \textit{ideally} want is to ‘Show’ the shorter and less confusing list of ‘Georeferenced variables’. 
-\item In Longitude-Latitude plots, by overlaying the modern continental output. (GENIE land is marked in grey.)
-\item By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g., time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘Scale’ tab. 
+\item By interpolating the data (not always misleading). To remove interpolation, un-tick:
+\\‘\textsf{Interpolate}’ in the ‘\textsf{Arrays}’ tab.
+\item By displaying a global zonal mean by default when selecting \textsf{Latitude-Vertical} plots. Then, to further confuse you, by plotting the output up-side-down (to invert: in the ‘\textsf{Grid}’ tab, hit ‘\textsf{Swap B/T}’ (for swap bottom/top). 
+\item By listing all ‘\textsf{Plottable variables}’ (option at the bottom of the window), when what you \textit{ideally} want are  the shorter and less confusing list of ‘\textsf{Georeferenced variables}’. 
+\item In \textsf{Longitude-Latitude} plots, by overlaying the modern continental output. (\textbf{muffin} land is marked in grey.)
+\item By fitting a scale to the plot when the display window is opened, but not changing the scale when e.g., time or depth is changed. (The point of confusion is that you can quickly move outside the scale and end up with all model points dark blue or red.) Re-fit the scale, or manually set limited, in the ‘\textsf{Scale}’ tab. 
 So be careful when opening a new plot that you are looking at what you *think* you are looking at …
-All the defaults can be changed via the ‘Edit’ drop-down menu and ‘Preferences’.
+All the defaults can be changed via the ‘\textsf{Edit}’ drop-down menu and ‘\textsf{Preferences}’.
 \end{enumerate}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-Explore different data fields and play with different ways of displaying them. Aim for a set of display properties that show the information you are interested in / want to present in the clearest possible manner. Try different years (time-slice number), depth level (for a Latitude-Longitude plot), or longitude (for a vertical section).
+\noindent Explore different data fields and play with different ways of displaying them. Aim for a set of display properties that show the information you are interested in / want to present in the clearest possible manner. Try different years (time-slice number), depth level (for a Latitude-Longitude plot), or longitude (for a vertical section).
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-To save plots in \textbf{Panoply}:
-File
-Save Image As …
-Then select the location, filename, and graphics format.
+\noindent To save plots in \textbf{Panoply}:
+\\\textsf{File}
+\\\textsf{Save Image As …}
+\\Then select the location, filename, and graphics format.
 
 %------------------------------------------------
 
@@ -812,7 +819,7 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 
 For example -- to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type:
 \small\begin{verbatim}
-$ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
+$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
 \end{verbatim}\normalsize
 
@@ -873,9 +880,9 @@ Other useful submission options for \textbf{SGE}:
         
         \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
         
-        \item A complete example for one of the University of Bristol clusters would be:
+        \item A complete example for the \texttt{domino} UCR clusters would be:
 \small
-        \vspace{-2pt}\begin{verbatim}$ qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
+        \vspace{-2pt}\begin{verbatim}$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
         cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
 \normalsize
         which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
@@ -6597,6 +6604,35 @@ $ mkdir mydirectory
 \subsubsection{Repeating command lines}
 
 You do not have to re-enter lines of commands and options in their entirety each time – by pressing the UP cursor key you get the last command you issued. If you keep pressing the UP cursor key you can recover progressively older commands you have previously entered. When you have recovered a helpful line you can simply just edit it, navigating along with the LEFT and RIGHT cursor keys (press RETURN when you are done).
+
+%------------------------------------------------
+%
+\subsubsection{vi}
+
+The \textbf{vi} editor is a text-based editor that you use at the command line (i.e. it does not open in its own window, nor have fancy menu items or icons to click). You use \textbf{vi =} to create/edit files, by typing:
+
+\begin{verbatim}
+$ vi FILENAME
+\end{verbatim}
+
+\noindent where \texttt{FILENAME} is the ... name of the file you want to edit\footnote{Then make sure the file is present in the directory you are currently in, or provide a full path to the file (+filename).} or create.
+
+You start in the 'command' mode, in which you do not edit the contents directly, but instead can access file and copy-paste operations such as:
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item :q == quit
+\item :q! == no, really quit
+\item :x == save and quit
+\item dd == cut line
+\item p == paste
+\end{itemize}
+\vspace{2mm}
+
+To start editing and e.g. inserting text, press the \textsf{i} key.
+
+To exit the editing mode and back to the command mode, press the \textsf{Esc} (escape) key.
 
 %------------------------------------------------
 
