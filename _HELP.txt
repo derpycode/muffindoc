@@ -103,6 +103,9 @@ PERMIL
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
+\vspace{-1mm}
+\vspace{-2mm}
+
 \noindent\rule[0.0ex]{\linewidth}{0.5pt}
 \noindent\rule{\linewidth}{0.5pt}
 \noindent\rule{4cm}{0.5pt}

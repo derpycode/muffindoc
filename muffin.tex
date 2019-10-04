@@ -74,6 +74,7 @@
 \input{muffin_structure} % Insert the commands.tex file which contains the majority of the structure behind the template
 \usepackage[normalem]{ulem}
 \usepackage{hyperref}
+\usepackage{amssymb}
 
 \begin{document}
 
@@ -179,13 +180,21 @@ The \textbf{(cGENIE.)muffin} model currently compiles and runs only under \textb
 
 The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the user-name, computer name, and current directory, e.g.:
 
+\vspace{-2mm}
 \begin{verbatim}
 [username@host ~]$
 \end{verbatim}
+\vspace{-2mm}
 
-\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer name ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory (represented by the \texttt{\~} symbol).
+\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer name ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory -- represented by the \texttt{\~} symbol. If, for example, you were instead currently in the \texttt{myfolder} directory, you would see at the command prompt:
 
-If you are not or not very familiar with the linux/unix command line – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see Section \ref{how-to-linux} (page \pageref{how-to-linux}).
+\vspace{-2mm}
+\begin{verbatim}
+[username@host myfolder]$
+\end{verbatim}
+\vspace{-2mm}
+
+If you are not or not very familiar with the linux/unix command line, such as how to navigate up and down the directory tree and to display the contents of the current directory you are in – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see Section \ref{how-to-linux} (page \pageref{how-to-linux}).
 
 NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
 
@@ -291,14 +300,18 @@ Log into your \textbf{linux}/\textbf{macOS} box!\footnote{If you fail at this st
 \begin{itemize}
 \item If logging in via a \textbf{linux}/\textbf{macOS} box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
 then you are probably already logged in! Otherwise, it will look like: \texttt{username@localcomputername:\(\sim\)\$}}, e.g.
+
+\vspace{-1mm}
 \begin{verbatim}
 $ ssh username@clustername
 \end{verbatim}
+\vspace{-1mm}
+
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
 \\  \texttt{catname.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
-\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
+\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client) or \textbf{PuTTY} (a 'shell', or 'terminal' window). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
-\\You will also need a terminal window. This can be opened by clicking on the ‘Open session in PuTTY’ icon on the top icon row, or pressing Ctrl+P. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
+\\You will also need a terminal window (assuming you did not open that first). This can be opened by clicking on the ‘\textsf{Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 \\ You can also log in directly from the shell/terminal window of e.g. \textbf{PuTTY} rather than first opening an sftp connection.
 \end{itemize}
 
@@ -314,13 +327,12 @@ As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
 \vspace{2mm}
 
-\noindent \textbf{IMPORTANT}: the default name of the installation (\texttt{cgenie.muffin}) is the same as under \textbf{svn}. If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename\footnote{Or simply delete: \texttt{rm -f -r cgenie.muffin}} the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
+\newpage
+\noindent \textbf{IMPORTANT}: if you had previously installed a version of \textbf{muffin} under \textbf{svn}, note that the default name of the installation (\texttt{cgenie.muffin}) is the same.\footnote{If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename, or simply delete (\texttt{rm -f -r cgenie.muffin}) the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
 
-\begin{verbatim}
-$ mv cgenie.muffin cgenie.muffin.svn
-\end{verbatim}
+\texttt{\$ mv cgenie.muffin cgenie.muffin.svn}
 
-\noindent will rename the installation directory, adding the extension \texttt{.svn} on the end.\footnote{You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
+\noindent will rename the installation directory, adding the extension \texttt{.svn} on the end. You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
 
 From here, there are 2 ways to get your mitts on the model code:
 
@@ -332,7 +344,7 @@ From here, there are 2 ways to get your mitts on the model code:
 \\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
 \vspace{1mm}
-\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can use a GUI based git client, easiest is at the command line, using \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
+\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line, using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
@@ -356,7 +368,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{1mm}
 \item \texttt{domino} (UCR cluster). There is a single file to edit (which lives in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# domino \#\#\#}.
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}.
 \end{enumerate}
 
 \vspace{1mm}
@@ -395,54 +407,66 @@ By doing this, you have created your own code repository (and an identical copy 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
  First, change directory (see: Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 
+\vspace{-2mm}
 \begin{verbatim}
 cgenie.muffin/genie-main
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent If you are not ‘linux-friendly’ (see: Section \ref{how-to-linux} for \textbf{linux} basics) – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ make testbiogem
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent This compiles a basic carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. There may be some ’Warnings’ reported (== somepony’s sloppy programming) but these are not detrimental to the ultimate science results (we hope!).
 
 ‘Success’ of this test is indicated by:
 
+\vspace{-2mm}
 \begin{verbatim}
 **TEST OK**
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line: 
 
+\vspace{-2mm}
 \small
 \begin{verbatim}
 ./genie.job -t -k -f configs/eb_go_gs_ac_bg_test.xml -o /home/genie00/cgenie_output
    -c /home/genie00/cgenie -g ../../cgenie -m "" > testbiogem.out;
 \end{verbatim}
 \normalsize
+\vspace{-2mm}
 
 \noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
 
 If the test doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ make cleanall
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent and then re-try the test. Refer to the FAQ section at the end of this book for further clues as to non-working model installations.
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 \noindent That is it as far basic installation goes. But ...
 
 \noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From \texttt{genie-main}:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ ./installmuffin.sh
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as well as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
 
@@ -454,27 +478,35 @@ $ ./installmuffin.sh
 
 The simplest workable installation of \textbf{muffin}, as described above, is to use \texttt{git clone}. You end up with a carbon copy of the muffin code repo (I am too lazy to type out 'repository' again) which you have also automatically now 'checked out'. Changes and developments will occur to the code on the GitHub repo from time-to-time, and if may be that either you might benefit by using a more up-to-date code base, or specific changes may have been made that you absolutely need. To determine the status of your repo, type\footnote{Here, the -uno ensures that files (e.g. experiment configuration files) you have created, but not added and committed, are not listed.} (from \texttt{cgenie.muffin}):
 
+\vspace{-2mm}
 \begin{verbatim}
 $ git status -uno
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent However, git has not actually compared your repo with the one on GitHub, because this is apparently network expensive (as if you don't spend the rest of your life killing the internet by streaming Rick and Morty). So, use:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ git fetch
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent which will 'download [new and modified] remote content but not update your local repo's working state'. If you now type \texttt{git status -uno}, \textbf{git} can tell you if there is newer content (e.g. '\texttt{Your branch is behind 'origin/master}'\footnote{\texttt{origin} is the origin of the repo -- GitHub, and \texttt{master} is the name of the branch, in this case, the default branch name.}). To merge in the fetched content:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ git merge
 \end{verbatim}
+\vspace{-2mm}
 
 Both these commands are also combined in a single command\footnote{If there are no changes (to \textit{fetch} and \textit{merge}), the you get the message: \texttt{Already up-to-date.}}:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ git pull
 \end{verbatim}
+\vspace{-2mm}
 
 If you are not developing code, and hence not editing files in the repo (but e.g. only adding new model configuration files), your life should mostly be trouble-free with regards to updating your code via \texttt{pull}.\footnote{
 One exception is, if any of the model installation/configuration files that you might have edited, i.e. one or all of: \texttt{genie-main/user.mak}, \texttt{genie-main/makefile.arc}, and/or \texttt{genie-main/makefile}, have also changed on \texttt{origin/master}, then \texttt{pull} (or \texttt{merge}, after \texttt{fetch}) will fail (with the message: '\texttt{Please, commit your changes or stash them before you can merge. Aborting}'). The root issue is a conflict between remote file changes, and local ones that you had not committed to your repo.
@@ -506,12 +538,15 @@ The overall sequence of configuring and running \textbf{muffin}, is shown in Fig
 
 At the command-line (\texttt{\$}) in the genie-main directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
 
+\vspace{-1mm}
 \begin{verbatim}
 $ ./runmuffin.sh #1 #2 #3 #4 (#5)
 \end{verbatim}
+\vspace{-1mm}
 
 \noindent(\uline{don't type it yet}!)
 
+\vspace{1mm}
 The form of the command requires that you must list at least 4 parameters after \texttt{./runmuffin.sh}, separated by S P A C E S and on a single continuous line (even if it ‘wraps’ around across 2 lines of the screen).
 These parameters are:
 
@@ -530,7 +565,7 @@ There is also one optional (5th) parameter (described later).
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-As an example of running the \textbf{muffin} Earth system model:
+\noindent As an example of running the \textbf{muffin} Earth system model:
 
 \vspace{2mm}
 \begin{enumerate}[noitemsep]
@@ -544,19 +579,24 @@ As an example of running the \textbf{muffin} Earth system model:
 
 The full command for your first example experiment, which you are going to issue from the \texttt{\~}\texttt{/cgenie.muffin/genie-main} directory, then looks like:
 
+\vspace{-1mm}
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 10
 \end{verbatim}
+\vspace{-1mm}
 
 \noindent(\uline{you can try it now}!)
 
+\vspace{2mm}
 REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C E S are vital. Take care not to confuse an el (‘\texttt{l}’) with a one (‘\texttt{1}’) when typing this in ... (it is a ‘one’ here).
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-What should happen is: First, you will end up twiddling your thumbs a while, as all the components of \textbf{muffin} are compiled from the raw source code (\textbf{FORTRAN}). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
+\noindent What should happen is: First, you will end up twiddling your thumbs a while, as all the components of \textbf{muffin} are compiled from the raw source code (\textbf{FORTRAN}). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
+
+\newpage
 
 \begin{itemize}
 \item[] \texttt{model year}  -- ... guess!
@@ -577,15 +617,19 @@ The choice of what information to display on screen as the model is running is r
 
 This information is reported at the same intervals as time-series data (see later and/or refer to the User Manual) is saved and is indicated by: 
 
+\vspace{-2mm}
 \begin{verbatim}
 >>> SAVING BIOGEM TIME-SERIES AVERAGE CENTERED @ year :
 \end{verbatim}
+\vspace{-2mm}
 
 Interleaved between these lines are lines reporting the saving of time-slice data (the 2- and 3-D model states – more of which later as well as in the User Manual). These appear as:
 
+\vspace{-2mm}
 \begin{verbatim}
 >>> SAVING BIOGEM TIME-SLICE AVERAGE CENTERED @ year:
 \end{verbatim}
+\vspace{-2mm}
 
 You can stop the model at any point (all data up to that time will have been saved) by hitting: \textsf{<Ctrl-C>} (\textsf{CONTROL} key + ‘\textsf{C}’ key).
 
@@ -661,18 +705,18 @@ and will be assigned a directory name something like:
 LAB_0.EXAMPLE
 \end{verbatim}
 (this being the results directory name for an experiment called \texttt{LAB\_0.EXAMPLE}). Within this directory are each module’s results sub-directories.
-We will primarily consider only results saved by the ocean biogeochemical module \textbf{‘BIOGEM’} (subdirectory: biogem). The results files in this example will thus be found in:
+We will primarily consider only results saved by the ocean biogeochemical module \textbf{‘BIOGEM’} (subdirectory: \small\texttt{biogem}\normalsize). The results files in this example will thus be found in:
 \begin{verbatim}
 ~/cgenie_output/LAB_0.EXAMPLE/biogem
 \end{verbatim}
-\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
+\textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, the atmospheric chemistry module '\textbf{ATCHEM}' does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while the marine sediment module \textbf{SEDGEM} does save its own results, but only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
 
 %------------------------------------------------
 
 \subsection{Time-slice output}
 
 One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g., a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
-Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed time-slices. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM} then assumes that the specified time point represents the mid-point of the annual (by default) average with the results that output years end up being reported as e.g.,
+Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed \textit{time-slices}. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM}  assumes that the specified time point represents the mid-point of the (annual) average with the results that output years end up being reported as e.g.,
 \begin{verbatim}
 0.5
 1.5
@@ -753,10 +797,6 @@ In \textbf{Excel}: Choose \textsf{File} then \textsf{Open}.  You will want to se
 
 For the time-slice NetCDF (*.nc) files you will be using a program called \textbf{Panoply}. If you want your own (FREE!) copy of this utility, you can get it here (and is available for: \textbf{Windoz}, \textbf{Mac}, and linux operating systems): http://www.giss.nasa.gov/tools/panoply/.
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
-
 \noindent When you open the NetCDF file, you will be presented with a ‘\textsf{Datasets and Variables}’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘\textsf{Long Name}’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. For the 3-D fields you will be asked first whether you want a ‘\textsf{Longitude-Latitude}’ or ‘\textsf{Latitude-Vertical}’ plot (for the 2-D fields, the plot display will immediately open).
 For the ‘\textsf{Longitude-Latitude}’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean.
 For the ‘\textsf{Latitude-Vertical}' plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. 
@@ -788,8 +828,10 @@ All the defaults can be changed via the ‘\textsf{Edit}’ drop-down menu and �
 \vspace{2mm}
 
 \noindent To save plots in \textbf{Panoply}:
+\small
 \\\textsf{File}
 \\\textsf{Save Image As …}
+\normalsize
 \\Then select the location, filename, and graphics format.
 
 %------------------------------------------------
@@ -800,7 +842,7 @@ All the defaults can be changed via the ‘\textsf{Edit}’ drop-down menu and �
 
 \section{Submitting experiment ‘jobs’}
 
-This bit is no particular fun at all, but it is a very handy ‘trick’ for running the model in the background, and maximizes drinking time in the pub vs. sat bored watching a computer screen :)
+This bit is no particular fun at all, but it is a very handy ‘trick’ for running the model in the background, and maximizes drinking time in the bar vs. sat bored watching a computer screen :)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -818,85 +860,28 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 \noindent The alternative is to submit your experiment as a ‘job’ to a queuing system which then manages what compute resources are used to run the model. Once you have submitted the experiment, that is it – you can go straight to the pub :)
 
 For example -- to run the same experiment as before (\texttt{LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type:
+\vspace{-1mm}
 \small\begin{verbatim}
 $ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
 \end{verbatim}\normalsize
+\vspace{-1mm}
 
-\noindent(Again: SINGLE, CONTINUOUS LINE.)
+\noindent(Again: SINGLE, CONTINUOUS LINE.) Here, the particular queue name is \textsf{dog}.
 
-Note that now you should omit the ‘./’ bit before runmuffin.sh.
-(If you are interested (I know that you are not): the options following qsub and before runmuffin.sh do things like re-directing screen output and error messaging to a file and specify which linux ‘shell’ to assume. It is even possible to receive an email when the job is done :) )
+Note that now you should omit the ‘\texttt{./}’ bit before \texttt{runmuffin.sh}.
+(If you are interested (I know that you are not): the options following \texttt{qsub} and before \texttt{runmuffin.sh} do things like re-directing screen output and error messaging to a file and specify which linux ‘shell’ to assume. It is even possible to receive an email when the job is done :) )
 The status of the cluster queue and how you experiment job is getting on (e.g., “Is it finished yet?”) can be checked by typing: 
+\vspace{-1mm}
 \small\begin{verbatim}
 $ qstat -f
 \end{verbatim}\normalsize
+\vspace{-1mm}
 (\texttt{qstat -f -u "*"} will show all jobs on the cluster.)
 
-After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of 6 compute nodes, numbered 0-0 to 0-5), although it might briefly reside as a ‘PENDING JOB’. For each node, there are 24 processing cores, meaning that up to 24 instances of \textbf{muffin} can run simultaneously on each node (i.e., a total of 144 across the entire cluster). For an 8-level ocean based configuration of \textbf{muffin}, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a qstat –f command you can follow your job’s progress.
+After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of 6 compute nodes, numbered 0-0 to 0-5), although it might briefly reside as a ‘PENDING JOB’. For each node, there are multiple processing cores (depending on the specific cluster and queue), meaning that multiple instances of \textbf{muffin} can run simultaneously on each node. For an 8-level ocean based configuration of \textbf{muffin}, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a \texttt{qstat –f} command you can follow your job’s progress.
 
 A rough rule of thumb is that 8-level ocean \textbf{muffin} @ a horizontal grid resolution of 36x36 will simulate about 1000 years per CPU hour. The 16-level version (which you will use later), runs at about 300-400 years per CPU hour.
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\subsubsection{Cluster job submission in detail ...}
-
-\vspace{2mm}
-
-For submitting jobs using \textbf{Sun Grid Engine} (\textbf{SGE}) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
-\vspace{-2pt}\begin{verbatim}
-$ qsub -S /bin/bash runmuffin.sh <options>
-\end{verbatim}\vspace{-2pt}
-Here: the \texttt{-S /bin/bash} part is to ensure that \textbf{SGE} uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
-
-Take care that the installed \textbf{FORTRAN} compiler can be seen by the cluster nodes. If not, the \textbf{muffin} executable must have already been built prior to submitting a job. The easiest way to do this is to run \textbf{muffin} interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
-
-Other useful submission options for \textbf{SGE}:
-
-\begin{itemize}[noitemsep]
-\setlength{\itemindent}{.2in}
-
-        \item To redirect the standard output stream:
-        \vspace{-2pt}\begin{verbatim}$ qsub -o genie_log ...\end{verbatim}
-        
-        \item To redirect the standard error stream:
-        \vspace{-2pt}\begin{verbatim}$ qsub -e genie_log ...\end{verbatim}
-        
-        \item To merge standard output and error streams into standard output:
-        \vspace{-2pt}\begin{verbatim}$ qsub -j y ...\end{verbatim}
-        
-        \item To specify particular resources, such as the nodes with 8 GB of RAM:
-        \vspace{-2pt}\begin{verbatim}$ qsub -l mem_total = 8.0G ...\end{verbatim}
-        
-        \item To decrease the priority of a job\footnote{The default priority is 0. A lower priority has a higher value ... !}:
-        \vspace{-2pt}\begin{verbatim}$ qsub -p 1 ...\end{verbatim}
-        
-        \item To submit a job from the current working directory:
-        \vspace{-2pt}\begin{verbatim}$ qsub –cwd\end{verbatim}
-        
-        \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
-        
-        \item A complete example for the \texttt{domino} UCR clusters would be:
-\small
-        \vspace{-2pt}\begin{verbatim}$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
-        cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
-\normalsize
-        which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
-        Note that to redirect output as per in this particular example, the directory \texttt{\~{}cgenie\_log} \textbf{MUST} be present. I have no idea what happens if it is not ... but it can't be good ;)
-        
-\end{itemize}
-
-\noindent You can check the status of the \textbf{SGE} job queue\footnote{Depending on the cluster setup, it may be possible to graphically check what is going on via the www.} with the command:
-\vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
-and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
 
 \noindent \textbf{NOTE}: It may be that the \textbf{FORTRAN} compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}.
 
@@ -912,25 +897,29 @@ and you can kill a job with the \texttt{qdel} command, the job numbers being giv
 
 Not much fun here either … but again – an important and time-saving (== increased drinking time!) modelling technique to learn to use.
 
-By default, model experiments start from ‘cold’, i.e., the ocean is at rest and uniform in temperature and salinity while the atmosphere is uniform in temperature and humidity. All biogeochemical tracers in the ocean have uniform concentrations and/or are zero and there are no biogenic materials in deep-sea sediments. From this state it will take several thousand years (kyr) for the climate system to reach steady-state, and closer to 5 kyr (or more) for ocean biogeochemical cycles and atmosphere \(CO_{2}\) to reach steady-state, and exceeding 100 kyr for sediment composition to re-balance weathering ... Reaching this the equilibrium state is called the ‘spin-up’ phase of the model.
-There is evidently little point in repeating the spin-up for each and every model experiment that are similar except in a single detail (e.g., testing a variety of different \(CO_{2}\) emissions scenarios all starting from current year 2012 conditions). A facility is thus provided for requesting that a ‘restart’ is used – starting a new experiment from the end of a previous one, usually a ‘spin-up’ that has been run explicitly for the purpose of generating a starting point (restart) of the system at steady-state (equilibrium) for subsequent experiments to continue on from.
-It is important to note that there is nothing special about a restart – it is simply an experiment that you have already run. Equally, there is nothing special about the restarts you will download next – these you could have generated yourself – it simply saves time to have them provided.
+By default, model experiments start from ‘cold’, i.e., the ocean is at rest and uniform in temperature and salinity while the atmosphere is uniform in temperature and humidity. All biogeochemical tracers in the ocean have uniform concentrations and/or are zero and there are no biogenic materials in deep-sea sediments. From this state it will take several thousand years (kyr) for the climate system to reach steady-state, and closer to 5 kyr (or more) for ocean biogeochemical cycles and atmosphere \(CO_{2}\) to reach steady-state, and exceeding 100 kyr for sediment composition to re-balance weathering ... Reaching this the equilibrium state is called the ‘\textit{spin-up}’ phase of the model.
+There is evidently little point in repeating the \textit{spin-up} for each and every model experiment that are similar except in a single detail (e.g., testing a variety of different \(CO_{2}\) emissions scenarios all starting from current year 2012 conditions). A facility is thus provided for requesting that a ‘\textit{re-start}’ is used – starting a new experiment from the end of a previous one, usually a \textit{spin-up} that has been run explicitly for the purpose of generating a starting point (\textit{re-start}) of the system at steady-state (equilibrium) for subsequent experiments to continue on from.
+It is important to note that there is nothing special about a \textit{re-start} – it is simply an experiment that you have already run. Equally, there is nothing special about the \textit{re-start}s you will download next – these you could have generated yourself – it simply saves time to have them provided.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent To experiment with using a restart, you will first need to download a file that has been created (a pre-run 10,000 year spin-up). To fetch this: Change to the \texttt{cgenie\_output} directory (perhaps by going ‘home’ first (cd <RETURN>), and then changing to \texttt{cgenie\_output} – refer to linux commands HOW-TO and Figure 1.1), and type:
+\noindent To experiment with using a \textit{re-start}, you will first need to download a file that has been created (a pre-run 10,000 year spin-up). To fetch this: Change to the \texttt{cgenie\_output} directory (perhaps by going ‘home’ first (\texttt{cd} \textsf{<Enter>}), and then changing to \texttt{cgenie\_output} – refer to linux commands HOW-TO and Figure 1.1), and type:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/LAB_0.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
 This downloads an archived/compressed copy of the restart from a location on the interweb. Extract the contents of this archive by typing:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_0.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
 Finally, change directory back to \texttt{cgenie.muffin} and then \texttt{genie-main} so that you are ready to run the model (the model is *always* run from \texttt{cgenie.muffin/genie-main}).
 
@@ -938,13 +927,15 @@ Finally, change directory back to \texttt{cgenie.muffin} and then \texttt{genie-
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent A restart can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the \texttt{runmuffin.sh} command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
-Create a new (\textit{user-config}) experiment configuration file in the: \\\texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., \texttt{LAB\_0.EXAMPLE}) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the \textit{user-config} file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to \texttt{LAB\_0.NEW}), and drag it back to the cluster directory \footnote{\texttt{~/cgenie.muffin/genie-userconfigs/LABS}} again.
+\noindent A \textit{re-start} can be requested in running an experiment by setting the 5th and last (optional) parameter when entering in the \texttt{runmuffin.sh} command. A spin-up of the climate state is provided: \texttt{LAB\_0.SPIN} which you have just unpacked to the \texttt{cgenie\_output} results output directory.
+Create a new (\textit{user-config}) experiment configuration file in the: \linebreak \texttt{~/cgenie.muffin/genie-userconfigs/LABS} directory by using the given file \texttt{LAB\_0.EXAMPLE} as a template (no parameter changes need to be made yet). You can make copies (cp command) of the experiment configuration files (e.g., \texttt{LAB\_0.EXAMPLE}) and assign them different names, e.g., twilight, rarity, applejack …. (ideally, use a name that helps you remember what the experiment did). Or … if you and the linux command lines are simply not BFFs, you can drag the \textit{user-config} file (\textsf{\footnotesize LAB\_0.EXAMPLE}) you want to use as a template to your local PC (/Mac) directory in the file transfer window, rename it either in the file transfer program or e.g., via the Windoz file-manager (e.g., to \texttt{LAB\_0.NEW}), and drag it back to the cluster directory \footnote{\texttt{~/cgenie.muffin/genie-userconfigs/LABS}} again.
 You specify the use of the restart state by adding the restart experiment name as the 5th parameter, e.g.:
 
+\vspace{-2mm}
 \small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.NEW 100 LAB_0.SPIN
 \end{verbatim}\normalsize
+\vspace{-2mm}
 
 The run-time output should now look noticeably different. There should be no (or perhaps just very little) drift in any of the various variable values outputted to the screen – this is because you have (re-)started from the end of a run that had already ready an equilibrium, steady-state.
 
@@ -975,18 +966,22 @@ The run-time output should now look noticeably different. There should be no (or
 
 \section*{Readme}
 
-You will need to download a new restart file prior to embarking on the snowball Earth experiments.
+You will need to download a new \textit{restart} file prior to embarking on the snowball Earth experiments.
 To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from this PDF ...):
 
+\vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
 This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has been run for 5,000 years for you. Extract the contents of this archive by typing:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_1.SPIN.tar.gz 
 \end{verbatim}
+\vspace{-2mm}
 
 A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself, and you could in fact have done so (remember to refresh the \textbf{WinSCP} directory view window if you are using this particular software, or it might appear that nothing has been extracted).
 
@@ -1000,34 +995,39 @@ You’ll then need to change directory back to \texttt{genie-main} to run the mo
 
 \section{Brrrrrrrrrrrr – it’s chilly on ... snowball Earth!}
 
-To illustrate how ‘easy’ it can be to configure an Earth system model such as cGENIE and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of climate and see what happens. Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or \(CH_{4}\) in the atmosphere and hence presumably highly elevated compared to the modern World, so sort of the opposite of the problem we have today …
+To illustrate how ‘easy’ it can be to configure an Earth system / climate model such as \textbf{muffin} and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of the climate system and see what happens. Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or \(CH_{4}\) in the atmosphere and hence presumably highly elevated compared to the modern World ... sort of opposite to the problem we have today …
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-You are going to be running experiments similar to before and using the restart: 
-\footnotesize\begin{verbatim}
+\noindent You are going to be running experiments in a similar manner to before, and using the \textit{re-start} experiment that you downloaded:
+\vspace{-1mm}
+\small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.SPIN 
 \end{verbatim}\normalsize
   
-\noindent but rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE} (which is provided for you), why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time. Also, be especially careful not to have 2 (or more) experiments running simultaneously with exactly the same name as they try and over-write each other in a somewhat entertaining way.
+\noindent But ... rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE} (which is provided for you), why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time, while having  2 (or more) experiments running simultaneously with exactly the same name causes havoc as they try and over-write each others results files in a somewhat entertaining but ultimately useless way.
 
 Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
 
-Useful 2-D (netCDF—Panoply) variables to view are surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D NetCDF results file (apologies for ocean temperature being in units of K ...).
+Useful 2-D (netCDF—Panoply) variables to view are surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D NetCDF results file.
 
 Time-series (ASCII .res files) are useful for providing simple mean indicators of global climate such as global ocean fractional sea-ice covered. 
 
 Note that the model configuration of an idealized super-continent, positioned symmetrically about the Equator, is pretty unrealistic. But the further you go back in time, the more uncertain it becomes as to exactly where and in what orientation the continents were. Sometimes modelers have to resort to somewhat idealized experiments if the uncertainties are too great. In addition, one can conduct sensitivity experiments to test whether the continental configuration is important to the results. For instance, \textit{Hoffman and Schrag} [2002] discuss the potential importance of continental configuration, while the entire hypothesis of \textit{Donnadieu et al.} [2004] rests on specific details of the continental configuration being realistic.
 
-For this configuration, the solar constant is set weaker than modern to reflect the fact that the Sun’s output has increased with time and during the Neoproterozoic the solar constant would have been ca. 5% weaker. This is set by the parameter (hidden in the base-config file):
+For this configuration, the solar constant is set weaker than modern to reflect the fact that the Sun’s output has increased with time and during the Neoproterozoic the solar constant would have been ca. 5\% weaker. This is set by the model \textit{parameter}:
 
+\vspace{-1mm}
 \begin{verbatim}
 ma_genie_solar_constant= 1285.92
 \end{verbatim}
+\vspace{-1mm}
 
-\noindent and which is set at the top of the given \textit{user-config} file. (For reference, the modern value is 1368 W m-2.)
+\noindent which is set at the top of the provided \textit{user-config} file. (For reference, the modern value is \( 1368 Wm^{-2}\).)
+
+\vspace{1mm}
 
 Other questions to think about with regards to numerical modeling (and this experiment) are:
 
@@ -1038,17 +1038,17 @@ Other questions to think about with regards to numerical modeling (and this expe
 \item Are the simulations being run for sufficiently long? Why not if not (i.e., justify your choices of parameter values and experimental assumptions)? How might the results and conclusions be biased (if at all)?
 \item How would you test model predictions and your overall conclusions?
 \item How could the experimental design be improved?
-\item Etc.
 \end{itemize}
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 \noindent To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
 ‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’
-you are going to edit the file that controls the specific details of the experiment, the \textit{user-config} file. From the \texttt{genie-userconfigs/LABS} directory, open one of the snowball experiments in your preferred  text editor. At the top of the file you should see something like:
+you are going to edit the file that controls the specific details of the experiment -- the \textit{user-config} file. From the \texttt{genie-userconfigs/LABS} directory, open one of the snowball experiments in your preferred  text editor. At the top of the file you should see something like:
 
+\vspace{-2mm}
 \small\begin{verbatim}
 #
 #
@@ -1058,51 +1058,58 @@ you are going to edit the file that controls the specific details of the experim
 # scaling for atmospheric CO2 radiative forcing, relative to 278 ppm
 ea_radfor_scl_co2=20.0
 \end{verbatim}\normalsize
+\vspace{-2mm}
 
-Each line that is not commented out (i.e., no \#) contains a parameter name and assigned value pair, with the format:
+Each line that is not commented out (i.e., no \#) contains a \textit{parameter} name and assigned value pair, with the format:
+\vspace{-2mm}
 \begin{verbatim}
 PARAMETER=VALUE
 \end{verbatim}
+\vspace{-2mm}
 The value of each parameter can be edited to form a new experiment. (Additional parameter value specifications can also be added, or existing ones deleted.) In this example, the line: 
+\vspace{-2mm}
 \begin{verbatim}
 ea_radfor_scl_co2=20.0
 \end{verbatim}
+\vspace{-2mm}
 specifies a radiative forcing of climate by \(CO_{2}\) equivalent to x20 modern (20x278 = 2560 ppm). If you instead wrote: 
+\vspace{-2mm}
 \begin{verbatim}
 ea_radfor_scl_co2=1.0
 \end{verbatim}
-this would give you a modern (x1, or 1x278 = 278 ppm) radiative forcing. (Technically: pre-industrial rather than ‘modern’ \textit{per se.})
+\vspace{-2mm}
+this would give you a modern (x1, or 1x278 = 278 ppm) radiative forcing. (Technically: the pre-industrial \(CO_{2}\) value rather than ‘modern’ \textit{per se.})
 Note: \(CO_{2}\) is not being explicitly modeled in this experiment, but the long-wave radiative forcing associated with a specified concentration of \(CO_{2}\) (in ratio to modern) is being set instead.
 
 Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher) and save the file. Re-run the experiment to see whether sea-ice extent is approaching a new steady state. You may want to try even longer simulations (than 100 years) if it becomes clear that the model is still far from steady-state. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
 
-HINT: By submitting the experiments to the cluster will allow you to run many experiments (tries of different radiative forcing values) simultaneously.
+HINT: Submitting the experiments to the cluster will allow you to run many many experiments (i.e. each with a different radiative forcing value) simultaneously.
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\noindent For each experiment you want to be assessing how far towards the Equator the sea-ice limit encroaches through some of the time-series and time-slice files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative time-series variables include (but not necessarily be limited to: atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
+\noindent For each experiment you want to be assessing how far towards the Equator the sea-ice limit encroaches through some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
 
-For the time-slice data: atmospheric and ocean surface temperature and sea-ice extent (2-D biogem \textbf{NetCDF} file) may be informative.
+For the \textit{time-slice} data: atmospheric and ocean surface temperature and sea-ice extent (2-D biogem \textbf{NetCDF} file) may be informative.
 
-HINT: Be careful with the ‘Fit to data’ scaling feature in \textbf{Panoply} – at near complete sea-ice cover, you may find Panoply scaling min and max sea-ice between 99.1 and 99.9% or something. Specific fixed scale limits (e.g. 0 and 100) can be set instead.
+HINT: Be careful with the ‘\textsf{Fit to data}’ scaling feature in \textbf{Panoply} – at near complete sea-ice cover, you may find Panoply scaling min and max sea-ice between 99.1 and 99.9\% or something. Specific fixed scale limits (e.g. 0 and 100) can be set instead.
 
-In answering the question think about what an appropriate degree of accuracy might be for your experiments. Just because computer models generally calculate to around 16 significant places of precision, does not mean you have 16 significant figures of accuracy (or realism). For instance – how many significant figures is the solar constant quoted to and what do you think is the uncertainty in this? Harder to judge is how the assumed (incorrect) continental configuration creates additional uncertainty, or the simple physics assumed in the ocean or sea-ice, or lack of snow on land … 
+In answering the question (‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’), think about what an appropriate degree of accuracy might be for your experiments. Just because computer models generally calculate to around 16 significant places of precision, does not mean you have 16 significant figures of realism. For instance – how many significant figures is the solar constant quoted to and what do you think is the uncertainty in this? Harder to judge is how the assumed (incorrect) continental configuration creates additional uncertainty, or the simple physics assumed in the ocean or sea-ice, or lack of snow on land … 
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\noindent Once you are happy about the controls on the snowball threshold try and answer:
+\noindent Once you are happy about the controls on the snowball threshold try and answer the supplementary question:
 
 \vspace{2mm}
 \noindent \textit{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
 \vspace{2mm}
 
-If you run the model with an appropriate radiative forcing to create a snowball, you can use that experiment as a restart and be able to carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of Hyde et al. [2000]. Note that a good restart is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run. (You cannot select when the re-start is saved – it is always saved at the end of an experiment.)
+Having determined the appropriate radiative forcing value required to create a snowball state, you can use that experiment as a \textit{re-start}, and hence carry out a series of experiments with increasing radiative forcing, all starting from the same snowball climate state you have just created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of \textit{Hyde et al.} [2000]. Note that a good \textit{re-start} is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next …). To achieve this, you can fine-tune the number of years the experiment is run, i.e. having determined the appropriate radiative forcing value required to create a snowball state, find out when in the experiment the snowball state first occurred, and then run a new experiment that finishes only a decade or so after the snowball is initiated.\footnote{You cannot select when the \textit{re-start} is saved – it is always saved at the end of an experiment.}
 
-HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (towards an exit) because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the \texttt{biogem\_series\_misc\_seaice.res} time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). Note that you can open and review the results of this file at *any* time during the experiment as the lines are written while the data for each time point is generated.
+HINT: If you are having trouble deciding whether or not the snowball is heading in the right direction (i.e. towards an exit!), e.g. because sea-ice is always reported at 100\% (or close to), you can keep track of whether there is net melting or net freezing by following mean sea-ice thickness (m) as reported in the \texttt{biogem\_series\_misc\_seaice.res} time-series output file. Your indication of a melting snowball state is a progressive decline in mean thickness (a proxy for global ice volume). \uline{Note that you can open and review the results of \textit{time-series} files at *any* time during the experiment as the lines are written while the data for each time point is generated.}
 
 Overall: think critically about the model configuration, the experimental design, and the nature of the scientific question (based on your background reading of snowball Earth). Some of the exploration/testing suggestions (above) may not necessarily give substantially different results. Such a finding would be as valid and interesting as determining an important dependence of a certain assumption, and would for instance indicate that the associated paleo uncertainties are not critical to model assessment of the question.
 
@@ -1120,7 +1127,7 @@ Always be prepared to justify all your choices for experimental design and model
 
 \subsection{Feedback loop analysis}
 
-To quantify the snowball Earth hysteresis loop in \textbf{muffin} as per Figure 2 in \textit{Hyde et al.} [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in \textbf{muffin}, the radiative forcing for a doubling of \(CO_{2}\) is set at: 5.77 W m-2. See: \textit{Myhre et al.} [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or \textit{IPCC} [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with Hyde et al. [2000] for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of 0 W m-2) you might assume is equivalent to 278 ppm and hence $~$130 ppm is an approximately halving of \(CO_{2}\) and hence creates ~5 W m-2 of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
+To quantify the snowball Earth hysteresis loop in \textbf{muffin} as per Figure 2 in \textit{Hyde et al.} [2000] you will need to extract from the model ‘meaningful’ measures of climate (e.g., global surface air temperature, fractional sea-ice coverage) as a function of \(CO_{2}\) multiples, \(CO_{2}\) concentration, or (better) radiative forcing. For the latter, in \textbf{muffin}, the radiative forcing for a doubling of \(CO_{2}\) is set at: \(5.77 Wm^{-2}\). See: \textit{Myhre et al.} [1998] (Geophys. Res. Lett. 25, 2715–2718) and/or \textit{IPCC} [2007] for more on what radiative forcing is and how it is related to a relative change in \(CO_{2}\) concentration. Also, for making a comparison with \textit{Hyde et al.} [2000] -- for going into the snowball, note that they plot the change in radiative with a ‘cooling’ as positive (a bit daft). Their baseline radiative forcing state (an anomaly of \(0 Wm^{-2}\)) you might assume is equivalent to 278 ppm and hence \(\backsim\)130 ppm is an approximately halving of \(CO_{2}\) and hence creates \(\backsim5 Wm^{-2}\) of cooling. (You might prefer to plot the radiative forcing change as warming being positive, which makes rather more sense ...)
 
 For coming out of a snowball, because the \(CO_{2}\) and hence radiative forcing threshold is so high as compared to going in, you may want to be creative in the plotting (assuming attempting to combine both thresholds into a single plot) and, for instance, one might break the scale between the low radiative forcing interval spanning going in and the high one spanning coming out.
 
@@ -1132,6 +1139,7 @@ Another example is as per Figures 3 and 4 in \textit{Stone and Yao} [2004] (Clim
 
 It was mentioned earlier that the position of the continents is an area of modelling uncertainty and might be important. You can test for this. Four alternative \textit{base-configs} are provided, each defining a different continental configuration:
 
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item 
@@ -1155,49 +1163,58 @@ cgenie.eb_go_gs_ac_bg.woreq2.NONE
 \end{verbatim}
  – two continents straddling the Equator, with an ocean resolution of 36x36 with 8 vertical levels.
 \end{enumerate}
+\vspace{1mm}
    
-You can use the given \textit{user-config} file (\texttt{LAB\_1.EXAMPLE}) as an experiment template and any of the alternative configurations can be run very similarly to as per before, i.e.:
+You can use the given \textit{user-config} file (\texttt{LAB\_1.EXAMPLE}) as an experiment template, and any of the alternative configurations can be run very similarly to as per before, i.e.:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.xxxxx.NONE LABS LAB_1.EXAMPLE 100
 \end{verbatim}
+\vspace{-2mm}
 
-Note that you are using a different \textit{base-config} file name: \small\texttt{cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE}\normalsize \\where \texttt{xxxxx} is one of: wopol1, wopol2, woreq1, or woreq2. 
-Also note that no restarts are provided for these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the restart experiments for to achieve as close to steady-state as you think is ‘sufficient’). Remember that restarts are just ‘normal’ experiments that have already been run.
-Be careful that when changing from one \textit{base-config} to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue - i.e., do not try and submit an experiment using a different base-config straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
+Note that you are using a different \textit{base-config} file name: \small\texttt{cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE}\normalsize \\where \texttt{xxxxx} is one of: \texttt{wopol1}, \texttt{wopol2}, \texttt{woreq1}, or \texttt{woreq2}. 
+Also note that no \textit{re-starts} are provided for any of these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the restart experiments for to achieve as close to steady-state as you think is ‘sufficient’). Recall again, that \textit{re-starts} are just ‘normal’ experiments that have already been run.
+Be careful that when changing from one \textit{base-config} to another, the model re-compiles. Simply running the new configuration briefly is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue, i.e. do not try and submit an experiment using a different \textit{base-config} straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
 
 %------------------------------------------------
 
 \subsection{Continental configuration (2)}
 
-Although much useful can be learned from conceptual configurations and Worlds regarding climate dynamics, it is invariably aesthetically more 'pleasing' to also test ideas in a more paleogeographically realistic configuration. Provided is a set of \textit{base-config} and \textit{user-config} files (plus associated boundary conditions) for the position of the continents and climate 635 millions years ago (635 Ma).
+Although much useful can be learned from conceptual configurations and Worlds regarding climate dynamics, it is invariably aesthetically more 'pleasing' to also test ideas in a more paleogeographically realistic configuration. Provided is a set of \textit{base-config} and \textit{user-config} files (plus associated boundary conditions) for the position of the continents and climate 635 millions years ago (635 Ma). For this:
 
 The \textit{base-config} is named: \texttt{muffin.CB.fm0635cb.NONE}
 
 The \textit{user-config }is: \texttt{muffin.CB.fm0635cb.NONE.EXAMPLE}
 
-A restart experiment is provided called \texttt{muffin.CB.fm0635cb.NONE.SPIN} and which can be downloaded as per before:
+A \textit{re-start }experiment is provided called \texttt{muffin.CB.fm0635cb.NONE.SPIN} and which can be downloaded as per before:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/muffin.CB.fm0635cb.NONE.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent and unpacked by:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv muffin.CB.fm0635cb.NONE.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
-\noindent (Remember: you should be in the \texttt{cgenie\_output} directory when you do this.)
+\noindent (Remember: you should be in the \texttt{cgenie\_output} directory when you do this downloading and unpacking.)
 
-To run (e.g. for 100 years), following on from its restart experiment:
+To run (e.g. for 100 years), following on from its \textit{re-start}:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ ./runmuffin.sh muffin.CB.fm0635cb.NONE LABS muffin.CB.fm0635cb.NONE.EXAMPLE
     100 muffin.CB.fm0635cb.NONE.SPIN
 \end{verbatim}
+\vspace{-2mm}
 
-\noindent (all one line)
+\noindent (\uline{all on one line})
 
 %------------------------------------------------
 
@@ -1205,32 +1222,36 @@ $ ./runmuffin.sh muffin.CB.fm0635cb.NONE LABS muffin.CB.fm0635cb.NONE.EXAMPLE
 
 Finally, \textbf{muffin} will fairly happily build up sea-ice, apparently without limit (with the remaining wet ocean becoming progressively colder and more saline). In the real world, one might expect some sort of limit to the maximum thickness achieved as the heat diffusion across a progressively greater thickness of sea-ice approaches the heat input at the bottom of the ocean from geothermal energy. Different modes of ocean circulation are also possible if one considers heating from the bottom as well as cooling (and brine rejection) from the top and which might affect the entry into or exit from a snowball state.
 
-In the experimental setup you have been given, a geothermal heat input is specified in the ocean circulation module via the following parameters:
+In the experimental setup you have been given, a geothermal heat input is specified in the ocean circulation module via the following :
 
+\vspace{-2mm}
 \begin{verbatim}
 bg_ctrl_force_GOLDSTEInTS=.TRUE.
 bg_par_Fgeothermal=100.0E-3
 \end{verbatim}
+\vspace{-2mm}
 
-The first enables the temperature and/or salinity of the ocean to be modified by processes other than redistribution via ocean circulation and exchange with sea-ice and atmosphere (i.e., to impose external forcings). The second sets the geothermal flux in units of W m$^{-2}$. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much higher? A question for Google…)
+The parameter \texttt{bg\_par\_Fgeothermal} sets the geothermal flux in units of W m$^{-2}$. (Note that in the Neoproterozoic, the geothermal heat flux could have been somewhat higher than modern. How much higher? A question for \textbf{Google} … ?)
 
-An appropriate research question might be to determine in radiative forcing \textit{vs.} geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster): the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short exercise: How much of a difference, to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? E.g., what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability)?
+An appropriate research question might be to determine in radiative forcing \textit{vs.} geothermal space (and requiring a 2D grid of parameter combinations to be created and submitted to the cluster), the equilibrium sea-ice thickness and region in which a snowball solution is not possible. However, more simply and suitable to a short exercise: How much of a difference, to the estimated entry and exit thresholds of radiative forcing, does the inclusion of a geothermal input make? E.g., what happens if you set it to zero? What about 10 times modern (or more, although *extreme* seafloor heating can cause numerical instability and the model to crash)?
 
 %------------------------------------------------
 
 \subsection{Seasonality}
 
-By default, this configuration is non-seasonally forced (by solar insolation). You can switch to a seasonally-forced to model by adding the following lines to the \textit{user-config} file: 
+By default, the idealized model configurations are non-seasonally forced (by solar insolation). You can switch to a seasonally-forced to model by adding the following lines to the \textit{user-config} file: 
 
+\vspace{-3mm}
 \begin{verbatim}
 ea_dosc=.true.
 go_dosc=.true.
 gs_dosc=.true.
 \end{verbatim}
+\vspace{-2mm}
 
 The scientific question here in trying this would be whether or not taking into account a seasonally-varying climate substantially affects the entry (and/or exit) thresholds for a snowball climate state. (At least, whether it is important in the context of the resolution and physics of the model you are using.)
 
-You can also save the data seasonally if you like – see Section 12.2.3 in the User Manual (your configuration has 24 time-steps per year for the \textbf{BIOGEM} module for reference).
+You can also save the data seasonally if you like – see Section 12.2.3 in the \textbf{muffin} User Manual (this document!).\footnote{For reference, your configuration has 24 time-steps per year set for the \textbf{BIOGEM} module.}
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER 3
@@ -6644,6 +6665,65 @@ To exit the editing mode and back to the command mode, press the \textsf{Esc} (e
 \vspace{2mm}
 
 %------------------------------------------------
+%
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... Sun Grid Engine}\label{how-to-sge}
+\vspace{2mm}
+
+%------------------------------------------------
+
+For submitting jobs using \textbf{Sun Grid Engine} (\textbf{SGE}) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
+\vspace{-2pt}\begin{verbatim}
+$ qsub -S /bin/bash runmuffin.sh <options>
+\end{verbatim}\vspace{-2pt}
+Here: the \texttt{-S /bin/bash} part is to ensure that \textbf{SGE} uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
+
+Take care that the installed \textbf{FORTRAN} compiler can be seen by the cluster nodes. If not, the \textbf{muffin} executable must have already been built prior to submitting a job. The easiest way to do this is to run \textbf{muffin} interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
+
+Other useful submission options for \textbf{SGE}:
+
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+
+        \item To redirect the standard output stream:
+        \vspace{-2pt}\begin{verbatim}$ qsub -o genie_log ...\end{verbatim}
+        
+        \item To redirect the standard error stream:
+        \vspace{-2pt}\begin{verbatim}$ qsub -e genie_log ...\end{verbatim}
+        
+        \item To merge standard output and error streams into standard output:
+        \vspace{-2pt}\begin{verbatim}$ qsub -j y ...\end{verbatim}
+        
+        \item To specify particular resources, such as the nodes with 8 GB of RAM:
+        \vspace{-2pt}\begin{verbatim}$ qsub -l mem_total = 8.0G ...\end{verbatim}
+        
+        \item To decrease the priority of a job\footnote{The default priority is 0. A lower priority has a higher value ... !}:
+        \vspace{-2pt}\begin{verbatim}$ qsub -p 1 ...\end{verbatim}
+        
+        \item To submit a job from the current working directory:
+        \vspace{-2pt}\begin{verbatim}$ qsub –cwd\end{verbatim}
+        
+        \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
+        
+        \item A complete example for the \texttt{domino} UCR clusters would be:
+\small
+        \vspace{-2pt}\begin{verbatim}$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
+        cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
+\normalsize
+        which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
+        Note that to redirect output as per in this particular example, the directory \texttt{\~{}cgenie\_log} \textbf{MUST} be present. I have no idea what happens if it is not ... but it can't be good ;)
+        
+\end{itemize}
+
+\noindent You can check the status of the \textbf{SGE} job queue\footnote{Depending on the cluster setup, it may be possible to graphically check what is going on via the www.} with the command:
+\vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
+and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
 
 %------------------------------------------------
 
