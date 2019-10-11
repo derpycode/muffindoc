@@ -1886,109 +1886,7 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 \newpage
 
 %------------------------------------------------
-
-\section{Creating alternative Worlds}
-
-%------------------------------------------------
-
-\subsection{Using muffingen}
-
-Refer to the \textbf{muffingen} \textit{user-manual} as your primary source of information and tutorial on how to create new and adjust existing continental configurations of \textbf{cGENIE.muffin}.
-
-%------------------------------------------------
-
-\subsubsection{Zonal wind-stress}
-
-For non GCM-based configurations, no prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'choose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
-
-\begin{itemize}
-\item \texttt{par\_tauopt=0;}
-\\\textbf{muffingen} chooses whether or not to apply a strong or weak zonal flow, and in which hemisphere.
-\item \texttt{par\_tauopt=1;}
-\\A weak zonal flow is applied in both hemispheres.
-\item \texttt{par\_tauopt=2;}
-\\A strong zonal flow is applied in both hemispheres.
-\end{itemize} 
-
-For reference -- the modern world has a mix of strong (southern) and weak (northern) hemisphere zonal flows.
-
-The different EXAMPLE (\small\textsf{.m}\normalsize) configuration files have a mixture of default choices:
-
-\begin{itemize}
-\item \small\textsf{muffingen\_settings\_BLANK}\normalsize, 
-\\\small\textsf{muffingen\_settings\_drakeworld}\normalsize, 
-\small\textsf{muffingen\_settings\_eqpasworld}\normalsize, 
-\\\small\textsf{muffingen\_settings\_ridgeworld}\normalsize, 
-\small\textsf{muffingen\_settings\_waterworld}\normalsize:
-\\\texttt{par\_tauopt=0;}
-\item \small\textsf{muffingen\_settings\_wppcont1}\normalsize:
-\\\texttt{par\_tauopt=2;}
-\item \small\textsf{muffingen\_settings\_modern}\normalsize:
-\\n/a (wind-stress derived from GCM fields)
-\end{itemize}
-
-\noindent (No EXAMPLE configurations currently specify a strong zonal field, although \\\small\textsf{muffingen\_settings\_ridgeworld }\normalsize will be prescribed one automatically in \textbf{muffingen}.) 
-
-%------------------------------------------------
-
-\subsection{Configuring cGENIE.muffin}
-
-Having created a new \textbf{cGENIE.muffin} configuration using the \textbf{MATLAB} function \texttt{muffingen}, carry out the following steps:
-
-\vspace{2mm}
-\begin{enumerate}
-\item Firstly, copy/transfer the entire  configuration subdirectory (the directory with the same name as whatever you called your 'world')  and its contents, from the \textbf{muffingen} output directory, to:
-\vspace{-4pt}\begin{verbatim}
-cgenie.muffin/genie-paleo
-\end{verbatim}\vspace{-4pt}
-\item Create a new \textit{base-config} file. You do this by:
-\vspace{2mm}
-\begin{enumerate}
-\item Taking one of the template \textit{base-config} files:
-\vspace{-2pt}\begin{verbatim}
-CONFIG_template_08lvl_R07.config
-CONFIG_template_16lvl_C09.config
-\end{verbatim}\vspace{-2pt}
-The first being suitable for an 8-level (non seasonally forced ocean) and the second for a 16-level (seasonally forced) ocean.
-\\Copy/rename the file to something ... 'appropriate'. (No spaces allowed in the filename.)
-\item There is a highlighted (\(<<<\;\;\;\;\;>>>\)) line in the template \textit{base-config} file:
-\footnotesize\vspace{-2pt}\begin{verbatim}
-# *******************************************************************
-# GRID & BOUNDARY CONDITION CONFIGURATION
-# *******************************************************************
-# insert the automatically generated muffingen parameter list here
-# *******************************************************************
-# <<<                                                             >>>
-# *******************************************************************
-\end{verbatim}\vspace{-2pt}\normalsize
-Copy and past the contents of the \textbf{muffingen} output file:
-\vspace{-2pt}\begin{verbatim}
-config_yymmdd.txt
-\end{verbatim}\vspace{-2pt}
-where indicated. (In the filename, \texttt{yymmdd} is the date of the configuration creation.)
-\item Now copy this new \textit{base-config}, to:
-\vspace{-4pt}\begin{verbatim}
-cgenie.muffin/genie-main/configs
-\end{verbatim}\vspace{-4pt}
-\end{enumerate}
-\vspace{2mm}
-\item (Create a new \textit{user-config} file to complete the experimental setup.)
-\end{enumerate}
-\vspace{2mm}
-
-\noindent Note that in using one of the template \textit{base-config} files, you have configured an ocean with just 2 tracers -- temperature and salinity (i.e., there is no carbon cycle or ocean nutrients \textit{etc.} enabled at this point).
-
-%------------------------------------------------
-
-\subsection{Testing}
-
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
+%
 \section{Investigations}
 
 %------------------------------------------------
@@ -5842,6 +5740,322 @@ Examples:
 
 \section{Miscellaneous data processing}
 
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{Map_of_Earth_24.jpg} % Chapter heading image
+
+\chapter{muffingen}
+
+\hfill \break
+\vspace{24mm}
+
+%------------------------------------------------
+
+\newpage
+
+\section{muffingen basics}
+
+%------------------------------------------------
+
+\subsection{overview of the muffingen software}
+
+\textbf{muffingen} is a collection of \textbf{MATLAB} functions that can create all the configuration files (excluding climatic and biogeochemical \textit{forcing} fields) required by the cGENIE (\textbf{muffin}) Earth system model. \texttt{muffingen} is designed to take the output from a fully coupled GCM, particularly of past climates with different continental configurations, and re-grid the output needed as boundary conditions by \textbf{muffin} and save in the appropriate format. However, \textbf{muffingen} can also be used to draw conceptual alternative Earths (in terms of continental configuration), again saving the required \textbf{muffin} files in their appropriate formats.
+
+As a \textbf{MATLAB} code, basic familiarity with using \textbf{MATLAB} at the command line is required. And a copy/license of the \textbf{MATLAB} software ... A sufficient grasp of \textbf{MATLAB} can be gained by going through the following sections/subsections of the \textsf{matlabananas} textbook, which can be found on \href{https://github.com/derpycode/matlabananas}{GitHub} (look for the PDF file compiled form the latex source -- \textsf{BANANAS.pdf}):
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\item Section 1.1 -- The \textbf{MATLAB} interface and command line.
+\item Section 1.6 -- Changing directories and file search paths.
+\item Section 2.2 -- Using \textit{functions} ... of which \texttt{muffingen} is one.
+\end{itemize}
+\vspace{2mm}
+
+%------------------------------------------------
+
+\subsection{Installing muffingen}
+
+The \textbf{muffingen} code is hosted on GitHub:
+
+\vspace{2mm}
+\href{https://github.com/derpycode/muffingen}{\texttt{https://github.com/derpycode/muffingen}}
+\vspace{2mm}
+
+There are 2 ways to get your mitts on the \textbf{muffingen} code:
+
+\vspace{2mm}
+\begin{enumerate}
+
+\vspace{1mm}
+\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\small{Clone or Download}} button, and select \textsf{\small{Download ZIP}}.
+\\You then unpack/unzip the files and directory structure where you want it.
+\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make become part of the official \textbf{muffingen} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
+
+\vspace{1mm}
+\item Or you can \textit{clone} the repository to where you intend to run \textbf{muffingen}. Note that you will need a git client installed on your computer. There are GUI clients for git, or this can be done at the command line:
+
+\vspace{-2mm}
+\begin{verbatim}
+$ git clone https://github.com/derpycode/muffingen.git
+\end{verbatim}
+\vspace{-2mm}
+
+By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code.
+
+\end{enumerate}
+\vspace{2mm}
+
+Note that you \uline{download or clone \textbf{muffingen} to the computer you have \textbf{MATLAB} installed on} and will use to run \textbf{muffingen}.
+
+%------------------------------------------------
+
+\newpage
+
+\subsection{Running muffingen}
+
+To use the \textbf{muffingen}, \textbf{cGENIE.muffin} model configuration generator -- at the command line in \textbf{MATLAB}, simply type:
+
+\vspace{-2mm}
+\begin{verbatim}
+>> muffingen('FILENAME')
+\end{verbatim}
+\vspace{-2mm}
+
+\noindent where \texttt{FILENAME} is the name of an ASCII format configuration file (having a \texttt{.m} filename extension) specifying the required settings (see next section).
+
+This file (\texttt{FILENAME}), must either be present in the directory you installed \textbf{muffingen} to and the directory where e.g. where the file \texttt{muffingen.m} is located (e.g. \textsf{C:\textbackslash muffingen}). In this case, your \textbf{MATLAB} working directory must also be \textsf{C:\textbackslash muffingen}. Or, the \textbf{MATLAB} working directory and the file \texttt{FILENAME} can be elsewhere (both directory locations must be the same however). You can 'add' the location of \textbf{muffingen} to \textbf{MATLAB}'s search path by the \textbf{MATLAB} function \texttt{addpath}\footnote{Refer to the \textbf{MATLAB} '\textsf{bananas}' text for the syntax for using \texttt{addpath}.}.
+
+The generator then starts and depending on the specific settings in the configuration file, may require no user input, or may require user input, either because this option was requested, or because a re-gridding issue arose that requires manual intervention to resolve. A series of plots are created (and saved) as the configuration generation progresses together with the \textbf{muffin} model configuration files themselves. All the various steps plus details of how the contents of the configuration files are generated are reported at the command line, and saved in a n ASCII format \texttt{*.log} file for future reference.
+
+Depending on the configuration file settings, \textbf{muffingen} has 4 main modes of operation which are summarized as follows (and described in more detail, along with specific examples, below):
+
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{.2in}
+\setcounter{enumi}{0}
+\vspace{1mm}
+\item \textbf{Configuration derivation based on re-gridding from a GCM.}
+\\ The most common usage of muffingen, enabling a new (typically paleo) configuration to be derived from the output of a GCM experiment. Currently options for utilizing 4 different GCMs are provided: HadCM3(l), FOAM, CESM, and ROCKE-3D.
+\vspace{1mm}
+\item \textbf{Derivation based on an existing topography ('\texttt{.k1}') file.}
+\\ Allowing a topography to be re-created, or adapted/altered, from an existing model 'k1' file.
+\vspace{1mm}
+\item \textbf{Derivation based on a prescribed land-sea mask.}
+\\ This option will create a configuration from any specified land-sea mask, whether 'real' or completely hypothetical.
+\vspace{1mm}
+\item \textbf{From a blank (all ocean) initial template.}
+\\ Finally, this option enables a topography to be 'drawn' within \textbf{muffingen} and hence represents an alternative to (3).
+\end{enumerate} 
+
+%------------------------------------------------
+
+\newpage
+
+\section{Configuring muffingen}
+
+%------------------------------------------------
+
+When \textbf{muffingen} is run, a configuration file with a specified filename\footnote{i.e. the single parameter passed to \textbf{muffingen} when it is invoked at the command line} is loaded. The configuration file is a plain text (ASCII) format, but is given a \textsf{.m} extension, enabling the values of a number of controlling parameter values to be set.\footnote{Note that the parameter filename is passed as a string without the .m extension (which is implicitly assumed). An error message will be generated if the file does not exist or has the incorrect extension.} The configuration file parameter control facets of \textbf{muffingen} behavior such as the primary model of operation, input and output filenames, what types of configuration files to generate, as well as a number of parameters controlling the finder details of re-gridding and configuration file generation, including whether to enable user-input or not.
+
+The configuration files can be edited with the \textbf{MATLAB} editor (indeed, as a \textsf{.m} file, they are inherently a \textbf{MATLAB} format file), or any plain text (ASCII) editor. They must have a \textsf{.m} filename extension. 
+The configuration file is divided up into sections of different parameter options; summarized as follows:
+
+\begin{itemize}
+
+\vspace{4mm}
+\item []
+\small\vspace{-2pt}\begin{verbatim}
+% *** CONFIG NAME AND MAIN INPUT SETTINGS *******************************
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item [] \texttt{par\_wor\_name}
+\\Defines the name of the model configuration. This must be a string, 8 characters long.
+\vspace{1mm}
+\item [] \texttt{par\_gcm}
+\\Defines the format of the input. The string is blank for an interactive user-defined world. See Section 16.1.3.
+\vspace{1mm}
+\item [] \texttt{par\_gcm}
+\\Defines the name of the GCM experiment if a GCM input is selected, or the '\textsf{.k1}' or '\textsf{.dat}' files if those respective input formats are selected by the above option.
+\end{itemize}
+
+\vspace{4mm}
+\item []
+\small\vspace{-2pt}\begin{verbatim}
+% *** FILE PATHS ********************************************************
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{4mm}
+\item []
+\small\vspace{-2pt}\begin{verbatim}
+% *** GCM netCDF FILENAMES **********************************************
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{4mm}
+\item []
+\small\vspace{-2pt}\begin{verbatim}
+% *** GRID RESOLUTION ***************************************************
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item [] \texttt{par\_max\_i}
+\\Defines the number of grid points in the longitude ('i') direction.
+\\This is typically 36 or 18.
+\vspace{1mm}
+\item [] \texttt{par\_max\_i}
+\\Defines the number of grid points in the latitude ('j') direction.
+\\This is typically 36 or 18.
+\vspace{1mm}
+\item [] \texttt{par\_max\_k}
+\\Defines the name of ocean layers.
+\\This is typically 16 or 8.
+\vspace{1mm}
+\item [] \texttt{opt\_equalarea} [default: \texttt{true}]
+\\This specifies an equal area grid. (A value of \texttt{false} results in the latitude grid being in equal increments of latitude).
+\end{itemize}
+
+\vspace{4mm}
+\item []
+\small\vspace{-2pt}\begin{verbatim}
+% *** REGRIDDING SETTINGS ***********************************************
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item [] \texttt{par\_max\_D} [default: \texttt{5000.0}]
+\\Sets the maximum ocean depth (in m).
+\end{itemize}
+
+\end{itemize}
+
+
+\subsubsection{Zonal wind-stress}
+
+For non GCM-based configurations, no prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'choose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
+
+\begin{itemize}
+\item \texttt{par\_tauopt=0;}
+\\\textbf{muffingen} chooses whether or not to apply a strong or weak zonal flow, and in which hemisphere.
+\item \texttt{par\_tauopt=1;}
+\\A weak zonal flow is applied in both hemispheres.
+\item \texttt{par\_tauopt=2;}
+\\A strong zonal flow is applied in both hemispheres.
+\end{itemize} 
+
+For reference -- the modern world has a mix of strong (southern) and weak (northern) hemisphere zonal flows.
+
+The different EXAMPLE (\small\textsf{.m}\normalsize) configuration files have a mixture of default choices:
+
+\begin{itemize}
+\item \small\textsf{muffingen\_settings\_BLANK}\normalsize, 
+\\\small\textsf{muffingen\_settings\_drakeworld}\normalsize, 
+\small\textsf{muffingen\_settings\_eqpasworld}\normalsize, 
+\\\small\textsf{muffingen\_settings\_ridgeworld}\normalsize, 
+\small\textsf{muffingen\_settings\_waterworld}\normalsize:
+\\\texttt{par\_tauopt=0;}
+\item \small\textsf{muffingen\_settings\_wppcont1}\normalsize:
+\\\texttt{par\_tauopt=2;}
+\item \small\textsf{muffingen\_settings\_modern}\normalsize:
+\\n/a (wind-stress derived from GCM fields)
+\end{itemize}
+
+\noindent (No EXAMPLE configurations currently specify a strong zonal field, although \\\small\textsf{muffingen\_settings\_ridgeworld }\normalsize will be prescribed one automatically in \textbf{muffingen}.) 
+
+%------------------------------------------------
+
+\newpage
+
+\section{Configuring muffin model experiments}
+
+%------------------------------------------------
+
+Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} function \texttt{muffingen}, carry out the following steps:
+
+\vspace{2mm}
+\begin{enumerate}
+
+\vspace{1mm}
+\item Firstly, copy/transfer the entire  configuration subdirectory (the directory with the same name as whatever you called your 'world')  and its contents, from the \textbf{muffingen} output directory (e.g. \textsf{muffingen/OUTPUT.EXAMPLES}) on your local computer, to:
+
+\vspace{1mm}
+\texttt{cgenie.muffin/genie-paleo}
+\vspace{1mm}
+
+\noindent on the computer that run the \textbf{muffin} model.
+
+\vspace{1mm}
+\item Create a new \textit{base-config} file. You do this by:
+\begin{enumerate}
+\vspace{1mm}
+\item Taking one of the template \textit{base-config} files:
+\vspace{-2pt}\begin{verbatim}
+CONFIG_template_08lvl_R07.config
+CONFIG_template_16lvl_C09.config
+\end{verbatim}\vspace{-2pt}
+The first being suitable for an 8-level (non seasonally forced ocean) and the second for a 16-level (seasonally forced) ocean.
+\\Copy/rename the file to something ... 'appropriate'. (No spaces allowed in the filename.)
+\vspace{1mm}
+\item There is a highlighted (\(<<<\;\;\;\;\;>>>\)) line in the template \textit{base-config} file:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+# *******************************************************************
+# GRID & BOUNDARY CONDITION CONFIGURATION
+# *******************************************************************
+# insert the automatically generated muffingen parameter list here
+# *******************************************************************
+# <<<                                                             >>>
+# *******************************************************************
+\end{verbatim}\vspace{-2pt}\normalsize
+Copy and past the contents of the \textbf{muffingen} output file\footnote{In the filename, \texttt{yymmdd} is the date of the configuration creation.}:
+\vspace{-2pt}\begin{verbatim}
+config_yymmdd.txt
+\end{verbatim}\vspace{-2pt}
+into the template file where indicated.
+\vspace{1mm}
+\item Now copy this new \textit{base-config}, to:
+\vspace{-2pt}\begin{verbatim}
+cgenie.muffin/genie-main/configs
+\end{verbatim}\vspace{-2pt}
+\end{enumerate}
+
+\noindent Note that in using one of the template \textit{base-config} files, you have configured an ocean with just 2 tracers -- temperature and salinity (i.e., there is no carbon cycle or ocean nutrients \textit{etc.} enabled at this point).
+
+\vspace{1mm}
+\item Create a new \textit{user-config} file to complete the experimental setup.
+
+\noindent An example/template \textit{user-config} file (designed for climate-only simulations) is also provided in the main \textbf{muffingen} directory:
+
+\vspace{1mm}
+\texttt{EXAMPLE.SPIN}
+
+\vspace{1mm}
+
+Rename and copy this (or copy and rename) to \textbf{muffin} model directory:
+
+
+\vspace{1mm}
+\texttt{genie.muffin/user-configs}
+\vspace{1mm}
+
+\end{enumerate}
+\vspace{2mm}
+
+%------------------------------------------------
+
+\newpage
+
+
+
+
+%------------------------------------------------
+%
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
 %----------------------------------------------------------------------------------------
