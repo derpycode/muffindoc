@@ -69,6 +69,10 @@
 \usepackage{makeidx} % Required to make an index
 \makeindex % Tells LaTeX to create the files required for indexing
 
+%
+%\usepackage{datetime}
+%\usepackage[regio]{datetime2}
+
 %----------------------------------------------------------------------------------------
 
 \input{muffin_structure} % Insert the commands.tex file which contains the majority of the structure behind the template
@@ -1881,40 +1885,70 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 
 \hfill \break
 
+\noindent Fake (alternative) Worlds are a useful tool for developing a general understanding of how climate (and ocean circulation) and global biogeochemical cycles operate. Different model resolutions and continental configurations can be generate and run to test specific hypotheses about the role and sensitivity of different elements in Earth system to emergent patterns of climate (and biogeochemical cycling). Ensembles of differing Worlds can also be utilized to more generalize understanding as well as in a fishing expedition of new or unexpected phenomena and system behaviours.
+
+This Chapter will take you through the generation and exploration (analysis) of fake (alternative) Worlds. 
+
 %------------------------------------------------
 
 \newpage
 
 %------------------------------------------------
 %
-\section{Investigations}
+\section{Generating fake Worlds}
 
 %------------------------------------------------
 
-The following sub-sub-sections, details a set of (alternative) model-based investigations into fundamental controls on the nature of large-scale/global ocean circulation patterns.
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent\textcolor{red}{TO COME ...}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+%
+\section{Understanding ocean circulation}
+
+%------------------------------------------------
+
+What follows, outlines different ways of visualizing and quantifying ocean circulation in \textbf{muffin}, and coming to a model-empirical understanding of ocean circulation controls.
 
 %------------------------------------------------
 
 \subsection{Model investigation over-view}
 
-Whilst both investigations could in theory be based on the modern continental configuration (and climate) in \textbf{cGENIE.muffin}, you'd be much less likely to come by any particularly deep or fundamental insights into ocean circulation. In any case, the modern and future (and recent glacial past) ocean circulation states and dynamics has been picked at endlessly by 1000s of researchers, writing 100,000s of increasingly boring and un-revealing publications ... and still we do not fully understand modern ocean circulation, let along that at the last glacial. 
+In restricting model-based experiments and derived understanding to   the modern continental configuration (and climate) in \textbf{muffin}, you'd be unlikely to come to any particularly deep or fundamental insights into ocean circulation controls in general. In any case, the modern and future (and recent glacial past) ocean circulation states and dynamics has been picked at endlessly by 1000s of researchers, writing 100,000s of  publications ... and yet still we do not fully understand modern ocean circulation, let along that at the last glacial. 
 
 A better (more fun) approach is to generalise the problem and consider fundamentally different configurations of ocean basins and climate. This is what you will be doing. But first, some potted advice:
 
+\vspace{2mm}
 \begin{itemize}[noitemsep]
-\item Try and define a hypothesis, or hypotheses, to pursue and text. These need only be very rough at the outset -- you'll likely find that you get new ideas and can either refine your original hypotheses, or come up with new ones, as you start to play with the model and see what is feasible and not feasible in terms of analysis.
+\vspace{1mm}
+\item Try and define a hypothesis, or hypotheses, to pursue and test. These need only be very rough at the outset -- you'll likely find that you get new ideas and can either refine your original hypotheses, or come up with new ones, as you start to play with the model and see what is feasible and not feasible in terms of analysis.
+\vspace{1mm}
 \item Create a plan of study -- what sort of experiments, now many, how are they going to be analysed, how do they all fit together in addressing the overarching hypotheses? Again -- it is very likely that your plan will evolve, but try and start out with something to guide you rather than wandering randomly in model world ...
+\vspace{1mm}
 \item For creating and an using different worlds -- create a list or table of the configurations to be explored, and summarize what you are finding. It might be helpful to plan out on paper first, some of the main continental configurations you need to create and then test in the model. (Again, this will evolve.)
-\item Once you have some sort of idea what are are going to do -- plan the work. This is important because to run the model to steady state is not trivial. Perhaps plan on having to run the model for 5,000 years\footnote{Even so, you should try running the model much longer to be confident that 5,000 years is OK (and sufficiently close to final equilibrium).} in order to achieve a fully spun up ocean circulation state. You might get away with shorter runs, but know in advance, what sort of error this would include and is it 'important'? Once you have a list and know how long each might take, you can plan out when they will be run on the cluster (presumably on the queue) and when the results will be analysed. Note that it is a virtual certainty, that once you have analysed the results of the first set of experiments, you will want something different (and will then need to revise the plana and list of experiments and analysis etc.).
+\vspace{1mm}
+\item Once you have some sort of idea what are are going to do -- plan the work. This is important because to run the model to steady state is not trivial. Perhaps plan on having to run the model for 5,000 years\footnote{Even so, you should try running the model much longer to be confident that 5,000 years is OK (and sufficiently close to final equilibrium).} in order to achieve a fully spun up ocean circulation state. You might get away with shorter runs, but know in advance what sort of error this would induce and is it 'important'? Once you have a list and know how long each might take, you can plan out when they will be run on the cluster (presumably on the queue) and when the results will be analysed. Note that it is a virtual certainty that once you have analysed the results of the first set of experiments, you will want something different (and will then need to revise the plana and list of experiments and analysis etc.).
 \end{itemize}
+\vspace{2mm}
 
-\noindent Overall -- scientific investigations with simplified (and relatively fast) Earth system models tends to be a very iterative undertaking and can involve significant trail-and-error. Rarely, can you devise at the outset, a single run or set of experiments, and it turns out this is completely sufficient. If you do not see something you do not understand in the results of the initial model experiments, you are either God (e.g. the Spaghetti Monster or Invisible Pink Unicorn), or not doing it properly. Expect to see things that interest you and lead you off on a tangent (hopefully -- this is how research should be).
+\noindent Overall -- scientific investigations with simplified (and relatively fast) Earth system models tends to become a somewhat iterative undertaking and can involve significant trail-and-error. (This is healthy and to be expected and even enjoyed!) Rarely, can you devise at the outset, a single run or set of experiments, and it turns out this is completely sufficient. If you do not see something you do not understand in the results of the initial model experiments, you are either God (e.g. the Spaghetti Monster or Invisible Pink Unicorn), or not doing it properly. Expect to see things that interest you and lead you off on a tangent (hopefully -- this is how research should be).
 
-Finally -- \uline{note} that in swapping between different continental configurations, in \textbf{cGENIE.muffin}, the models needs (or really really wants to) re-compile.\footnote{Note that if the \textit{base-config} is the same as the previous experiment, but you have changed a parameter value (in the \textit{user-config}), you do not need to re-compile.} This ... cannot happen on the compute nodes of the cluster if you submit an experiment using a different \textit{base-config}. When changing to a new \textit{base-config}: \uline{first}, run the model briefly interactively (i.e. at the command line). Once it has compiled (and started running), the experiment can be killed (\textsf{ctrl-c}) and now it is good to submit to the queue as a job. In any case, in utilizing a new configuration that you may never have used before, it is good practice to test it first (e.g. watch it run for a short period).
+Finally -- \uline{note} that in swapping between different continental configurations, \textbf{muffin} currently requires the model executable to be  re-compiled.\footnote{Note that if the \textit{base-config} is the same as the previous experiment, but you have changed a parameter value (in the \textit{user-config}), you do not need to re-compile.} This ... cannot happen on the compute nodes of the cluster if you submit an experiment using a different \textit{base-config}. When changing to a new \textit{base-config}: \uline{first}, run the model briefly interactively (i.e. at the command line). Once it has compiled (and started running), the experiment can be killed (\textsf{ctrl-c}) and now it is good to submit to the queue as a job. In any case, in utilizing a new configuration that you may never have used before, it is good practice to test it first (e.g. watch it run for a short period).
 
 %------------------------------------------------
 
-\subsection{Deep-water formation (and baroclinic circulation)}
+\subsection{Deep-water formation (\& baroclinic circulation)}
 
 The first investigation is to investigate the controls on the strength and large-scale structure of ocean circulation, particularly in terms of the global meridional overturning circulation (MOC), and associated with this -- the primary sites of deep-water formation.
 
@@ -1923,21 +1957,22 @@ There are presumably 2 key controls to this:
 \vspace{2mm}
 \begin{enumerate}
 \item \textbf{Temperature.}
-\\This is presumably mostly controlled by latitude (i.e. the further North or South, the more suitable the site will tend to be for deep-water formation). There will also be an influence of the prescribed planetary albedo (which includes the effect of clouds) as well as of sea-ice (if it exists).
+\\This is presumably mostly a function of latitude (i.e. the further North or South, the more suitable the site will tend to be for deep-water formation) and to some extent season. There will also be an influence of the prescribed planetary albedo (which includes the effect of clouds) as well as of sea-ice (if it exists).
 \vspace{2mm}
 \item \textbf{Salinity.}
-\\This will generally be controlled by P-E -- the balance between precipitation to the ocean surface as well as fresh-water run-off form the continents, vs. evaporation from the ocean surface. Sea-ice may also be a key factor, in leading to the (seasonal) rejection of dense salty brine.
+\\This will generally be controlled by P-minus-E -- the balance between precipitation to the ocean surface as well as fresh-water run-off form the continents, vs. evaporation from the ocean surface. Sea-ice may also be a key factor, in e.g. leading to the (seasonal) rejection of dense salty brine (and removal of freshwater to the forming ice).
 \end{enumerate}
 \vspace{2mm}
 
 In turn, this suggests two sets of 'knobs' in the model that influence the patterns and magnitude of temperature and salinity across the ocean surface:
 
-\vspace{2mm}
+\vspace{1mm}
 \begin{enumerate}
+\vspace{1mm}
 \item \textbf{Continental Configuration.}
 \\The configuration of the continents and ocean basins will dictate the shape and location of the highest latitude ocean regions -- presumably the locations where on average, deep-water formation will occur (and hence forming the downwards/sinking limb of the MOC).
-\\The model knob is hence how the position and orientation of continental blocks has been set. This (creating or changing the continental configuration used by \textbf{cGENIE.muffin}) is all done using the \textbf{MATLAB} \textbf{muffingen} program.
-\vspace{2mm}
+\\The relevant model 'knob' is hence how the position and orientation of continental blocks is configured on the surface of the Earth. This (creating or changing the continental configuration used by \textbf{muffin}) can all done using the \textbf{MATLAB} \textbf{muffingen} program.
+\vspace{1mm}
 \item \textbf{Global Climate.}
 \\The mean and climate as well as the zonal temperature gradients, together with whether or not sea-ice forms (and how much), will modulate both temperature and salinity patterns at the ocean surface.
 \\The model knobs here are primarily:
@@ -1952,11 +1987,11 @@ which here, specifies \(\times1\) \(CO_{2}\) equivalent radiative forcing.
 ma_genie_solar_constant=1368.0
 \end{verbatim}\vspace{-2pt}
 which has a subtly different effect form changing \(CO_{2}\) radiative forcing, as radiative forcing has a relatively spatially uniform impact, whereas changing the solar constant has a disproportionate impact towards the Equator (where the incident solar shortwave radiation is the greatest). So changing the solar constant is likely to impact the pole-to-Equator temperature gradient. e.g. see: Lunt, D. J., A. Ridgwell, P. J. Valdes, and A. Seale, Sunshade World.: a fully coupled GCM evaluation of the climatic impacts of geoengineering, GRL 35, L12710, doi:10.1029/2008GL033674 (2008).
-\item One could also adjust the planetary albedo, particularly in respect of looking to modify the pole-to-Equator temperature. In the \textbf{muffingen} created configurations, there is an explicit 2D file specifying the zonal (with latitude) planetary albedo profile:
+\item One could also adjust the planetary albedo, particularly in respect of looking to modify the pole-to-Equator temperature. In the \textbf{muffingen} created configurations, there is an explicit 1D file specifying the zonal (with latitude) planetary albedo profile:
 \vspace{-2pt}\begin{verbatim}
 xxxxxxxx.albd.dat
 \end{verbatim}\vspace{-2pt}
-where \texttt{xxxxxxxx} is the 8-character name of the \textbf{muffingen} created World. It would be a simple matter of editing the values in the file (between the range of 0.0 and 1.0, for  perfectly absorbing, and perfectly reflective, respectively).\footnote{Best to make a copy of the original file before you modify it.} Note that the file runs North-to-South (top to bottom).
+where \texttt{xxxxxxxx} is the 8-character name of the \textbf{muffingen} created World. It would be a simple matter of editing the values in the file (between the range of 0.0 and 1.0, for  perfectly absorbing, and perfectly reflective, respectively).\footnote{Best to make a copy of the original file before you modify it.} Note that the file data order is North-to-South (going from top to bottom in the file).
 \end{enumerate}
 \end{enumerate}
 \vspace{2mm}
@@ -1965,43 +2000,48 @@ where \texttt{xxxxxxxx} is the 8-character name of the \textbf{muffingen} create
 
 \subsection{Gateways and barotropic flow}
 
-The overarching question for this investigation is a little harder to define succinctly; it has to do with the conditions, of the degree of alignment or prevailing wind (stress)
-and open gateways, that give rise to strong zonal ocean flow. A good and obvious modern example is the existence of the Drake Passage, between the northern tip of the Antarctic Peninsular, and the southern tip of Souther America, how this aligns with the prevailing Westerlies in the Southern Hemisphere, and hence the nature and strength of the ACC (Antarctic Circumpolar Current).
+The overarching question in the context of ocean gateways and barotropic flow, is a little harder to define succinctly; it has to do with the details of the degree of alignment (or not) of the prevailing wind (stress)
+with  gateways, and the degree to which this give rise to strong zonal ocean flow. A good and obvious modern example is the existence of the Drake Passage, between the northern tip of the Antarctic Peninsular, and the southern tip of Souther America, how this aligns with the prevailing Westerlies in the Southern Hemisphere, and hence the nature and strength of the ACC (Antarctic Circumpolar Current).
 
 So the question naturally arises: how misaligned does a gateway have to be relative to the prevailing wind stress maximum, before the circumpolar (or circum-equatorial) flow ceases. What about having multiple gateways and their relative alignment, including what happens if one gateway is aligned with Westerly wind stress, and a second with Easterly wind stress -- who 'wins')? Also -- what about sill depths? For the Drake Passage, the ocean floor, while tectonically messy, is generally relatively deep. What happens to ocean circulation with a progressively shallow sill depth?
 
-The 2 key controls in this exercise are then:
+The 3 key controls in this exercise are then:
 
 \vspace{2mm}
 \begin{enumerate}
+\vspace{1mm}
 \item \textbf{Gateway alignment.}
-\\How does gateway, or gateways, align with the maximum of the zonal wind stress? For multiple gateways, what if one aligns with a wind-stress maximum of the opposite sign?
-\vspace{2mm}
+\\The degree of alignment (or latitudinal correspondence) of a gateway with the maximum of the zonal wind stress. (For multiple gateways, what if one aligns with a wind-stress maximum of the opposite sign?)
+\vspace{1mm}
+\item \textbf{Gateway width.}
+\\The width of a gateway (and how important this is in exerting control on ocean circulation).
+\vspace{1mm}
 \item \textbf{Sill depth.}
 \\The sill depth! This could be uniform in depth across the gateway (easiest/best) or could be varying (probably not so easy to learn anything).
 \end{enumerate}
 \vspace{2mm}
 
-The importance of the position of the gateways is primarily only in the context of the position of the maxima in the wind-stress field. In theory, the shape of the assumed zonal wind-stress could be altered ... but the wind stress needs to be defined on 2 different grids, and this gets messy.
+The importance of the position of the gateways is primarily only in the context of the position of the maxima in the wind-stress field. In theory, the shape of the assumed zonal wind-stress could be altered ... but the wind stress needs to be defined on 2 different ocean grids  ... and this gets messy ...
 
 As before, there are a number of changes that can be made in the model to explore the consequences of varying gateway position and sill depth (and knobs, turned):
 
 \vspace{2mm}
 \begin{enumerate}
+\vspace{1mm}
 \item \textbf{Land-sea mask.}
 \\The model knob is hence how the width and location of gateways has bene defined in the land-sea mask. There is also the question of how many gateways (and their respective position).
-\\As before, this (creating or changing the continental configuration used by \textbf{cGENIE.muffin}) is all done using the \textbf{MATLAB} \textbf{muffingen} program. Any of the given example \textbf{muffingen} configurations: \textsf{drakeworld}, \textsf{eqpasworld}, \textsf{ridgeworld}, or \textsf{waterworld}, could be taken as starting points -- copying and renaming the configuration \textsf{.m} file, as well as the \textsf{.dat} file in the \textsf{INPUT} directory.
-\vspace{2mm}
+\\As before, this (creating or changing the continental configuration used by \textbf{muffin}) is all done using the \textbf{MATLAB} \textbf{muffingen} program. Any of the given example \textbf{muffingen} configurations: \textsf{drakeworld}, \textsf{eqpasworld}, \textsf{ridgeworld}, or \textsf{waterworld}, could be taken as starting points -- copying and renaming the configuration \textsf{.m} file, as well as the \textsf{.dat} file in the \textsf{INPUT} directory.
+Or start from scratch and a the 'blank' (initially all ocean) example configuration.\vspace{1mm}
 \item \textbf{Ocean bathymetry.}
-\\The bathymetry (ocean floor depth) can be changed to alter the sill depth. The easiest way to do this is probably within the \textbf{muffingen} editor, using the setting:
+\\The bathymetry (ocean floor depth) can be changed to alter the sill depth. The easiest way to do this is probably within the \textbf{muffingen} editor, ensuring the following input parameter setting is set:
 \vspace{-2pt}\begin{verbatim}
 opt_user=true; % [false/true] enable user input to grid
 \end{verbatim}\vspace{-2pt}
-in the configuration \textsf{.m} file. (One might also then, 'draw' in the gateways by hand at the same time.)
-\\Note that a gap between 2 land masses must be \uline{2 or more cells wide}, to count as a gateway (and allow barotropic flow).
-\vspace{2mm}
+in the configuration \textsf{.m} file. (One might also then 'draw' in the gateways by hand at the same time.)
+\\Note that a gap between 2 land masses must be \uline{2 or more cells wide}, to count as a gateway and allow barotropic flow in \textbf{muffingen}).
+\vspace{1mm}
 \item \textbf{Wind stress strength.}
-\\Although it is messy to attempt to edit the profile of the applied wind-stress field, it is possible to scale its impact on ocean circulation lower and higher. The \textbf{cGENIE.muffin} parameter for this is:
+\\Although it is messy to attempt to edit the profile of the applied wind-stress field, it is possible to scale its impact on ocean circulation lower and higher. The \textbf{muffin} parameter for this is:
 \vspace{-2pt}\begin{verbatim}
 go_13=1.531013488769531300
 ea_11=1.531013488769531300
@@ -2032,13 +2072,15 @@ In addition, the sub-sub-sections that follow outline some simple diagnostics an
 
 \subsubsection{Simple/global diagnostics}
 
-\vspace{2pt}
+\vspace{1pt}
 \begin{itemize}[noitemsep]
+\vspace{1mm}
 \item In the biogem output results folder, there is a time-series file named:
 \vspace{-2pt}\begin{verbatim}
 biogem_series_misc_opsi.res
 \end{verbatim}\vspace{-2pt}
 This contains a summary of the evolution with time, of the minimum and maximum (anywhere) global overturning stream-function values.
+\vspace{1mm}
 \item Another simple property of the climate system that you might consider, is the pole-to-equator temperature gradient, both in terms of atmospheric temperature, and ocean surface temperature\footnote{\textbf{Panoply} has an option for plotting the zonal mean, from which you could read off pole-to-equator temperature gradients.} (although they should presumably be closely coupled).
 \\Why? Because the large scale (overturning) circulation of the ocean should be transporting heat from the high latitude surface to the deep ocean. This presumably would act to reduce latitudinal temperature gradients. In contrast, a strong zonal slow might prevent latitudinal transport of heat.
 \end{itemize}
@@ -2047,7 +2089,7 @@ This contains a summary of the evolution with time, of the minimum and maximum (
 
 \subsubsection{Using Panoply}
 
-In a physics-only (T + S tracer) configuration of \textbf{cGENIE.muffin} you are more limited. A good staring point is the previous tutorial on ocean circulation and AMOC stability (in the context of the modern world, climate and continental configuration). For instance, you know already how to plot and visualize the MOC using \textbf{Panoply}. The Atlantic basin and hence the existence of an AMOC, is pretty specific and unique to the modern world, so likely you'll need to focus on the global MOC. (A good starting point is to familiarise yourself with the pattern and intensity of the modern.)
+In a physics-only (T + S tracer) configuration of \textbf{muffin} you are  somewhat limited in what you can look at. A good staring point is the previous tutorial on ocean circulation and AMOC stability (in the context of the modern world, climate and continental configuration). For instance, you know already how to plot and visualize the MOC using \textbf{Panoply}. The Atlantic basin and hence the existence of an AMOC, is pretty specific and unique to the modern world, so likely you'll need to focus on the global MOC. (A good starting point is to familiarise yourself with the pattern and intensity of the modern.)
 
 For example -- the \small\textsf{drakeworld }\normalsize configuration gives rise to a global MOC pattern as shown in Figure \ref{fig:paleo_drakeworld.opsi}.
 
@@ -2058,7 +2100,7 @@ For example -- the \small\textsf{drakeworld }\normalsize configuration gives ris
 \label{fig:paleo_drakeworld.opsi}
 \end{figure}
 
-This is stored as the variable \small\textsf{phys\_opsi }\normalsize in the netCDF file \small\textsf{fields\_biogem\_2d.nc }\normalsize. Remember that the first time-slice plotted in \textbf{Panoply} is the first time-slice saved.
+This is stored as the variable \small\textsf{phys\_opsi }\normalsize in the netCDF file \small\textsf{fields\_biogem\_2d.nc }\normalsize. Remember that the first time-slice plotted in \textbf{Panoply} is the first time-slice saved and it may also be up-site-down(!) by default :(.
 
 You can also plot the barotropic circulation using \textbf{Panoply} -- the variable is called \small\textsf{phys\_psi }\normalsize -- this is shown in Figure \ref{fig:paleo_drakeworld.psi}.
 
@@ -2082,7 +2124,15 @@ Finally in \textbf{Panoply}, you might plot the current field (surface or otherw
 
 \subsubsection{Using MATLAB ...}
 
-...
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent\textcolor{red}{TO COME ...}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 %------------------------------------------------
 
@@ -2114,6 +2164,10 @@ GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
 \small\vspace{-2pt}\begin{verbatim}
 GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
 \end{verbatim}\vspace{-2pt}\normalsize
+i.e. to make:
+\small\vspace{-2pt}\begin{verbatim}
+GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=4'
+\end{verbatim}\vspace{-2pt}\normalsize
 \item Secondly, you need to list the additional \texttt{list selected biogeochemical tracers}.
 \\For this add the following code in place of the (\(<<<\;\;\;\;\;>>>\)) line:
 \small\vspace{-2pt}\begin{verbatim}
@@ -2126,6 +2180,35 @@ bg_ocn_init_48=0.0
 bg_ocn_init_49=0.0
 \end{verbatim}\vspace{-2pt}\normalsize
 \end{enumerate}
+
+To apply a 'red' dye tracer to the ocean, you can employ the same \textit{forcing} as used in the experiments in Chapter 3 -- \texttt{pyyyyz.Fred} and implement this with similar user-config settings:
+
+\small\vspace{-2pt}\begin{verbatim}
+#
+# --- FORCINGS --------------------------------------------------------
+#
+bg_par_forcing_name="pyyyyz.Fred"
+bg_par_force_point_i=1
+bg_par_force_point_j=1
+bg_par_force_point_k=1
+bg_par_ocn_force_scale_val_48=0.0
+\end{verbatim}\vspace{-2pt}\normalsize
+
+However, the specific \texttt{i,j,k} (longitude, latitude, ocean depth layer) model grid locations will depend on the resolution of the World you generated or had adopted, and it may have e.g. 18 or 36 maximum \texttt{i,j} values, and generally, either 8 or 16 maximum depth levels (\texttt{k}). (The values shown would be for the southern and western corner of the grid at the bottom of the ocean ... but note that this location might be land or seafloor in your particular World!)
+
+%------------------------------------------------
+
+\subsubsection{Via age tracing}
+
+Refer to the 'HOW-TO' in the muffin manual -- 'Add a water mass age tracer':
+
+"\textit{Water mass age tracing can be configured quite simply, and with the tracer concentration manipulations carried out automatically, as follows. As \textit{base-config} file with both red and blue color tracers defined is still required, but  rather than have to define and use a set of \textit{forcings} (and associated forcing configuration), a single parameter is added in the \textit{user-config} file:}
+\vspace{-2pt}\begin{verbatim}
+bg_ctrl_force_ocn_age=.true.
+\end{verbatim}\vspace{-2pt}
+\textit{This will automatically create the age tracer and additional explicitly output (in netCDF) both the total age of a water parcel, as well as the age relative to the surface (ventilation age). In this methodology, in the netCDF output, the concentration ratio of blue/red, should be 'age' -- the mean time that a parcel of water was last at the surface.}"
+
+Note that an experiment \textit{spin-up} duration of perhaps as much as 10,000 years is required in order to obtain a stable tracing of water mass age.
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER 5
@@ -6017,7 +6100,6 @@ cgenie.muffin/genie-main/configs
 
 Rename and copy this (or copy and rename) to \textbf{muffin} model directory:
 
-
 \vspace{1mm}
 \texttt{genie.muffin/user-configs}
 \vspace{1mm}
@@ -6068,6 +6150,58 @@ The different EXAMPLE (\small\textsf{.m}\normalsize) configuration files have a 
 
 \noindent (No EXAMPLE configurations currently specify a strong zonal field, although \\\small\textsf{muffingen\_settings\_ridgeworld }\normalsize will be prescribed one automatically in \textbf{muffingen}.) 
 
+%------------------------------------------------
+
+\newpage
+
+\section{muffingen configuration examples}
+
+A series of example configurations are provided in the main \textbf{muffingen} directory:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_BLANK} -- Start from a blank (water-) World.  User input (allowing continents and seafloor topography to be 'drawn') is activated by default.
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_wppcont1} -- Start from a land-sea mask: \texttt{wppcont1.dat}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The mask defines an idealized pole-to-pole super-continent. There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_drakeworld} --
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_eqpasworld1} --
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_ridgeworld1} --
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_waterworld1} --
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_wor0251b1} -- Start from a muffin model configuration 'k1' topography defining file: \texttt{p0251b.k1}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k1 file defines a late Permian continental configuration (and bathymetry). There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
+\vspace{1mm}
+\item \texttt{muffingen\_settings\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \texttt{xbowl} in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
+\end{itemize}
+\vspace{2mm}
+
+\noindent These examples span the 4 main ways of using \textbf{muffingen} as summarized earlier and described in detail in the following sections:
+
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \textbf{From a blank (all ocean) initial template.}
+\\ Finally, this option enables a topography to be 'drawn' within \textbf{muffingen} and hence represents an interactive alternative to (3) (rather than editing a land-sea mask in a text editor).
+
+\vspace{1mm}
+\item \textbf{Derivation based on a prescribed land-sea mask.}
+\\ This option will create a new configuration from any specified land-sea mask, whether 'real' or completely hypothetical.
+\vspace{1mm}
+\item \textbf{Derivation based on an existing model topography ('\texttt{.k1}') file.}
+\\ Allowing a topography to be re-created, or adapted/altered, all directly from an existing model 'k1' file (and hence existing model configuration).
+\vspace{1mm}
+\item \textbf{Configuration derivation based on re-gridding climate output from a GCM.}
+\\ The most common usage of \textbf{muffingen}, and enabling a new (typically paleo) configuration to be derived from the output of a GCM experiment. Currently options for utilizing 4 different GCMs are provided: HadCM3(l), FOAM, CESM, and ROCKE-3D.
+\end{enumerate} 
+\vspace{2mm}
+
+%------------------------------------------------
+
+\subsection{overview of the muffingen software}
 
 
 
@@ -7435,7 +7569,15 @@ The way this is going to work is:
 \end{enumerate}
 \vspace{2mm}
 
-In the original, and still valid way of doing this, 2 surface ocean \textit{forcings} need be specified in order to create the combined age tracer. An example forcing is provided: \textit{forcing}: \texttt{pyyyyz.Rcolr\_Rcolb}, which is yhen configured, for a 10,000 year run in this example, by adding the following 2 parameter settings in the \textit{user-config}:
+Water mass age tracing can be configured quite simply, and with the tracer concentration manipulations carried out automatically, as follows. As \textit{base-config} file with both red and blue color tracers defined is still required, but  rather than have to define and use a set of \textit{forcings} (and associated forcing configuration), a single parameter is added in the \textit{user-config} file:
+\vspace{-2pt}\begin{verbatim}
+bg_ctrl_force_ocn_age=.true.
+\end{verbatim}\vspace{-2pt}
+This will automatically create the age tracer and additional explicitly output (in netCDF) both the total age of a water parcel, as well as the age relative to the surface (ventilation age).
+
+In this methodology, in the netCDF output, the concentration ratio of blue/red, should be 'age' -- the mean time that a parcel of water was last at the surface.
+
+In comparison, in the original (and still valid way of implementing water mass age tracing), 2 surface ocean \textit{forcings} need be specified in order to create the combined age tracer. An example forcing is provided: \textit{forcing}: \texttt{pyyyyz.Rcolr\_Rcolb}, which is yhen configured, for a 10,000 year run in this example, by adding the following 2 parameter settings in the \textit{user-config}:
 \vspace{-2pt}\begin{verbatim}
 bg_par_ocn_force_scale_val_49=10000.0
 bg_par_ocn_force_scale_time_49=10000.0
@@ -7443,13 +7585,6 @@ bg_par_ocn_force_scale_time_49=10000.0
 
 \noindent (If the experiment duration is longer than 10,000 years, the parameter values need be adjusted accordingly.)
 
-In this methodology, in the netCDF output, the concentration ratio of blue/red, should be 'age' -- the mean time that a parcel of water was last at the surface.
-
-This is all quite a faff\footnote{Google it.}. So a simpler methodology has been implemented. As \textit{base-config} file with both red and blue color tracers defined is still required, but now, rather than a set of \textit{forcings} (and associated forcing configuration), a single parameter is added in the \textit{user-config} file:
-\vspace{-2pt}\begin{verbatim}
-bg_ctrl_force_ocn_age=.true.
-\end{verbatim}\vspace{-2pt}
-This will automatically create the age tracer and additional explicitly output (in netCDF) both the total age of a water parcel, as well as the age relative to the surface (ventilation age).
 
 Example \textit{user-config} files for both approaches are provided: 
 \vspace{-2pt}\begin{verbatim}
