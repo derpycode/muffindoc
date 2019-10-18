@@ -5727,7 +5727,7 @@ For example:
 \normalsize
 plots from the experiment \texttt{EXP1}, the variable \texttt{ocn\_sur\_temp} for time-slice \texttt{9999.5} (the mid-point time of the final year of a 10,000 year experiment). The color scale is from \texttt{0.0} to \texttt{30.0}, with no re-scaling (\texttt{1.0}), and \texttt{30} color intervals in the scale. The default \footnotesize\textsf{SETTINGS }\normalsize parameter file is used, and the default filename string replaced with \texttt{example1a}. The only other thing to note, is for parameter \texttt{PIK}, a value of \texttt{16} is set -- corresponding to the ocean surface. See Figure \ref{fig:example1a}.
 
-Note that the model results variable \texttt{ocn\_sur\_temp} is not always saved in \textbf{BIOGEM} 2D netCDF output. If a variable, such as \texttt{ocn\_sur\_temp} does not exist, MATLAB will pause and provide a warning and list all the variables in the file that it can find and wait for a new variable name to be inputted. For instance, a variable that is always saved in \textbf{BIOGEM} 2D netCDF output is \texttt{atm\_temp} (surface air temperature) and would be substituted in the plot. Also note that time is similarly handled -- if the specific time-slice value does not exist, a list of all possible time-slice years are provided and a substitute value requested as \textbf{MATLAB} pauses and wait for your input.
+Note that in this example, the   variable \texttt{ocn\_sur\_temp} is assumed. However, the model results variable \texttt{ocn\_sur\_temp} is not always saved in \textbf{BIOGEM} 2D netCDF output. If the requested variable, such as \texttt{ocn\_sur\_temp} does not exist, or is mis-spelt, \textbf{MATLAB} will pause and provide a warning. It will then list all the variables in the netCDF file that it can find and wait for a new variable name to be inputted. For instance, a variable that is always saved in \textbf{BIOGEM} 2D netCDF output is \texttt{atm\_temp} (surface air temperature) and could be substituted in the plot. Also note that time (the time-slice year to be plotted) is similarly handled -- if the specific time-slice value does not exist, a list of all possible time-slice years are provided and a substitute value requested as \textbf{MATLAB} pauses and wait for your input.
 
 \begin{figure}[ht]
 \begin{center}
@@ -5738,13 +5738,18 @@ Note that the model results variable \texttt{ocn\_sur\_temp} is not always saved
 \label{fig:example1b}
 \end{figure}
 
-To add contours, in the \footnotesize\textsf{SETTINGS }\normalsize parameter file, adjust the following line:
+\vspace{4pt}
+To add contours, in the default \footnotesize\textsf{SETTINGS }\normalsize parameter file (or a copied and re-named version thereof), adjust the following line:
 \small
 \vspace{-2pt}\begin{verbatim}
 contour_plot = 'y';     % [ 'y']  OVERLAY CONTOUR PLOT?
 \end{verbatim}\vspace{-2pt}
 \normalsize
-The results of this are shown in Figure \ref{fig:example1b}. Refinements to the contouring can be done by changing the lines:
+The results of this are shown in Figure \ref{fig:example1b}.
+
+\pagebreak 
+
+Refinements to the contouring can be done by changing the lines:
 \small
 \vspace{-2pt}\begin{verbatim}
 contour_mod = 1;        % [   1]  NUMBER OF COLOR INTERVALS PER CONTOR
@@ -5755,7 +5760,12 @@ contour_dashneg = 'n';  % [ 'n']  PLOT NEGATIVE CONTOURS DASHED?
 \normalsize
 (these are the more commonly used refinements).
 
-Alternatively, using 3d plotting:
+Here: \texttt{contour\_mod} determines how many color intervals per contour interval, which in the previous SST plot example, was \texttt{30}. So a value of \texttt{1} will give you 30 contours -- one every 1 degree C. And a value of \texttt{5} will give you 6 contours -- one each 5 degrees C.
+
+\texttt{contour\_mod\_label} then determines whether you want the contours labelled or not. The answer (parameter value) to be the character \texttt{y} or \texttt{n}, as a string (i.e. in inverted commas). If you elect to have contour labels, \texttt{contour\_mod\_label} determines how frequently to label the contours. A value of \texttt{1} labels every single contour. A value of \texttt{2} labels every other contour. So for instance, if you set \texttt{contour\_mod=5} and \texttt{contour\_mod\_label=2} in the previous SST example, you get a contour every \texttt{5} degrees C, and a temperature label every \texttt{10} degrees C.
+
+\vspace{4pt}
+Alternatively, using 3d plotting, you could plot the ocean surface temperature field as follows:
 
 \footnotesize
 \vspace{-0pt}\begin{verbatim}
@@ -5763,12 +5773,12 @@ Alternatively, using 3d plotting:
 ('EXP1','','ocn_temp','',9999.5,-1,16,'',1.0,0.0,30.0,30,'','','example1c');
 \end{verbatim}\vspace{-0pt}
 \normalsize
-The only thing that changes here is the variable name -- now \texttt{ocn\_temp}, and the plot is identical to Figure \ref{fig:example1a}.
+The main things that change here are firstly the variable name -- now \texttt{ocn\_temp}, and secondly because this is a 3D ocean field, we need to specify what ocean model level we want to plot -- this is where the integer \texttt{16} comes in and corresponds to the input  \texttt{PIK}, as discussed earlier. The resulting plot will be identical to Figure \ref{fig:example1a}.
 
 \vspace{4pt}
 \item \textbf{Global zonal average temperature profile}
 
-To keep with ocean temperature, but now plot the global zonal mean (lat-depth) profile:
+To keep with ocean temperature, we can use the \texttt{plot\_fields\_biogem\_3d\_i} function to plot the global zonal mean (lat-depth) profile (rather than horizontal, surface slice):
 
 \footnotesize
 \vspace{-0pt}\begin{verbatim}
@@ -5776,13 +5786,13 @@ To keep with ocean temperature, but now plot the global zonal mean (lat-depth) p
 ('EXP1','','ocn_temp','',9999.5,-1,0,'',1.0,0.0,30.0,30,'','','example2a');
 \end{verbatim}\vspace{-0pt}
 \normalsize
-where the only significant change compared to before, is setting a \texttt{0} for input parameter \texttt{PIK}. The results is shown in Figure \ref{fig:example2a}.
+The only significant change as compared to before, is setting a \texttt{0} for input parameter \texttt{PIK} (again -- see earlier). The results is shown in Figure \ref{fig:example2a}.
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=0.5]{example2a.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Zonal mean global ocean temperature profile.}
 \label{fig:example2a}
 \end{figure}
@@ -5790,7 +5800,7 @@ where the only significant change compared to before, is setting a \texttt{0} fo
 \vspace{4pt}
 \item \textbf{Pacific dissolved oxygen profile}
 
-As per choosing ocean levels (\texttt{k}-values) in the lon-lat plotting, you can specify a specific longitude for creating a lat-depth section. e.g. Figure \ref{fig:example3a}, created by\footnote{Also turning on the contour plotting.}:
+As per choosing ocean levels (\texttt{k}-values) in the lon-lat plotting, you can also specify a specific longitude for creating a lat-depth section rather than calculating and plotting a global zonal mean. e.g. Figure \ref{fig:example3a} was created by\footnote{Also turning on the contour plotting.}:
 
 \footnotesize
 \vspace{-0pt}\begin{verbatim}
@@ -5798,13 +5808,13 @@ As per choosing ocean levels (\texttt{k}-values) in the lon-lat plotting, you ca
 ('EXP1','','ocn_O2','',9999.5,-1,10,'',1.0E-6,0.0,300.0,30,'','','example3a');
 \end{verbatim}\vspace{-0pt}
 \normalsize
-is somewhere in the Pacific, along a line of longitude (whatever corresponds to \texttt{i=10} on this GENIE grid ... I guess about 165W ...). Here, the variable to be plotted has also bee changed -- \texttt{ocn\_O2}. Because of this the scale has also been changed -- from 0 to 300 \(\mu mol kg^{-1}\), and because the \textit{netCDF} variable units are \(mol kg^{-1}\), a units scaling of \texttt{1.0E-6} is specified for parameter \texttt{PCSCALE}.
+The chosen section is somewhere in the Pacific, along a line of longitude (whatever corresponds to \texttt{i=10} on this \textbf{muffin} model grid ... I guess about 165W ...). Here, the variable to be plotted has also been changed -- \texttt{ocn\_O2}\footnote{You'll need a biogeochemsitry enabled \textit{base-config}}. Because the units of dissolved oxygen are much smaller than for temperature (in degrees C),  the plotted scale has also been changed -- from 0 to 300 \(\mu mol kg^{-1}\) rather than the netCDF variable units of \(mol kg^{-1}\). To achieve this re-scaling, a units scaling value of \texttt{1.0E-6} is specified for parameter \texttt{PCSCALE}.\footnote{Note that the scaling specified is as the new units relative to the old units -- here, \(\mu mol kg^{-1}\) relative to \(mol kg^{-1}\) and hence \(10^{-6}\). ALSO NOTE that \textbf{Panoply} does it the other way around ... :(}
 
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=0.5]{example3a.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Ocean oxygen profile on a Pacific transect.}
 \label{fig:example3a}
 \end{figure}
@@ -5812,7 +5822,7 @@ is somewhere in the Pacific, along a line of longitude (whatever corresponds to 
 \vspace{4pt}
 \item \textbf{Atlantic zonal mean dissolved oxygen profile}
 
-So far, with the exception of plotting a gridded color field \uline{and} a contoured field at the same time, all these examples can also be done in \textbf{Panoply}. One difference, is the ability in the \textbf{muffinplot} suite of \textbf{MATLAB} functions to apply masks -- isolating geographical regions or even single points. In the \footnotesize\textsf{MASKS}\normalsize directory, are a series of example ASCII mask files, mostly for the 2 (8- and 16-level ocean) modern published configurations of \textbf{cGENIE.muffin}. For instance, \footnotesize\textsf{mask\_worjh2\_AtlanticALL.dat}\normalsize has all the grid points in the entire Atlantic basin assigned a value of \texttt{1}, with \texttt{0} everywhere else. If we apply this first to the surface ocean dissolved oxygen field:
+So far, with the exception of plotting a gridded color field \uline{and} a contoured field at the same time, all these examples can also be done in \textbf{Panoply}. One difference, is the ability in the \textbf{muffinplot} suite of \textbf{MATLAB} functions to apply masks -- isolating geographical regions or even single points. In the \footnotesize\textsf{MASKS }\normalsize directory, are a series of example ASCII mask files, mostly for the 2 (8- and 16-level ocean) modern published configurations of \textbf{muffin}. For instance, \footnotesize\textsf{mask\_worjh2\_AtlanticALL.dat }\normalsize has all the grid points in the entire Atlantic basin assigned a value of \texttt{1}, with \texttt{0} everywhere else. If we apply this first to the surface ocean dissolved oxygen field:
 
 \footnotesize
 \vspace{-0pt}\begin{verbatim}
@@ -5827,12 +5837,14 @@ we obtain Figure \ref{fig:example4a}.
 \begin{center}
 \includegraphics[scale=0.5]{example4a.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Distribution of surface ocean dissolved  oxygen in the Atlantic.}
 \label{fig:example4a}
 \end{figure}
 
-Now also applying a mask field to the zonal average:
+Here, it is clear how the masked has been applied and all the ocean falling outside of the mask is plotted as white (no data).
+
+We can also apply a mask field to the zonal average plot:
 
 \footnotesize
 \vspace{-0pt}\begin{verbatim}
@@ -5847,7 +5859,7 @@ Now also applying a mask field to the zonal average:
 \begin{center}
 \includegraphics[scale=0.5]{example4b.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Mean zonal ocean oxygen profile in the Atlantic.}
 \label{fig:example4b}
 \end{figure}
@@ -5858,43 +5870,48 @@ Now also applying a mask field to the zonal average:
 
 \subsection{Example analysis}
 
-An set of \footnotesize\textsf{m-file}\normalsize functions are provided that plot and analyse a basic set of experiments properties, with \footnotesize\textsf{make\_analysis\_ALL.m}\normalsize
-given as a template for carrying out all the plotting. Obviously, the individual aggregate plotting functions can be edited, added to, or with unwanted or irrelevant plots, commented out or deleted -- treat these all simply as templates for developing your own analysis strategy (as well as viewing the associated configuration files as illustrations of the function/use of some of the different further plotting options\footnote{Also covered in a subsequent sub-sub-section.}).
+An set of \textbf{MATLAB} \footnotesize\textsf{m-file }\normalsize functions are provided that define a series of different generic and basic experiment analysis and plottings, with \footnotesize\textsf{make\_analysis\_ALL.m }\normalsize provided as a template for carrying them all out in one go. Obviously, the individual aggregate plotting functions can be edited, added to, or with unwanted or irrelevant plots, commented out or deleted -- treat these all simply as templates for developing your own analysis strategy (as well as viewing the associated configuration files as illustrations of the function/use of some of the different further plotting options\footnote{Also covered in a subsequent sub-sub-section.}).
 
 The aggregate plotting functions are as follows:
 
 \begin{enumerate}[noitemsep]
 
-\vspace{2pt}
+\vspace{1pt}
 \item \footnotesize\textbf{\textsf{fun\_make\_analysis\_phys.m}}\normalsize \\This encompasses a basic set of analyses of ocean circulation and climatology.
-\\The script is written as a function, and requires two parameters to be passed as input:
+\\The script is written as a \textit{function}, and requires just two parameters to be passed as input:
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item The experiment name.
 \item The (mid-point of the) year of the time-slice to plot.
 \end{enumerate}
 In the example of an experiment called \texttt{'EXP1'}, and plotting the last annual time-slice (\texttt{9999.5}) from a 10,000 year model run, the function is hence called:
-\vspace{-0pt}\begin{verbatim}
+\vspace{-2pt}\begin{verbatim}
 fun_make_analysis_phys('EXP1',9999.5);
-\end{verbatim}\vspace{-0pt}
+\end{verbatim}\vspace{-2pt}
 
-\vspace{2pt}
+\vspace{1pt}
 \item \footnotesize\textbf{\textsf{fun\_make\_analysis\_geo.m}}\normalsize \\This encompasses a basic set of analyses of ocean (abiotic) geochemistry and ocean acidification related variables and metrics.
-\\
 
-\vspace{2pt}
+\vspace{1pt}
 \item \footnotesize\textbf{\textsf{fun\_make\_analysis\_bio.m}}\normalsize \\This encompasses a basic set of analyses of marine biological fluxes and biologically related properties.
-\\
-
-\vspace{2pt}
-\item \footnotesize\textbf{\textsf{fun\_make\_analysis\_eco.m}}\normalsize \\This encompasses a basic set of analyses of marine ecological analysis 
-\\
-
-\vspace{2pt}
-\item \footnotesize\textbf{\textsf{make\_analysis\_ALL.m}}\normalsize
-\\Aggregates the above functions.
-\\Note that this particular \footnotesize\textsf{m-file}\normalsize \ is a script file and has no inputs. 
+ 
+\vspace{1pt}
+\item \footnotesize\textbf{\textsf{fun\_make\_analysis\_ALL.m}}\normalsize
+\\Aggregates all the above functions (i.e., calls all 3).
 \end{enumerate}
+
+\vspace{2pt}
+To run these example analysis -- either copy all the files contained in the \footnotesize\textsf{EXAMPLES }\normalsize subdirectory, to your working directory (e.g. \footnotesize\textsf{RESULTS }\normalsize as per the previous example). Then type e.g..\footnote{Note that if you did not run with ocean biogeochemsitry (but rather climate-only), not all the plotting functions will run and you will have to restrict this default analysis to: \texttt{fun\_make\_analysis\_phys('EXP1',9999.5);}}
+
+\vspace{-2pt}\begin{verbatim}
+fun_make_analysis_ALL('EXP1',9999.5);
+\end{verbatim}\vspace{-2pt}
+
+\noindent OR, add the path to the \footnotesize\textsf{EXAMPLES }\normalsize subdirectory, e.g.
+\vspace{-2pt}\begin{verbatim}
+addpath('Y:\_git\muffinplot\EXAMPLES');
+\end{verbatim}\vspace{-2pt}
+but obviously depending on quite where you installed \textbf{muffinplot}.
 
 %------------------------------------------------
 
@@ -5902,6 +5919,7 @@ fun_make_analysis_phys('EXP1',9999.5);
 
 A number of additional options for exerting finer control over the plotting are provided as a block of parameters and (default) values in the m-file itself, in a section immediately after the commented help and change-log at the start of the m-file. Not all the options are relevant to all the plotting functions\footnote{See 'help' on a specific plotting function for details of the relevant options in the parameter block.}, but the full list (and then defaults in brackets \texttt{[]}) is as follows:
 
+\vspace{2pt}
 {\small \begin{enumerate}
 \item \texttt{lon\_min = -180;         [-180]  STARTING LONGITUDE FOR X-AXIS}
 \\ Sets the longitude of the left-hand edge of the plot.
@@ -5955,6 +5973,7 @@ plot\_opsi\_dminor = 1;   [   1]; plot\_opsi\_dmajor = 5;   [   5] }
 \item \texttt{dscrsz = 0.60;          [0.60]  FRACTIONAL FIGURE WINDOW SIZE}
 \\ Adjustment factor of the fractional size (compared to the screen) of the figure window.
 \end{enumerate}}
+\vspace{2pt}
 
 \subsubsection{Further refinements: Examples}
 
