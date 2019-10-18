@@ -4954,8 +4954,8 @@ Note -- depending on the specific model configuration (which model modules are s
 \vspace{21mm}
 
 \noindent The primary format for saving spatial (2- and 3-D) data is \textit{netCDF} (network Common Data Form). More information on the netCDF format and the libraries necessary to compile the model can be found \href{http://www.unidata.ucar.edu/software/netcdf}{here}.
-The writing of netCDF follows roughly the \href{http://www.cgd.ucar.edu/cms/eaton/cf-metadata/index.html}{CF1.0 convention} (\textit{NetCDF} Climate and Forecast (CF) Metadata Convention).
-The netCDF output is written for  the \textit{BIOGEM} and \textit{SEDGEM} modules separately, and both modules have a flag that suppresses spatial data file saving in ASCII format, with \textit{netCDF} format being the default.
+The writing of netCDF follows roughly the \href{http://www.cgd.ucar.edu/cms/eaton/cf-metadata/index.html}{CF1.0 convention} (NetCDF Climate and Forecast (CF) Metadata Convention).
+The netCDF output is written for  the \textbf{BIOGEM} and \textbf{SEDGEM} modules separately, and both modules have a flag that suppresses spatial data file saving in ASCII format, with netCDF format being the default.
 
 Under unix/linux, netCDF files can be interrogated with: \texttt{\$ ncdump -h filename.nc} which will give you the header information of the file. The command is included in the netCDF library which has to be present to run the model anyway. It's useful to get the NCO software package helping to concatenate files or extract variables as shell command. A full list of available software to manipulate or graphically illustrate netCDF files can be found \href{http://www.unidata.ucar.edu/software/netcdf/software.html}{here}.
 
@@ -4966,11 +4966,11 @@ This Chapter covers how to visualize \textbf{muffin} output, with a particular e
 \begin{itemize}
 \vspace{1pt}
 \item \textbf{Panoply}
-\\ If you really really must insist on using Windozzzz, a recommended viewer for netCDF is \href{http://www.giss.nasa.gov/tools/panoply/}{Panoply} (see below). In fact, the can be run under linux and on the Mac (OS X) as well.
+\\ If you really really must insist on using Windozzzz, the recommended viewer for netCDF is \href{http://www.giss.nasa.gov/tools/panoply/}{Panoply} (see below). \textbf{Panoply} can be run under linux and on the Mac (OS X).
 \\ There is also \href{http://www.epic.noaa.gov/java/ncBrowse/}{ncBrowse}. Again, this will also run under LINUX and on the Mac (OS X).
 \vspace{1pt}
 \item \textbf{MUTLAB}
-\\ You can also view \textit{netCDF} files using \textbf{MUTLAB}, for which a number of plotting functions are provided. An advantage here is that the \textbf{MUTLAB} code can be hacked to produce much more powerful and bespoke analysis and plots.
+\\ You can also view netCDF files using \textbf{MUTLAB}, for which a number of plotting functions are provided. An advantage here is that the \textbf{MUTLAB} code can be hacked to produce much more powerful and bespoke analysis and plots.
 \end{itemize}
 
 %------------------------------------------------
@@ -4998,18 +4998,25 @@ When you open a netCDF file, you will be presented with a \footnotesize\textsf{D
 In a drop-down box at the bottom of the application window is an option for shortening the list of displayed variables in the netCDF file:
 
 \begin{itemize}[noitemsep]
+\vspace{1mm}
 \item \footnotesize\textsf{Georeferenced variables }\normalsize -- All the spatial (2 or 3D) variables.
+\vspace{1mm}
 \item \footnotesize\textsf{Plottable variables }\normalsize -- As above, but now including axis definitions (which can be plotted as 1D lines).
+\vspace{1mm}
 \item \footnotesize\textsf{All variables }\normalsize -- all of the variables.
 \end{itemize}
-Advisable, is to ensure that \footnotesize\textsf{Georeferenced variables }\normalsize is selected.
+\vspace{2mm}
 
 To create a plot of a variable -- simply double-click anywhere on the line containing that variable. A dialogue box will open with various options (Figure \ref{fig:CreatePlot}). For 3-D model output, you have the option of whether you want a \footnotesize\textsf{'Lat-Vert'}\normalsize, \footnotesize\textsf{'Lon-Lat'}\normalsize, or \footnotesize\textsf{'Lon-Vert' }\normalsize plot (for the 2-D fields, the only choice is \footnotesize\textsf{'Lon-Lat'}\normalsize).
 \begin{itemize}
+\vspace{1mm}
 \item \footnotesize\textsf{'Lat-Vert' }\normalsize plots -- a common way of visualizing vertical distribution in the ocean. The default is for \textbf{Panoply} to display an average of all longitudes in a zonal mean. Un-ticking the \footnotesize\textsf{Ave}\normalsize box in the \footnotesize\textsf{Array}\normalsize tab will enable you to specify a specific longitude section. Be aware that Panoply likes to plot the depth inverted by default ...
+\vspace{1mm}
 \item \footnotesize\textsf{'Lon-Lat' }\normalsize plots -- the classic 2D, top-down view of the ocean. There are multiple levels (depth layers) in the ocean of data that can be plotted, from the surface to the abyssal ocean.
+\vspace{1mm}
 \item \footnotesize\textsf{'Lon-Vert' }\normalsize plots -- (an uncommon option).
 \end{itemize}
+\vspace{2mm}
 For all three: there may be multiple time-slices (i.e., you can plot data saved from different years).\footnote{Remember that the default, first time slice, will be the first once saved in the experiment. The last one saved and displayed, will reflect the end of your experiments.} 
 
 \begin{figure}[ht]
@@ -5029,24 +5036,41 @@ To save plots in \textbf{Panoply} -- from the file menu: \footnotesize\textsf{Fi
 
 The default settings in \textbf{Panoply}, i.e. those used when a plot is first created, can often mislead. In particular, note:
 \begin{itemize}
+
+\vspace{1mm}
 \item \footnotesize\textsf{Year }\normalsize (\footnotesize\textsf{Array}\normalsize tab)
         \\ The default is for the very 1st \textit{time-slice} to be displayed rather than the experiment end. The first \textit{time-slice} is numbered from 1 to however many total time-slices have been saved (displayed to the immediate right of the \footnotesize\textsf{Year ,}\normalsize box), and it is this integer number that appears in the \footnotesize\textsf{Year }\normalsize box -- not the year of the data save. Instead, the mid-point year of the time-slice is displayed in a second box (labeled '\footnotesize\textsf{Year mid-point}\normalsize').
         \\ Different \textit{time-slices} to be plotted can be selected by either clicking through the saved year count, or by selecting the save year mid-point from the drop-down list.
+
+\vspace{1mm}
 \item \footnotesize\textsf{Scale Range }\normalsize (\footnotesize\textsf{Scale}\normalsize tab)
         \\ The color scale is auto-scaled so that the range always goes from the minimum to maximum displayed value. This can potentially mislead if save years and/or depth/latitude slices are scrolled through as the scale will be automatically adjusted to fit each plot in turn.
         \\ Confusion can also arise for fields with no variation, e.g. atmospheric trace gas concentrations or air temperature -- the auto-scaled plot in these instances has a uniform color but with odd hatching as Panoply dutifully tries to achieve the impossible (creating a scale of multiple colors for a single value).
+
+\vspace{1mm}
 \item Zonal averaging (\footnotesize\textsf{Array }\normalsize tab)
         \\ \footnotesize\textsf{Lat-Vert }\normalsize plots are displayed as a zonal mean by default. This is indicated by the tick in the \footnotesize\textsf{Ave }\normalsize box (bottom RH corner). Un-ticking the \footnotesize\textsf{Ave }\normalsize box releases the averaging with the first longitudinal value of the grid now displayed instead. Similar to how Panoply displays years -- the longitudinal grid locations are counter from 1 to typically 36 (depending on the resolution of the ocean grid), with the longitudinal mid-point value in degrees East displayed to the right.
         \\ Different longitudinal sections to be plotted can be selected by either clicking through the grid point number count, or by selecting the longitudinal mid-point from the drop-down list.
+
+\vspace{1mm}
 \item Scale bar tick marks (\footnotesize\textsf{Array }\normalsize tab)
         \\ The tick labels on the color scale are displayed by default in the format: \footnotesize\textsf{x.y }\normalsize. If the typical values of the variable are order e.g. 10\begin{math}^{-6}\end{math} you will end up with value labels ranging from \footnotesize\textsf{0.0 }\normalsize to \footnotesize\textsf{0.0 }\normalsize ... This can be most easily resolved in one of two ways:
-        
-\begin{itemize}
+        \begin{itemize}
 \item The format of the label can be changed by selecting a different option from the pull-down \footnotesize\textsf{Tick Label Format }\normalsize box (default == \footnotesize\textsf{\%.1f}\normalsize). For instance, \footnotesize\textsf{\%.2e }\normalsize would give a display in the format \footnotesize\textsf{x.xxEyy }\normalsize (or \footnotesize\textsf{x.xxE-yy}\normalsize) or \footnotesize\textsf{\%.6f }\normalsize would give \footnotesize\textsf{x.xxxxxx}\normalsize.
 \item An alternative is to re-scale the values. This is done in the Scaling Factor box in which you set the scale factor in powers of 10. For example: setting \footnotesize\textsf{-6}\normalsize in effect converts units of mol kg\begin{math}^{-6}\end{math} to \begin{math}\mu\end{math}mol kg\begin{math}^{-6}\end{math}.
 \end{itemize}
 
+\vspace{1mm}
+\item Other things to watch out for include:
+\begin{itemize}
+\item A plot involving depth, being by default, 'up-side-down'!.
+\\This is fixed in the \footnotesize\textsf{Grid}\normalsize tab, and the click button, \footnotesize\textsf{Swap B/T}\normalsize.
+\item In \footnotesize\textsf{'Lon-Lat'}\normalsize plots, the modern continental outline being displayed by default.
+\\This can be fixed by changing options in the \footnotesize\textsf{Overlay}\normalsize tab.
 \end{itemize}
+
+\end{itemize}
+\vspace{2mm}
 
 \begin{center}
 \textbf{Simply be careful when opening a new plot that you are looking at what you *think* you are looking at (or what you think you are looking at *is* what you are looking at).}
@@ -5058,38 +5082,47 @@ Note that default plotting settings in \textbf{Panoply} can be changed (and save
 
 \subsection{Basic plots -- examples}
 
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent\textcolor{red}{TO COME ...}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
 %------------------------------------------------
 
 \subsection{Difference (anomaly) plots}
 
-It is possible to create an anomaly (difference) maps in Panoply which are essential when analyzing changes in a variable that may be small compared to the global variability in that variability. To do this:  
+It is possible to create an anomaly (difference) maps in \textbf{Panoply} which are essential when analyzing changes in a variable that may be small compared to the global spatial variability. To do this:  
 
-\vspace{2mm}
 \begin{itemize}
 \vspace{1mm}
 \item First, open the netCDF results file.
 \vspace{1mm}
 \item Open the variable of interest, e.g., \texttt{atm\_temp} (surface air temperature) in the 2D netCDF file. 
 \vspace{-4mm}
-\item From the upper LH corner of the Dataset Browser window, from the drop-down menu, select the name of the plot you have just created (\texttt{atm\_temp} in \textsf{field\_biogem\_2D} ...).
+\item From the upper LH corner of the Dataset Browser window, from the drop-down menu, select the name of the plot you have just created (\texttt{atm\_temp} in \footnotesize\textsf{field\_biogem\_2D}\normalsize ...).
 \vspace{1mm}
-\item From the upper LH corner of the Dataset Browser window, now click on the Combine Plot icon.
+\item From the upper LH corner of the Dataset Browser window, now click on the \footnotesize\textsf{Combine Plot}\normalsize icon.
 \\ You now have a plot window that is displaying a difference map. By default, it is showing you the difference between two identical (in time) slices. The two different slices are labeled Array 1 (LH side) and Array 2 (RH side).
+\\NOTE: Easier than mucking about with \footnotesize\textsf{Combine Plot}\normalsize, is having open the first dataset, simply drag another variable from the list of variables in the \footnotesize\textsf{Sources }\normalsize window, into the \footnotesize\textsf{Plot }\normalsize window. You can drag either a different, or the same variable, into the \footnotesize\textsf{Plot }\normalsize window.
 \end{itemize}
 \vspace{2mm}
 
 For instance, you can keep one array (Array 1) fixed to the initial (year 1 (centered on 0.5)) and vary the year in the second array (Array 2). Note that you can select in Panoply whether Array 1 - Array 2 is plotted, or Array 2 - Array 1, or various proportional or relative differences.
 
-If switch off the auto-scaling feature (\textsf{Always fit to data}) you can center the scale so that no change is white, with positive deviations = red and negative = blue by clicking on Center on 0. This is something of a convention in the scientific literature.
+If you switch off the auto-scaling feature (\footnotesize\textsf{Always fit to data}\normalsize) you can center the scale so that no change is white, with positive deviations = red and negative = blue by clicking on Center on 0. This is something of a convention in the scientific literature.
 
 The same variable in two different model experiments can also be opened up and analyzed combined: 
 
-\vspace{2mm}
 \begin{itemize}
 \vspace{1mm}
 \item Start by opening up both required netCDF files.
 \vspace{1mm}
-\item Open the variable of interest in one (either one) of the two 2D netCDF datasets. 
+\item Open the variable of interest in one (either one) of the two 2D netCDF data-sets. 
 \vspace{1mm}
 \item From the upper LH corner of the Dataset Browser window, from the drop-down menu, select the name of the plot you have just created.
 \vspace{1mm}
@@ -5102,27 +5135,28 @@ The same variable in two different model experiments can also be opened up and a
 
 \subsection{Ocean velocity plots}
 
-By combining the two (horizontal) fields of ocean circulation, rather than a difference plot, Panoply can create a velocity plot. This is a great way of visualizing surface (and deeper) currents and circulation patterns. To do this:
+By combining the two (horizontal) fields of ocean circulation, rather than a difference plot, \textbf{Panoply} can create a velocity plot. This is a great way of visualizing surface (and deeper) currents and circulation patterns. To do this:
 
-\vspace{2mm}
 \begin{itemize}
 \vspace{1mm}
 \item First, open the 3-D netCDF results file.
 \vspace{1mm}
-\item Open either the \texttt{phys\_u} ('ocean velocity - u') or \texttt{phys\_v} ('ocean velocity - v') field and select a Lon-Lat plot.
+\item Open either the \texttt{phys\_u} ('ocean velocity - u') or \texttt{phys\_v} ('ocean velocity - v') field and select a \footnotesize\textsf{Lon-Lat }\normalsize plot.
 \vspace{1mm}
-\item From the upper LH corner of the Dataset Browser window, from the drop-down menu, select the name of the plot you have just created.
+\item From the upper LH corner of the \footnotesize\textsf{Sources }\normalsize window, from the drop-down menu, select the name of the plot you have just created.
 \vspace{1mm}
 \item Now double-click on the other velocity variable (whichever of the u and v fields you did not open first).
 \vspace{1mm}
-\item By default you get a difference map, which is pretty useless really. From the drop-down Plot menu box (which should be displaying 'Array 1 - Array 2' by default) select: \textbf{Vector Magnitude} (bottom of the list).
+\item By default you get a difference map, which is pretty useless really. From the drop-down \footnotesize\textsf{Plot }\normalsize menu box (which should be displaying 'Array 1 - Array 2' by default) select: \footnotesize\textsf{Vector Magnitude }\normalsize(bottom of the list).
 \\ You now have a plot window that is displaying the ocean velocity field, with arrows indicating the direction and speed (length of the arrow) together with an interpolated color background of the speed.
 \end{itemize}
 \vspace{2mm}
 
-You can re-scale the velocity arrows to more clearly display the circulation pattern by altering the \textbf{Scale Length} value (\textbf{Contours \& Vectors} tab). A value of 0.1 is a reasonable choice for surface currents. e.g. see Figure \ref{fig:cgenie_currents}.
+You can re-scale the velocity arrows to more clearly display the circulation pattern by altering the \footnotesize\textsf{Scale Length }\normalsize value (\footnotesize\textsf{Contours \& Vectors }\normalsize tab). A value of 0.1 is a reasonable choice for surface currents. e.g. see Figure \ref{fig:cgenie_currents}.
 
-If you want to display deeper (in the ocean) current fields and/or different time-slices, take care that the depth level (/time-slice) in both LH and RH sides of the \textbf{Array(s)} panel must be changed to the same value. If displaying deeper current fields, then the velocity vectors will have to be further re-scaled (to a smaller value) in line with the lower velocities at depth compared to the surface.
+If you want to display deeper (in the ocean) current fields and/or different time-slices, take care that the depth level (/time-slice) in both LH and RH sides of the \footnotesize\textsf{Array(s) }\normalsize panel must be changed to the same value. If displaying deeper current fields, then the velocity vectors will have to be further re-scaled (to a smaller value) in line with the lower velocities at depth compared to the surface.
+
+\newpage
 
 \begin{figure}[ht]
 \begin{center}
@@ -5146,13 +5180,16 @@ If you want to display deeper (in the ocean) current fields and/or different tim
 
 If you need a tutorial on \textbf{MATLAB}, either as a refresher, or because you have not used the program before, refer to (and/or work through) the following sections of the \href{https://github.com/derpycode/matlabananas\#matlabananas}{matlabananas} \textbf{MATLAB} textbook:
 
-\vspace{4pt}
+\vspace{2pt}
 \begin{itemize}
-\item All of Chapter 1 --  that covers the very basics of using \textbf{MATLAB}, what variables are, including scales (e.g. single numbers), vectors (1D array), matrices (2D array) and higher order arrays, now to index and carry out basic manipulation of arrays, basic data loading and saving and plotting.
+\vspace{1pt}
+\item Chapter 1 --  this covers the very basics of using \textbf{MATLAB}, what variables are, including scalars (e.g. single numbers), vectors (1D array), matrices (2D array) and higher order arrays, now to index and carry out basic manipulation of arrays, basic data loading and saving and plotting.
+\vspace{1pt}
 \item Sections 2.1 and 2.2 of Chapter 2, which cover creating (script) programs -- i.e. adding all your \textbf{MATLAB} commands to a file (a \footnotesize\textsf{.m }\normalsize or '\footnotesize\textsf{m-file }\normalsize') and running the file, and \textit{functions} -- programs (\footnotesize\textsf{m-file}\normalsize s) where one or more parameters might be passed into the \textit{function} when it is called (e.g. at the command line), and potentially variables returned.
+\vspace{1pt}
 \item In Chapter 3 -- subsection 3.1.3 deals with reading in netCDF format data, which is the \textbf{muffin} format for spatial data. Section 3.2 deals with more advanced 2D plotting (also of direct relevance to \textbf{muffin} data processing and visualization using \textbf{MATLAB}).
 \end{itemize}
-\vspace{4pt}
+\vspace{2pt}
 
 %------------------------------------------------
 
@@ -5165,7 +5202,7 @@ The \textit{time-series} (\textsf{\footnotesize .res}) output of \textbf{BIOGEM}
 >> plot(co2(:,1),1.0E6*co2(:,3));
 \end{verbatim}\normalsize
 
-loads in the atmospheric \(CO_{2}\) time-series file (assigning it to the array variable \texttt{co2}), and then plots (as a line graph) the 3rd column (\(CO_{2}\) concentration) vs. the first (time). Because concentrations are saved in units of atmospheres, a factor of \texttt{1.0E6} is applied to concert to \(\mu atm\). Equivalently:
+\noindent loads in the atmospheric \(CO_{2}\) time-series file (assigning it to the array variable \texttt{co2}), and then plots (as a line graph) the 3rd column (\(CO_{2}\) concentration) vs. the first (time). Because concentrations are saved in units of atmospheres, a factor of \texttt{1.0E6} is applied to concert to \(\mu atm\). Equivalently:
 
 \small\begin{verbatim}
 >> co2=load('biogem_series_atm_pCO2\).res','-ascii');
@@ -5174,9 +5211,29 @@ loads in the atmospheric \(CO_{2}\) time-series file (assigning it to the array 
 
 %------------------------------------------------
 
+\subsection{MATLAB 'Import Data' ...}
+
+You can also import the time-series files by clicking on the \footnotesize\textsf{Import Data }\normalsize icon:
+
+\begin{itemize}
+\vspace{1pt}
+\item Navigate to the \textbf{BIOGEM} sub-directory of your experiment results directory. Ensure that \footnotesize\textsf{All Files }\normalsize is selected and click on the time-series file you want.
+\vspace{1pt}
+\item \textbf{MATLAB} ignores the header lines, and it should be safe to simply click on \footnotesize\textsf{Import Selecftion }\normalsize for all columns, or select what you want to plot -- typically year (the first column) and another one.
+\vspace{1pt}
+\item A default variable name -- the filename minus the underscore characters -- will appear listed in the \textbf{MATLAB} \footnotesize\textsf{Workspace window }\normalsize. Double-click on the variable name to open up the imported data in a table view. If you select columns to plot, and then head over to the main \footnotesize\textsf{PLOTS }\normalsize tab, a range of plotting options are provided and a plot can be generated by clicking on one of the plotting icons.\footnote{Note that if you have not selected any data columns, then all the plotting icons are disabled and greyed out in the \footnotesize\textsf{PLOTS }\normalsize tab.}
+\vspace{1pt}
+\item Labels can be added, scales and markers changed, etc etc, in the \footnotesize\textsf{Figure window }\normalsize.
+\end{itemize}
+\vspace{2pt}
+
+Note that as the data has been imported as an array in \textbf{MATLAB}, you can also plot directly from the command line. (And indeed, you could also have loaded the data from the command line.)
+
+%------------------------------------------------
+
 \subsection{MATLAB and netCDF (\textit{time-slice})}
 
-\noindent Basically -- the only hard part, having opened the \textit{netCDF} file is correctly deducing which dimension in an extracted data array is which of longitude, latitude, (sometimes depth), and time. Mostly this should be pretty obvious from inspecting the \textbf{MATLAB} \footnotesize\textsf{Workspace }\normalsize window (assuming you have a column for \footnotesize\textsf{Size }\normalsize selected to be displayed), or using the \texttt{size} command.\footnote{It also turns out that the order of dimensions for a variable read in by \textbf{MATLAB}, is the opposite of the order listed in the \textsf{Variable} window of \textbf{Panoply}.} Once you have done this, you can plot slices, scale data, average or otherwise process data, extract locations at specific locations, etc etc.
+\noindent Basically -- the only hard part, having opened the \textit{netCDF} file is in correctly deducing which dimension in an extracted data array is   longitude, latitude, (sometimes depth), or time. Mostly this should be pretty obvious from inspecting the \textbf{MATLAB} \footnotesize\textsf{Workspace }\normalsize window (assuming you have a column for \footnotesize\textsf{Size }\normalsize selected to be displayed), or using the \texttt{size} command.\footnote{It also turns out that the order of dimensions for a variable read in by \textbf{MATLAB}, is the opposite of the order listed in the \textsf{Variable} window of \textbf{Panoply}.} Once you have done this, you can plot slices, scale data, average or otherwise process data, extract locations at specific locations, etc etc.
 
 As an example -- in \textbf{MATLAB}, first either change directory to the \textsf{\small biogem} directory of a set of \textbf{muffin} results, or from where-ever you are, add a path to the location of the \textsf{\small biogem} directory. To open the 2D \textbf{BIOGEM} netCDF results file, type:
 \begin{verbatim}
@@ -5187,8 +5244,7 @@ To extract a variable, you first need to find its ID from its name:
 \begin{verbatim}
 >> varid = netcdf.inqVarID(ncid,NAME);
 \end{verbatim}
-
-In turn, you might need to use Panoply to display all the different variable names. Or, you can list all the variables and stuff in the netCDF file using \texttt{ncdisp}:
+where \texttt{NAME} is a place-holder for the name of he variable (as a string). You might need to use \textbf{Panoply} to display all the different variable names. Or, you can list all the variables and stuff in the netCDF file using \texttt{ncdisp}:
 \begin{verbatim}
 >> ncdisp('fields_biogem_2d.nc') 
 \end{verbatim}
@@ -5232,9 +5288,11 @@ There are three key things to remember at this point:
 \begin{enumerate}
 \setlength{\itemindent}{.2in}
 
-\vspace{2mm}\item Firstly, the depth levels are read such that index \texttt{1} is the surface, and \texttt{16} is the deepest ocean depth level (in this case, otherwise it is \texttt{8}).
+\vspace{1mm}
+\item Firstly, the depth levels are read such that index \texttt{1} is the surface, and \texttt{16} is the deepest ocean depth level (in this case, otherwise it is \texttt{8}).
 
-\vspace{2mm}\item For the lon-lat part -- (\textit{lon, lat}) equates to \textit{row}\textit{}s vs. \textit{columns} in \textbf{MATLAB}, and hence if you were to plot e.g. the surface ocean slice:
+\vspace{1mm}
+\item For the lon-lat part -- (\textit{lon, lat}) equates to \textit{row}\textit{}s vs. \textit{columns} in \textbf{MATLAB}, and hence if you were to plot e.g. the surface ocean slice:
 \begin{verbatim}
 >> imagesc(data_last(:,:,1));
 \end{verbatim}
@@ -5248,7 +5306,8 @@ but ... this still leaves you with an up-side-down plot, because \textbf{MATLAB}
 >> imagesc(flipud(data_last(:,:,1)'));
 \end{verbatim}
 
-\vspace{2mm}\item The final complication is that \textbf{muffin} netCDF output uses a special value to represent an invalid or null number, e.g. for ocean temperature where the grid point is land (and an ocean temperature value would have no meaning). In the netCDF definition, \textbf{Panoply} is told what the special number is, hence it shows land in grey when plotting ocean variables.
+\vspace{1mm}
+\item The final complication is that \textbf{muffin} netCDF output uses a special value to represent an invalid or null number, e.g. for ocean temperature where the grid point is land (and an ocean temperature value would have no meaning). In the netCDF definition, \textbf{Panoply} is told what the special number is, hence it shows land in grey when plotting ocean variables.
 
 Panoply reports this as: \textsf{\footnotesize missing\_value = 9.969209968386869E36}.
 
@@ -5276,11 +5335,11 @@ The question then remains: what do you actually 'do' with it in \textbf{MATLAB}?
 
 For a quick look-see, \texttt{imagesc} (as per above) is handy.
 
-\noindent For more advanced plotting (and for presentation) -- refer to the  \href{http://www.seao2.info//teaching/201718.GEO111/GEO111.pdf}{\textbf{MATLAB} programming text}.
+\noindent For more advanced plotting (and for presentation) -- refer to the \textbf{matlabananas} \textbf{MATLAB} programming text.
 
 \noindent As per above, horizontal (lon-lat) fields can be extracted from 2D \textit{netCDF} output by: \texttt{data(:,:,time)} and from 3D by: \texttt{data(:,:,zt,time)}. Obviously, you could also extract lon-depth via: \texttt{data(:,lat,:,time)} and lat-depth via: \texttt{data(lon,:,:,time)}.
 
-\noindent Anomalies (with time) are extracted: \texttt{data(:,:,:,time2)-data(:,:,:,time2)}.
+\noindent Anomalies (with time) are created: \texttt{data(:,:,:,time2)-data(:,:,:,time2)}.
 
 Typically, except a little trial-and-error in extracting the dimensions you want, and also in correcting the orientation of the matrix or resulting plot.
 
@@ -5290,9 +5349,12 @@ Typically, except a little trial-and-error in extracting the dimensions you want
 
 Often, the inventory (total mass or number of moles) of the ocean or atmosphere is useful to know, particularly as a function of time. For the ocean (or atmosphere) as a whole, the \textit{time-series} output files report this (alongside the mean global concentration).
 
-You can also calculate this with \textbf{MATLAB} from the \textit{netCDF} output. Fields of ocean concentration are saved in the 3D output (and atmospheric concentrations in the 2D output). To convert concentration in the ocean, in units of \(molkg^{-1}\) you'll need to know the mass of each ocan cell, in units of \(kg\). 
+You can also calculate this with \textbf{MATLAB} from the netCDF output. Fields of ocean concentration are saved in the 3D output (and atmospheric concentrations in the 2D output). To convert concentration in the ocean, in units of \(molkg^{-1}\) you'll need to know the mass of each ocean cell, in units of \(kg\). 
 
 When saving using save option \texttt{9}, or \texttt{99}\footnote{Parameter \texttt{bg\_par\_data\_save\_level} -- see earlier.}, you save the 'physics' of the ocean model, which is actually mostly just the grid information, such as cell area, thickness, latitude and longitude edges and midpoints, depth edges and mid point. Also saved are the masses and volumes of the grid of cells. So to derive an array of cell tracer inventories from an array of concentrations, and the array of cell masses (variable \textsf{\footnotesize phys\_ocn\_M}), you'd write:
+
+\pagebreak 
+
 \small\begin{verbatim}
 varid = netcdf.inqVarID(ncid,'ocn_temp');
 data  = netcdf.getVar(ncid,varid);
@@ -5318,22 +5380,29 @@ The advantage of doing the calculations in \textbf{MATLAB} (despite being provid
 
 \vspace{24mm}
 
-\noindent The \textbf{muffinplot} suite of MATLAB functions provides a means of plotting a variety of output reproducibly (by means of  saved parameter file) and with the potential for automation (i.e. automatically generating the same analysis for a large number of different experiments).
+\noindent The \textbf{muffinplot} suite of \textbf{MATLAB} functions provides a means of plotting a variety of output reproducibly (by means of  saved parameter file) and with the potential for automation (i.e. automatically generating the same analysis for a large number of different experiments).
 
 The functions comprising this software suite include:
 
 \begin{itemize}[noitemsep]
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_fields\_biogem\_2d}\normalsize -- lon-lat plots from the 2D \textbf{biogem} output.
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_fields\_biogem\_3d\_i}\normalsize -- lat-depth plots from the 3D \textbf{biogem} output. 
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_fields\_biogem\_3d\_k}\normalsize -- lon-lat plots from the 3D \textbf{biogem} output.
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_fields\_ccd}\normalsize -- analsysis of the 'CCD' (from both \textbf{biogem} 2D and \textbf{sedgem} 2D output).
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_fields\_sedgem\_2d}\normalsize -- lon-lat plots from the 2D \textbf{sedgem} output.
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_histc\_2d}\normalsize -- a generic color-coded histogram function.
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_sedcore}\normalsize -- down-core plots from \textbf{sedgem} sedcore output.
+\vspace{1mm}
 \item \footnotesize\textsf{plot\_timeseries\_biogem}\normalsize -- time-series plots from \textbf{biogem} time-series output.
 \end{itemize}
-
-At this current time, there is no facility for lon-depth plotting.
+Note that at this current time, there is no facility for lon-depth plotting.
 
 Most of the plots also perform additional functions (which can be generally disabled if not wanted), such as plotting and saving zonal or depth profiles, plotting difference maps, plotting and labelling data on maps and carrying out model-data fit statistics and plotting, extracting model values at data locations.
 
@@ -5345,17 +5414,29 @@ The following sections provide an overview and examples of such plotting and ana
 
 \textbf{muffinplot} can be obtained from \href{https://github.com/derpycode/muffinplot\#https://github.com/derpycode/muffinplot}{github}. If you do not have a \textbf{git} client on your computer (and hence can clone the repository locally), then simply download an archive of the code (from \footnotesize\textsf{\textcolor[rgb]{0,0.501961,0}{clone or download }}\normalsize -- pick \textsf{\footnotesize Download ZIP}).
 
-When you unpack (or clone) \textbf{muffinplot}, you should see 3 directories -- \footnotesize\textsf{EXAMPLES}\normalsize, and \footnotesize\textsf{MASKS}\normalsize,\ \footnotesize\textsf{source}\normalsize, a series of \footnotesize\textsf{.m }\normalsize files, and a single lonely \footnotesize\textsf{.ps }\normalsize graphics file (\footnotesize\textsf{colorscales.ps}\normalsize). The \footnotesize\textsf{.m }\normalsize files are split into filenames with or without the label \footnotesize\textsf{SETTINGS }\normalsize -- the ones without are code files (functions), and the ones with that string, contain parameter settings for plotting.
+When you unpack (or clone) \textbf{muffinplot}, you should see 3 directories -- \footnotesize\textsf{EXAMPLES}\normalsize, and \footnotesize\textsf{MASKS}\normalsize,\ \footnotesize\textsf{source}\normalsize, a series of \footnotesize\textsf{.m }\normalsize files, and a single lonely \footnotesize\textsf{.ps }\normalsize graphics file (\footnotesize\textsf{colorscales.ps}\normalsize). The \footnotesize\textsf{.m }\normalsize files are split into filenames with or without the label \footnotesize\textsf{SETTINGS }\normalsize -- the ones without are code files (\textit{functions}), and the ones with the word \footnotesize\textsf{SETTINGS }\normalsize in their filename, contain parameter settings for plotting.
 
-The plotting functions do not have to be run from the same directory that you are in -- i.e. you can 
-\vspace{-2pt}\begin{verbatim}
->> addpath(PATH)
-\end{verbatim}\vspace{-2pt}
-where \texttt{PATH} is the path from where you are, to the directory where \textbf{muffinplot} is installed. However, by default (the parameters can be changed if you wish), whereever you run the plotting function from, requires that you have a a subdirectory called \footnotesize\textsf{cgenie\_output}\normalsize, where you will place the (complete) \textbf{cGENIE.muffin} experiment output directories (i.e. the contents of \footnotesize\textsf{cgenie\_output }\normalsize should look like the contents of \footnotesize\textsf{cgenie\_output }\normalsize on your cluster account\footnote{Although you do not need to copy \uline{all} the results over ... just the experiments that you wish to plot up.}). If you do any model-data analysis, by default, a directory \footnotesize\textsf{DATA }\normalsize is also expected. Mask files reside in the \footnotesize\textsf{MASKS}\normalsize\ subdirectory of the \textbf{muffinplot} installation, or in your current directory, or anywhere in the \textbf{MATLAB} path.
+By default (the parameters can be changed if you wish), wherever you run the \textbf{muffinplot} plotting function from, requires that you have a subdirectory called \footnotesize\textsf{cgenie\_output}\normalsize, where you will place the (complete) \textbf{muffin} experiment output directories (i.e. the contents of \footnotesize\textsf{cgenie\_output }\normalsize should look like the contents of \footnotesize\textsf{cgenie\_output }\normalsize on your cluster account\footnote{Although you do not need to copy \uline{all} the results over ... just the experiments that you wish to plot up.}). If you do any model-data analysis, by default, a directory \footnotesize\textsf{DATA }\normalsize is also expected. Mask files reside in the \footnotesize\textsf{MASKS}\normalsize\ subdirectory of the \textbf{muffinplot} installation, or in your current directory, or anywhere in the \textbf{MATLAB} path.
 
-Results are saved to a subdirectory that by default is called \footnotesize\textsf{PLOTS}\normalsize, and will be created for you if it does not already exist.
+The simplest option might be to unpack/clone \textbf{muffinplot} to a directory containing \footnotesize\textsf{cgenie\_output }\normalsize and hence all your experimental results directories.\footnote{However, the \textbf{muffinplot} functions do not have to be run from the same directory that you are in -- you can install them somewhere convenient, and then with \textbf{MATLAB} set to a directory containing a \textsf{cgenie\_output} experiment results directory, you can:
+\\\texttt{>> addpath(PATH)}
+\\where \texttt{PATH} is the path to the directory where \textbf{muffinplot} is installed.}
+In other words:
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Create some local directory e.g. called \footnotesize\textsf{RESULTS}\normalsize.
+\vspace{1mm}
+\item Create a subdirectory in \footnotesize\textsf{RESULTS }\normalsize called \footnotesize\textsf{cgenie\_output}\normalsize.
+\vspace{1mm}
+\item Drag your experiment results folders across into the subdirectory \footnotesize\textsf{cgenie\_output}\normalsize, as per the directory structure on the cluster. (Or drag the archived files and unpack them.)
+\vspace{1mm}
+\item Install \textbf{muffinplot} in the \footnotesize\textsf{RESULTS }\normalsize directory.
+\vspace{1mm}
+\item Change the \textbf{MATLAB} working directory to \footnotesize\textsf{RESULTS}\normalsize.
+\end{enumerate}
+\vspace{2mm}
 
-The plotting functions are run simply by typing their name and passing a list of parameters (comma-separated, with the complete list enclosed in parentheses). By default,   the \footnotesize\textsf{SETTINGS }\normalsize files need to be in the same directory as you are running the functions from, or in one of the \textbf{MATLAB} paths.
+The plotting functions are run simply by typing their name and passing a list of parameters (comma-separated, with the complete list enclosed in parentheses). By default,   the \footnotesize\textsf{SETTINGS }\normalsize files need to be in the same directory as you are running the \textit{functions} from, or in one of the \textbf{MATLAB} paths. Results are saved to a subdirectory that by default is called \footnotesize\textsf{PLOTS}\normalsize, which will be created for you if it does not already exist.
 
 All the plotting functions provide some manner of 'help', that can be obtained by typing at the command line:
 \vspace{-2pt}\begin{verbatim}
@@ -5378,6 +5459,7 @@ The plotting function requires a list of parameters to be passed in the argument
 
 These are, in order:
 
+\vspace{1mm}
 \begin{enumerate}
 \item \texttt{PEXP1} -- \textit{string} \(\rightarrow\) the (first) experiment name.
 \item \texttt{PEXP2} -- \textit{string} \(\rightarrow\)  is the name of the 2nd (optional) experiment. If no second experiment is selected, then a null string value must be passed, i.e., \texttt{''}.
@@ -5394,8 +5476,65 @@ These are, in order:
 \item \texttt{POPT} -- \textit{string}\(\rightarrow\) The string for an alternative plotting parameter set.
 \\If an empty\texttt{ ('') }value is passed as this parameter, then the default parameter set file is used.
 \item \texttt{PNAME}  -- \textit{string}\(\rightarrow\) The string for an alternative filename.
-\\If an empty value is passed as this parameter, then a filename is automatically generated.
 \end{enumerate}
+\vspace{2mm}
+Note that if an empty value is passed as this parameter, then a filename is automatically generated.
+
+A simple example usage would be:
+
+\begin{verbatim}
+>> plot_timeseries_biogem('myexperiment','',0.0,10000.0,'',0,'',0,'',0,'','')
+\end{verbatim}
+where \texttt{myexperiment} is the name of the 1st experiment, followed by and empty string (\texttt{''}) indicating no second experiment. The results are to be plotted from 0.0 to 10000.0 years (the 2 following parameters; \texttt{0.0,10000.0}). Then, no additional (maximum 3) optional parameters are requested, and hence the next parameters passed are: \texttt{'',0,'',0,'',0}. Finally, the default plotting parameter set is required, and no specific alternative filename is ot be used, accounting for the final 2 empty strings passed.
+
+By default, \textsf{\footnotesize plot\_timeseries\_biogem} plots 2 panels of data, both with 2 (LH\ and RH) axes:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Atmospheric \(CO_{2}\). Note that if the experiment was not \(CO_{2}\)-enabled (i.e. not run with a global carbon cycle), a warning is given and 'fake' data (actually, random numbers) is plotted.
+\vspace{1mm}
+\item Atmospheric \(\delta ^{13}CO_{2}\). Note that if the experiment was not \(\delta ^{13}CO_{2}\)-enabled (i.e. not run with a global carbon cycle), a warning is given and 'fake' data is plotted.
+\vspace{1mm}
+\item Atmospheric temperature (as a global mean, annual average).
+\vspace{1mm}
+\item Fractional (percentage) sea-ice extent.
+\end{enumerate}
+\vspace{2mm}
+
+Additional model outputs can then be added by listing them in the function call. For example, to also plot the global overturning strength, which is contained in the file \footnotesize\textsf{biogem\_series\_misc\_opsi.res}\normalsize, you would add \texttt{'misc\_opsi',3}\footnote{Don't forget that you omit the '\texttt{biogem\_series\_}' and '\texttt{.res}' parts of the filename.}, where the \texttt{3} indicates the 3rd column of data in the file is to be plotted, which in this case is the global maximum overturning value (and the 2nd column is the minimum value). The complete line looks like:
+\small\begin{verbatim}
+>> plot_timeseries_biogem('myexperiment','',0.0,10000.0,'misc_opsi',3,'',0,'',0,'','')
+\end{verbatim}\normalsize
+
+By default, the plotted variables are all auto-scaled. To specify the y-axes, you will need to edit the plotting settings parameter file: \footnotesize\textsf{plot\_timeseries\_SETTINGS.m}\normalsize. For the default plotted 4 results variables, the minimum and maximum y-axis limits are specified in the section:
+\vspace{1mm}
+\begin{itemize}
+\item[] \texttt{axis\_pCO2min = 0.0;}
+\item[] \texttt{axis\_pCO2max = 0.0;}
+\item[] \texttt{axis\_d13Cmin = 0.0;}
+\item[] \texttt{axis\_d13Cmin = 0.0;}
+\item[] \texttt{axis\_Tatmmin = 0.0;}
+\item[] \texttt{axis\_Tatmmin = 0.0;}
+\item[] \texttt{axis\_icemin = 0.0;}
+\item[] \texttt{axis\_icemin = 0.0;}
+\end{itemize}
+\vspace{2mm}
+The default zero values here, tell the plotting function to create an auto-scale for the y-axis.\footnote{Note the units of atmospheric \(CO_{2}\) as \(\mu atm\).} Following this in the parameter file, are the settings for the optional variable plotting:
+\vspace{1mm}
+\begin{itemize}
+\item[] \texttt{axis\_data1\_min = 0.0;}
+\item[] \texttt{axis\_data1\_max = 0.0;}
+\item[] \texttt{axis\_data2\_min = 0.0;}
+\item[] \texttt{axis\_data2\_max = 0.0;}
+\item[] \texttt{axis\_data2\_min = 0.0;}
+\item[] \texttt{axis\_data2\_max = 0.0;}
+\end{itemize}
+\vspace{2mm}
+
+Note that if you want instead to copy and rename and then edit this settings file, you will need to pass the new (non-default) filename when calling the plotting function. For example, if you created a new parameter settings file: \footnotesize\textsf{settings\_NEW.m }\normalsize, then the \textit{function} call would look like:
+\small\begin{verbatim}
+>> plot_timeseries_biogem('myexperiment','',0.0,10000.0,'',0,'',0,'',0,'settings_NEW','')
+\end{verbatim}\normalsize
 
 %------------------------------------------------
 
@@ -5414,11 +5553,11 @@ These are, in order:
 
 \item \texttt{plot\_fields\_biogem\_3d\_i}
 \\Plot a vertical-meridional (2-D) slice through the ocean (i.e., all cells have the same \texttt{i} (longitudinal) coordinate value) from: \footnotesize\textsf{fields\_biogem\_3d.nc}\normalsize.
-\\Options are  provided for averaging longitudinally over a supplied mask, which may be the entire ocean and hence giving a global meridional cross-sectional mean, of a specific ocean basin, or may be a single cell 'wide' longitudinally and take a meandering path hence simulating an ocean transect. An option is also provided to overlay ocean circulation stream-functions.
+\\Options are  provided for averaging longitudinally over a supplied mask, which may be the entire ocean and hence giving a global meridional cross-sectional mean, of a specific ocean basin, or may be a single cell 'wide' longitudinally and take a meandering path hence simulating an ocean transect. An option is also provided to overlay an ocean circulation stream-function.
 
 \item \texttt{plot\_fields\_biogem\_3d\_k.m}
 \\Plot a horizontal slice through the ocean from: \footnotesize\textsf{fields\_biogem\_3d.nc}\normalsize.
-\\An option is provided for overlaying ocean circulation. Water column integrals can also be calculated and displayed.
+\\An option is provided for overlaying ocean circulation (velocity fields). Water column integrals  can also be calculated and displayed, as well as benthic surfaces, and the function can also determine the spatial distribution of the maximum or minimum value occurring anywhere in the water column (or portion of the water column).
 
 \item \texttt{plot\_fields\_sedgem\_2d}
 \\Plot a 2-D field from: \texttt{fields\_sedgem\_2d.nc}.
@@ -5439,9 +5578,10 @@ All 4 plotting functions share exactly the same format of parameters\footnote{Pa
 \vspace{-2mm}
 \noindent i.e. take a (long!) list of parameters. These are (in order):
 
-\vspace{2mm}
+\vspace{1mm}
 \noindent Firstly, a series of parameters for defining experiment, variable, and year:
 
+\vspace{1mm}
 \begin{enumerate}
 \item \texttt{PEXP1} -- \textit{string} -- is the name of the 1st (main) experiment. A results directory with the same name must exist in the directory \footnotesize\textsf{cgenie\_output}\normalsize\footnote{Or alternative directory if the default file path settings have been changed.}. 
 \item \texttt{PEXP2} -- \textit{string} -- is the name of the 2nd (optional) experiment. If no second experiment is selected, then a null string value must be passed, i.e., \texttt{''}.
@@ -5450,72 +5590,94 @@ All 4 plotting functions share exactly the same format of parameters\footnote{Pa
 \item \texttt{PT1} -- \textit{real} (or \textit{integer}) -- is the value of the 1st (main) time-slice. If no valid variable value is given, a list of valid variable names will be printed out.\footnote{As \textbf{sedgem} does not save multiple and/or time-specific data, a dummy value (anything) is entered here.}
 \item \texttt{PT2} -- \textit{real} (or \textit{integer}) -- is the value of the 2nd (optional) time-slice. If no second time-slice is selected, then enter \texttt{-1}.\footnote{As \textbf{sedgem} does not save multiple and/or time-specific data, a dummy value (anything) is entered here.}
 \end{enumerate}
+\vspace{1mm}
+
 Then there are 2 parameters for plotting sub-sets of the 2D or 3D data (essential for 3D data which cannot be usefully visualized in raw form):
+
+\vspace{1mm}
 \begin{enumerate}
 \item \texttt{PIK} -- \textit{integer} -- varies in its interpretation and is discussed below.
 \item \texttt{PMASK} -- \textit{string} -- is the name of an optional (2D) mask. A null string (\texttt{''}) must be passed if no mask is requested. A file with the same name (plus an extension \footnotesize\textsf{.dat}\normalsize) must exist in the directory \footnotesize\textsf{MASKS}\normalsize\footnote{Or alternative directory if the default file path settings have been changed.}. The interpretation of this parameter differs slightly between functions (below).
 \end{enumerate}
+\vspace{1mm}
+
 Next come options for plotting scale control:
+
+\vspace{1mm}
 \begin{enumerate}
 \item \texttt{PCSCALE} -- \textit{real} (or \textit{integer}) -- is the scale factor for the plot. For example, to plot in micro molar (umol kg-1) units, enter; \texttt{1e-6}. The plot is auto-scaled if a value of zero (\texttt{0.0}) is entered.
 \item \texttt{PCMIN} -- \textit{real} (or \textit{integer}) -- is the minimum scale value.
 \item \texttt{PCMAX} -- \textit{real} (or \textit{integer}) -- is the maximum scale value.
 \item \texttt{PCN} -- \textit{integer} -- is the number of (contour) intervals between minimum and maximum scale values.
 \end{enumerate}
+\vspace{1mm}
+
 Finally, there are 3 parameters for: specifying discrete (observed) data to be plotted (and analyzed against model projections), for specifying the plotting parameter file to be used, and for substituting an alternative filename for all the output:
+
+\vspace{1mm}
 \begin{enumerate}
 \item \texttt{PDATA} -- \textit{string} -- is the filename containing the an overlay data set, which must be formatted as separated columns. The precise number and type of columns varies between different functions and also the plotting options chosen, and are hence discussed later. The full filename of this file must be give, \uline{including} any extensions (e.g. \footnotesize\textsf{.dat }\normalsize, \footnotesize\textsf{.txt}\normalsize). This parameter must be passed as a \textit{string}; leave blank, i.e., \texttt{''}, for no overlay data.
 \item \texttt{POPT} -- \textit{string} -- is the \footnotesize\textsf{m-file }\normalsize filename (excluding the \footnotesize\textsf{.m }\normalsize extension) containing the plotting options (\footnotesize\textsf{SETTINGS}\normalsize). This parameter must be passed as a string; leave blank, i.e., \texttt{''}, in order to load the default file (\footnotesize\textsf{plot\_fields\_SETTINGS}\normalsize).
 \item \texttt{PNAME} -- \textit{string} -- is the string for an alternative series of output filenames. This parameter must be passed as a string, e.g., \texttt{'experiment2'}. If an empty (i.e., \texttt{''}) value is passed to this parameter then the output filenames will be automatically generated.
 \end{enumerate}
+\vspace{1mm}
 
-The basic parameter list to all 4 plotting functions is hence:
+\vspace{1mm}
+The basic parameter list for all 4 plotting functions\footnote{Note that for \texttt{plot\_fields\_sedgem\_2d} several of the parameters are redundant but \uline{must} still be included (typically as zeros). This is in order to retain a common parameter list format between all the different plotting functions.} is hence:
 \footnotesize
 \vspace{-4pt}\begin{verbatim}
 >> FUNCTIONNAME(PEXP1,PEXP2,PVAR1,PVAR2,PT1,PT2,PIK,PMASK,PCSCALE,PCMIN,PCMAX,PCN,PDATA,POPT,PNAME);
 \end{verbatim}\vspace{-4pt}
 \normalsize
 
-Note that for \texttt{plot\_fields\_sedgem\_2d} several of the parameters are redundant but \uline{must} still be included (typically as zeros). This is in order to retain a common parameter list format between all the different plotting functions.
-
 \subsubsection{Function specific interpretation of PIK and PMASK}
 
-\texttt{PIK}, and to some extent, \texttt{PMASK}, have quite different interpretations depending on the particular plotting function used:
+A note on the different behaviour of 2 of the passed parameters, depending on whcih plotting function is used -- \texttt{PIK}, and to some extent, \texttt{PMASK}, have quite different interpretations depending on the particular plotting function used:
 
 \begin{enumerate}
 
 \vspace{2pt}
 \item \texttt{plot\_fields\_biogem\_2d}
 \begin{enumerate}
+\vspace{1pt}
 \item \texttt{PIK} -- is the maximum depth (\texttt{k}) level that will be plotted, i.e. all depth levels deeper than \texttt{PIK} will be excluded. This is useful for plotting a variable only for the 'deep' ocean (rather than the ocean overlaying all ocean depths) for example. This value also provides an alternative way of creating a mask, and only values of \texttt{k} less than of equal to the passed value will be plotted.
+\vspace{1pt}
 \item \texttt{PMASK} -- is the name of an optional (2D) mask. A null string (\texttt{''}) must be passed if no mask is requested. (Shallow depths could also be excluded from the plot by means of a mask rather than setting \texttt{PIK}.)
 \end{enumerate}
 
 \vspace{2pt}
 \item \texttt{plot\_fields\_biogem\_3d\_k}
 \begin{enumerate}
+\vspace{1pt}
 \item \texttt{PIK} -- the depth (\texttt{k}) level to be plotted. Note that the levels are numbered from a maximum value designating the surface, to 1 for the deepest ocean level. Typically, maximum values for the number of ocean levels are \texttt{8} (e.g. \textit{Ridgwell et al.} [2007]) or \texttt{16} (e.g. \textit{Cao et al.} [2009]).
 \\Non ocean level \texttt{k} values have special meanings here:
 \begin{enumerate}[noitemsep]
+\vspace{1pt}
 \item \texttt{0}
 \\A zero will result in a water column integral being plotted. With data, the model-data is  carried out on the grid as a whole.
+\vspace{1pt}
 \item \texttt{-1}
 \\Will result in the benthic surface being plotted.
 \end{enumerate}
+\vspace{1pt}
 \item \texttt{MASK} -- is the name of an optional (2D) mask. A null string (\texttt{''}) must be passed if no mask is requested.
 \end{enumerate}
 
 \vspace{2pt}
 \item \texttt{plot\_fields\_biogem\_3d\_i}
 \begin{enumerate}
+\vspace{1pt}
 \item \texttt{PIK} -- the longitude-depth (\texttt{i}) slice through the ocean to be plotted.
 \\Non longitude grid point \texttt{i} values have special meanings here:
 \begin{enumerate}[noitemsep]
+\vspace{1pt}
 \item \texttt{0}
 \\A zero will result in a zonal mean being plotted. With data, model-data comparison is conducted at the specific data locations, rather than vs. a zonal mean model value.
+\vspace{1pt}
 \item \texttt{-1}
 \\I have forgotten what this does ...
 \end{enumerate}
+\vspace{1pt}
 \item \texttt{MASK} -- is the name of an optional (2D) mask. A null string (\texttt{''}) must be passed if no mask is requested.
 \\ For example: if the mask is of the entire ocean (\texttt{mask\_worbe2\_ALL.dat}), the result is a global meridional cross-sectional mean.
 \\ If the mask is just of a single basin such as the Atlantic (\texttt{mask\_worjh2\_Atlantic.dat}), the result is the Atlantic meridional cross-sectional mean.
@@ -5529,13 +5691,15 @@ Note that for \texttt{plot\_fields\_sedgem\_2d} several of the parameters are re
 \end{enumerate}
 \vspace{4pt}
 
-The mask itself (if \texttt{PMASK} contains a mask name) is a 2-D array of model grid points (on the \textbf{BIOGEM} grid) in the form of a simple ASCII file. A value of '\texttt{1}' represents a vertical column of ocean cells to include, whereas a value '\texttt{0}' will exclude all cells in the water column at that particular grid point. Examples of masks can be found in the \footnotesize\textsf{MASKS }\normalsize subdirectory of \textbf{muffinplot}.
+The mask itself (if \texttt{PMASK} contains a mask name) is a 2-D array of model grid points (on the \textbf{BIOGEM} grid) in the form of a simple ASCII file. A value of '\texttt{1}' represents a vertical column of ocean cells to include, whereas a value '\texttt{0}' will exclude all cells in the water column at that particular grid point. Examples of some masks can be found in the \footnotesize\textsf{MASKS }\normalsize subdirectory of \textbf{muffinplot}.
         
 %------------------------------------------------
+%
+\pagebreak
 
 \subsection{Basic usage}
 
-What follows are some basic and quasi random examples, just to illustrate a simple use of the three main plotting functions (1 function for the 2D netCDF output, and 2 functions for the 3D netCDF output).
+What follows are some basic and quasi random examples, just to illustrate a simple use of the three main plotting functions.
 
 \begin{enumerate}[noitemsep]
 
@@ -5548,7 +5712,7 @@ Surface ocean temperature can be plotted in 2 ways -- via the 2d plotting functi
 \begin{center}
 \includegraphics[scale=0.5]{example1a.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Example basic (default) surface temperature plot.}
 \label{fig:example1a}
 \end{figure}
@@ -5563,11 +5727,13 @@ For example:
 \normalsize
 plots from the experiment \texttt{EXP1}, the variable \texttt{ocn\_sur\_temp} for time-slice \texttt{9999.5} (the mid-point time of the final year of a 10,000 year experiment). The color scale is from \texttt{0.0} to \texttt{30.0}, with no re-scaling (\texttt{1.0}), and \texttt{30} color intervals in the scale. The default \footnotesize\textsf{SETTINGS }\normalsize parameter file is used, and the default filename string replaced with \texttt{example1a}. The only other thing to note, is for parameter \texttt{PIK}, a value of \texttt{16} is set -- corresponding to the ocean surface. See Figure \ref{fig:example1a}.
 
+Note that the model results variable \texttt{ocn\_sur\_temp} is not always saved in \textbf{BIOGEM} 2D netCDF output. If a variable, such as \texttt{ocn\_sur\_temp} does not exist, MATLAB will pause and provide a warning and list all the variables in the file that it can find and wait for a new variable name to be inputted. For instance, a variable that is always saved in \textbf{BIOGEM} 2D netCDF output is \texttt{atm\_temp} (surface air temperature) and would be substituted in the plot. Also note that time is similarly handled -- if the specific time-slice value does not exist, a list of all possible time-slice years are provided and a substitute value requested as \textbf{MATLAB} pauses and wait for your input.
+
 \begin{figure}[ht]
 \begin{center}
 \includegraphics[scale=0.5]{example1b.171031.ps}
 \end{center}
-\vspace{-11mm}
+\vspace{-4mm}
 \caption{Example surface temperature plot, with contours.}
 \label{fig:example1b}
 \end{figure}

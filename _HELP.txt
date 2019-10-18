@@ -99,6 +99,8 @@ PERMIL
 \item Line 2
 \end{arrowlist}
 
+\footnotesize\textsf{ }\normalsize
+
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
