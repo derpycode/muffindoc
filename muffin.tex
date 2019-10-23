@@ -6411,25 +6411,25 @@ A series of example configurations are provided in the main \textbf{muffingen} d
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_BLANK} -- Start from a blank (water-) World.  User input (allowing continents and seafloor topography to be 'drawn') is activated by default.
+\item \texttt{muffingen\_settings\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template.  User input (allowing continents and seafloor topography to be 'drawn') is activated by default.
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_wppcont1} -- Start from a land-sea mask: \texttt{wppcont1.dat}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The mask defines an idealized pole-to-pole super-continent. There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
+\item \texttt{muffingen\_settings\_wppcont1} -- Starts from a land-sea mask: \footnotesize\textsf{wppcont1.dat}\normalsize, which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The mask defines an idealized pole-to-pole super-continent. There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_drakeworld} --
+\item \texttt{muffingen\_settings\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). As per \footnotesize\textsf{muffingen\_settings\_wppcont1}\normalsize, this tarts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature). 
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_eqpasworld1} --
+\item \texttt{muffingen\_settings\_eqpasworld} -- As above, except with an equatorial (only) gateway.
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_ridgeworld1} --
+\item \texttt{muffingen\_settings\_ridgeworld} -- As above, except with no gateway.
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_waterworld1} --
+\item \texttt{muffingen\_settings\_waterworld} -- As above, but with no barriers, i.e. a 'water world'.
 \vspace{1mm}
 \item \texttt{muffingen\_settings\_wor0251b1} -- Start from a muffin model configuration 'k1' topography defining file: \texttt{p0251b.k1}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k1 file defines a late Permian continental configuration (and bathymetry). There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \texttt{xbowl} in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
+\item \texttt{muffingen\_settings\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \footnotesize\textsf{xbowl }\normalsize in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES }\normalsize) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
 \end{itemize}
 \vspace{2mm}
 
-\noindent These examples span the 4 main ways of using \textbf{muffingen} as summarized earlier and described in detail in the following sections:
+\noindent These examples span the 4 main ways of using \textbf{muffingen} (as summarized earlier),  and which are described in detail in following sections:
 
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
