@@ -2230,19 +2230,23 @@ Note that an experiment \textit{spin-up} duration of perhaps as much as 10,000 y
 
 \section*{Readme}
 
-You will need to download a new restart file prior to embarking on the experiments. This pre-industrial spin-up includes a basic ocean (-atmosphere) carbon cycle plus various diagnostic anthropogenic tracers, following \textit{Cao et al.} [2009].
+You will need to download a new \textit{restart} file prior to embarking on the experiments. This pre-industrial spin-up includes a basic ocean (-atmosphere) carbon cycle plus various diagnostic anthropogenic tracers, following \textit{Cao et al.} [2009].
 
 \noindent To fetch this: change to the cgenie\_output directory, and type:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_muffin/LAB_3.SPIN.tar.gz
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent Extract the contents of this archive by typing:
 
+\vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_3.SPIN.tar.gz 
 \end{verbatim}
+\vspace{-2mm}
 
 \noindent (change directory back to \texttt{genie-main} to run the model)
 
@@ -2256,32 +2260,29 @@ $ tar xfzv LAB_3.SPIN.tar.gz
 
 For the next experiment(s) you can chuck \(CO_{2}\) into the atmosphere, just for the hell of it. As much as you want! Apparently, humans are actually doing this now. Imagine that!
 
-The \textit{user-config} for \textbf{muffin}, \texttt{LAB\_3.\(CO_{2}\)emissions} is provided and configured with climate being responsive to \(CO_{2}\) (i.e., it takes account of \(CO_{2}\)-climate feedbacks): 
-
+A new \textit{user-config} for \textbf{muffin} -- \footnotesize\textsf{LAB\_3.CO2emissions }\normalsize -- is provided and configured with climate being responsive to \(CO_{2}\) (i.e., it takes account of \(CO_{2}\)-climate feedbacks): 
 \vspace{-2pt}\begin{verbatim}
 # set CO2-climate feedback
 ea_36=y
 \end{verbatim}\vspace{-2pt}
+\noindent Note that although a biological scheme is set up, with the fixation of organic carbon at the surface and sinking into the ocean interior, plus a rate of calcification by plankton at the surface ocean that is responsive to ocean acidification and saturation state (i.e., it takes into account \(CO_{2}\)-calcification feedbacks, which will additionally interact with climate – see \textit{Ridgwell et al.} [2007b, 2009]\footnote{e.g. obtain from http://www.seao2.info/pubs.html}) ... we will concentrate only on the carbon geochemistry. A 'biological pump' in the ocean is set up simply to create a modern-like ocean surface carbonate chemistry. How the biological pump actually operates, response to changes in e.g climate and nutrient availability, we'll consider in another chapter.
 
-\noindent as well as having a rate of calcification by plankton at the surface ocean that is responsive to ocean acidification and saturation state (i.e., it takes into account \(CO_{2}\)-calcification feedbacks, which will additionally interact with climate – see \textit{Ridgwell et al.} [2007b, 2009]\footnote{e.g. obtain from http://www.seao2.info/pubs.html}). Anything could happen!!!
-
-In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set for just 1 PgC over an interval of a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay away rapidly, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional \textbf{netCDF} output has also been prescribed (\texttt{bg\_par\_data\_save\_level=10}) so that more information relevant to assessing ocean acidification is saved.
+In this \textit{user-config} file, a release of \(CO_{2}\) to the atmosphere is prescribed, which by default is set to a value of just 1 PgC and over an interval of just a single year. (Releasing \(CO_{2}\) just over a single year is obviously rather unrealistic and many impacts will decay away rapidly, but represents a useful idealized experiment for assessing the time-scale(s) of fossil fuel \(CO_{2}\) uptake by the ocean.) Additional (netCDF) output has also been prescribed, via the setting: \texttt{bg\_par\_data\_save\_level=10} (see Section 12.4) so that more information relevant to assessing ocean acidification is saved.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
 \noindent Run the experiment for e.g., 20 (or more if you like) years, starting from the pre-industrial re-start experiment \texttt{LAB\_3.SPIN}, i.e.: 
-
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
    LAB_3.CO2emissions 20 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
 
-As for what model results variables to consider … think about the climate change and ocean acidification literature and which environmental properties are considered either critical for ecosystems or are simply helpful and illustrative. Refer to Section 12.6.2 for a summary of some of the key ocean acidification (and other) variables that may be saved by the model\footnote{(depending on specific data saving configuration)}. 
-In the 3-D \textbf{netCDF} time-slice file remember, for instance, that ocean surface waters in which aragonite becomes under-saturated (OHMEGA < 1.0) is regarded as a critical threshold for organisms making aragonite shells and skeletons and spells TROUBLE for some poor calcifying marine organism somewhere. (Temperature is also highly relevant to marine ecosystems under future global change.) Note that the calcification response is encoded in the model and described in \textit{Ridgwell et al.} [2007a,b] and may or may not reflect the Real World.
+As for what model results variables to consider … think about the climate change and ocean acidification literature and which environmental (physical and geochemical) properties are considered either critical for ecosystems or are simply helpful and illustrative. Refer to Section 12.6.2 for a summary of some of the key ocean acidification (and other) variables that may be saved by the model\footnote{(depending on specific data saving configuration)}. 
+In the 3-D netCDF time-slice file remember, for instance, that ocean surface waters in which aragonite becomes under-saturated (OHMEGA < 1.0) is regarded as a critical threshold for organisms making aragonite shells and skeletons and spells TROUBLE for some poor calcifying marine organism somewhere. (Temperature is also highly relevant to marine ecosystems under future global change.) Note that the calcification response is encoded in the model and described in \textit{Ridgwell et al.} [2007a,b] and may or may not reflect the Real World.
 
-For climate change ... the variables of particular interest should be obvious. Remember that there are both time-series outputs, as well as special 2D and 3D fields which might be more helpful for relating impacts to specific ecosystems.
+For climate change ... the variables of particular interest should be obvious. Remember that there are both \textit{time-series} outputs, as well as  2D and 3D fields, any or all of which might be  helpful for elucidating impacts.
 
 %------------------------------------------------
 
@@ -2291,15 +2292,19 @@ For climate change ... the variables of particular interest should be obvious. R
 \vspace{-2pt}\begin{verbatim}
 bg_par_atm_force_scale_val_3=8.3333e+013
 \end{verbatim}\vspace{-2pt}
-scales the \(CO_{2}\) flux given in the forcing file 
-\vspace{-2pt}\begin{verbatim}
-biogem_force_flux_atm_pCO2_sig.dat
-\end{verbatim}\vspace{-2pt}
-which can be found in the directory:
-\vspace{-2pt}\begin{verbatim}
-cgenie.muffin/genie_forcings/pyyyyz.FpCO2_Fp13CO2
-\end{verbatim}\vspace{-2pt}
-The format of this file is:
+scales the time-history of the  \(CO_{2}\) flux, given in the forcing file:
+
+\vspace{2pt}
+\noindent \footnotesize\textsf{biogem\_force\_flux\_atm\_pCO2\_sig.dat}\normalsize
+\vspace{2pt}
+ 
+\noindent ... which can be found in the directory:
+
+\vspace{2pt}
+\noindent \footnotesize\textsf{cgenie.muffin/genie\_forcings/pyyyyz.FpCO2\_Fp13CO2}\normalsize
+\vspace{2pt}
+
+\noindent The format of this file is:
 \vspace{-2pt}\begin{verbatim}
 -START-OF-DATA-
      0.0  1.0 
@@ -2309,28 +2314,30 @@ The format of this file is:
 -END-OF-DATA-
 \end{verbatim}\vspace{-2pt}
 
-\noindent and defines an emission of 1 mol C per year over the first year (year 1.0) of the model experiment (between year \texttt{0.0} and \texttt{1.0}), but which in the example user-config is then scaled by a value of 8.333*1013 (by the parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3}) to give a total of 1 PgC yr-1. (Year 999999.9 has no special meaning and is simply just way in the future …)
+\noindent and defines an emission of \(1 mol C\) (carbon) per year over the first year (year 1.0) of the model experiment (between year \texttt{0.0} and \texttt{1.0}), but which in the example \textit{user-config} is then scaled by a value of \(8.333\times10^{13}\) (by the parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3}) to give a total of \(1 PgC yr^{-1}\). (Year 999999.9 has no special meaning and is simply just way in the future …)
 
-Pause … and note briefly how the final \(CO_{2}\) flux is arrived at. \textbf{muffin} calculates it by multiplying the value in the forcing file (1.0) by a modifying parameter in the \textit{user-config} file (\texttt{8.3333e+13}). The total flux is hence: \(1.0 \times 8.333\times10^{13} = 8.333\times10^{13} mol CO_{2} yr^{-1}\). If you set both values as \texttt{1.0}, you’d get very little carbon released (a single mole!). If you screw up and multiply \texttt{8.3333e+013} and \texttt{8.3333e+013} together as the total flux ... you’ll soon know it as you cook the Earth … But it does not matter which parameter has value \texttt{1.0} and which scales the units (\texttt{8.3333e+013}). For now, it is simply more convenient to be able to edit the forcing file with simple numbers (and leave the units conversion in the \textit{user-config} file).
+Pause … and note briefly how the final \(CO_{2}\) flux is arrived at. \textbf{muffin} calculates it by multiplying the value in the forcing file (1.0) by a modifying parameter in the \textit{user-config} file (\texttt{8.3333e+13}). The total flux is hence: \(1.0 \times 8.333\times10^{13} = 8.333\times10^{13} mol CO_{2} yr^{-1}\). If you set both values as \texttt{1.0}, you’d get very little carbon released (a single mol!). If you screw up and multiply \texttt{8.3333e+013} and \texttt{8.3333e+013} together as the total flux ... you’ll soon know it as you cook the Earth … But it does not matter which parameter has value \texttt{1.0} and which scales the units (\texttt{8.3333e+013}). For now, it is simply more convenient to be able to edit the \textit{forcing} file with 'simple' numbers (and leave the large numbers and units conversion in the \textit{user-config} file).
 
 Together, the scaling and forcing value gives a \(CO_{2}\) release of \(1 PgC yr^{-1}\) for just a single year compared to current emissions are about \(10 PgC yr^{-1}\). So, do not expect anything exciting to happen at this point.
 
-(The parameter: \texttt{bg\_par\_atm\_force\_scale\_val\_4=-27.0} specifies the carbon isotopic composition of fossil fuel carbon and can be ignored.)
+(The parameter: \texttt{bg\_par\_atm\_force\_scale\_val\_4=-27.0} specifies the carbon isotopic composition of fossil fuel carbon and can be ignored for now.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent Because ‘accidents can happen’ and the global environmental changes induced by the massive fossil fuel \(CO_{2}\) release can obscure mistakes made in the experiment configuration (parameter values) and/or the re-start used, you are strongly advised to first (or in parallel, as a job submitted to the cluster – refer to Lesson Zero to remind yourself of the commend line syntax needed for this) set a control experiment:
+\noindent Because ‘accidents can happen’ and the global environmental changes induced by the massive fossil fuel \(CO_{2}\) release can obscure mistakes made in the experiment configuration (parameter values) and/or the re-start used, you are strongly advised to first (or in parallel, as a job submitted to the cluster – refer to Lesson Zero to remind yourself of the commend line syntax needed for this) --  and \uline{run a control experiment}:
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
    LAB_3.CONTROL 20 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
-Here – the \textit{user-config} defining the control experiment (\texttt{LAB\_3.CONTROL}) is identical to that for the actual experiment itself (\texttt{LAB\_3.CO2emissions}) with the exception of the scaling of the \(CO_{2}\) emissions that have been set to zero. (It is left completely to you to create the experiment configuration file \texttt{LAB\_3.CONTROL}.)
+Here – the \textit{user-config} defining the control experiment (\texttt{LAB\_3.CONTROL}) is \uline{identical} to that for the actual experiment itself (\texttt{LAB\_3.CO2emissions}) \uline{with the exception of} the scaling of the \(CO_{2}\) emissions that is set to zero. (It is left completely to you to create the experiment configuration file \texttt{LAB\_3.CONTROL}.)
 
-If everything is OK, atmospheric \(CO_{2}\) (and climate) should be stable and there should be little (or no) drift in any of the output variables (because the spin-up should have been run to an equilibrium state and you have not changed anything in the control experiment, right?).
+If everything is OK, atmospheric \(CO_{2}\) (and climate) following form the \textit{re-start} should be stable and there should be little (or no) drift in any of the output variables (because the \textit{spin-up} you are re-starting from should have been run to an equilibrium state and you have not changed anything in the control experiment, right?).
 
-It is good practice (i.e., do it!) to always run a control experiment for each different type of experiments – e.g., ideally run one control experiment for each set of \(CO_{2}\) emissions experiments. 
+It is good practice (i.e., do it!) to always run a control experiment for each different type of experiments – e.g., ideally run one control experiment for each set of \(CO_{2}\) emissions experiments.
+
+When you have run both the real and control experiment, compare the results. View (or plot) both relevant \textit{time-series} output, and create anomaly maps of key \textit{time-slice} variables in \textbf{Panoply} or \textbf{MATLAB}, using a corresponding \textit{time-slice} from the control experiment to create the experiment anomaly with.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2354,61 +2361,88 @@ you might have:
 999999.9     0.0
 -END-OF-DATA-
 \end{verbatim}\vspace{-2pt}
-So now a total of 1000 PgC over a single year. Now you should see some policy-relevant impacts occur :o) 
+So now a total of 1000 PgC over a single year. Now you should see some policy-relevant impacts occur :o)
+
+\noindent (Again, contrast control and experiment results to quantify/visualize the impacts of the \(CO_{2}\) release.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent You can control the shape of the emissions profile as well as it magnitude. Between the start and end ‘tags’ in the text file, the data is arranged into 2 columns: the first contains a series of tie-points for defining the timing of changes in emissions, and the 2nd column contains flux information (units of \(PgC yr^{-1}\) when scaled by the parameter parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3} in the \textit{user-config}). At each time-step of the model the \(CO_{2}\) flux is interpolated between these time points.
+\noindent You can control the shape of the emissions profile as well as it magnitude. Between the start and end ‘tags’ in the text \textit{forcing} file, the data is arranged into 2 columns: the first contains a series of tie-points for defining the timing of changes in emissions, and the 2nd column contains flux information (units of \(PgC yr^{-1}\) when scaled by the parameter parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3} in the \textit{user-config}). At each time-step of the model, the \(CO_{2}\) flux to be applied to the atmosphere is interpolated between these time points.
 
-The purpose of: 
+\pagebreak
+
+For instance, in the \textit{forcing} (directory) file \footnotesize\textsf{biogem\_force\_flux\_atm\_pCO2\_sig.dat}\normalsize, the purpose of: 
 \vspace{-2pt}\begin{verbatim}
      0.0  1.0 
      1.0  1.0
      1.0  0.0
+999999.9  0.0
 \end{verbatim}\vspace{-2pt}
-then specifies a uniform flux of 1.0 (scaled to \(PgC yr^{-1}\)) over the first full year of the model run, followed by a sharp turn-off to zero flux at the end of first year (and remaining zero thereafter). To extend the period of emissions – for example: 
+is to specify a uniform flux of 1.0 (scaled to \(PgC yr^{-1}\)) over the first full year of the model run, followed by a sharp turn-off to zero flux at the end of first year (and remaining zero thereafter). To extend the period of emissions – for example: 
 \vspace{-2pt}\begin{verbatim}
      0.0  1.0 
     10.0  1.0
     10.0  0.0
+999999.9  0.0
 \end{verbatim}\vspace{-2pt}
-would result in a uniform flux lasting 10 years (i.e., once scaled by the parameter in the \textit{user-config} – \(1 PgC yr^{-1}\) over 10 years – \(10 PgC\) total emissions). In contrast; 
-\vspace{-2pt}\begin{verbatim}
+would result in a uniform flux lasting 10 years with a sudden cut-off and zero thereafter (i.e., once scaled by the parameter in the \textit{user-config} – \(1 PgC yr^{-1}\) over 10 years – \(10 PgC\) total emissions). In contrast; \vspace{-2pt}\begin{verbatim}
      0.0  0.0
     10.0  1.0
+    10.0  0.0
+999999.9  0.0
 \end{verbatim}\vspace{-2pt}
-would result in a linear ramp, starting from zero at the start of year \(0.0\) to \(1.0 PgC yr^{-1}\) at year 10.0 (a total \(CO_{2}\) emission of \(1\times1.0\times0.5 = 5PgC\) over 10 years). 
+would result in a linear ramp, starting from zero at the start of year \(0.0\) to \(1.0 PgC yr^{-1}\) at year 10.0 and then suddenly ceasing and remaining at zero for the remainder of the experiment (a total \(CO_{2}\) emission of \(1\times1.0\times0.5 = 5PgC\) over 10 years).
+
+Make up a few 'shapes' (and hence different experiments), maybe for the sam integrated/total emissions, explore the effect of different rates of rise/fall in the release rate. And/or for the same release rate and/or duration, explore the impact of different total emissions of \(CO_{2}\). Try and think in terms of hypotheses and formulate questions to guide your experimental design/configuration. (An alternative approach is to create random scenarios and in the analysis, fish for interesting patters that could lead to knowledge and/or specific questions to be tested further, but it is better to start off with a hypothesis in mind.)
+
+Note that you can either edit and re-use the same \textit{forcing} directory and name, modifying the file \footnotesize\textsf{biogem\_force\_flux\_atm\_pCO2\_sig.dat }\normalsize each time but then losing an explicit record of how you might have set the emissions profile previously), or you can copy and rename the entire \textit{forcing} directory (and then edit \footnotesize\textsf{biogem\_force\_flux\_atm\_pCO2\_sig.dat }\normalsize). In the \textit{user-config}, you then need to specify this new forcing (directory) name, e.g.:
+\vspace{-2pt}\begin{verbatim}
+# specify forcings
+bg_par_forcing_name="pyyyyz.FpCO2_Fp13CO2.NEW"
+\end{verbatim}\vspace{-2pt}
+if you, for instance, called your new \textit{forcing} directory (in \footnotesize\textsf{genie-forcings }\normalsize): \footnotesize\textsf{pyyyyz.FpCO2\_Fp13CO2.NEW}\normalsize.\footnote{Refer to the directory map in Figure 1.1. if in doubt here.}
+
+\vspace{20pt}
 
 %------------------------------------------------
 
 \subsection{Historical (real-world!) emissions forcing}
 
-Historical and future (SRES) emissions scenarios can also be prescribed explicitly. A historical emissions forcing (technically: a prescribed concentration profile of p\(CO_{2}\) and other anthropogenic gases) can be specified by adding/substituting the following lines to the user-config: 
+Historical and future (e.g. IPCC 'SRES') emissions scenarios can also be prescribed explicitly. A historical emissions forcing (technically: a prescribed concentration profile of p\(CO_{2}\) and other anthropogenic gases) can be specified by adding/substituting the following lines to the \textit{\textit{user-config}}:
+
 \vspace{-2pt}\begin{verbatim}
 bg_par_forcing_name=’worjh2.historical2010’
 \end{verbatim}\vspace{-2pt}
-Now, no additional scaling is needed because the forcing specification directly follows the observed change in atmospheric concentration with time (in units of atm \(CO_{2}\)) and the line containing the scaling parameter: 
+Now, no additional scaling is needed because the forcing specification directly follows the observed change in atmospheric concentration with time (in units of atm \(CO_{2}\)), and the line containing the scaling parameter: 
 \vspace{-2pt}\begin{verbatim}
-bg_par_atm_force_scale_time_3=1.0
+bg_par_atm_force_val_time_3=1.0
 \end{verbatim}\vspace{-2pt}
-should be deleted (or commented out with a \# at the start of the line).
-An additional line is needed in the user-config because the historical p\(CO_{2}\) transient starts in the 1700s (for which a nominal date of 1765 is often used) rather than year zero. For example, to start from year 1765, the start year parameter must be set:
+should be deleted (or commented out with a \texttt{\#} at the start of the line, as the default value is \texttt{1.0}).
+For completeness, you might also set the scaling of atmospheric \(CO_{2}\) \(\delta^{13}C\)\footnote{\texttt{bg\_par\_atm\_force\_scale\_val\_4}} to a value of \texttt{1.0}, even fi we are not interested in \(\delta^{13}C\) at this time ... 
+
+An additional line is now needed in the \textit{user-config} because the historical p\(CO_{2}\) transient starts in the 1700s (for which a nominal date of 1765 is often used) rather than year zero. For example, to start \textbf{muffin} from year 1765 rather than zero, the start year parameter must be set:
 \vspace{-2pt}\begin{verbatim}
 bg_par_misc_t_start=1765.0
 \end{verbatim}\vspace{-2pt}
-Because the start year has changed, it is convenient to specify save points that are consistent with the historical period, e.g.:
+Now because the start year has changed ... it is convenient to specify a set of time save points that are consistent with the historical period, e.g. you might add the parameter settings:
 \vspace{-2pt}\begin{verbatim}
 bg_par_infile_slice_name=’save_timeslice_historicalfuture.dat’
 bg_par_infile_sig_name=’save_timeseries_historicalfuture.dat’
 \end{verbatim}\vspace{-2pt}
+which specify a seties of time points at which data is saved that aligns with historically relevant years. View the contents of these (text) files, which can be found in the directory \footnotesize\textsf{genie-biogem/data/input }\normalsize, to get a sense of how frequently and when data will be saved, and how this differs from the default settings, which are defined in the files:
+\vspace{2pt}
+\\ \footnotesize\textsf{save\_timeseries.dat }\normalsize
+\\ \footnotesize\textsf{save\_timeslice.dat }\normalsize
+\vspace{2pt}
 
-A \textit{user-config} with these changes is provided for your convenience (or to double-check you were following it all) -– \texttt{LAB\_3.historical}. A suitable experiment would then be one run for 245 years so that it reaches year 2010 (having started from year 1765): 
+A \textit{user-config} with these specific changes is provided for your convenience (or to double-check you were following it all) -– \footnotesize\textsf{LAB\_3.historical}\normalsize. A suitable experiment would then be one run for 245 years so that it reaches year 2010 (having started from year 1765): 
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
    LAB_3.historical 245 LAB_3.SPIN
 \end{verbatim}\vspace{-2pt}
+(Here, the 245 year run duration is simply calculated to get you from year 1765 to 2010 ...)
 
 WARNING! Ignore the ‘WARNING’s at the start -- these are simply telling you that more tracer forcings have been specified than you have selected tracers for in the \textit{base-config} (cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASE). (A different \textit{base-config} with additional selected tracers could have been specified to make use of other historical changes in atmospheric composition, such as of radiocarbon ($^{14}$C) and CFCs.) Also: from year 1765 onwards, changes in atmospheric \(CO_{2}\) only rise very s l o w l y initially. Don’t expect to see anything happen in 10 seconds flat because relatively few people and countries in the 1800s could be bothered to burn much more than a little local coal. You could potentially start your experiment at year 1850, changing the value of bg\_par\_misc\_t\_start and specifying shorter experiment duration if you are desperate for the End of the World to come.
 
@@ -2418,16 +2452,17 @@ Don’t forget: you could submit this experiment to the cluster and do more (ide
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g., \textit{Sabine et al.} [2004]) and having run a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\), you are in a position to critically evaluate the models ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
+\noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g., \textit{Sabine et al.} [2004]) ... and you are running a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\) ... you are in a position to critically evaluate the models ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
 
-In the 2D \textbf{netCDF} output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e., to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A time-slice centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g., 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: \textit{Cao et al.} [2009])
+In the 2D netCDF output, there is a variable for the water column integrated inventory of DIC – equivalent to the Sabine map except you will need to subtract the preindustrial background of DIC first, i.e., to create a DIC anomaly map representing only the added fossil fuel \(CO_{2}\) component of ocean DIC. The data in the Sabine paper clusters around 1994. A \textit{time-slice} centered on this year (1994.5) has been configured in the model exactly for this purpose. Your baseline state can either be from prior to \(CO_{2}\) emissions commencing at any significant rate (e.g., 1750.5) or (better), from a control experiment. Note that similar comparisons could be (and are regularly) made with other tracers such as CFCs, which provide additional insights into the patterns and time-scales of trace gas update and ocean circulation. (See: \textit{Cao et al.} [2009])
 
-Observational data, re-gridded to the \textbf{muffin} grid and in \textbf{netCDF} format can be downloaded from the ‘usual place’ (http://www.seao2.org/mycgenie.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D \textbf{netCDF}) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the \textit{Sabine} paper … unless you are \textbf{MATLAB}-friendly and you use the 3D \textbf{BIOGEM} \textbf{MATLAB} plotting scripts (https://github.com/derpycode/muffinplot) whose use is somewhat described in the \textbf{muffin} user-manual. Examples of \textbf{MATLAB} plotting of the model \textit{vs.} observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
+Observational data, re-gridded to the \textbf{muffin} grid and in netCDF format can be downloaded from the ‘usual place’ (http://www.seao2.org/mymuffin.html) from the ‘got data?’ box on the left. You could for instance, compare horizontal or vertical slices (3D netCDF) and create difference (anomaly) maps. Somewhat more representative of the entire ocean is to compare (or calculate difference maps) of zonal average profiles. Unfortunately, the observations are not in the form of water column integrals and hence you cannot create difference maps of model as per the \textit{Sabine} paper … unless you are \textbf{MATLAB}-friendly and you use the 3D \textbf{BIOGEM} \textbf{MATLAB} plotting scripts (https://github.com/derpycode/muffinplot) whose use is somewhat described in the \textbf{muffin} user-manual. Examples of \textbf{MATLAB} plotting of the model \textit{vs.} observed anthropogenic anomaly are shown in Figure \ref{fig:chx-co2uptake} (note the use of plotting un-interpolated model grid data as colors but with an interpolated contour overlain to help guide the eye and pick out features).
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[scale=0.5]{chx-co2uptake.eps}
+\includegraphics[scale=0.55]{chx-co2uptake.eps}
 \end{center}
+\vspace{-10pt}
 \caption{Observed (top) \textit{vs.} Model (bottom) anthropogenic \(CO_{2}\) inventories.
 Data and model water column integrals in units of mol \(CO_{2}\) m$^{-2}$ and are nominally with respect to year 1994.}
 \label{fig:chx-co2uptake}
@@ -2437,7 +2472,7 @@ Data and model water column integrals in units of mol \(CO_{2}\) m$^{-2}$ and ar
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent Finally, and the closest to being slightly interesting: rather than applying highly idealized pulses  of \(CO_{2}\) emissions, IPCC SRES emissions scenarios can be used to make future projections with. An example forcing of this sort is provided and can be selected by changing the name of the forcing selection parameter (\texttt{bg\_par\_forcing\_name}) to:
+\noindent Finally, and the closest to being slightly interesting: rather than applying highly idealized pulses  of \(CO_{2}\) emissions, the IPCC 'SRES' emissions scenarios can be used to make future projections with. An example forcing of this sort is provided and can be selected by changing the name of the forcing selection parameter (\texttt{bg\_par\_forcing\_name}) to:
 \vspace{-2pt}\begin{verbatim}
 worjh2.FeMahowald2006.FpCO2_Fp13CO2_A2_02180PgC
 \end{verbatim}\vspace{-2pt}
@@ -2447,7 +2482,7 @@ Again, as this forcing has units of \(PgCyr^{-1}\) in its time-series file, you 
 bg_par_atm_force_scale_val_3=8.3333e+013
 \end{verbatim}\vspace{-2pt}
 
-For complete ‘realism’ you will need to run this experiment starting from the end of the historical transient experiment (Section 1.6), e.g.,
+For complete ‘realism’, you will need to run this experiment starting from the end of the historical transient experiment you have just run (Section 1.6), e.g.,
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
    LAB_3.future 90 LAB_3.historical
@@ -2456,9 +2491,11 @@ and with the start from year now set to year 2010 (the end year of the historica
 \vspace{-2pt}\begin{verbatim}
 bg_par_misc_t_start=2010.0
 \end{verbatim}\vspace{-2pt}
-Note that the \textit{user-config} \texttt{LAB\_3.future} is not provided for you – create this (or a file named whatever you like) by copying e.g., \texttt{LAB\_3.EXAMPLE} and making the parameter changes described above (forcing specification parameter, emissions scaling parameter, and start year parameter).
+Note that the \textit{user-config} \footnotesize\textsf{LAB\_3.future }\normalsize is not provided for you – you will need to create this (or a file named whatever you like) by copying e.g., \footnotesize\textsf{LAB\_3.EXAMPLE }\normalsize and making the parameter changes described above (forcing specification parameter, emissions scaling parameter, and start year parameter).
 
-You can also easily replace the details of the emissions with other SRES scenarios – simply find the year \textit{vs.} emissions rate information from the interweb\footnote{e.g., http://sres.ciesin.columbia.edu/final\_data.html} and edit or copy-and-paste) the flux values for each decade into the file \texttt{biogem\_force\_flux\_atm\_pCO2\_sig.dat} in the forcing directory.\textbf{ muffin} will then automatically interpolate between the decadal tie-points to give a continuous change in emissions. Now you are able to make a rather more realistic/plausible assessment of when and where potential ecological impacts (via assumed ocean chemistry criteria) might occur.
+You can also easily replace the details of the emissions with other SRES scenarios – simply find the year \textit{vs.} emissions rate information from the interweb\footnote{e.g., http://sres.ciesin.columbia.edu/final\_data.html} and edit or copy-and-paste the flux values for each decade into the file \footnotesize\textsf{biogem\_force\_flux\_atm\_pCO2\_sig.dat }\normalsize in the forcing directory.\textbf{ muffin} will then automatically interpolate between the decadal tie-points to give a continuous change in emissions. Now you are able to make a rather more realistic/plausible assessment of when and where potential ecological impacts (via assumed ocean chemistry criteria) might occur.
+
+Try running (e.g. as jobs submitted to the cluster queue), some other actual or made up SRES emissions scenarios.
 
 %------------------------------------------------
 
@@ -2472,7 +2509,9 @@ You can also easily replace the details of the emissions with other SRES scenari
 
 \subsection{Assessing the importance of emissions rate}
 
-By editing the flux and/or timing information you can control the \(CO_{2}\) emissions trajectory and total fossil fuel burned. Explore different \(CO_{2}\) release assumptions and note their impact on climate and ocean biogeochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) compared to the conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years. (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!) But note that you should create 3 new forcings based on the original if you are editing the forcing and expecting to run different ones at the same time. Really, this is little more than copying and renaming \textit{user-config} files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
+By editing the flux and/or timing information you can control the \(CO_{2}\) emissions trajectory and total fossil fuel burned. Explore different \(CO_{2}\) release assumptions and note their impact on climate and ocean biogeochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) compared to the conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of  fossil fuel \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years.\footnote{These all represent rather unrealistically small total \(CO_{2}\) releases and you may want ot consider a total more like 1000 \(PgC\) or rather more. You may also want to think about more realistic shapes rather than pulses, such a some sort of ramp up and then down in the emissions rate (but for the same total emissions).} (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!) 
+
+Note note that you should create 3 new \textit{forcings} based on the original if you are editing the same original  \textit{forcing} and expecting to run different ones at the same time. Really, this is little more than copying and renaming \textit{user-config} files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
 
 %------------------------------------------------
 
@@ -2482,14 +2521,19 @@ There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\
 
 \begin{itemize}[noitemsep]
 
+\vspace{1mm}
 \item What is the maximum total \(CO_{2}\) release that can be made without inducing aragonite under-saturation at the ocean surface anywhere (or any season – see Section 5.2.3 in the User Manual for seasonal time-slice data saving)? How important is the time-scale of emissions in determining this? For total emissions above this: where in the ocean does the surface first become under-saturated? How large would the emissions have to be in order to induce under-saturation at the surface in the tropics (home to socio-economically important reef systems). These are questions that can be addressed with simple \(CO_{2}\) release experiments in ocean carbon cycle models and everyone seems to get a GRL paper out of it each and every time!
 
+\vspace{1mm}
 \item How important are \(CO_{2}\)-climate feedbacks in amplifying or diminishing future climate and ocean carbonate chemistry changes – e.g., is the same atmospheric p\(CO_{2}\) value reached with and without climate feedback (and surface warming) – if not, why? You can investigate this by contrasting an experiment made including \(CO_{2}\)-climate feedback with one made without. The \(CO_{2}\)-climate feedback can be turned off by setting: \texttt{ea\_36=n}.
 
-\item Also: How much \(CO_{2}\) emission does it take to significantly ‘collapse’ the AMOC and over what time-scale? (Or alternatively: what is the atmospheric p\(CO_{2}\) threshold for collapse?) If the AMOC weakens or collapses … why in the absence of a prescribed freshwater perturbation does this happen? (Plotting appropriate ocean property anomalies between the \(CO_{2}\) release experiment and a control experiment might help.)
+\vspace{1mm}
+\item Also: How much \(CO_{2}\) emission does it take to significantly ‘collapse’ the AMOC and over what time-scale? (Or alternatively: what is the atmospheric p\(CO_{2}\) threshold for collapse?) 
+\\ If the AMOC weakens or collapses … why in the absence of a prescribed freshwater perturbation does this happen? What physical process are at play in response to rapid \(CO_{2}\) release too the atmosphere that may act to reduce or shutdown deep-water formation in the ocean model? (Plotting appropriate ocean property anomalies between the \(CO_{2}\) release experiment and a control experiment might help.)
 
 \end{itemize}
 
+\vspace{1mm}
 Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g., starting in year 2010).
 
 %----------------------------------------------------------------------------------------
