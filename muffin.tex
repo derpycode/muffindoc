@@ -7779,48 +7779,6 @@ TBA ...
 
 %------------------------------------------------
 
-\section{HOW-TO ... modify model output}\label{how-to-1}
-\vspace{2mm}
-
-%------------------------------------------------
-%
-\subsubsection{Set the frequency of time-series and time-slice output}
-
-\vspace{1mm}
-[see model output chapter]
-
-%------------------------------------------------
-%
-\subsubsection{Diagnose orbital (insolation) changes}
-
-\vspace{1mm}
-Two new \texttt{misc} category time-series files have been provided:
-\vspace{-1mm}\begin{verbatim}biogem_series_misc_ocn_insol.res\end{verbatim}\vspace{-1mm}
-and
-\vspace{-1mm}\begin{verbatim}biogem_series_misc_ocn_swflux.res\end{verbatim}\vspace{-1mm}
-with the the SW (shortwave) flux (\texttt{swflux}) being equivalent to the incident strength of solar radiation at the surface (\texttt{insol}) but accounting for the prescribed planetary albedo. Both variables are calculated and saved on a global mean ocean grid basis (2nd data column) and have units of W m-2.
-\\In addition, to help diagnose orbital variability, \texttt{biogem\_series\_misc\_ocn\_insol.res} includes two further insolation variables (3rd and 4th columns). These reflect the strength of insolation at a single point in the annual cycle and at discrete latitudes (i.e. \texttt{j} grid indices). (The insolation at 2 different latitudes are saved so that both .e.g. N and S hemisphere insolation signals can be simultaneously recorded.)
-\\Three new namelist parameters are provided to configure this:
-
-\begin{enumerate}[noitemsep]
-
-\item \texttt{bg\_par\_t\_sig\_count} -- which sets the BIOGEM 'time-step' in the annual cycle at which the insolation value will be saved. e.g. for 96 time-steps in the ocean physics, and a 2:1 GOLDSTEIN:BIOGEM gearing (the default for the 16 level configuration), there are 48 BIOGEM time-steps. (It is left to the user to work out which part of the annual cycle \textit{c}GENIE starts at (i.e. time-step \#1) -- I haven't a clue ...)
-
-\item \texttt{bg\_par\_sig\_j\_N} -- sets the 'j' value for a northern hemisphere (but could be southern) snap-shot.
-
-\item \texttt{bg\_par\_sig\_j\_S} -- sets the 'j' value for a southern hemisphere snap-shot.
-
-\end{enumerate}
-
-By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \texttt{bg\_par\_sig\_j\_S} a value of \texttt{1} (on account of the maximum grid size not being \textit{a priori} known).
-The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
 \section{HOW-TO ... diagnose how the model works}
 \vspace{2mm}
 
@@ -9383,27 +9341,327 @@ The challenge here is that   changes in seasonal characteristics are critical, s
 
 The solution provided is to save data at specific points (that are specified prior to an experiment being run), and to be very specific about what data is saved (i.e. rather than large generic sets of variables being saved as in the time-series and time-slice data saving approaches). Furthermore, because orbital variability is slow compared to the seasonal cycle, the data can be aliased. i.e., rather than saving every time-step during the seasonal cycle, and saving every year (of every seasonal cycle), one can devise an interval of data save, that samples a complete seasonal cycle only when x (where x > 1) complete years have been simulated. For example -- saving data every 13 months would mean Jan is saved in year 1, Feb in year 2, Mar in year 3, etc, with all months saved over the course of 12 years. This would not work so well if significant inter-annual variability was present, but in the basic EMBM-based configuration of muffin, there is no inter-annual variability.
 
+\textbf{\textcolor{red}{TO BE SORTED OUT ...}}
+
+To configure this way of saving data requires two files to be present in \footnotesize\textsf{genie-biogem/data/input}\normalsize, identified by 2 new \textit{user-config} parameters:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \texttt{bg\_par\_infile\_orb\_pts\_loc\_name}
+\\which directs BIOGEM to a file containing a list of model grid locations, in (i,j) format
+\vspace{1mm}
+\item \texttt{bg\_par\_infile\_orb\_pts\_var\_name}
+\\directs BIOGEM to a file containing a list of variables.
+\end{enumerate}
 
 
 
-%------------------------------------------------
+The default is: 'orb\_pts\_loc.dat' and looks like
 
-\subsection*{Saving just orbital insolation}
+02 02
+02 04
+03 03
+
+
+
+The default is: 'orb\_pts\_loc.dat' and looks like
+
+ocn\_sur\_PO4
+ocn\_sur\_DIC
+ocn\_ben\_sal
+ipoa\_seaice
+ipoa\_cost
+
+BIOGEM will save *each* variable at *each* location, saving files with
+names in this example:
+
+biogem\_orb\_i02j02.res
+biogem\_orb\_i02j04.res
+biogem\_orb\_i03j03.res
+
+The data is written out on each time-slice save step.
+Internally, in between tiem-slice saves, BIOGEM can store up to:
+
+bg\_n\_orb\_pts\_nmax=10000
+
+sets of data points by default.
+BIOGEM will warn you if you run out of internal storage, should you have
+e.g. too low a value 
+of bg\_n\_orb\_pts\_nmax, or too infrequent a time-slice save.
+
+I would not recommend exceeding a product of
+bg\_n\_orb\_pts\_nmax X number of locations X number of variables
+of ... 10,000,000
+(whether disk space exists to save a long run, is another matter)
+
+The frequency of data sampling is set by:
+
+ma\_conv\_kocn\_korb 
+
+(which by default has a value of 9999999 or something to disable it)
+
+ma\_conv\_kocn\_korb is the number of *ocean* timesteps between data
+sampling.
+
+ma\_conv\_kocn\_korb = 2
+would sample each and every BIOGEM time-step (48 per year) for the
+standard 16 level 
+ocean (96 time-steps per year in the ocean model).
+
+ma\_conv\_kocn\_korb = 96
+would sample once per year for the standard 16 level ocean (96 time-steps
+per year in the 
+ocean model).
+
+ma\_conv\_kocn\_korb = 98
+would alias the sampling, so that each year, you sample one BIOGEM
+time-step later in the 
+year. So after 48 years, you will have sampled each of the BIOGEM
+time-steps once (and 
+hence have sampled the variability in a year), but only have 48 lines of
+data, rather than 
+48*48 lines for 48 years sampling each and every BIOGEM time-step.
+
+Aliasing is the way to go if you want to resolve the seasonal cycle, yet
+still run for millions of 
+years and have a number of locations with a number of variables saved.
+Most likely, you'll 
+need a much higher value of ma\_conv\_kocn\_korb than this in order to be
+able to save the 
+data on a disk that exists on this planet ...
+
+For the variable list. The format is similar to the netCDF names.
+If the sub-string 'sur' appears in the variable string, surface data is
+saved.
+If the sub-string 'ben' appears in the variable string, benthic data is
+saved.
+
+Pick any of the ocean tracers listed in 
+tracer\_define.ocn
+as part of the string
+
+e.g.
+ocn\_sur\_PO4
+ocn\_sur\_DIC
+ocn\_ben\_sal
+
+Carbonate variables can also be chosen, the list is:
+
+H     
+fug\_CO2   
+conc\_CO2    
+conc\_CO3    
+conc\_HCO3   
+ohm\_cal   
+ohm\_arg     
+dCO3\_cal  
+dCO3\_arg     
+RF0            
+
+(for both sur and ben)
+
+3D physics array variables (both ben and sur):
+
+rho   
+u     
+v
+dzrho  
+diffv  
+rho\_go  
+
+(the most useful ones)
+
+and 2D atm-ocn physics only (no sur or ben):
+
+seaice 
+seaice\_th 
+solfor  
+fxws  
+cost   
+KCO2 
+MLD  
+evap     
+precip     
+
+This has taken me the entirety of Saturday and I have not been inclined to
+output isotopes in 
+units of per mil.
+For now -- save DIC and DIC\_13C (concentration of bulk DIC and
+concentration of 13C of 
+DIC) and calculate the d13C ...
+
+
+
+
+Now you only have to select the 13C tracer and it saves as per mil.
+
+For format of the variable list has changed slightly -- in the example
+file:
+
+ocn\_sur\_PO4.
+ocn\_sur\_DIC\_13C.
+ocn\_ben\_temp.
+ipoa\_seaice.
+ipoa\_cost.
+atm\_pCO2.
+atm\_pCO2\_13C.
+bio\_fpart\_POC\_13C.
+
+So -- a DOT has been added at the end of each line, which helps the
+algorithm distinguish 
+different tracers.
+
+Other than the 'physics' -- see earlier email -- you simply write the name
+of any atm, ocn, of 
+sed tracer from the tracer definition file. There are all listed in:
+cgenie.muffin/genie-main/data/input
+And add a DOT to the end.
+Add 'sur' or 'ben' to the start of you want ot specify surface or
+benthic.
+
+*NOTE* I have not tested this beyond check that it runs and that the
+values reported look 
+'reasonabe'. It is up to YOU to confirm that the values outputted are
+representative of that 
+location and that point in the year. (Remember that these outputs are
+instantaneous values, 
+whereas the 2D and 3D netCDF is an average of multple points in time.)
+
+
+/andy
+
+
+
+
+Sorry it has taken so long to get to this -- revision 10205 should have it
+all fixed and working.
+
+I have also modified the way different variables are defined for saving
+very slightly.
+
+Firstly, the variable name itself, as defined in BIOGEM, must be
+immediately followed by a 
+decimal point ('.') -- as before. The variable names are as defined in
+tracer\_define.atm, 
+tracer\_define.ocn, and tracer\_define.sed in column \#1 (CASE is important
+here).
+
+Because there is an ambiguity between atmosphere and ocean temperature, as
+they have 
+the same name, when specifying any of atm, ocn, or sed tracers for saving,
+add 'atm', 'ocn', 
+or 'sed' to the string. I use underscores (\_) to separate parts of the
+string.
+
+For now, all 'sed' tracers requested are assumed to be particulate fluxes.
+(Again, as before.)
+
+I have removed 'ocean physics' variable saving because there is nothing
+particularly useful 
+there and there is an ambiguity between some of the ocean and ocn-atm
+interface variables. 
+All the most useful variables, such as sea-ice cover etc. are ocn-atm
+interface variables.
+(But I can bring back the phys variables if you need them.)
+
+Carb chem variable saving is as before.
+
+Also as before -- for 3D variables -- fluxes and ocean tracers -- you add
+'sur' or 'ben' to 
+specify surface or benthic, otherwise surface is assumed.
+
+Examples of valid (although I have not tried them all ...) ocn tracer
+strings:
+
+sur\_ocn\_temp.
+surocntemp.
+ocnsurtemp.
+ocn\_tmp.
+benocntemp.
+
+Valid ocn-atm interface variables include:
+
+seaice.
+seaice\_th.
+solfor.
+
+and carbonate chem:
+
+conc\_CO2.
+ohm\_cal.
+H.
+
+Note that for saving carbonate chemistry anywhere in the ocean and at any
+time (not just 
+associated with time slice saving), you need to specify that the carbonate
+system is re-solved 
+frequently. The setting for this is:
+
+bg\_ctrl\_carbchemupdate\_full=.true.
+
+Note that there may be considerable computational overheads to this.
+However, the surface 
+equilibrium is solved frequently by default, and if you only want surface,
+you do not need to 
+add this setting. (So I guess it is only if you want benthic carbonate
+chem saved is there any 
+issue.)
+
+
+
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent There is also a previous/old way of saving just orbital insolation:
 
 For evaluating and checking orbital experiments in \textbf{\textit{c}GENIE.muffin}, it is useful to be able to extract commonly used diagnostics of orbital variations in insolation, e.g. June 21 65N. \textbf{\textit{c}GENIE.muffin} can be configured to save the \textit{time-series} (at the standard save frequency for \textit{time-series} output) at two different '\texttt{j}' grid positions (latitude) -- typically one Northern and one Southern hemisphere, and at specific points in the seasonal cycle. The relevant parameters are:
 
 \begin{itemize}
+\vspace{1mm}
 \item \texttt{bg\_par\_sig\_j\_N}
 Sets the '\texttt{j}'  latitude grid point location for extracting the insolation. On a \(18\times18\) grid, a value of \(17\) is as close as you are going to get to 65N.
+\vspace{1mm}
 \item \texttt{bg\_par\_sig\_j\_S}
 As above, except for the Southern hemisphere (although there is nothing stopping you from choosing 2 Northern or 2 Southern hemisphere points, just what out for the automatic output column labelling that might cause confusion).
+\vspace{1mm}
 \item \texttt{bg\_par\_t\_sig\_count\_N}
 Sets the time-step in the \textbf{BIOGEM} tie-stepping cycle at which the insolation value is extracted. Care is needed here in distinguishing between the primary ocean (\textbf{GOLDSTEIN}) time-step, and \textbf{BIOGEM}, which is typically sub-stepped. For  example, on an 18x18x8 grid, the \textbf{GOLDSTEIN} time-step is 48 (per year), and \textbf{BIOGEM} time-steps every other \textbf{GOLDSTEIN} step, i.e. 24 per year. A value for this parameter of 12 is then approximately June 21.
+\vspace{1mm}
 \item \texttt{bg\_par\_t\_sig\_count\_N}
 As above, except for the Southern hemisphere.
 \end{itemize}
+\vspace{2mm}
 
 The \textit{time-series} output files is called: \texttt{biogem\_series\_misc\_ocn\_insol.res} (and has pretty self-explanatory columns).
+
+%------------------------------------------------
+%
+\subsubsection{Saving global/annual (insolation) changes}
+
+\vspace{1mm}
+Two new \texttt{misc} category time-series files have been provided:
+\vspace{-1mm}\begin{verbatim}biogem_series_misc_ocn_insol.res\end{verbatim}\vspace{-1mm}
+and
+\vspace{-1mm}\begin{verbatim}biogem_series_misc_ocn_swflux.res\end{verbatim}\vspace{-1mm}
+with the the SW (shortwave) flux (\texttt{swflux}) being equivalent to the incident strength of solar radiation at the surface (\texttt{insol}) but accounting for the prescribed planetary albedo. Both variables are calculated and saved on a global mean ocean grid basis (2nd data column) and have units of W m-2.
+\\In addition, to help diagnose orbital variability, \texttt{biogem\_series\_misc\_ocn\_insol.res} includes two further insolation variables (3rd and 4th columns). These reflect the strength of insolation at a single point in the annual cycle and at discrete latitudes (i.e. \texttt{j} grid indices). (The insolation at 2 different latitudes are saved so that both .e.g. N and S hemisphere insolation signals can be simultaneously recorded.)
+\\Three new namelist parameters are provided to configure this:
+
+\begin{enumerate}[noitemsep]
+
+\item \texttt{bg\_par\_t\_sig\_count} -- which sets the BIOGEM 'time-step' in the annual cycle at which the insolation value will be saved. e.g. for 96 time-steps in the ocean physics, and a 2:1 GOLDSTEIN:BIOGEM gearing (the default for the 16 level configuration), there are 48 BIOGEM time-steps. (It is left to the user to work out which part of the annual cycle \textit{c}GENIE starts at (i.e. time-step \#1) -- I haven't a clue ...)
+
+\item \texttt{bg\_par\_sig\_j\_N} -- sets the 'j' value for a northern hemisphere (but could be southern) snap-shot.
+
+\item \texttt{bg\_par\_sig\_j\_S} -- sets the 'j' value for a southern hemisphere snap-shot.
+
+\end{enumerate}
+
+By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \texttt{bg\_par\_sig\_j\_S} a value of \texttt{1} (on account of the maximum grid size not being \textit{a priori} known).
+The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
