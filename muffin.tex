@@ -951,7 +951,7 @@ The run-time output should now look noticeably different. There should be no (or
 
 \chapterimage{Figure-1-The-image-of-an-ice-encased-Earth-a-Snowball-Earth-with-oases-of-open-water-on.png} % Chapter heading image
 
-\chapter{snowball Earth}
+\chapter{Climate dynamics \& experimental design}
 
 \hfill \break
 
@@ -972,7 +972,6 @@ The run-time output should now look noticeably different. There should be no (or
 
 You will need to download a new \textit{restart} file prior to embarking on the snowball Earth experiments.
 To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from this PDF ...):
-
 \vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
@@ -980,7 +979,6 @@ $ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
 \vspace{-2mm}
 
 This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has been run for 5,000 years for you. Extract the contents of this archive by typing:
-
 \vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_1.SPIN.tar.gz 
@@ -1657,7 +1655,7 @@ Secondly -- you could additionally combine this experiment configuration with fr
 
 \chapterimage{Jay-Matternes---EOCENE.jpg} % Chapter heading image
 
-\chapter{Past Worlds}
+\chapter{Climates of Past Worlds}
 
 \hfill \break
 
@@ -1881,7 +1879,7 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 
 \chapterimage{middle_earth.png} % Chapter heading image
 
-\chapter{Alternative Worlds}
+\chapter{Alternative Oceans}
 
 \hfill \break
 
@@ -2233,21 +2231,18 @@ Note that an experiment \textit{spin-up} duration of perhaps as much as 10,000 y
 You will need to download a new \textit{restart} file prior to embarking on the experiments. This pre-industrial spin-up includes a basic ocean (-atmosphere) carbon cycle plus various diagnostic anthropogenic tracers, following \textit{Cao et al.} [2009].
 
 \noindent To fetch this: change to the cgenie\_output directory, and type:
-
 \vspace{-2mm}
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie_muffin/LAB_3.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/LAB_3.SPIN.tar.gz
 \end{verbatim}
 \vspace{-2mm}
 
 \noindent Extract the contents of this archive by typing:
-
 \vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_3.SPIN.tar.gz 
 \end{verbatim}
 \vspace{-2mm}
-
 \noindent (change directory back to \texttt{genie-main} to run the model)
 
 %------------------------------------------------
@@ -2550,12 +2545,7 @@ Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (
 
 \vspace{24mm}
 
-\noindent This Chapter ...
-
-\section*{Background reading}
-\begin{itemize}
-\item 
-\end{itemize}
+\noindent 
 
 %------------------------------------------------
 
@@ -2565,13 +2555,6 @@ Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (
 
 \section*{READ.ME}
 
-You will need to download a new restart file prior to embarking on the experiments. This differs from previous provided restarts in that it now includes an iron cycle in the ocean and hence co-limitation of biological productivity by Fe.
-
-\begin{verbatim}
-$ wget http://www.seao2.info/cgenie/labs/AWI.2017/LAB_4.SPIN.tar.gz
-\end{verbatim}
-
-Extract the results in the usual way and in the usual place ... and return to \texttt{genie-main}.
 
 %------------------------------------------------
 
@@ -2582,6 +2565,65 @@ Extract the results in the usual way and in the usual place ... and return to \t
 \section{xxx}
 
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{xxx}
+
+
+%------------------------------------------------
+
+\subsection{Further modifications of the biological pump in the ocean}
+
+Other manipulations of the biological pump and ocean carbon cycle are possible and potentially instructive and in the following examples may be of rather more relevance to past climates and carbon cycles and e.g. possible reasons for the low atmospheric \(CO_{2}\) concentrations at the last glacial, as opposed to relevant to geoengineering (a good thing!). The first two of these may have profound effects not only atmospheric p\(CO_{2}\) but also on dissolved oxygen concentrations in the ocean (and hence implications for the suitability of animal habitat such as for fish) and this is something that you will want to look at as part of your overall assessment of impacts.
+
+\subsubsection*{Remineralization depth}
+
+In the model configuration that you have been using, the degradation of particulate organic matter sinking in the water column proceeds according to a fixed profile of flux with depth (there is no e.g. temperature control on the rate of bacterial degradation of sinking organic matter) with \(CO_{2}\) and \(PO_{4}\) released back to the seawater as the particulate flux decreases. The parameter that controls the (\textit{e}-folding) depth scale of particulate organic matter is:
+\vspace{-2pt}\small\begin{verbatim}
+bg_par_bio_remin_POC_eL1=589.9451
+\end{verbatim}\normalsize\vspace{-2pt}
+Either edit this value (found under the heading: \texttt{\# --- REMINERALIZATION ---}) or add a new line at the end of the \textit{user-config} file specifying the value you want. Units are \(m\).
+
+Read \textit{Ridgwell et al.} [2007] for additional discussion of this parameter. See Figure 2-4 in \textit{Ridgwell} [2001] (http://www.seao2.org/pubs/ridgwell\_thesis.pdf) for an illustration of how the flux of particulate organic matter decreases with depth in the ocean, plus references therein.
+
+There is also an associated parameter: \texttt{bg\_par\_bio\_remin\_POC\_frac2}, which sets a fraction of organic matter that is assumed to settle through the water column completely un-altered (currently assigned a value of 0.045 == 4.5\%), but this is arguably less useful to change than the remineralization length-scale of the more labile fraction (the other 95.5\% of particulate organic carbon exported from the ocean surface).
+
+Note that there may well be no simple parallel that can be found in geoengineering to this process. However, there are hypotheses that during the last glacial and as a result of colder ocean temperatures, the depth scale was longer. Conversely, there are ideas about that the warmer temperatures of the e.g. Eocene ocean and hence faster rates of bacterial metabolism led to a much shallower remineralization depth scale. So a remineralization depth scale that is responsive to temperature may have importance in understanding ocean biogeochemical cycles during both past warm and cold climates as well as obviously, future global change. While you are not implementing a temperature-dependent parameterization explicitly, you can at least test for whether changes in temperature might have important impacts by simply changing the remineralization depth to be shallower (smaller depth-scale under a warming climate) or deeper (greater depth-scale in a colder ocean).
+
+\subsubsection*{Macro nutrient inventory and uptake}
+
+Suggestions have been made that nutrients were used more efficiently during the LGM, meaning that for the same nutrient uptake at the surface more carbon was exported to depth in the ocean. See: \textit{Omta et al.} [2006]. There are also a bunch of (relatively old) hypotheses concerning differences between glacial and modern ocean in how much nitrate (\(NO^{-}_{3}\)) there was. There is no \(NO^{-}_{3}\) in this version of \textbf{muffin} (just \(PO_{4}\) and \(Fe\)), but an analogous change can be made to the phosphorous cycle.
+
+For the nutrient-to-carbon ratio in organic matter, the relevant parameter is:
+\vspace{-2pt}\small\begin{verbatim}
+bg_par_bio_red_POP_POC=106.0
+\end{verbatim}\normalsize\vspace{-2pt}
+To change the default value (106.0), add a new line at the end of the \textit{user-config} file specifying the value you want. A larger number means that \(PO_{4}\) is being utilized more efficiently and more organic matter is being produced for the same nutrient consumption.
+
+To test the effect of there being more \(PO_{4}\) in the ocean, in addition to using the (surface) flux forcing as described earlier, it is also possible to simply increase the inventory of the ocean as a whole in one go:
+\vspace{-2pt}\small\begin{verbatim}
+bg_ocn_dinit_8=1.0E-6
+\end{verbatim}\normalsize\vspace{-2pt}
+which will add \(1\:\mu mol\:kg^{-1}\) of \(PO_{4}\) uniformly to the ocean. (A larger/smaller number will obviously increase the glacial nutrient inventory by more/less.)
+
+In terms of geoengineering, changing the ‘Redfield’ ocean plankton might be difficult … but not impossible, although we are presumably talking about releases of genetically modified organisms to the entire ocean to achieve this meaning there are obviously some severe ethical concerns. However, adding macro nutrients such as \(PO_{4}\) (more often, \(NO^{-}_{3}\) is talked about) may be more feasible.
+
+\subsubsection*{CaCO3:POC rain ratio}
+
+Kicked off by a classic 1994 \textit{Nature} paper by \textit{Archer and Maier-Reimer} (see: \textit{Kohfeld and Ridgwell} [2009]), one potential means of changing atmospheric \(CO_{2}\) naturally at the last glacial involves changes in the export ratio between \(CaCO_{3}\) (shells) and \(POC\) (particulate organic matter). Such a change in ratio could come about through a variety of ways (e.g., via the 'silica leakage hypothesis' (see: \textit{Kohfeld and Ridgwell} [2009]) and also through the direct effect of \(Fe\) on diatom physiology (see \textit{Watson et al.} [2000] in \textit{Nature} and also Supplemental Information). There are also ideas about an opposite ocean acidification effect, whereby the less acidic glacial (compared to modern) ocean led to increased calcification and \(CaCO_{3}\) export. Note that this response (higher saturation == greater rate of calcification) is encoded into your model configuration – see \textit{Ridgwell et al.} [2007b].
+
+In \textbf{muffin}, the \(CaCO_{3}:POC\) rain ratio is controlled (technically: scaled) by the parameter:
+\vspace{-2pt}\small\begin{verbatim}
+bg_par_bio_red_POC_CaCO3=0.0485
+\end{verbatim}\normalsize\vspace{-2pt}
+
+The pattern of \(CaCO_{3}:POC\) rain ratio is not uniform across the ocean (why? (see: \textit{Ridgwell et al.} [2007, 2009]), and its pattern can be viewed in the (2D \textbf{BIOGEM}) netCDF variable: \textsf{\footnotesize misc\_sur\_rCaCO3toPOC}.
+
+(Note that it is unlikely that there is any parallel in a geoengineering context to this process.)
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -2591,19 +2633,13 @@ Extract the results in the usual way and in the usual place ... and return to \t
 
 \chapterimage{geoengineering.png} % Chapter heading image
 
-\chapter{Geoengineering}
+\chapter{Geoengineering I}
 
 \hfill \break
 
 \vspace{12mm}
 
-\noindent This Chapter ...
-
-
-\section*{Background reading}
-\begin{itemize}
-\item 
-\end{itemize}
+\noindent In this Chapter we'll use the 'excuse' of geoengineering, to perturb and elucidate the response of the global carbon cycle and climate system and hence learn something new/different about Earth system dynamics compared to e.g. its response only under standard future carbon emissions scenarios.
 
 %------------------------------------------------
 
@@ -2614,7 +2650,7 @@ Extract the results in the usual way and in the usual place ... and return to \t
 \section*{READ.ME}
 
 You will need to download a new \textit{restart} file prior to embarking on the experiments. This differs from previous provided restarts in that it now includes an iron cycle in the ocean and hence co-limitation of biological productivity by Fe.
-
+\vspace{-2mm}
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/LAB_4.SPIN.tar.gz
 \end{verbatim}
@@ -2629,11 +2665,11 @@ Extract the results in the usual way and in the usual place ... and return to \t
 
 \section{Ocean carbon geoengineering}
 
-In the following experiments you are going to explore some of the ocean biological controls on atmospheric p\(CO_{2}\) (plus ocean acidification, and the distributions and intensities of oxygen minimum zones). Really, the ‘geoengineering’ focus is just an excuse to be looking at how the biological pump in the ocean works, how it regulates atmospheric p\(CO_{2}\), how sensitive it is to perturbation and what the consequences are of any changes in it. So if you are uncomfortable with ideas of large scale manipulating the Earth system, think about the relevance of the experiments to e.g. understanding why atmospheric p\(CO_{2}\) was low at the time of the last glacial.
+In the following experiments you are going to explore some of the ocean biological controls on atmospheric p\(CO_{2}\) (plus ocean acidification, and the distributions and intensities of oxygen minimum zones). Really, the ‘geoengineering’ focus is just an excuse to be looking at how the biological pump in the ocean works, how it regulates atmospheric p\(CO_{2}\), how sensitive it is to perturbation and what the consequences are of any changes in it. So if you are uncomfortable with ideas of large scale manipulating the Earth system, you might instead think about the relevance of the experiments to e.g. understanding why atmospheric p\(CO_{2}\) was low at the time of the last glacial.
 
-The overall idea of this lab is to run future \(CO_{2}\) emissions scenarios and test whether ocean carbon geoengineering is an effective means for reducing future ocean acidification and marine ecological impacts (but keep in mind you are also exploring the basic natural operation of the system in doing so). You will require a pre-industrial spin-up and will need to create a new historical p\(CO_{2}\) transient experiment because compared to the previous lab, you are now using a different \textit{base-config} (\texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASEFe}) that includes additional tracers for the marine iron cycle, i.e. you cannot simply use any of the experiments from previous labs as a restart.
+The overall idea of this Chapter is to run future \(CO_{2}\) emissions scenarios and test whether ocean carbon geoengineering is an effective means for reducing future ocean acidification and marine ecological impacts (but keeping in mind that you are also exploring the basic natural operation of the system in doing so). You will require a pre-industrial \textit{spin-up} and will need to create a new historical p\(CO_{2}\) transient experiment because you are now using a different \textit{base-config} (\texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASEFe}) that includes additional tracers for the marine iron cycle, i.e. you cannot simply use any of the experiments from previous labs as a restart.
 
-Refer to the Supplement (final chapter section) for a guide as to what to ‘look for’ in the model results.
+Refer to Section 12.6  for a guide as to what to ‘look for’ in the model results.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2650,13 +2686,13 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASEFe LABS
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent The example \textit{user-config} provided: \texttt{LAB\_4.EXAMPLE}, includes parameter settings for controlling any one of 3 different possible ocean carbon geoengineering schemes, described below (Section 1.3). By default, these are commented out (== ignored by the model) and only the forcing for the A2 emissions scenario (\texttt{worjh2.FeMahowald2006.Fp\(CO_{2}\)\_Fp13\(CO_{2}\)\_A2\_02180PgC}) with no geoengineering is set by default. You might regard this as a control (reference) experiment for all the with-geoengineering experiments you might run, i.e. the impacts of \(CO_{2}\) emissions in the absence of any mitigation by geoenginerring. To activate any particular geoengineering forcing: simply un-comment (delete the \#) the appropriate pair of lines (the first line being the forcing specification, and the second one the total flux forcing used in the geoengineering scheme). If you have multiple (un-commented) settings of a parameter (e.g. bg\_par\_forcing\_name) the value specified in the last occurrence is the one that is applied. This can get confusing, so if you un-comment out one set of parameter options, comment out (add a \#) the ones you are not using.
+\noindent The provided example \textit{user-config} -- \texttt{LAB\_4.EXAMPLE} -- includes parameter settings for controlling any one of 3 different possible ocean carbon geoengineering schemes, described below. By default, these are commented out (== ignored by the model) and only the forcing for the A2 emissions scenario (\texttt{worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC}) with no geoengineering enacted,  is enabled by default. You might regard this as a control (reference) experiment for all the with-geoengineering experiments you might run, i.e. the impacts of \(CO_{2}\) emissions in the absence of any mitigation by geoenginerring. To activate any particular geoengineering forcing: simply un-comment (delete the \# at the start of) the appropriate pair of lines (the first line being the forcing specification, and the second one the total flux forcing used in the geoengineering scheme). If you have multiple (un-commented) settings of a parameter (e.g. \texttt{bg\_par\_forcing\_name}), then the value specified in the last occurrence of the parameter, is the one that is applied. This can get confusing, so if you un-comment out one set of parameter options, comment out (add a \# to) the ones you are not using.
 
 The geoengineering (and control) experiments need to be run starting from the end of your historical transient experiment:
-\begin{verbatim}
+\vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASEFe LABS
    LAB_4.EXAMPLE 90 LAB_4.historical
-\end{verbatim}
+\end{verbatim}\vspace{-2pt}
 Because with a modern configuration and additional tracers in the ocean, the model is running rather slower than in some earlier exercises, you may not want to run beyond the end of the century (hence the 90 year experiment duration, starting from year 2010, as suggested above).
 
 \vspace{1mm}
@@ -2668,11 +2704,11 @@ Because with a modern configuration and additional tracers in the ocean, the mod
 \vspace{2mm}
 \begin{itemize}[noitemsep]
 \item 
-\begin{verbatim}worjh2.FeMahowald2006.Fp\(CO_{2}\)_Fp13\(CO_{2}\)_A2_02180PgC_FFe\end{verbatim}
+\begin{verbatim}worjh2.FeMahowald2006.FpCO2_Fp13CO2_A2_02180PgC_FFe\end{verbatim}
 \item 
-\begin{verbatim}worjh2.FeMahowald2006.Fp\(CO_{2}\)_Fp13\(CO_{2}\)_A2_02180PgC_FPO4\end{verbatim}
+\begin{verbatim}worjh2.FeMahowald2006.FpCO2_Fp13CO2_A2_02180PgC_FPO4\end{verbatim}
 \item 
-\begin{verbatim}worjh2.FeMahowald2006_Fp\(CO_{2}\)_Fp13\(CO_{2}\)_A2_02180PgC_FALK\end{verbatim}
+\begin{verbatim}worjh2.FeMahowald2006_FpCO2_Fp13CO2_A2_02180PgC_FALK\end{verbatim}
 \end{itemize}
 \vspace{2mm}
    
@@ -2680,13 +2716,15 @@ Each forcing includes the A2 \(CO_{2}\) emissions scenario, with the annual emis
 
 Each forcing also includes a prescribed dust flux to the ocean surface (the \texttt{FeMahowald2006} part of the directory name string). This is necessary because the model configuration you are using includes a co-limitation of biological productivity by iron (Fe) in addition to phosphate (\(PO_{4}\)). (The files associated with the dust forcing are: \texttt{biogem\_force\_flux\_sed\_det\_sig.dat} and \texttt{biogem\_force\_flux\_sed\_det\_SUR.dat} but you do not need to edit these files.) For the role of iron in controlling ocean productivity: possible starting points for background reading are: \textit{Ridgwell and Kohfeld} [2007] (PDF available form my website) or \textit{Jickells et al.} [2005] (Science).
 
+\vspace{1mm}
 The specific details of the 3 different example geoengineering scenarios are as follows:
 
 %------------------------------------------------
 
 \subsection{Iron fertilization}
 
-\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.Fp\(CO_{2}\)\_Fp13\(CO_{2}\)\_A2\_02180PgC\_FFe} -- a constant (with time) flux of dissolved Fe (in addition to whatever Fe dissolves into the surface ocean from the dust flux) is specified in: \texttt{biogem\_force\_flux\_ocn\_Fe\_sig.dat}. The magnitude of the applied flux is then scaled in the \textit{user-config} file by the setting:
+\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC\_FFe} \vspace{1pt}
+\\-- a constant (with time) flux of dissolved Fe (in addition to whatever Fe dissolves into the surface ocean from the dust flux) is specified in: \texttt{biogem\_force\_flux\_ocn\_Fe\_sig.dat}. The magnitude of the applied flux is then scaled in the \textit{user-config} file by the setting:
 \small\begin{verbatim}
 bg_par_ocn_force_scale_val_9=1.0e+09
 \end{verbatim}\normalsize
@@ -2697,43 +2735,47 @@ A spatial pattern of the flux is also defined, in the file:
 biogem_force_flux_ocn_Fe_SUR.dat
 \end{verbatim}\normalsize
 
-An example pattern is set (see Section 1.4 for details on editing this pattern) – here a row of grid cells are marked at the same latitude in the Southern Ocean. You do not need to retain this pattern. In choosing an alternative: think about where in the modern ocean biological productivity is thought to be at least partly limited by the availability of dissolved Fe. Remember that the model may or may not correspond with reality, i.e. it may or may not predict Fe limitation in the correct regions, which may affect your choice of location for iron fertilization.
+An example pattern is set (see later for instructions on modifying this) with a row of grid cells  marked along the same latitude in the Southern Ocean. You do not need to retain this pattern. In choosing an alternative: think about where in the modern ocean biological productivity is thought to be at least partly limited by the availability of dissolved Fe. Remember that the model may or may not correspond with reality, i.e. it may or may not predict Fe limitation in the correct regions, which may affect your choice of location for iron fertilization.
 
 %------------------------------------------------
 
 \subsection{Phosphate fertilization}
 
-\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC\_FPO4} (‘macro-nutrient’ addition) -- a constant (with time) flux of dissolved \(PO_{4}\) is specified in: \texttt{biogem\_force\_flux\_ocn\_PO4\_sig.dat}. The magnitude of the applied flux is then scaled in the \textit{user-config} by the setting:
-\small\begin{verbatim}
+\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC\_FPO4} (‘macro-nutrient’ addition) 
+\vspace{1pt}
+\\ -- a constant (with time) flux of dissolved \(PO_{4}\) is specified in: \texttt{biogem\_force\_flux\_ocn\_PO4\_sig.dat}. The magnitude of the applied flux is then scaled in the \textit{user-config} by the setting:
+\vspace{-2pt}\small\begin{verbatim}
 bg_par_ocn_force_scale_val_8=2.0e+12 
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-2pt}
 
 Again, you should consider this as an example total flux. In choosing a total flux to apply, points of comparison include whatever the total weathering flux (via rivers) of P to the global ocean is. Also: global phosphate (fertilizer) production, which produces an interesting potential conflict between geoengineering and food production, although there are proposals for using fertilized ocean regions for enhanced fish production. 
 
 A spatial pattern of the flux is also defined, in the file:
-\small\begin{verbatim}
+\vspace{-2pt}\small\begin{verbatim}
 biogem_force_flux_ocn_PO4_SUR.dat
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-2pt}
 
-An example pattern has been set – here, the Equatorial Atlantic. In choosing your regions(s), think about where in the ocean (again – there may be differences between real ocean and model) productivity is currently limited by \(PO_{4}\). Also be aware of possible on-set of Fe limitation if you relieve the PO4 limitation (i.e., you could potentially lose effectiveness if you supply too much PO4 and instead productivity and \(CO_{2}\) drawdown is capped by a second factor). You could potentially consider PO4 and Fe addition at the same time … ?
+An example pattern has been set – here, the Equatorial Atlantic. In choosing your regions(s), think about where in the ocean (again – there may be differences between real ocean and model) productivity is currently limited by \(PO_{4}\). Also be aware of possible on-set of Fe limitation if you relieve the PO4 limitation (i.e., you could potentially lose effectiveness if you supply too much PO4 and instead productivity and \(CO_{2}\) draw-down is capped by a second factor). You could potentially consider PO4 and Fe addition at the same time … ?
 
 %------------------------------------------------
 
 \subsection{Enhanced weathering}
 
-\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC\_FPO4} (alkalinity addition) -- a constant (with time) flux of alkalinity is specified in: \texttt{biogem\_force\_flux\_ocn\_ALK\_sig.dat}. The magnitude of the applied flux is then scaled in the user-config by the setting:
-\small\begin{verbatim}
+\textit{Forcing}: \textsf{\footnotesize worjh2.FeMahowald2006.FpCO2\_Fp13CO2\_A2\_02180PgC\_FPO4} (alkalinity addition)
+\vspace{1pt}
+\\ -- a constant (with time) flux of alkalinity is specified in: \texttt{biogem\_force\_flux\_ocn\_ALK\_sig.dat}. The magnitude of the applied flux is then scaled in the \textit{user-config} by the setting:
+\vspace{-2pt}\small\begin{verbatim}
 bg_par_ocn_force_scale_val_12=5.0e+13
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-2pt}
 
-Again, another example total flux. In choosing a total flux to apply, points of comparison include whatever the total weathering flux (via rivers) of alkalinity (often described in terms of the bicarbonate ion flux) to the global ocean is. Also: global cement (lime) production. (Note that in one mole of lime: CaO, you have 2 moles of alkalinity (\(Ca^{2+}\)).) 
+Again, another example total flux. In choosing a total flux to apply, points of comparison include whatever the total weathering flux (via rivers) of alkalinity (often described in terms of the bicarbonate ion flux) to the global ocean is. Also: global cement (lime) production. (Note that in one mole of lime: \(CaO\), you have 2 moles of alkalinity (\(Ca^{2+}\)).) 
 
 A spatial pattern of the flux is also defined, in the file:
-\small\begin{verbatim}
+\vspace{-2pt}\small\begin{verbatim}
 biogem_force_flux_ocn_ALK_SUR.dat
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-2pt}
 
-An example pattern has been set – here, bordering the major tropical coral reefs locations in the Western Pacific. In choosing your regions(s), you might think about mitigating specific ecosystem impacts of ocean acidification, or about the feasibility of transport and proximity to abundant limestone (CaCO3 – the source of lime) and/or energy.
+An example pattern has been set – here, bordering the major tropical coral reefs locations in the Western Pacific. In choosing your regions(s), you might think about mitigating specific ecosystem impacts of ocean acidification, or about the feasibility of transport and proximity to abundant limestone (\(CaCO_{3}\) – the source of lime) and/or energy.
 
 %------------------------------------------------
 
@@ -2782,7 +2824,7 @@ The spatial patterns of an applied flux forcing to the ocean can easily be modif
   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 \end{verbatim}\normalsize
 
-Here: ‘\texttt{0}’s represent land and cannot have a forcing associated with them. ‘\texttt{0.0}’s represent a zero flux to the ocean, and ‘\texttt{1.0}’s the default Southern Ocean forcing pattern. Note that a distinction is made between a ‘\texttt{0}’ and a ‘\texttt{0.0}’ so that you can make out where the continents are and do not necessarily have to count in the \textit{i} and \textit{j} grid directions to find a specific location. The grid is the same as you saw previously in the ocean circulation tracing Lab, and which numbered the \textit{i} and \textit{j} axes if that helps. For the ALK forcing, ‘\texttt{1.0}’s are set off of the coast of Australia and SE Asia and in the PO4 forcing, in the Atlantic.
+Here: ‘\texttt{0}’s represent land and cannot have a forcing associated with them. ‘\texttt{0.0}’s represent a zero flux to the ocean, and ‘\texttt{1.0}’s the default Southern Ocean forcing pattern. Note that a distinction is made between a ‘\texttt{0}’ and a ‘\texttt{0.0}’ so that you can make out where the continents are and do not necessarily have to count in the \textit{i} and \textit{j} grid directions to find a specific location. The grid is the same as you saw previously in tracing ocean circulation, and which numbered the \textit{i} and \textit{j} axes if that helps. For the ALK forcing, ‘\texttt{1.0}’s are set off of the coast of Australia and SE Asia and in the \(PO_{4}\) forcing, in the Atlantic.
 
 There is no more to changing the pattern of the flux forcing than simply marking with a ‘\texttt{1.0}’ where you would like the forcing applied, and a ‘\texttt{0.0}’ where it should not be. Note that there should be a single blank line at the bottom of the file. (If you have problems applying a modified spatial pattern – check that this is present.) It is best to keep a copy of the original forcing in case you make a mess of the spatial pattern file, but the original can also be recovered from the code server.
 
@@ -2800,64 +2842,16 @@ There is no more to changing the pattern of the flux forcing than simply marking
 
 \begin{itemize}
 
+\vspace{1pt}
 \item Impacts and ecosystems of interest could potentially be ones residing on the ocean floor, such as cold-water (deep water) corals, and are not necessarily planktic (/surface) only.
 
+\vspace{1pt}
 \item Don’t forget that different calcifying organisms employ different mineralogies (calcite vs. aragonite), with different saturation states and hence potentially susceptibility to ocean acidification. Hence thresholds of both aragonite and calcite saturation will be relevant, depending on the organism. Depending on the organism, saturation changes occurring in specific regions may much more relevant than a global mean change. Also, it might be the seasonal minimum value reached, rather than annual averaged minimum, that is critical.
 
-\item Some of the arguments against some forms of ocean carbon geoengineering concern the potential for adverse impacts on marine organisms (and positive climate feedbacks) induced by decreases in the degree of oxygenation in the ocean, such as expanding and/or intensifying oxygen minimum zones. cGENIE saves 3D fields of \(O_{2}\) concentrations that can be plotted in slices through the ocean of various orientations.
+\vspace{1pt}
+\item Some of the arguments against some forms of ocean carbon geoengineering concern the potential for adverse impacts on marine organisms (and positive climate feedbacks) induced by decreases in the degree of oxygenation in the ocean, such as expanding and/or intensifying oxygen minimum zones. \textbf{muffin} saves 3D fields of \(O_{2}\) concentrations that can be plotted in slices through the ocean of various orientations.
 
 \end{itemize}
-
-%------------------------------------------------
-
-\subsection{Further modifications of the biological pump in the ocean}
-
-Other manipulations of the biological pump and ocean carbon cycle are possible and potentially instructive and in the following examples may be of rather more relevance to past climates and carbon cycles and e.g. possible reasons for the low atmospheric \(CO_{2}\) concentrations at the last glacial, as opposed to relevant to geoengineering (a good thing!). The first two of these may have profound effects not only atmospheric p\(CO_{2}\) but also on dissolved oxygen concentrations in the ocean (and hence implications for the suitability of animal habitat such as for fish) and this is something that you will want to look at as part of your overall assessment of impacts.
-
-\subsubsection*{Remineralization depth}
-
-In the model configuration that you have been using, the degradation of particulate organic matter sinking in the water column proceeds according to a fixed profile of flux with depth (there is no e.g. temperature control on the rate of bacterial degradation of sinking organic matter) with \(CO_{2}\) and PO4 released back to the seawater as the particulate flux decreases. The parameter that controls the (e-folding) depth scale of particulate organic matter is:
-\small\begin{verbatim}
-bg_par_bio_remin_POC_eL1=589.9451
-\end{verbatim}\normalsize
-Either edit this value (found under the heading: \texttt{\# --- REMINERALIZATION ---}) or add a new line at the end of the \textit{user-config} file specifying the value you want. Units are \(m\).
-
-Read \textit{Ridgwell et al.} [2007] for additional discussion of this parameter. See Figure 2-4 in \textit{Ridgwell} [2001] (http://www.seao2.org/pubs/ridgwell\_thesis.pdf) for an illustration of how the flux of particulate organic matter decreases with depth in the ocean, plus references therein.
-
-There is also an associated parameter: \texttt{bg\_par\_bio\_remin\_POC\_frac2}, which sets a fraction of organic matter that is assumed to settle through the water column completely un-altered (currently assigned a value of 0.045 == 4.5\%), but this is arguably less useful to change than the remineralization length-scale of the more labile fraction (the other 95.5\% of particulate organic carbon exported from the ocean surface).
-
-Note that there may well be no simple parallel that can be found in geoengineering to this process. However, there are hypotheses that during the last glacial and as a result of colder ocean temperatures, the depth scale was longer. Conversely, there are ideas about that the warmer temperatures of the e.g. Eocene ocean and hence faster rates of bacterial metabolism led to a much shallower remineralization depth scale. So a remineralization depth scale that is responsive to temperature may have importance in understanding ocean biogeochemical cycles during both past warm and cold climates as well as obviously, future global change. While you are not implementing a temperature-dependent parameterization explicitly, you can at least test for whether changes in temperature might have important impacts by simply changing the remineralization depth to be shallower (smaller depth-scale under a warming climate) or deeper (greater depth-scale in a colder ocean).
-
-\subsubsection*{Macro nutrient inventory and uptake}
-
-Suggestions have been made that nutrients were used more efficiently during the LGM, meaning that for the same nutrient uptake at the surface more carbon was exported to depth in the ocean. See: \textit{Omta et al.} [2006]. There are also a bunch of (relatively old) hypotheses concerning differences between glacial and modern ocean in how much nitrate (\(NO^{-}_{3}\)) there was. There is no \(NO^{-}_{3}\) in this version of \textbf{muffin} (just \(PO_{4}\) and Fe), but an analogous change can be made to the phosphorous cycle.
-
-For the nutrient-to-carbon ratio in organic matter, the relevant parameter is:
-\small\begin{verbatim}
-bg_par_bio_red_POP_POC=106.0
-\end{verbatim}\normalsize
-To change the default value (106.0), add a new line at the end of the user-config file specifying the value you want. A larger number means that \(PO_{4}\) is being utilized more efficiently and more organic matter is being produced for the same nutrient consumption.
-
-To test the effect of there being more \(PO_{4}\) in the ocean, in addition to using the (surface) flux forcing as described earlier, it is also possible to simply increase the inventory of the ocean as a whole in one go:
-\small\begin{verbatim}
-bg_ocn_dinit_8=1.0E-6
-\end{verbatim}\normalsize
-which will add \(1\:\mu mol\:kg^{-1}\) of \(PO_{4}\) uniformly to the ocean. (A larger/smaller number will obviously increase the glacial nutrient inventory by more/less.)
-
-In terms of geoengineering, changing the ‘Redfield’ ocean plankton might be difficult … but not impossible, although we are presumably talking about releases of genetically modified organisms to the entire ocean to achieve this meaning there are obviously some severe ethical concerns. However, adding macro nutrients such as \(PO_{4}\) (more often, \(NO^{-}_{3}\) is talked about) may be more feasible.
-
-\subsubsection*{CaCO3:POC rain ratio}
-
-Kicked off by a classic 1994 Nature paper by \textit{Archer and Maier-Reimer} (see: \textit{Kohfeld and Ridgwell} [2009]), one potential means of changing atmospheric \(CO_{2}\) naturally at the last glacial involves changes in the export ratio between CaCO3 (shells) and POC (particulate organic matter). Such a change in ratio could come about through a variety of ways (e.g., via the 'silica leakage hypothesis' (see: Kohfeld and Ridgwell [2009]) and also through the direct effect of Fe on diatom physiology (see Watson et al. [2000] in Nature and also Supplemental Information). There are also ideas about an opposite ocean acidification effect, whereby the less acidic glacial (compared to modern) ocean led to increased calcification and CaCO3 export. Note that this response (higher saturation == great calcification) is encoded into your model configuration – see Ridgwell et al. [2007b].
-
-In \textbf{muffin}, the CaCO3:POC rain ratio is controlled (technically: scaled) by the parameter:
-\small\begin{verbatim}
-bg_par_bio_red_POC_CaCO3=0.04
-\end{verbatim}\normalsize
-
-The pattern of CaCO3:POC rain ratio is not uniform across the ocean (why? (see: \textit{Ridgwell et al.} [2007, 2009]), and its pattern can be viewed in the (2D \textbf{BIOGEM}) \textbf{netCDF} variable: \textsf{\footnotesize misc\_sur\_rCaCO3toPOC}.
-
-(Note that it is unlikely that there is any parallel in a geoengineering context to this process.)
 
 %------------------------------------------------
 
@@ -2865,18 +2859,22 @@ The pattern of CaCO3:POC rain ratio is not uniform across the ocean (why? (see: 
 
 \begin{itemize}
 
-\item If you want to combine forcings, you need to first update the file: \textsf{\footnotesize configure\_forcings\_ocn.dat} – this specifies which ocean flux forcing will be used – simply copy the relevant line from the equivalent file of the forcing to be added. You will also need to copy in the relevant ‘\texttt{\_sig.dat}’ and ‘\texttt{\_SUR.dat}’ files. Remember that in the user-config file, you will need to set the relevant flux scaling parameter for each different flux in the forcing.
+\vspace{1pt}
+\item If you want to combine forcings, you need to first update the file: \textsf{\footnotesize configure\_forcings\_ocn.dat} – this specifies which ocean flux forcing will be used – simply copy the relevant line from the equivalent file of the forcing to be added. You will also need to copy in the relevant ‘\texttt{\_sig.dat}’ and ‘\texttt{\_SUR.dat}’ files. Remember that in the \textit{user-config} file, you will need to set the relevant flux scaling parameter for each different flux in the forcing.
 
+\vspace{1pt}
 \item By default, the \(CO_{2}\)-climate feedback is ‘on’:
-\small\begin{verbatim}
+\vspace{-2pt}\small\begin{verbatim}
 # set climate feedback
 ea_36=y
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-2pt}
 Should you want to assess the impacts of geoengineering independently of changes in climate -- the option is there. (Note that under some of the high end \(CO_{2}\) emissions scenarios, there may be a degree of collapse of the AMOC that will presumably affect the patterns of ocean acidification and oxygenation etc.)
 
-\item If you are having doubts that your experiment is actually ‘doing’ anything (different from the control) – remember to create anomaly maps (plots) to look for specific changes in e.g. saturation state, pH, or the water column inventory of anthropogenic \(CO_{2}\). Even before this – plot anomalies of the flux you think you have applied, looking specifically at the region you think you have applied it to. For this, \textbf{muffin} saves the 3D distributions of dissolved Fe and PO4. See Figures below.
+\vspace{1pt}
+\item If you are having doubts that your experiment is actually ‘doing’ anything (different from the control) – remember to create anomaly maps (plots) to look for specific changes in e.g. saturation state, pH, or the water column inventory of anthropogenic \(CO_{2}\). Even before this – plot anomalies of the flux you think you have applied, looking specifically at the region you think you have applied it to. For this, \textbf{muffin} saves the 3D distributions of dissolved Fe and \(PO_{4}\). See Figures below.
 
-\item Always be aware of the caveats regarding this specific model (and models in general) – how much does it different form the ‘real world’ for the modern ocean, particularly in terms of patterns of carbonate saturation? Does it even simulate anthropogenic \(CO_{2}\) uptake adequately in the first place (e.g. see session \#2)?
+\vspace{1pt}
+\item Always be aware of the caveats regarding this specific model (and models in general) – how much does it different form the ‘real world’ for the modern ocean, particularly in terms of patterns of carbonate saturation? Does it even simulate anthropogenic \(CO_{2}\) uptake adequately in the first place?
 
 \end{itemize}
 
@@ -2890,7 +2888,7 @@ Top: pre-industrial model ocean surface saturation (aragonite) with ReefBase tro
 2nd and 3rd down: Year 1994 and 2010 ocean surface saturation (aragonite) with ReefBase reef locations.
 Bottom: Year 2010 ocean surface saturation (aragonite) under the A2 \(CO_{2}\) emissions scenario.
 The thick white line delineates the 3.25 saturation contour (inferred to reflect a limitation on corals).
-\textit{Examples here produced using \textbf{MATLAB} (plotting scripts are located in genie-matlab) but equally do-able in Panoply with the exception of achieving a data overlay. These are provided simply to illustrate some of the impacts you might consider and possible ways of visualizing them.}
+\textit{Examples here produced using \textbf{muffinplot} but equally do-able in \textbf{Panoply} with the exception of achieving a data overlay. These are provided simply to illustrate some of the impacts you might consider and possible ways of visualizing them.}
 }
 \label{fig:chx-oaimpacts}
 \end{figure}
@@ -2900,13 +2898,47 @@ The thick white line delineates the 3.25 saturation contour (inferred to reflect
 \includegraphics[scale=0.875]{chx-geoengimpacts.eps}
 \end{center}
 \caption{
-\textbf{Ocean surface export (particulate organic carbon) and zonal [O2] anomalies.}
-Left: anomalies of global mean annual export production, for Fe fertilization (top), PO4 addition (middle), and ocean liming (bottom).
-Right: Zonal mean anomalies of dissolved O2 concentrations.
-\textit{Examples here produced using \textbf{MATLAB} (plotting scripts are located in genie-matlab) but equally do-able in Panoply with the exception of achieving a data overlay. These are provided simply to illustrate some of the impacts you might consider and possible ways of visualizing them.}
+\textbf{Ocean surface export (particulate organic carbon) and zonal \([O_{2}]\) anomalies.}
+Left: anomalies of global mean annual export production, for \(Fe\) fertilization (top), \(PO_{4}\) addition (middle), and ocean liming (bottom).
+Right: Zonal mean anomalies of dissolved \(O_{2}\) concentrations.
+\textit{Examples here produced using \textbf{muffinplot} but equally do-able in \textbf{Panoply} with the exception of achieving a data overlay. These are provided simply to illustrate some of the impacts you might consider and possible ways of visualizing them.}
 }
 \label{fig:chx-geoengimpacts}
 \end{figure}
+
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{} % Chapter heading image
+
+\chapter{Proxies and Reconstructing the Past}
+
+\hfill \break
+
+\vspace{24mm}
+
+\noindent 
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section*{READ.ME}
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{xxx}
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -3688,6 +3720,74 @@ In this warmer world:
 \vspace{2mm}
 
 See what you can find out about the two systems and think about the mechanisms that might be responsible for the differences \dots
+
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{} % Chapter heading image
+
+\chapter{Atmopsheric dynamics}
+
+\hfill \break
+
+\vspace{24mm}
+
+\noindent 
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section*{READ.ME}
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{xxx}
+
+
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{} % Chapter heading image
+
+\chapter{Geoengineering II}
+
+\hfill \break
+
+\vspace{24mm}
+
+\noindent 
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section*{READ.ME}
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{xxx}
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
