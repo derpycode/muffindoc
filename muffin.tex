@@ -9327,9 +9327,14 @@ ea_42 = "orbits_La2004_1Myr.dat"
 
 In addition to these settings, a data file (\footnotesize\textsf{.dat}\normalsize) needs to be present in \footnotesize\textsf{genie-embm/data/input }\normalsize that specifies the values for eccentricity, obliquity and precession over time. In the example described above, the filename is:
 
+\vspace{1mm}
 \footnotesize\textsf{orbits\_La2004\_1Myr.dat}\normalsize
+\vspace{1mm}
 
 \noindent which provides the astronomical solution for the past 1 million year based on the astronomical solution of \textit{Laskar} (2004) in time-steps of 1,000 years, meaning that 1,000,000 / 1,000 = 1,000 data points (+ 1 for year zero) = 1,001 data points are available in file (\texttt{ea\_40}). 
+
+Note that the file containing the astronomical solution is read in reverse
+order, i.e. from the bottom to the top. Thus, for file \footnotesize\textsf{orbits\_La2004\_1Myr.dat}\normalsize, the values for eccentricity and obliquity used for the first 1000 year of the simulation, are 0.03576 and 0.40080, respectively, corresponding to the astronomical solution 1 million year ago. To change the time slice that you would like to simulate\footnote{Don't forget to update parameter ea\_40!} (for example from 500 ka to recent), simply copy the astronomical solution into a new text file and remove the last 500 lines so that the simulation begins with the solution at 500 ka.
 
 The value for parameter \texttt{ea\_41} depends on the resolution of the model that is used. By default, for a 16-level ocean circulation model configuration, \textbf{muffin} employs 96  time-steps per year in the \textbf{GOLDSTEIN} ocean circulation model component. When the astronomical solution is provided as one orbital value per \(1000\) years, this equates to \(1000\times96=96000\) \textbf{GOLDSTEIN} time steps. For lower resolution configurations of \textbf{muffin}, \textbf{GOLDSTEIN} may be operating on \(48\) time steps per year, which means that \texttt{ea\_41} need to be changed to \(48000\) (when the astronomical solution is provided \(1000\) year time steps).
 
