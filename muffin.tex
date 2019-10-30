@@ -3427,15 +3427,13 @@ Questions:
 
 \subsection{A fully size-structured  ecosystem} We are now going to switch to a more diverse version of the size-structured ecosystem model. This configuration has 8 size classes of phytoplankton, and 8 size classes of zooplankton, as shown in Table~\ref{planktonconfig2}.
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
-
+\vspace{1mm}
 \item Save the \textit{ecosystem configuration} file under a new name, replacing the existing plankton populations with the ones described in Table~\ref{planktonconfig2}.
-
+\vspace{1mm}
 \item Update the \textit{user-config} to point to the new \textit{ecosystem configuration} file, and save again under a new name. (It is generally a good idea to make a note of the name and goal of each experiment as you set it up.)
-
+\vspace{1mm}
 \item Run the new model for at least 20 years (this will probably take about 10-15 minutes). 
-
 \end{enumerate}
 \vspace{2mm}
 
@@ -3479,17 +3477,22 @@ $j$     & Functional Type       & \multicolumn{1}{r}{Diameter ($\mu$m)}  \\
 
 \subsection{Ecosystem characteristics} We can now begin to look at the size and diversity metrics of the phytoplankton community in a meaningful way.
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
-
-\item Look first at (1) the total carbon biomass, (2) the carbon uptake flux (i.e. primary production) and (3) the geometric mean size. Make sure in each case that you are looking at the last year of model output. You may also find it useful to adjust the colour scale, or to change to a logarithmic colour scale (e.g. try a logarithmic scale from 2 to 20 microns for the geometric mean size).
+\vspace{1mm}
+\item Look first at:
+\begin{enumerate}[noitemsep]
+\item the total carbon biomass
+\item the carbon uptake flux (i.e. primary production) 
+\item the geometric mean size
+\end{enumerate}
+Make sure in each case that you are looking at the last year of model output. You may also find it useful to adjust the colour scale, or to change to a logarithmic colour scale (e.g. try a logarithmic scale from 2 to 20 microns for the geometric mean size).
 \\Looking at the maps, we can perhaps pick out three different ``biomes'' in terms of their community properties:
 \begin{enumerate}
-\item The low-latitude oligotrophic gyres are relatively unproductive, and support some of the lowest annual mean biomasses in the surface ocean. In these regions the mean phytoplankton size is very small. 
-\item Subpolar latitudes between 40$^\circ$ and 50$^\circ$ N or S are much more productive, and support very high annual mean biomass. These communities also have the highest mean sizes of any region.
-\item The polar oceans are also highly productive (except perhaps the high Arctic), and support relatively high annual mean biomasses. These communities are made up (in the model, at least) of slightly smaller phytoplankton than we see in the subpolar regions.
+\item The low-latitude oligotrophic gyres are relatively unproductive, and support some of the lowest annual mean biomass in the surface ocean. In these regions the mean phytoplankton size is very small. 
+\item Subpolar latitudes between 40$^\circ$ and 50$^\circ$ (either N or S) are much more productive, and support very high annual mean biomass. These communities also have the highest mean sizes of any region.
+\item The polar oceans are also highly productive (except perhaps the high Arctic), and support relatively high annual mean biomass. These communities are made up (in the model, at least) of slightly smaller phytoplankton than we see in the subpolar regions.
 \end{enumerate}
-
+\vspace{1mm}
 \item What can we find out about the community structure in these regions? Open up some of the other metrics describing the community (standard deviation of size distribution, size fractionation, diversity, limiting factors). What can you find out about the community structure within each region, in terms of coexistence and exclusion?
 \begin{itemize}
 \item Does the community span a broad or narrow size range?
@@ -3497,12 +3500,12 @@ $j$     & Functional Type       & \multicolumn{1}{r}{Diameter ($\mu$m)}  \\
 \item What is the smallest and largest size class in each biome?
 \item How much biomass is concentrated in each size fraction (picoplankton, nanoplankton and microplankton)?
 \end{itemize}
-
 \end{enumerate}
-\vspace{2mm}
+\vspace{1mm}
 
-What factors do you think are most important in terms of dictating the global distribution of each size class?
-\\To find out the answers to these questions, you are going to pull the model apart, and then put it back together. At each stage the aim is to bring in a different limiting factor, so that you can see its effect on the model behaviour.
+Overall -- what factors do you think are most important in terms of dictating the global distribution of each size class?
+
+To find out the answers to these questions, you are going to pull the model apart, and then put it back together. At each stage the aim is to bring in a different limiting factor, so that you can see its effect on the model behaviour.
 
 %------------------------------------------------
 
@@ -3512,19 +3515,16 @@ The first step is to find out the impact of abiotic factors on the distribution 
 
 The fundamental niche is fairly abstract, and not something that can be measured in the real world. In model world, however, we can get a useful estimate of the fundamental niche by making a few simple changes to the model.
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
-
+\vspace{1mm}
 \item First of all, you can remove all predation, simply by removing the zooplankton from the \textit{ecosystem configuration} file. Once again, you will need to save a new and appropriately named \textit{user-config} file.
-
+\vspace{1mm}
 \item Next, you also need to remove all competition for nutrients and light. This involves tweaking the model equations so that the phytoplankton are not nutrient limited, and do not attenuate light. To do this, all you need is to add the following line to the \textit{user-config} file.
 \small\begin{verbatim}
 eg_fundamental = .TRUE.
 \end{verbatim}\normalsize
-
-\item If you now run the model (just 10 years should do in this case), you should have a community of eight phytoplankton size classes that are growing solely as a function of the incoming light and the temperature. This growth will be balanced balanced the basal (i.e. non-grazing) mortality. As there is no feedback between the ecosystem and the environment, populations that can survive will grow exponentially and without limit, potentially reaching astronomical abundance in very little time. Populations that
-\vspace{2mm}
-\item cannot survive will rapidly decline to almost nothing.
+\vspace{1mm}
+\item If you now run the model (just 10 years should do it, in this case), you should have a community of eight phytoplankton size classes that are growing solely as a function of the incoming light and the temperature. This growth will be balanced balanced the basal (i.e. non-grazing) mortality. As there is no feedback between the ecosystem and the environment, populations that can survive will grow exponentially and without limit, potentially reaching astronomical abundance in very little time. Populations that cannot survive will rapidly decline to almost nothing.
 \\The regions in which each plankton shows positive growth defines its fundamental niche. This is a function of abiotic conditions only, and is the absolute limit of its geographical range. Look at the carbon biomass distribution in each size class (set the data range in each case from \(0\) to \(1mmolCm^{-3}\)).
 \begin{itemize}
 \item How and why does the fundamental niche vary with size?
@@ -3540,11 +3540,11 @@ eg_fundamental = .TRUE.
 
 The next step is asses the impact of resource competition. We are first going to do this in the absence of any zooplankton grazing. 
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item All you need to do at this stage is to re-enable nutrient and light competition. To do this, simply delete `\texttt{eg\_fundamental~=~.TRUE.}' from the \textit{user-config} file (or comment out the line to disable it), and save under a new name. Leave the \textit{ecosystem configuration} file as it is.
 
-\item All you need to do at this stage is to re-enable nutrient and light competition. To do this, simply delete `\texttt{eg\_fundamental~=~.TRUE.}' from the \textit{user-config} file, and save under a new name. Leave the \textit{ecosystem configuration} file as it is.
-
+\vspace{1mm}
 \item You should have a community of eight phytoplankton size classes that are competing for nutrients and light, again as a function of temperature. This is a much more realistic simulation, as feedbacks between the ecosystem and the environment serve to limit the size of the phytoplankton populations. \\Examine the model to find out:
 \begin{itemize}
 \item What size classes are able to persist when resource competition is enabled?
@@ -3552,10 +3552,10 @@ The next step is asses the impact of resource competition. We are first going to
 \item How does the distribution of each size class compare to the fundamental niche?
 \item What are the reasons for any differences?
 \end{itemize}
-Phytoplankton biogeography at this stage begins to approximate the realised niche, which defines the range of conditions that support a population in the presence of ecological interactions. Note that at this stage, however, we have ignored the effects of any predator-prey interactions, as the zooplankton grazers are still missing.
-
 \end{enumerate}
-\vspace{2mm}
+\vspace{1mm}
+
+Phytoplankton biogeography at this stage begins to approximate the realised niche, which defines the range of conditions that support a population in the presence of ecological interactions. Note that at this stage, however, we have ignored the effects of any predator-prey interactions, as the zooplankton grazers are still missing.
 
 %------------------------------------------------
 
@@ -3563,27 +3563,23 @@ Phytoplankton biogeography at this stage begins to approximate the realised nich
 
 The previous simulation is clearly unrealistic (although, hopefully, informative). You are now going to add back in just a single zooplankton class, that grazes equally on all plankton (including itself). 
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
-
+\vspace{1mm}
 \item Add a 100 micron zooplankton into the \textit{ecosystem configuration} file, and save under a new name. Also update the \textit{user-config} file to reflect the change, and save under a similar name.
-
+\vspace{1mm}
 \item You need to modify the model so that the zooplankton eats all prey with equal preference. This can be done by adding the following lines to the \textit{ecosystem configuration} file.
-\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 eg_ns=1
 eg_pp_sig_a=1.0e99
-\end{verbatim}\normalsize
-
+\end{verbatim}\normalsize\vspace{-1mm}
 \item[NOTE:] For aficionados, the first parameter disables prey-switching (i.e. predators no longer preferentially attack the most abundant prey). The second parameter increases the width of the grazing kernel (i.e. predators can attack a range of prey across a huge size range with equal preference).
-
+\vspace{1mm}
 \item The addition of zooplankton to the model community should give a more accurate approximation of the realised niche. 
 \begin{itemize}
 \item Does the addition of a single zooplankton grazer enable more or less coexistence?
 \item What factors might be responsible for any shifts in biogeography?
 \end{itemize}
-
 \end{enumerate}
-\vspace{2mm}
 
 %------------------------------------------------
 
@@ -3591,12 +3587,17 @@ eg_pp_sig_a=1.0e99
 
 You began with a full food-web containing 8 phytoplankton and 8 zooplankton size classes. The diversity of zooplankton clearly has an effect on the phytoplankton community that is not seen in the previous experiment. This effect can be imitated with just one generalist zooplankton if we instruct it to graze preferentially on the most successful prey. 
 
+\vspace{8mm}
+\pagebreak 
+
 Re-enable this 'prey switching' effect by changing the following control parameter to a \texttt{2}:
-\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 eg_ns=2
 eg_pp_sig_a=1.0e99
-\end{verbatim}\normalsize
+\end{verbatim}\normalsize\vspace{-1mm}
+
 Compare this simulation to the first experiment (8 phytoplankton and 8 zooplankton) to see how the inclusion of prey switching increases coexistence through the `kill-the-winner' mechanism.
+
 \begin{itemize}
 \item How does nutrient limitation change with phytoplankton size, and how might zooplankton be affecting this?
 \item Look at the C:P biomass ratio in the community as a whole, and compare to your estimates from the NPZD model (Lesson~1). 
@@ -3624,29 +3625,26 @@ Compare this simulation to the first experiment (8 phytoplankton and 8 zooplankt
 
 \subsection{Mixotrophy}
 
-Try adding some mixotrophs to the phytoplankton and zooplankton already present in the community. These will have exactly half the nutrient uptake traits of phytoplankton of a similar size, and half the prey capture traits of zooplankton if a similar size. 
+Try adding some mixotrophs to the phytoplankton and zooplankton already present in the community. These will have exactly half the nutrient uptake traits of phytoplankton of a similar size, and half the prey capture traits of zooplankton if a similar size. To do this:
 
-\vspace{2mm}
 \begin{enumerate}[noitemsep]
-
+\vspace{1mm}
 \item Save the previous \textit{ecosystem configuration} file under a new name.
-
+\vspace{1mm}
 \item Edit the new \textit{ecosystem configuration} file and add an additional line to add a mixotroph:
-\begin{verbatim}
+\vspace{-1mm}\begin{verbatim}
  Mixotroph    xxx   1
-\end{verbatim}
+\end{verbatim}\vspace{-1mm}
 where \texttt{xxx} is the class size of the mixotroph. (And remember to save it.)
-
+\vspace{1mm}
 \item Update the \textit{user-config} to point to the new \textit{ecosystem configuration} file, and save again under a new name. (It is generally a good idea to make a note of the name and goal of each experiment as you set it up.)
-
+\vspace{1mm}
 \item Run the new model for at least 10-20 years. 
-
 \end{enumerate}
-\vspace{2mm}
+\vspace{1mm}
 
-Questions to explore/answer:
+\noindent Further questions to explore/answer:
 
-\vspace{2mm}
 \begin{itemize}
 \item How does this effect the mean and standard deviation of cell size?\\(Size and diversity metrics will be calculated for phytoplankton and mixotrophs together)
 \item How does mixotrophy effect the C:P ratio of organic matter? 
@@ -3654,14 +3652,18 @@ Questions to explore/answer:
 \end{itemize}
 
 Also: try replacing all the phytoplankton and zooplankton with a range of sizes of mixotrophs. How does the simulation differ from one with the same size range of sperate phytoplankton and zooplankton classes?
-
+%
 %------------------------------------------------
 
 \newpage
 
 %------------------------------------------------
 
-\section{Ecology in a paleo-ocean}
+\section{Ecology in past oceans}
+
+Here we consider a series of examples\footnote{Either published or in the works or existing in some publication fantasy ...} of the \textbf{ECOGEM} model of marine ecology applied to published paleo configuration of \textbf{muffin} and used to ask questions of how different could marine carbon cycling (and atmospheric \(pCO_{2}\)) and oxygenation have been in the (relatively recent) past and how do model projections compare with proxy observations.
+
+The three examples come firstly from the Last Glacial Maximum with direct comparison being made to post glacial time (here, the late Holocene), with the intention to explore the role of climate cooling, altered ocean circulation, and increased iron supply to the ocean in modifying plankton distributions and size structures. Secondly, from around the time of the Paleocene-Eocene Thermal Maximum (PETM) some 55 Myr ago, now both considering a different paleogeograpnhy, a warmer ocean, and then transient warming on top of that. Lastly we turn to marine ecology and carbon cycling in the aftermath of the impact and extinction event at the end of the Cretaceous, some 66 Myr ago, and return to our earlier exploration of what happens if you lose the larger plankton in the ocean.
 
 %------------------------------------------------
 
@@ -3706,6 +3708,19 @@ In this warmer world:
 
 See what you can find out about the two systems and think about the mechanisms that might be responsible for the differences \dots
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Ecology in fake oceans}
+
+%------------------------------------------------
+%
+We can also consider the question of the casues and consequences of different ecologies in the ocean in a more general way and return to our hypothetical or 'fake' oceans.
+
+%
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
 %----------------------------------------------------------------------------------------
