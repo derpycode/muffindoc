@@ -100,6 +100,8 @@ PERMIL
 \end{arrowlist}
 
 \footnotesize\textsf{ }\normalsize
+\textsf{\footnotesize }
+\textsf{\small }
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
