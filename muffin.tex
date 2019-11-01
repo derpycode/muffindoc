@@ -3684,7 +3684,7 @@ The three examples come firstly from the Last Glacial Maximum with direct compar
 
 The Last Glacial Maximum (LGM) (ca. 19 to 23 ka) was characterized by lower sealevel and higher ocean salinity, colder ocean temperatures, and a reorganized meridional overturning circulation in the Atlantic. The latter 2 changes in particular should have impacted marine ecosystems and indeed, observations suggest range migration (temperature-tracking) and shifts in the zone of highest productivity in the Southern Ocean, amongst other impacts. The aim of this particular investigation, is to assess what these ecological changes are (at least in model world).
 
-Provided is a configuration of LGM ocean circulation that has been tuned to fit observations of benthic carbon isotopes, which provide an observational constrain on large-scale ocean circulation. To this, you'll an ecosystem (in place of the default \textbf{BIOGEM} 'induced export' scheme). Also provided is a \textbf{muffin} configuration for late Holoene ('HOL') (0-6 ka), created in exactly the same way and also tuned to respective (0-6 ka) benthic carbon isotope data. Configuration HOL provides a point of comparison (or control) for you to compare the ecology in a colder, LGM ocean against.\footnote{i.e. you run pairs of HOL and LGM experiments and contrast between them, rather than necessarily comparing to previous modern configurations.}
+Provided is a configuration of LGM ocean circulation that has been tuned to fit observations of benthic carbon isotopes, which provide an observational constrain on large-scale ocean circulation. To this, you'll an ecosystem (in place of the default \textbf{BIOGEM} 'induced export' scheme). Also provided is a \textbf{muffin} configuration for late Holocene ('HOL') (0-6 ka), created in exactly the same way and also tuned to respective (0-6 ka) benthic carbon isotope data. Configuration HOL provides a point of comparison (or control) for you to compare the ecology in a colder, LGM ocean against.\footnote{i.e. you run pairs of HOL and LGM experiments and contrast between them, rather than necessarily comparing to previous modern configurations.}
 
 \vspace{1mm}
 
@@ -3694,26 +3694,69 @@ The \textit{user-configs} you need to use, or copy-rename, can be found in the d
 \vspace{1mm}
 \\\noindent(and you can run your experiments from here, or better, copy-edit-rename the \textit{user-configs} you run experiments with, from the \textsf{\footnotesize LABS} sub-directory).
 
-Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but note that you may be running a \textit{user-config} with a different name and likely from a different sub-directory.
-
-You want to spin up the following experiments first (and then experiment with them later):
+Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but note that you may be running a \textit{user-config} with a different name and likely from a different sub-directory. 
+Spin up the following experiments first (and then experiment with them later)\footnote{Noting that the long file-names differ only in a single '\textsf{v}' vs. an '\textsf{a}' ...}:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
-\item[(1)] \textsf{\footnotesize xxx}
-\item[(2)] \textsf{\footnotesize xxx}
+\item[(1)] \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_rb } \textit{base-config} \\+ \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_rb.SPIN } \textit{user-config}
+\item[(2)] \textsf{\footnotesize muffin.CB.GIteiiva.BASESFeTDTL\_rb } \textit{base-config} \\+ \textsf{\footnotesize muffin.CB.GIteiiva.BASESFeTDTL\_rb.SPIN } \textit{user-config}
 \end{itemize}
 \vspace{1mm}
 
-\noindent Submit these to the cluster, but remember that you will need to recompile muffin between (1) and (2) (and re-compile before (1) if you have not  used that \textit{base-config} immediately prior). Run the spin-ups for 10,000 years.
+\noindent Submit these to the cluster ...  remembering that you will need to recompile \textbf{muffin} between (1) and (2) (and potentially also re-compile before running (1) if you have not  used that particular \textit{base-config} immediately prior). Run the spin-ups for 10,000 years.
 
-Neither of these configurations currently have an ecosystem enabled, but they will provide a baseline against which to contrast with and with-out an explicit ecology if you are interested. So what you need to do know is to add in \textbf{ECOGEM}. To do this, you need to modify both \textit{base-} and \textit{user-config} files.\footnote{Strongly recmmmended that that you copy-rename both sets of files and edit the copies.}
+Neither of these configurations currently have an ecosystem enabled, but they will provide a baseline against which to contrast with and with-out an explicit ecology if you are interested. So what you need to do know is to add in \textbf{ECOGEM}. To do this, you need to modify both \textit{base-} and \textit{user-config} files of both the HOL and LGM model configurations.\footnote{Strongly recommended that that you copy-rename both sets of files and edit the copies.}
 
+\begin{enumerate}[noitemsep]
 
+\vspace{1mm}
+\item \textit{base-config} -- First, you need to enable the \textbf{ECOGEM} module.
+\\At the top of the file \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_Crb} you will see the line:
+\begin{verbatim}
+ma_flag_ecogem=.FALSE.
+\end{verbatim}
+Simply change this to \texttt{.TRUE.}
+\\Then, at the bottom of the file where you see the line: you will see the line:
+\begin{verbatim}
+# kraus-turner mixed layer scheme on (1) or off (0)
+go_imld = 0
+\end{verbatim}
+change the \texttt{0} to a \texttt{1} -- this enables a 'mixed layer depth' scheme in the ocean circulation model that \textbf{ECOGEM} needs to calculate light limitation during esp. intervals of high latitude / wintertime deep mixing.
 
+\vspace{1mm}
+\item \textit{user-config} -- Next some deletions and additions are needed in the \textit{user-config} provided with only implicit biological export enabled.
+\\In the section of the file under the heading:
+\small\begin{verbatim}
+#
+# --- BIOLOGICAL NEW PRODUCTION -------------------------------------
+#
+\end{verbatim}\normalsize
+you are going to delete everything there and replace it with:
+\begin{verbatim}
+# biological scheme ID string
+bg_par_bio_prodopt="NONE"
+\end{verbatim}
+The only other thing you need then is a section of code that defines all the \textbf{ECOGEM} ecological parameters.
+\\ Go open file \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN}, which you can find in the \textit{user-config} sub-directory \textsf{\footnotesize MS\wardetal.2018}, and you'll see under the heading:
+\small\begin{verbatim}
+#
+# --- ECOGEM ----------------------------------------------------------
+#
+\end{verbatim}\normalsize
+a long list of parameter settings (down to the next section headed \texttt{DATA SAVING}). Simply copy-paste this entire section (including \texttt{ECOGEM} header lines if you like), anywhere in your \textit{user-config} file. At the very end of the file would do just fine.\footnote{Try and ensure that there is blank line at the very end of the file just in case \textbf{muffin} has any problems reading it in.}
+\\This ... should do-it, i.e. you have added the same tuned ecosystem model as described in \textit{Ward et al.} [2018] to your LGM / HOL \textit{user-configs}.
 
+\end{enumerate}
 
+\vspace{1mm}
 
+Now you are ready to run new LGM and HOL experiments, with a full ecosystem in each\footnote{Remembering that presumably both your \textit{base-config} and \textit{user-config} file names are  different as compared to running the non \textbf{ECOGEM} version described in the \textsf{\footnotesize readme}.}. 
+\vspace{1mm}
+
+Obvious questions to investigate include not only how ecosystems and patterns of biological export may have differed between LGM and HOL, but also how patterns of nutrients (\(PO_{4}\) and \(Fe\)) may have differed ... and also distributions of dissolved \(O_{2}\) in the ocean. A water mass ventilation age tracer has also been simulated and the results of this wil help in understanding how global circulation patterns differ between the 2 time intervals. 
+
+You can also compare between with and without \textbf{ECOGEM} versions as the only thing that changes between pairs of HOL or pairs of LGM experiments is the biological scheme\footnote{Actually, this is not true, as in the \textbf{ECOGEM} enabled experiments, the mixed layer scheme in the coean circulation model is also activated and which has an impact on ocean circulation. You could then create a 3rd set of HOL+LGM experiments, using the basic \textbf{BIOGEM} implicit export biological scheme, but now also setting the \texttt{go\_imld} parameter to a value of \texttt{1}}.
 
 %------------------------------------------------
 \newpage
