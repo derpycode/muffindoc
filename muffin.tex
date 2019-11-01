@@ -3168,6 +3168,8 @@ In this `NPD' (single nutrient-plankton-detritus) configuration, we only have a 
 
 \item[NOTE:] The only PFTs available at the moment are \texttt{Phytoplankton}, \texttt{Zooplankton} and \texttt{Mixotroph}. The other groups currently have no real functionality associated with them. 
 
+\item[NOTE:] This file format is fussy, and you\uline{ cannot have any empty lines} in between the  \texttt{\small -START-OF-DATA-} and \texttt{\small -END-OF-DATA-} tags -- every line between these tags must have data (3 parameter values).
+
 \vspace{1mm}
 \item We can increase the ecological complexity of the model by adding another plankton population. Save the \textit{ecosystem configuration} file under a new and highly intuitive name (such as \textsf{\footnotesize NP\underline{Z}D.eco}), and add another line specifying a 100 micron zooplankton. It is important that the zooplankton is 10 times larger than the phytoplankton in terms of diameter. This is the optimal predator-prey length ratio in the default configuration. (You could maybe think about changing this value later on.)
 
@@ -3259,7 +3261,8 @@ These two variables take values of between 0 and 1. A \textsf{\footnotesize 1} i
 
 \vspace{1mm}
 \item  Plankton stoichiometry plays a critical role in determining which nutrient is most limiting to growth. You can increase the plankton \(Fe:C\) ratio by increasing the minimum and maximum iron quotas. Look at the parameters \texttt{eg\_qminFe\_a} and \texttt{eg\_qmaxFe\_a} in the \textit{user-config} file.
-\vspace{1mm}
+
+\pagebreak
 \begin{itemize}
 \item What happens to the ecosystem if you increase these parameters by a factor of 2, 5 or 10?
 \item How does a change in these parameters affect the model behaviour?
@@ -3676,37 +3679,73 @@ Here we consider a series of examples\footnote{Either published or in the works 
 The three examples come firstly from the Last Glacial Maximum with direct comparison being made to post glacial time (here, the late Holocene), with the intention to explore the role of climate cooling, altered ocean circulation, and increased iron supply to the ocean in modifying plankton distributions and size structures. Secondly, from around the time of the Paleocene-Eocene Thermal Maximum (PETM) some 55 Myr ago, now both considering a different paleogeograpnhy, a warmer ocean, and then transient warming on top of that. Lastly we turn to marine ecology and carbon cycling in the aftermath of the impact and extinction event at the end of the Cretaceous, some 66 Myr ago, and return to our earlier exploration of what happens if you lose the larger plankton in the ocean.
 
 %------------------------------------------------
+\newpage
+\subsection*{The Last Glacial}
 
-\subsection{The PETM} In this practical we are going to look at the ocean as it \textit{might} have been just over 55 million years ago, at the Paleocene-Eocene Thermal Maximum (PETM) -- in short a lot warmer, and with a somewhat different continental configuration and hence ocean circulation.
+The Last Glacial Maximum (LGM) (ca. 19 to 23 ka) was characterized by lower sealevel and higher ocean salinity, colder ocean temperatures, and a reorganized meridional overturning circulation in the Atlantic. The latter 2 changes in particular should have impacted marine ecosystems and indeed, observations suggest range migration (temperature-tracking) and shifts in the zone of highest productivity in the Southern Ocean, amongst other impacts. The aim of this particular investigation, is to assess what these ecological changes are (at least in model world).
 
-We are going to make the rather strong assumption that the ecosystem is structured according to exactly the same rules as in the modern ocean, and simply run the model in the new (i.e. old) environment.
+Provided is a configuration of LGM ocean circulation that has been tuned to fit observations of benthic carbon isotopes, which provide an observational constrain on large-scale ocean circulation. To this, you'll an ecosystem (in place of the default \textbf{BIOGEM} 'induced export' scheme). Also provided is a \textbf{muffin} configuration for late Holoene ('HOL') (0-6 ka), created in exactly the same way and also tuned to respective (0-6 ka) benthic carbon isotope data. Configuration HOL provides a point of comparison (or control) for you to compare the ecology in a colder, LGM ocean against.\footnote{i.e. you run pairs of HOL and LGM experiments and contrast between them, rather than necessarily comparing to previous modern configurations.}
 
-To do this, simply evaluate the following text at the terminal command line:
+\vspace{1mm}
 
-\vspace{-2mm}
-\small\begin{verbatim}
-./runmuffin.sh cgenie.eb_go_gs_ac_bg_eg.p0055c.BASES / BSS.p0055c.8P8Z.SPIN 1
-   EXAMPLE.p0055c.RidgwellSchmidt2010.SPIN1
-\end{verbatim}\normalsize
-\vspace{-2mm}
+The \textit{user-configs} you need to use, or copy-rename, can be found in the directory:
+\vspace{1mm}
+\\\textsf{\footnotesize genie-userconfigs/MS/odalenetal.CP.2019}
+\vspace{1mm}
+\\\noindent(and you can run your experiments from here, or better, copy-edit-rename the \textit{user-configs} you run experiments with, from the \textsf{\footnotesize LABS} sub-directory).
 
-\noindent which will force a re-compile of the model, and then to run longer:
+Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but note that you may be running a \textit{user-config} with a different name and likely from a different sub-directory.
 
-\vspace{-2mm}
-\small\begin{verbatim}
-qsub -j y -o cgenie_log -V -S /bin/bash runmuffin.sh 
-   cgenie.eb_go_gs_ac_bg_eg.p0055c.BASES / BSS.p0055c.8P8Z.SPIN 10
-   EXAMPLE.p0055c.RidgwellSchmidt2010.SPIN1
-\end{verbatim}\normalsize
-\vspace{-2mm}
+You want to spin up the following experiments first (and then experiment with them later):
 
-\noindent NOTE: This simulation does not include iron as a limiting nutrient. The spatial distribution of bioavailable iron sources is highly uncertain even in the modern ocean, and we simply do not have enough information to justify using iron in this ancient world. Bear that in mind when thinking about your results.
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[(1)] \textsf{\footnotesize xxx}
+\item[(2)] \textsf{\footnotesize xxx}
+\end{itemize}
+\vspace{1mm}
 
-Using what you have learnt so far, and your own resourcefulness, see what you can find out about the Paleocene-Eocene ecosystem.
+\noindent Submit these to the cluster, but remember that you will need to recompile muffin between (1) and (2) (and re-compile before (1) if you have not  used that \textit{base-config} immediately prior). Run the spin-ups for 10,000 years.
 
-In this warmer world:
+Neither of these configurations currently have an ecosystem enabled, but they will provide a baseline against which to contrast with and with-out an explicit ecology if you are interested. So what you need to do know is to add in \textbf{ECOGEM}. To do this, you need to modify both \textit{base-} and \textit{user-config} files.\footnote{Strongly recmmmended that that you copy-rename both sets of files and edit the copies.}
+
+
+
+
+
+
+
+%------------------------------------------------
+\newpage
+\subsection*{The PETM}
+
+In this practical we are going to look at the ocean as it \textit{might} have been just over 55 million years ago, at the Paleocene-Eocene Thermal Maximum (PETM) -- in short a lot warmer, and with a somewhat different continental configuration and hence ocean circulation. The exercise is based on a recent 'ECOGENIE' (\textbf{muffin} configured to include \textbf{ECOGEM}) publication\footnote{Wilson, J.D., F.M. Monteiro, D.N. Schmidt, B.A. Ward, and A. Ridgwell, Linking marine plankton ecosystems and climate: A new modeling approach to the warm early Eocene climate, Paleoceanography and Paleoclimatology, 33, 1439–1452, DOI: 10.1029/2018PA003374 (2018).} which you should read first.
+
+We are going to make the rather strong assumption that the ecosystem is structured according to exactly the same rules as in the modern ocean, and simply run the same ecological model configuration but in a new climate and ocean environment. However, because we don't really have any good (or any!) data constraints on the iron supply to the early Eocene ocean via e.g. dust, the ecological configuration does not include iron as a limiting nutrient. Bear that in mind when thinking about your results.
+
+The \textit{user-configs} you need to use, or copy-edit-rename, can be found in the directory:
+\vspace{1mm}
+\\\textsf{\footnotesize genie-userconfigs/MS/wilsonetal.2018}
+\vspace{1mm}
+\\\noindent(and you can run your experiments from here, or better, copy-edit-rename the \textit{user-configs} you run experiments with, from the \textsf{\footnotesize LABS} sub-directory).
+
+Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but note that you may be running a \textit{user-config} with a different name and likely from a different sub-directory. You want to spin up the following experiments first (and then experiment with them later):
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[(1)] \textsf{\footnotesize Modern}
+\item[(3)] \textsf{\footnotesize Early Eocene CO2 and Climate}
+\end{itemize}
+\vspace{1mm}
+
+\noindent Submit these to the cluster, but remember that you will need to recompile muffin between (1) and (3) (and re-compile before (1) if you have not been using the \textit{base-config} \texttt{muffin.CBE.worjh2.BASES} immediately prior to this). Run the spin-ups for 10,000 years.
 
 \vspace{2mm}
+\noindent When you have completed the pair of spin-ups, see what you can diagnose and learn about how ecosystems and the spatial pattern of ecology and biological export differ between a colder modern ocean and the warmer Eocene ocean. 
+
+For example, in the warmer Eocene world:
+
+\vspace{1mm}
 \begin{itemize}
 \item What has happened to the mean plankton size in different regions?
 \item What has happened to the fundamental niches in different size classes?
@@ -3714,9 +3753,85 @@ In this warmer world:
 \item Is the system more or less productive?
 \item Has carbon export gone up or down?
 \end{itemize}
-\vspace{2mm}
+\vspace{1mm}
 
 See what you can find out about the two systems and think about the mechanisms that might be responsible for the differences \dots
+
+Note that to be more comparable with the Eocene, this particular modern configuration also lacks iron co-limitation. We could also try and remove the effect of the Eocene being warmer than the modern so as to concentrate just on the effect of a different continental configuration and hence ocean circulation. The experiment (included in the \textit{user-config} sub-directory and briefly described in the \textsf{\footnotesize readme } file:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[(2)] \textsf{\footnotesize Late Paleocene Early Eocene Paleogeography}
+\end{itemize}
+\vspace{1mm}
+
+\noindent does exactly this, i.e. attempts to 'remove' the effect of higher ocean temperatures by running an Eocene experiment at \(\times1 CO_{2}\) .
+
+Conversely, we could run modern at \(\times3 CO_{2}\) and then compare to the \(\times3 CO_{2}\) Eocene experiment. This alternative comparative experiment is provided as:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[(S1)] \textsf{\footnotesize Modern with 3 x CO2}
+\end{itemize}
+\vspace{1mm}
+
+\noindent and will also require a 10,000 year long spin-up ... Note that the 2 strategies, while slightly different, are attempting the same thing (i.e. isolating the effect of paleography and ocean circulation from coeval climate change and warming).
+
+Finally -- having run some or all of these spin-ups and contrasted the results (focussing on ecological patterns and biological export, but remembering also to assess differences in ocean circulation), you can investigate the impact of geologically rapid warming a-la the PETM, on the system (esp. ecological patterns and biological export plus ocean circulation). There are two immediately obvious possible approaches:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item You could use a \(\times1 CO_{2}\) spin-up as a re-start -- either or both of modern and Eocene continental configurations -- and run the \(\times3 CO_{2}\) experiment from this.
+\\This will give you an instantaneous warming -- much faster than occurred associated with PETM onset, and also faster even than modern anthropogenic warming. However, it does provide a nice simple idealized perturbation to investigate and analyse.
+\\An experiment duration of 100, or even 10 years, might be sufficient.\footnote{But running for a full 10,000 years would enable you to follow not only the initial rapid warming perturbation, but also the long-term recovery and adjustment to a new steady state.}
+\\Conversely and for fun, you could also start from a \(\times3 CO_{2}\) \textit{spin-up}, and run a \(\times1 CO_{2}\) experiment, to achieve a rapid cooling. Investigate the differential ecological response to rapid cooling vs. rapid warming.
+
+\vspace{1mm}
+\item Secondly, in the \textit{user-configs}, you might note near the bottom is a \textit{forcing} that determines the value of atmospheric \(CO_{2}\):
+\vspace{-2mm}\begin{verbatim}
+# specify forcings
+bg_par_forcing_name="pyyyyz.RpCO2_Rp13CO2"
+\end{verbatim}\vspace{-2mm}
+followed by a line that specifies either \(\times1 CO_{2}\) or \(\times3 CO_{2}\), e.g.
+\vspace{-2mm}\begin{verbatim}
+bg_par_atm_force_scale_val_3=278.0E-06
+\end{verbatim}\vspace{-2mm}
+or
+\vspace{-2mm}\begin{verbatim}
+bg_par_atm_force_scale_val_3=834.0E-06
+\end{verbatim}\vspace{-2mm}
+(followed by a line specifying the carbon isotopic composition of the atmosphere).
+
+Similar to as you have seen before for a fossil fuel \(CO_{2}\) emissions \textit{forcing}, there is a file:
+\vspace{1mm}
+\\ \indent \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}
+\vspace{1mm}
+\\and which has contents as so:
+\vspace{-1mm}\small\begin{verbatim}
+-START-OF-DATA-
+0.0      1.0
+999999.0 1.0
+-END-OF-DATA-
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{4mm}
+\pagebreak
+
+Referring back to the instructions for changing fossil fuel \(CO_{2}\) emissions \textit{forcing}, you should be able to modify this (or better, copy-rename a new forcing directory and edit the file \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat} in that) to create a prescribed time-dependent change in atmospheric \(CO_{2}\).
+
+Note that in the format of \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}, the values in the second column scale the value of the parameter \texttt{bg\_par\_atm\_force\_scale\_val\_3} in the \textit{user-config}. Hence, in \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}, setting a value of \texttt{2.0} in place of \texttt{1.0}, will double the applied \(CO_{2}\) forcing. Exactly as per in the fossil fuel \(CO_{2}\) emissions exercises, pulses, ramps, etc etc can be constructed to control the rate and shape of the applied change in atmospheric \(CO_{2}\).
+
+\end{enumerate}
+
+\vspace{2mm}
+Either way --  assess the important and impact of the rate of \(CO_{2}\) rise and hence warming. (Equally, you might explore rapid cooling and how that fundamentally differs in impact from warming.)
+
+%------------------------------------------------
+\newpage
+\subsection*{The Oceans, Post end Cretaceous Impact}
+
+
 
 %------------------------------------------------
 
@@ -3728,7 +3843,7 @@ See what you can find out about the two systems and think about the mechanisms t
 
 %------------------------------------------------
 %
-We can also consider the question of the casues and consequences of different ecologies in the ocean in a more general way and return to our hypothetical or 'fake' oceans.
+We can also consider the question of the causes and consequences of different ecologies in the ocean in a more general way and return to our hypothetical or 'fake' oceans.
 
 %
 %----------------------------------------------------------------------------------------
