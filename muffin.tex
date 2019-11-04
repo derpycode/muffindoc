@@ -3674,9 +3674,9 @@ For instance -- you might also try having an ecosystem comprising just a single 
 
 \section{Ecology in past oceans}
 
-Here we consider a series of examples\footnote{Either published or in the works or existing in some publication fantasy ...} of the \textbf{ECOGEM} model of marine ecology applied to published paleo configuration of \textbf{muffin} and used to ask questions of how different could marine carbon cycling (and atmospheric \(pCO_{2}\)) and oxygenation have been in the (relatively recent) past and how do model projections compare with proxy observations.
+Here we consider a series of examples\footnote{Either published or in the works or existing in some publication fantasy ...} of the \textbf{ECOGEM} model of marine ecology, applied to published paleo configuration of \textbf{muffin} and used to ask questions of how different could marine carbon cycling (and atmospheric \(pCO_{2}\)) and oxygenation have been in the (relatively recent) past and how do model projections compare with proxy observations.
 
-The three examples come firstly from the Last Glacial Maximum with direct comparison being made to post glacial time (here, the late Holocene), with the intention to explore the role of climate cooling, altered ocean circulation, and increased iron supply to the ocean in modifying plankton distributions and size structures. Secondly, from around the time of the Paleocene-Eocene Thermal Maximum (PETM) some 55 Myr ago, now both considering a different paleogeograpnhy, a warmer ocean, and then transient warming on top of that. Lastly we turn to marine ecology and carbon cycling in the aftermath of the impact and extinction event at the end of the Cretaceous, some 66 Myr ago, and return to our earlier exploration of what happens if you lose the larger plankton in the ocean.
+The three examples come firstly from the Last Glacial Maximum, with direct comparison being made to post glacial time (here, the late Holocene), with the intention to explore the role of climate cooling, altered ocean circulation, and increased iron supply to the ocean in modifying plankton distributions and size structures. Secondly, from around the time of the Paleocene-Eocene Thermal Maximum (PETM) some 55 Myr ago, now both considering a different paleogeography, a warmer ocean, and then transient warming on top of that. Lastly we turn to marine ecology and carbon cycling in the aftermath of the impact and extinction event at the end of the Cretaceous, some 66 Myr ago, and return to our earlier exploration of what happens if you lose the larger plankton in the ocean.
 
 %------------------------------------------------
 \newpage
@@ -3692,10 +3692,10 @@ The \textit{user-configs} you need to use, or copy-rename, can be found in the d
 \vspace{1mm}
 \\\textsf{\footnotesize genie-userconfigs/MS/odalenetal.CP.2019}
 \vspace{1mm}
-\\\noindent(and you can run your experiments from here, or better, copy-edit-rename the \textit{user-configs} you run experiments with, from the \textsf{\footnotesize LABS} sub-directory).
+\\\noindent(and you can run your experiments from here\footnote{If you use them in this directory, make sure at the command line, you replace LABS with \texttt{MS/odalenetal.CP.2019}.}, or better, copy-edit-rename the \textit{user-configs} you run experiments with, from the \textsf{\footnotesize LABS} sub-directory).
 
-Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but note that you may be running a \textit{user-config} with a different name and likely from a different sub-directory. 
-Spin up the following experiments first (and then experiment with them later)\footnote{Noting that the long file-names differ only in a single '\textsf{v}' vs. an '\textsf{a}' ...}:
+Read the \textsf{\footnotesize readme.txt} file for instructions for the basic set of command line parameters needed, but remember that you may be running your \textit{user-config} with a different name and likely from a different sub-directory. 
+Spin up the following experiments  (and then experiment with them later)\footnote{Noting that the long file-names differ only in a single '\textsf{v}' vs. an '\textsf{a}' ...}:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -3706,46 +3706,57 @@ Spin up the following experiments first (and then experiment with them later)\fo
 
 \noindent Submit these to the cluster ...  remembering that you will need to recompile \textbf{muffin} between (1) and (2) (and potentially also re-compile before running (1) if you have not  used that particular \textit{base-config} immediately prior). Run the spin-ups for 10,000 years.
 
-Neither of these configurations currently have an ecosystem enabled, but they will provide a baseline against which to contrast with and with-out an explicit ecology if you are interested. So what you need to do know is to add in \textbf{ECOGEM}. To do this, you need to modify both \textit{base-} and \textit{user-config} files of both the HOL and LGM model configurations.\footnote{Strongly recommended that that you copy-rename both sets of files and edit the copies.}
+Neither of these configurations currently have an ecosystem enabled, but they will provide a baseline against which you can  contrast a pair of experiment that include explicit ecology. What you need to do know is to add in/enable \textbf{ECOGEM}. To do this, you need to modify both \textit{base-} and \textit{user-config} files of both the HOL and LGM model configurations.\footnote{Strongly recommended that that you copy-rename both sets of files and edit the copies.}
 
 \begin{enumerate}[noitemsep]
 
 \vspace{1mm}
 \item \textit{base-config} -- First, you need to enable the \textbf{ECOGEM} module.
-\\At the top of the file \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_Crb} you will see the line:
-\begin{verbatim}
+\\At the top of the HOL \textit{base-config} file \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_Crb}\footnote{And similarly for the LGM one.} you will see the line:
+\vspace{-2mm}\begin{verbatim}
 ma_flag_ecogem=.FALSE.
-\end{verbatim}
+\end{verbatim}\vspace{-2mm}
 Simply change this to \texttt{.TRUE.}
-\\Then, at the bottom of the file where you see the line: you will see the line:
-\begin{verbatim}
-# kraus-turner mixed layer scheme on (1) or off (0)
-go_imld = 0
-\end{verbatim}
-change the \texttt{0} to a \texttt{1} -- this enables a 'mixed layer depth' scheme in the ocean circulation model that \textbf{ECOGEM} needs to calculate light limitation during esp. intervals of high latitude / wintertime deep mixing.
+\vspace{6mm}
+\pagebreak 
 
 \vspace{1mm}
-\item \textit{user-config} -- Next some deletions and additions are needed in the \textit{user-config} provided with only implicit biological export enabled.
+\item \textit{user-config} -- Next, some deletions and additions are needed in the \textit{user-config} provided (which only has implicit biological export enabled).
 \\In the section of the file under the heading:
-\small\begin{verbatim}
+\footnotesize\begin{verbatim}
 #
 # --- BIOLOGICAL NEW PRODUCTION -------------------------------------
 #
 \end{verbatim}\normalsize
-you are going to delete everything there and replace it with:
-\begin{verbatim}
+you are going to delete everything there (in that section) and replace it with:
+\vspace{-1mm}\begin{verbatim}
 # biological scheme ID string
 bg_par_bio_prodopt="NONE"
-\end{verbatim}
+\end{verbatim}\vspace{-1mm}
 The only other thing you need then is a section of code that defines all the \textbf{ECOGEM} ecological parameters.
-\\ Go open file \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN}, which you can find in the \textit{user-config} sub-directory \textsf{\footnotesize MS\wardetal.2018}, and you'll see under the heading:
-\small\begin{verbatim}
+\\ Go open file \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN}, which you can find in the \textit{user-config} sub-directory \textsf{\footnotesize MS/wardetal.2018}, and you'll see under the heading:
+\footnotesize\begin{verbatim}
 #
 # --- ECOGEM ----------------------------------------------------------
 #
 \end{verbatim}\normalsize
 a long list of parameter settings (down to the next section headed \texttt{DATA SAVING}). Simply copy-paste this entire section (including \texttt{ECOGEM} header lines if you like), anywhere in your \textit{user-config} file. At the very end of the file would do just fine.\footnote{Try and ensure that there is blank line at the very end of the file just in case \textbf{muffin} has any problems reading it in.}
-\\This ... should do-it, i.e. you have added the same tuned ecosystem model as described in \textit{Ward et al.} [2018] to your LGM / HOL \textit{user-configs}.
+
+And lastly ... under:
+\footnotesize\begin{verbatim}
+#
+# --- MISC ----------------------------------------------------------
+#
+\end{verbatim}\normalsize
+
+(and the end of the section) add the following lines
+\vspace{-1mm}\begin{verbatim}
+# kraus-turner mixed layer scheme on (1) or off (0)
+go_imld = 1
+\end{verbatim}\vspace{-1mm}
+This enables a 'mixed layer depth' scheme in the ocean circulation model that \textbf{ECOGEM} needs to calculate light limitation during esp. intervals of high latitude / wintertime deep mixing.
+
+This ... should do-it, i.e. you have added the same tuned ecosystem model as described in \textit{Ward et al.} [2018] to your LGM / HOL \textit{user-configs}.
 
 \end{enumerate}
 
@@ -3754,7 +3765,7 @@ a long list of parameter settings (down to the next section headed \texttt{DATA 
 Now you are ready to run new LGM and HOL experiments, with a full ecosystem in each\footnote{Remembering that presumably both your \textit{base-config} and \textit{user-config} file names are  different as compared to running the non \textbf{ECOGEM} version described in the \textsf{\footnotesize readme}.}. 
 \vspace{1mm}
 
-Obvious questions to investigate include not only how ecosystems and patterns of biological export may have differed between LGM and HOL, but also how patterns of nutrients (\(PO_{4}\) and \(Fe\)) may have differed ... and also distributions of dissolved \(O_{2}\) in the ocean. A water mass ventilation age tracer has also been simulated and the results of this wil help in understanding how global circulation patterns differ between the 2 time intervals. 
+Obvious questions to investigate include not only how ecosystems and patterns of biological export may have differed between LGM and HOL, but also how patterns of nutrients (\(PO_{4}\) and \(Fe\)) may have differed ... and also distributions of dissolved \(O_{2}\) in the ocean (and in the interior, rather than across the ocean surface). A water mass ventilation age tracer has also been simulated and the results of this will help in understanding how global circulation patterns differ between the 2 time intervals. 
 
 You can also compare between with and without \textbf{ECOGEM} versions as the only thing that changes between pairs of HOL or pairs of LGM experiments is the biological scheme\footnote{Actually, this is not true, as in the \textbf{ECOGEM} enabled experiments, the mixed layer scheme in the coean circulation model is also activated and which has an impact on ocean circulation. You could then create a 3rd set of HOL+LGM experiments, using the basic \textbf{BIOGEM} implicit export biological scheme, but now also setting the \texttt{go\_imld} parameter to a value of \texttt{1}}.
 
@@ -3799,6 +3810,9 @@ For example, in the warmer Eocene world:
 \vspace{1mm}
 
 See what you can find out about the two systems and think about the mechanisms that might be responsible for the differences \dots
+
+\vspace{8mm}
+\pagebreak 
 
 Note that to be more comparable with the Eocene, this particular modern configuration also lacks iron co-limitation. We could also try and remove the effect of the Eocene being warmer than the modern so as to concentrate just on the effect of a different continental configuration and hence ocean circulation. The experiment (included in the \textit{user-config} sub-directory and briefly described in the \textsf{\footnotesize readme } file:
 
@@ -3850,16 +3864,17 @@ Similar to as you have seen before for a fossil fuel \(CO_{2}\) emissions \texti
 \vspace{1mm}
 \\ \indent \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}
 \vspace{1mm}
-\\and which has contents as so:
+
+\vspace{8mm}
+\pagebreak 
+
+and which has contents as so:
 \vspace{-1mm}\small\begin{verbatim}
 -START-OF-DATA-
 0.0      1.0
 999999.0 1.0
 -END-OF-DATA-
 \end{verbatim}\normalsize\vspace{-1mm}
-
-\vspace{4mm}
-\pagebreak
 
 Referring back to the instructions for changing fossil fuel \(CO_{2}\) emissions \textit{forcing}, you should be able to modify this (or better, copy-rename a new forcing directory and edit the file \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat} in that) to create a prescribed time-dependent change in atmospheric \(CO_{2}\).
 
@@ -3868,7 +3883,8 @@ Note that in the format of \textsf{\footnotesize biogem\_force\_restore\_atm\_pC
 \end{enumerate}
 
 \vspace{2mm}
-Either way --  assess the important and impact of the rate of \(CO_{2}\) rise and hence warming. (Equally, you might explore rapid cooling and how that fundamentally differs in impact from warming.)
+
+\noindent Either way --  assess the important and impact of the rate of \(CO_{2}\) rise and hence warming. (Equally, you might explore rapid cooling and how that fundamentally differs in impact from warming.)
 
 %------------------------------------------------
 \newpage
@@ -3887,6 +3903,82 @@ Either way --  assess the important and impact of the rate of \(CO_{2}\) rise an
 %------------------------------------------------
 %
 We can also consider the question of the causes and consequences of different ecologies in the ocean in a more general way and return to our hypothetical or 'fake' oceans.
+
+For any of your 'fake' worlds' that you generated earlier, you can add carbon and nutrient cycling (if that was not already included), plus a marine ecology. To do this, you first need to create a new \textit{base-config} that includes all the carbon cycling and nutrients needed by \textbf{ECOGEM} (and \textbf{BIOGEM}), then you need to create/configure a suitable \textit{user-config}.
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item \textit{base-config} -- First, you need to enable the \textbf{ECOGEM} module.
+\\At the top of the your \textit{base-config} file, change the \textbf{ECOGEM} 'flag' to true:
+\vspace{-1mm}\begin{verbatim}
+ma_flag_ecogem=.TRUE.
+\end{verbatim}\vspace{-1mm}
+Next, it is likely that you did not add any biogeochemical tracers when you created your fake world, and the \textit{base-config} section: 
+\footnotesize\begin{verbatim}
+# *******************************************************************
+# TRACER CONFIGURATION
+# *******************************************************************
+\end{verbatim}\normalsize
+will probably look like:
+\footnotesize\begin{verbatim}
+# the total number of tracers includes T and S
+# T and S do not need to be explicitly selected and initialized
+# *******************************************************************
+# Set number of tracers
+GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
+# list selected biogeochemical tracers
+# <<<                                                             >>>
+# list biogeochemical tracer initial values
+# <<<                                                             >>>
+\end{verbatim}\normalsize
+Go find the \textit{base-config} file \textsf{\footnotesize muffin.CBE.p0055c.BASES} in the \textsf{\footnotesize configs} sub-directory of \textsf{\footnotesize genie-main}. Copy all of the section headed 
+\footnotesize\begin{verbatim}
+# *******************************************************************
+# TRACER CONFIGURATION
+# *******************************************************************
+\end{verbatim}\normalsize
+into your \textit{base-config}, replacing the original contents with only 2 tracers selected.
+
+\vspace{1mm}
+\item \textit{user-config} -- Next, you need to define some biogeochemical cycling PLUS and ecosystem. Go find the \textit{user-config} file: \textsf{\footnotesize wilsonetal.p0055c.8P8Z.pal.3x} in \textsf{\footnotesize genie-userconfigs} sub-directory \\ \textsf{\footnotesize MS/wilsonetal.2018}.
+
+Easiest, is to simply re-use (copy-rename) the  \textit{user-config} file: \textsf{\footnotesize wilsonetal.p0055c.8P8Z.pal.3x}.
+
+\vspace{1mm}
+The only parameters you might want to adjust\footnote{Note that ocean alkalinity is also set for an Eocene world.}, other than a different ecological structure (and \texttt{eg\_par\_ecogem\_plankton\_file}), is atmospheric \(CO_{2}\), which is set to \(\times 3 CO_{2}\) by:
+\small\begin{verbatim}
+bg_par_forcing_name="pyyyyz.RpCO2_Rp13CO2"
+bg_par_atm_force_scale_val_3=834.0E-06
+bg_par_atm_force_scale_val_4=-4.9
+\end{verbatim}\normalsize
+(and atmospheric \(\delta^{13}C\) to \(-4.9\)).
+
+\vspace{1mm}
+Strictly, the scaling for the air-sea gas exchange coefficient, for a fake world, should be:
+\footnotesize\begin{verbatim}
+# re-scale gas transfer coefficient ...
+bg_par_gastransfer_a=0.722
+\end{verbatim}\normalsize
+(changing the value from \texttt{0.5196} to \texttt{0.722}).
+
+\end{enumerate}
+
+\pagebreak
+
+Those changes -- enabling \textbf{ECOGEM} and adding ocean (and atmosphere) tracers to your \textit{base-config}, and then taking a paleo \textbf{ECOGEM} \textit{user-config} as a template to work from, should get you going with an ecology in your fake world.
+
+\vspace{1mm}
+If you also want to diagnose ocean circulation better and add a ventilation tracer, then in the \textit{base-config}, increase the number of selected tracers by 2 (under \texttt{\# Set number of tracers}) and add the following 2 lines to the list of selected tracers:
+\footnotesize\begin{verbatim}
+gm_ocn_select_48=.true. # r
+gm_ocn_select_49=.true. # b
+\end{verbatim}\normalsize
+and ... in the \textit{user-config}, add (anywhere, but e,g, in the \texttt{MISC} parameter section):
+\footnotesize\begin{verbatim}
+# add ventillation tracers
+bg_ctrl_force_ocn_age=.true.
+\end{verbatim}\normalsize
 
 %
 %----------------------------------------------------------------------------------------
