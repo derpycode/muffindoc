@@ -88,6 +88,7 @@ HAT (POWER) SYMBOL
 
 PERMIL
 \textperthousand
+\def\permille{\ensuremath{{}^\text{o}\mkern-5mu/\mkern-3mu_\text{oo}}}
 
 \hfill \break
 

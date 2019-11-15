@@ -14,7 +14,7 @@
 %
 % Compiling this template:
 % This template uses biber for its bibliography and makeindex for its index.
-% When you first open the template, compile it from the command line with the 
+% When you first open the template, compile it from the command line with
 % commands below to make sure your LaTeX distribution is configured correctly:
 %
 % 1) pdflatex main
@@ -46,15 +46,14 @@
 \usepackage[top=3cm,bottom=3cm,left=3.2cm,right=3.2cm,headsep=1mm,letterpaper]{geometry} % Page margins
 
 \usepackage{xcolor} % Required for specifying colors by name
-\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
+\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting
 
 % Font Settings
 \usepackage{avant} % Use the Avantgarde font for headings
 %\usepackage{times} % Use the Times font for headings
-\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Sym­bol, Chancery and Com­puter Modern fonts
+\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font
 %%%\usepackage{textcomp}
 \usepackage{amsmath}
-
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 \usepackage[utf8]{inputenc} % Required for including letters with accents
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
@@ -71,10 +70,12 @@
 
 %----------------------------------------------------------------------------------------
 
-\input{muffin_structure} % Insert the commands.tex file which contains the majority of the structure behind the template
+\input{muffin_structure} % Insert the commands.tex file
 \usepackage[normalem]{ulem}
 \usepackage{hyperref}
 \usepackage{amssymb}
+
+\def\permille{\ensuremath{{}^\text{o}\mkern-5mu/\mkern-3mu_\text{oo}}}
 
 \begin{document}
 
@@ -4004,13 +4005,15 @@ bg_ctrl_force_ocn_age=.true.
 
 \section{README}
 
-If you have not been through (and completed!) Session \#0100 (‘Fossil fuel \(CO_{2}\) release and ocean acidification’) will need to download a restart file prior to embarking on the experiments with modern ocean circulation.
-To fetch this: change to the cgenie\_output directory, and type:
-\$ wget http://www.seao2.info/cgenie/labs/Yale.2016/
- EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz
-Extract the contents of this archive by typing:
-\$ tar xfzv EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz 
-You’ll then need to change directory back to genie-main to run the model.
+You will need to download a new \textit{re-start} file. To fetch this -- change to the \textsf{\footnotesize cgenie\_output directory}, and type:
+\small\begin{verbatim}
+$ wget http://www.seao2.info/cgenie/labs/Yale.2016/EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz
+\end{verbatim}\normalsize
+\noindent Extract the contents of this archive by typing:
+\small\begin{verbatim}
+$ tar xfzv EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz 
+\end{verbatim}\normalsize
+You’ll then need to change directory back to \textsf{\footnotesize genie-main } directory in order to run \textbf{muffin}.
 
 %------------------------------------------------
 
@@ -4020,58 +4023,46 @@ You’ll then need to change directory back to genie-main to run the model.
 
 \section{The long tail of \(CO_{2}\) (and other tales from the sediments)}
 
-You will be using a 'modern' configuration of cGENIE, but … it is rather more idealized than you have seen for the modern Earth in previous Labs (although not quite as idealized as for the snowball Earth experiments). It also differs in that in addition to having an ocean carbon cycle (which was omitted from many of the previous Lab experiments) it includes a representation of deep-sea sediments and interaction between the preservation and burial of CaCO3 and ocean chemistry plus balance between weathering and sedimentary burial. For an over-view of the sediment model and what time-scales and nature of carbon cycle interaction between ocean and sediment you can expect, read: Ridgwell and Zeebe [2005] and Ridgwell and Hargreaves [2007].
+You will be using a highly idealized continental configuration with a single pole-to-pole super-continent and a single ocean basin, all symmetrical about the Equator. This differs from the snowball Earth experiment configurations  in having an ocean carbon cycle, \uline{including},  a representation of deep-sea sediments and interaction between the preservation and burial of \(CaCO_{3}\) and ocean chemistry, plus balance between weathering and sedimentary burial. For an over-view of the sediment model and what time-scales and nature of carbon cycle interaction between ocean and sediment you can expect, read: \textit{Ridgwell and Zeebe} [2005] and \textit{Ridgwell and Hargreaves} [2007].
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-Take the new model for a test drive by running on from the restart provided:
-\begin{verbatim}
-EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz
-\end{verbatim}
-This is a steady-state climate+carbon cycle experiment that includes the deposition of CaCO3 in deep-sea sediments and the balance between weathering (solute input to the ocean) and burial (output). Try running ('briefly', but 100 years would not be too tedious for this faster configuration!):
-
-\begin{verbatim}
+\noindent Take the new model for a test drive by running on from the provided \textit{re-start} experiment: \\ \textsf{\footnotesize EXAMPLE.\_rwlma.PO4\_S18x18.SPIN2.tar.gz}. This is a steady-state climate+carbon cycle experiment that includes the deposition of \(CaCO_{3}\) in deep-sea sediments and the balance between weathering (solute input to the ocean) and burial (output). Try running ('briefly', but 100 years would not be too tedious for this faster configuration!):
+\vspace{-2mm}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg_sg_rg_gl._rwlma.BASES 
  LABS LAB_x.sediments 100 EXAMPLE._rwlma.PO4_S18x18.SPIN2 
-\end{verbatim}
+\end{verbatim}\vspace{-2mm}
+Note that the \textit{base-config} file \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg\_sg\_rg\_gl.\_rwlma.BASE} specifies the use of a sediment model -- the ‘\textsf{\footnotesize sg}’ in the filename. 
+Also note that we are running at a degraded \(18\times18\) resolution, requiring fewer (twice as few) time-steps per year -- helpful in being able to run \textbf{muffin} on geological time-scales but within a reasonable about of real time. (The configuration also utilizes a conceptual/idealized continental configuration somewhat similar to as in the snowball Earth experiments.)
 
-Note that the base-config
-\begin{verbatim}
-cgenie.eb_go_gs_ac_bg_sg_rg_gl._rwlma.BASE
-\end{verbatim}
-specifies the use of a sediment model ‘sg’ in GENIE for instance. 
-The degraded resolution (and fewer time-steps per year) is helpful in being run cGENIE on geological time-scales within a reasonable time. It also utilizes a conceptual/idealized continental configuration (similar to as in the snowball Earth experiments).
+The \textit{user-config} \textsf{\footnotesize LAB\_x.sediments } is set up with the global carbon cycle configured as 'open' -- that is to say, that there is an input of carbon (and alkalinity) to the ocean from weathering, and a loss due to preservation and burial of \(CaCO_{3}\) in deep-sea sediments. Depending on the state of ocean chemistry (and biology) and weathering, these two fluxes (input vs. output) do not have to balance, and hence ocean carbonate chemistry (and in turn, atmospheric \(pCO_{2}\)) can evolve with time. The \textit{spin-up} may not necessarily have the two fluxes perfectly balanced and hence before you run any experiments you might want to confirm whether the spin-up provided really is adequately 'spun-up'\footnote{i.e. you might plot some of the variables from the results of the \textit{spin-up}  experiment as a function of time and judge whether they are sufficiently converged or not.}.
 
-The user-config LAB\_x.sediments is set up with the global carbon cycle is 'open' -- that is to say, that there is an input of carbon (and alkalinity) to the ocean from weathering, and a loss due to preservation and burial of CaCO3 in deep-sea sediments. Depending on the state of ocean chemistry (and biology) and weathering, these two fluxes (input and output) do not have to balance, and hence ocean carbonate chemistry (and in turn, atmospheric p\(CO_{2}\)) can change with time. The spin-up may not have the two fluxes (input and output) perfectly balanced and hence before you run any experiments you might want to confirm whether the spin-up provided really is adequately 'spun-up'.
-(Note that a residual drift can be dealt with if it is relatively small and near linear and you have a control experiment, because any experiment you carry out will likely also incorporate (or be biased) by the same residual drift. Hence running a control gives you something to directly contrast with your experiment minus the control (e.g., a difference map or simple subtraction of global numbers) will give you the effect of whatever parameters you changed in the experiment and corrected for any drift. In previous exercises we were a bit lazy, and difference maps were often created with respect to year 1 of an experiment -- strictly, they should have been created relative to the same year of a parallel control experiment, i.e., results at year 100 should have been contrasted with the year 100 results of the control.)
+Note that a residual drift can be dealt with if it is relatively small and near linear and you have a \uline{control experiment}, because any experiment you carry out will likely also incorporate (or be biased) by the same residual drift. Running a control gives you something to directly contrast  your experiment with and calculating the difference (e.g., a difference map or simple subtraction of global numbers) will give you the effect of whatever parameters you changed in the experiment but corrected for any drift. In previous exercises, we were a little lazy, and difference maps were often created with respect to year 1 of an experiment -- strictly, they should have been created relative to the same year of a parallel control experiment, i.e., results at year 100 should have been contrasted with the year 100 results of the control.
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
+\vspace{12mm}
+\pagebreak
 
-Because you are now considering a rather more complex carbon cycle than before (i.e. now including a number of additional, mostly sediments/weathering processes), it is worth conducting a number of idealized perturbations of the global carbon cycle to get a feel for the sensitivity and time-scale of the system response.
+\noindent Because you are now considering a rather more complex carbon cycle than before (including a number of additional, mostly sediments/weathering processes), it is worth conducting a number of idealized perturbations of the global carbon cycle to get a feel for the sensitivity and time-scale of the system response.
 
-For instance – one illustrative experiment, and which has a parallel to experiments you have conducted previously, is to add a pulse \(CO_{2}\) release to the atmosphere and track the consequences for atmospheric p\(CO_{2}\) and ocean chemistry (particularly ‘alkalinity’), and now also e.g. deep sea sediments. To the user-config, add the lines:
-
-\begin{verbatim}
-bg_par_forcing_name=' pyyyyz.Fp\(CO_{2}\)_Fp13\(CO_{2}\)'
+For instance – one illustrative experiment, and which has a parallel to experiments you have conducted previously, is to add a pulse \(CO_{2}\) release to the atmosphere and track the consequences for atmospheric p\(CO_{2}\) and ocean chemistry (particularly ‘alkalinity’), and now also e.g. deep sea sediments. To the \textit{user-config}, add the lines:
+\vspace{-2mm}\small\begin{verbatim}
+bg_par_forcing_name='pyyyyz.FpCO2_Fp13CO2'
 bg_par_atm_force_scale_val_3=8.3333e+016
 bg_par_atm_force_scale_val_4=-27.0
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-2mm}
+in order to achieve a 1000 PgC total release in a single year (or multiply by 5 to be comparable-ish to the 5000 PgC release in \textit{Ridgwell and Hargreaves} [2007]) with an isotopic composition of \(-27\)\permille -- appropriate for a fossil fuel carbon source. Methane derived carbon (e.g. as from hydrates) would be more like  \(-60\)\permille.
 
-in order to achieve a 1000 PgC total release in a single year (or multiply by 5 to be comparable-ish to Ridgwell and Hargreaves [2007]) with an isotopic composition of -27‰ – appropriate for a fossil fuel carbon source. Methane derived carbon (e.g. as from hydrates) would be more like -60‰.
+Run the model for as long as you dare (or can be bothered) – 1,000 or 2,000 years might be just enough as a minimum to start to see impacts on deep-sea sediments, but 5,000 or 10,000 years would be much better. (You can always submit this to the cluster queue and get on with something else.) FYI: 10,000 years is going to take something like an hour ... if you are lucky ...
 
-Run the model for as long as you dare (or can be bothered) – 1,000 or 2,000 years might be just enough as a minimum to start to see impacts on deep-sea sediments, but 5,000 or 10,000 years would be much better. (You can always submit this to the cluster queue and get on with something else.) FYI: 10,000 years is going to take something like an hour.
-
-Plot the time-series of e.g. atmospheric p\(CO_{2}\) and compare to the (much shorter experiments) you have carried out before with a simple ocean+atmosphere only system. Compare how quickly atmospheric p\(CO_{2}\) decays compared to previously GENIE papers (e.g. Ridgwell and Hargreaves [2007]) or other models (e.g. Archer et al. [2009]) (see: http://www.seao2.info/pubs.html).and e.g. how the sediments respond (e.g. the time-series of sediment CaCO3 content). 
+Plot the time-series of e.g. atmospheric \(pCO_{2}\) and compare to the (much shorter experiments) you have carried out before with a simple ocean+atmosphere only system. Compare how quickly atmospheric \(pCO_{2}\) decays compared to previously \textbf{muffin} publications\footnote{see: http://www.seao2.info/pubs.html} (e.g. \textit{Ridgwell and Hargreaves} [2007]) or other models (e.g. \textit{Archer et al.} [2009]) and  how the sediments respond (e.g. the time-series of sediment \(CaCO_{3}\) content). 
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-To properly (quantitatively) appreciate the role of ocean-sediment interaction (and weathering) and controlling atmospheric p\(CO_{2}\), you need to contrast these experiments with as similar a model configuration as possible, except one having no sediments (or weathering). You can achieve this quite simply: create a new user-config and edit the lines:
+\noindent To properly (quantitatively) appreciate the role of ocean-sediment interaction (and weathering) and controlling atmospheric p\(CO_{2}\), you need to contrast these experiments with as similar a model configuration as possible, except one having no sediments (or weathering). You can achieve this quite simply: create a new user-config and edit the lines:
 
 \begin{verbatim}
 # set an 'OPEN' system
