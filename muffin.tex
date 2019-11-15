@@ -4044,7 +4044,7 @@ Note that a residual drift can be dealt with if it is relatively small and near 
 \vspace{12mm}
 \pagebreak
 
-\noindent Because you are now considering a rather more complex carbon cycle than before (including a number of additional, mostly sediments/weathering processes), it is worth conducting a number of idealized perturbations of the global carbon cycle to get a feel for the sensitivity and time-scale of the system response.
+\noindent Because you are now considering a rather more complex carbon cycle than before (e.g. now including a number of additional, mostly sediments/weathering processes), it is worth conducting some number of idealized perturbations of the global carbon cycle to get a feel for the sensitivity and time-scale of the system response.
 
 For instance – one illustrative experiment, and which has a parallel to experiments you have conducted previously, is to add a pulse \(CO_{2}\) release to the atmosphere and track the consequences for atmospheric p\(CO_{2}\) and ocean chemistry (particularly ‘alkalinity’), and now also e.g. deep sea sediments. To the \textit{user-config}, add the lines:
 \vspace{-2mm}\small\begin{verbatim}
@@ -4062,30 +4062,25 @@ Plot the time-series of e.g. atmospheric \(pCO_{2}\) and compare to the (much sh
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent To properly (quantitatively) appreciate the role of ocean-sediment interaction (and weathering) and controlling atmospheric p\(CO_{2}\), you need to contrast these experiments with as similar a model configuration as possible, except one having no sediments (or weathering). You can achieve this quite simply: create a new user-config and edit the lines:
-
-\begin{verbatim}
+\noindent To properly (quantitatively) appreciate the role of ocean-sediment interaction (and weathering) and controlling atmospheric \(pCO_{2}\), you need to contrast these experiments with as similar a model configuration as possible -- for instance, one that is identical excepting having no sediments (or weathering). You can achieve this quite simply: create (/copy-rename) a new \textit{user-config} based on \textsf{\footnotesize LAB\_x.sediments }and edit the lines\footnote{You do not have to edit the comment line (\#) but it will help you remember what you have done.}:
+\small\begin{verbatim}
 # set an 'OPEN' system
 bg_ctrl_force_sed_closedsystem=.false.
-\end{verbatim}
-
-to: 
-
-\begin{verbatim}
+\end{verbatim}\normalsize
+changing it to: 
+\small\begin{verbatim}
 # set a 'CLOSED' system
 bg_ctrl_force_sed_closedsystem=.true.
-\end{verbatim}
+\end{verbatim}\normalsize
 
-(You do not have to edit the comment line (\#) but it will help you remember what you have done.)
+What this  does is to force the model to always maintain an exact balance between the preservation and burial in marine sediments of \(CaCO_{3}\), with the supply of solves derived from the weathering of \(CaCO_{3}\) on land. Because no excess or deficit of  weathering vs. sedimentation is not allowed to occur, no changes in ocean chemistry occur. This configuration hence acts (geochemically and dynamically) exactly the same way as a configuration without any sediments or weathering being present (and as used previously).
 
-What this line does is to force the model to always balance CaCO3 preservation and removal in marine sediments with CaCO3 weathering – i.e. the balance (or imbalance) between sediments and weathering is not allowed to change ocean chemistry and hence acts exactly the same as a configuration without any sediments or weathering (as used before).
-
-By comparing the two experiments: can you deduce the effect of the sediments in modulating the atmospheric p\(CO_{2}\) decline? E.g. compare the p\(CO_{2}\) time-series. Also view the sediment distribution (of CaCO3): what are the impacts on sediment composition for the experiment with an ‘open’ system? The time-series file of mean global sediment composition biogem\_series\_sed\_CaCO3.res (wt\% CaCO3) may help illustrate what is going on here.
+By comparing the two experiments: can you deduce the effect of the sediments in modulating (accelerating or decelerating) atmospheric \(pCO_{2}\) decline?\footnote{e.g. you could compare the \(pCO_{2}\) time-series of the 2 different experiments.}  Also view the sediment distribution (of \(CaCO_{3}\)): what are the impacts on sediment composition in the case of an experiment configured with an ‘open’ system (vs. a 'closed' system)? Here, the time-series file of mean global sediment composition biogem\_series\_sed\_CaCO3.res (wt\% CaCO3) may help illustrate what is going on here.
 Note that the way the ‘closed’ system is constructed; a response of the sediments is predicted and saved in the output, even though it is not allowed to affect chemistry or atmospheric p\(CO_{2}\).
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{sediments.jpg}
-\caption{Schematic of SEDGEM sediment component.}
+\caption{Schematic of \textbf{SEDGEM} sediment component.}
 \label{fig:sediments}
 \end{figure}
 
