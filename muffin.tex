@@ -92,7 +92,7 @@
 \textcolor[rgb]{1,1,0}{The Bumper Book of \textit{.muffin}s}\par % title
 \vspace*{0.5cm}
 \par\normalfont\fontsize{21}{21}\sffamily\selectfont
-\textcolor[rgb]{0,0,1}{(The \textit{c}GENIE.muffin user-manual and an introduction to Earth system modelling)}\par % title2
+\textcolor[rgb]{0,0,1}{(The \textit{c}GENIE.muffin user-manual and introduction to Earth system modelling)}\par % title2
 \vspace*{1cm}
 {\Huge \textcolor[rgb]{1,1,1}{Andy Ridgwell}}\par % Author name
 \endgroup
@@ -9440,9 +9440,9 @@ Hacking the solar constant in a time-varying manner is, of course, a (albeit cru
 
 %------------------------------------------------
 %
-\subsection*{Specifying a fixed orbital configuraation}
+\subsection*{Specifying a fixed orbital configuration}
 
-To prescribe a fixed (but different from modern) orbital configuration (and are running this to steady-state) -- the parameters:
+The parameters to prescribe a fixed (but different from modern) orbital configuration are:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -9459,7 +9459,7 @@ ea_par_orbit_oscgam=102.92
 \end{itemize}
 \vspace{1mm}
 
-\noindent specify, respectively:
+\noindent which specify, respectively:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -9470,7 +9470,9 @@ ea_par_orbit_oscgam=102.92
 \end{itemize}
 \vspace{1mm}
 
-For example -- to specify a last glacial maximum like configuration, you would add (to the \textit{user-config}):
+\noindent and here are shown with their modern, default values. 
+
+To specify an alternative (different from modern) orbital configuration, such as for the the last glacial maximum (21 ka)\footnote{Taken from: \href{https://pmip2.lsce.ipsl.fr/design/boundary.shtml}{PMIP2} experiment boundary conditions.}, you would add (to the \textit{user-config}):
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -9487,7 +9489,7 @@ ea_par_orbit_oscgam=114.42
 \end{itemize}
 \vspace{1mm}
 
-\noindent For comparison, the mid-Holocene (6 ka) parameter set is:
+\noindent For comparison, the mid-Holocene (6 ka) parameter set\footnote{Taken from: \href{https://pmip2.lsce.ipsl.fr/design/boundary.shtml}{PMIP2} experiment boundary conditions.} is:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -9504,38 +9506,32 @@ ea_par_orbit_oscgam=0.87
 \end{itemize}
 \vspace{1mm}
 
-\noindent (Taken from: \href{https://pmip2.lsce.ipsl.fr/design/boundary.shtml}{PMIP2} experiment boundary conditions.)
-
 %------------------------------------------------
 %
-\subsection*{Specifying varying orbits}
+\subsection*{Specifying time-varying orbits}
 
-For model simulations over long timescales you might want to consider the effects of time-varying astronomical forcing. In this case, the amount of daily mean insolation at each latitude can vary as a function of eccentricity, obliquity and (climatic) precession, as opposed to a fixed insolation pattern. Such transient forcing can be applied in \textbf{muffin} with the following set of parameters that can be added to the user-configuration file:
+For model simulations over long timescales you might want to consider the effects of changes with time in the astronomical forcing. In this case, the amount of daily mean insolation at each latitude can vary as a function of eccentricity, obliquity and (climatic) precession, as opposed to under a fixed insolation pattern. Such transient forcing can be applied in \textbf{muffin} by adding the following set of parameter settings to the \textit{user-config} file:
 \vspace{-1mm}\small\begin{verbatim}
 # Call orbit_radfor: Applies astronomical forcing
 ea_38 = "y"
-# Specify the type of orbital forcing default (0), time-varying (1), alternative config (2)
+# Specify the type of orbital forcing: 0 (default), 1 (time-varying)
 ea_39 = 1       
 # Number of data points in orbits file
 ea_40 = 1001
-# Interval between data points in goldstein time steps
+# Interval between data points in units of goldstein time steps
 ea_41 = 96000
-# filename for orbital parameters (must be in genie-embm/data/input)
+# filename for orbital parameters
 ea_42 = "orbits_La2004_1Myr.dat"
 \end{verbatim}\normalsize\vspace{-1mm}
 
-In addition to these settings, a data file (\footnotesize\textsf{.dat}\normalsize) needs to be present in \footnotesize\textsf{genie-embm/data/input }\normalsize that specifies the values for eccentricity, obliquity and precession over time. In the example described above, the filename is:
-
-\vspace{1mm}
-\footnotesize\textsf{orbits\_La2004\_1Myr.dat}\normalsize
-\vspace{1mm}
-
-\noindent which provides the astronomical solution for the past 1 million year based on the astronomical solution of \textit{Laskar} (2004) in time-steps of 1,000 years, meaning that 1,000,000 / 1,000 = 1,000 data points (+ 1 for year zero) = 1,001 data points are available in file (\texttt{ea\_40}). 
+In this specific example, a file: \footnotesize\textsf{orbits\_La2004\_1Myr.dat }\normalsize is specified, which provides the astronomical solution for the past 1 million year based on the astronomical solution of \textit{Laskar} (2004) in time-steps of 1,000 years.\footnote{The data file \textsf{.dat} can be found in sub-directory: \textsf{genie-embm/data/input}} For 1 million year in time-steps of 1,000 years, there are 1,000,000 / 1,000 = 1,000 data points (+ 1 for year zero) = 1,001 data points total. The value of parameter \texttt{ea\_40} needs to be set equal to this value, i.e. prescribing how many data points are present in the file specified by  \texttt{ea\_42}.  
 
 Note that the file containing the astronomical solution is read in reverse
 order, i.e. from the bottom to the top. Thus, for file \footnotesize\textsf{orbits\_La2004\_1Myr.dat}\normalsize, the values for eccentricity and obliquity used for the first 1000 year of the simulation, are 0.03576 and 0.40080, respectively, corresponding to the astronomical solution 1 million year ago. To change the time slice that you would like to simulate\footnote{Don't forget to update parameter ea\_40!} (for example from 500 ka to recent), simply copy the astronomical solution into a new text file and remove the last 500 lines so that the simulation begins with the solution at 500 ka.
 
 The value for parameter \texttt{ea\_41} depends on the resolution of the model that is used. By default, for a 16-level ocean circulation model configuration, \textbf{muffin} employs 96  time-steps per year in the \textbf{GOLDSTEIN} ocean circulation model component. When the astronomical solution is provided as one orbital value per \(1000\) years, this equates to \(1000\times96=96000\) \textbf{GOLDSTEIN} time steps. For lower resolution configurations of \textbf{muffin}, \textbf{GOLDSTEIN} may be operating on \(48\) time steps per year, which means that \texttt{ea\_41} need to be changed to \(48000\) (when the astronomical solution is provided \(1000\) year time steps).
+
+\uline{Important}. When using one of the paleo configurations of \textbf{muffin} defined in the \textsf{\footnotesize genie-paleo } directory, the file containing the astronomical solution must be present in that directory. For all other configurations, the file lives in \footnotesize\textsf{genie-embm/data/input}\normalsize}. A warning messgage will be generated and the \textbf{muffin} will exit if the file is not found in the correct directory.
 
 %------------------------------------------------
 %
