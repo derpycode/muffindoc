@@ -9537,278 +9537,162 @@ The value for parameter \texttt{ea\_41} depends on the resolution of the model t
 %
 \subsection*{Saving orbitally-relevant data}
 
-The challenge here is that   changes in seasonal characteristics are critical, so seasonal or even monthly resolved data is needed, yet the  experiments may be several 100 kyr to Myr in duration. Saving seasonally or monthly resolved netCDF sufficiently frequently to resolve precession -- every few kyr -- is possible but the resulting data file size maybe near unmanageable, and in any case, would have to be laboriously processed. The situation can be helped a little by only saving 2D netCDF (see earlier), but it still remains to process a large seasonal/monthly netCDF file. In contrast, time-series data is cheap to save, but is currently saved only as global and annual average, masking the details of any orbital response.
+The challenge here is that   changes in seasonal characteristics are critical to understanding orbital modulated insolation forcing and response, so seasonal or even monthly resolved data is needed ... yet the  experiments may be several 100 kyr to Myr in duration ... Saving seasonal or monthly resolved netCDF sufficiently frequently to resolve precession -- every few kyr -- is possible, but the resulting data file size maybe near unmanageable, and in any case, the net CDF files would have to be laboriously processed. The situation can be helped a little by only saving 2D netCDF (see earlier), but it still remains a task to process a large seasonal/monthly netCDF file. In contrast, time-series data is cheap to save, but is currently saved only as global and annual average, masking the details of any orbital response.
 
-The solution provided is to save data at specific points (that are specified prior to an experiment being run), and to be very specific about what data is saved (i.e. rather than large generic sets of variables being saved as in the time-series and time-slice data saving approaches). Furthermore, because orbital variability is slow compared to the seasonal cycle, the data can be aliased. i.e., rather than saving every time-step during the seasonal cycle, and saving every year (of every seasonal cycle), one can devise an interval of data save, that samples a complete seasonal cycle only when x (where x > 1) complete years have been simulated. For example -- saving data every 13 months would mean Jan is saved in year 1, Feb in year 2, Mar in year 3, etc, with all months saved over the course of 12 years. This would not work so well if significant inter-annual variability was present, but in the basic EMBM-based configuration of muffin, there is no inter-annual variability.
+The solution provided here is to save data at specific points in the model grid (that are specified prior to an experiment being run), and to be very specific about what data is saved (i.e. rather than large generic sets of variables being saved as in the time-series and time-slice data saving approaches, only certain variables are saved). Furthermore, because orbital variability is slow compared to the seasonal cycle, the data can be aliased. i.e., rather than saving every time-step during the seasonal cycle, and saving every year (of every seasonal cycle), one can devise an interval of data save, that samples a complete seasonal cycle only when \(x\) (where \(x>1\)) complete years have been simulated. For example -- saving data every 13 months would mean that Jan is saved in year 1, Feb in year 2, Mar in year 3, etc, with all months saved over the course of 12 years and then Jan again in year 13. This would not work so well if significant inter-annual variability was present (i.e. as per in a fully coupled model), but in the basic EMBM-based configuration of \textbf{muffin}, there is no inter-annual variability and hence this strategy should work just fine.
 
-\textbf{\textcolor{red}{TO BE SORTED OUT ...}}
+\pagebreak
 
-To configure this way of saving data requires two files to be present in \footnotesize\textsf{genie-biogem/data/input}\normalsize, identified by 2 new \textit{user-config} parameters:
+To configure this way of saving data requires that two files are be present in the: \\ \footnotesize\textsf{genie-biogem/data/input }\normalsize sub-\footnote{Regardless of whether or not a paleo configuration is used.}directory, are identified by name via 2 new \textit{user-config} parameters:
 
+\vspace{2mm}
 \begin{enumerate}[noitemsep]
-\vspace{1mm}
 \item \texttt{bg\_par\_infile\_orb\_pts\_loc\_name}
-\\which directs BIOGEM to a file containing a list of model grid locations, in (i,j) format
-\vspace{1mm}
+\\which directs \textbf{BIOGEM} to a file containing a list of model grid locations, in (i,j) format, and
 \item \texttt{bg\_par\_infile\_orb\_pts\_var\_name}
-\\directs BIOGEM to a file containing a list of variables.
+\\which directs \textbf{BIOGEM} to a file containing a list of variables to be saved.
 \end{enumerate}
+\vspace{1mm}
 
+The default setting of  \footnotesize\textsf{bg\_par\_infile\_orb\_pts\_loc\_name }\normalsize  is file:  \footnotesize\textsf{save.orb\_pts\_loc.EXAMPLE.dat}\normalsize, whose content looks like:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{01 01}
+\item[] \texttt{01 02}
+\item[] \texttt{01 35}
+\item[] \texttt{01 36}
+\end{itemize}
+\vspace{1mm}
 
+For \footnotesize\textsf{bg\_par\_infile\_orb\_pts\_var\_name }\normalsize  is file:  \footnotesize\textsf{save.orb\_pts\_var.EXAMPLE.dat}\normalsize, and whose content looks like:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{ipoa\_solfor.}
+\item[] \texttt{ipoa\_fxsw.}
+\item[] \texttt{ipoa\_seaice.}
+\item[] \texttt{ipoa\_cost.}
+\item[] \texttt{ocn\_sur\_temp.}
+\item[] \texttt{ocn\_ben\_temp.}
+\end{itemize}
+\vspace{1mm}
 
-The default is: 'orb\_pts\_loc.dat' and looks like
-
-02 02
-02 04
-03 03
-
-
-
-The default is: 'orb\_pts\_loc.dat' and looks like
-
-ocn\_sur\_PO4
-ocn\_sur\_DIC
-ocn\_ben\_sal
-ipoa\_seaice
-ipoa\_cost
-
-BIOGEM will save *each* variable at *each* location, saving files with
-names in this example:
-
-biogem\_orb\_i02j02.res
-biogem\_orb\_i02j04.res
-biogem\_orb\_i03j03.res
+\textbf{BIOGEM} will save *each* variable at *each* location, saving the data in files with names\footnote{(for this example)}:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \textsf{\footnotesize biogem\_orb\_i01j01.res}
+\item[] \textsf{\footnotesize biogem\_orb\_i01j02.res}
+\item[] \textsf{\footnotesize biogem\_orb\_i01j35.res}
+\item[] \textsf{\footnotesize biogem\_orb\_i01j36.res}
+\end{itemize}
+\vspace{1mm}
 
 The data is written out on each time-slice save step.
-Internally, in between tiem-slice saves, BIOGEM can store up to:
+Internally, in between time-slice saves, \textbf{BIOGEM} can store up to a maximum number of data points, determined by the variable:
+\begin{verbatim}
+bg_n_orb_pts_nmax=0
+\end{verbatim}
+By default, this is set to zero, and BIOGEM will therefore not save orbital data, nor look to see if the files \textsf{\footnotesize bg\_par\_infile\_orb\_pts\_loc } and \textsf{\footnotesize bg\_par\_infile\_orb\_pts\_var\_name} even exist.\footnote{This means that for non orbital data saving, you do not even need to have these default files present.} \textbf{BIOGEM} will warn you if you run out of internal storage, should you have e.g. too low a value of \texttt{bg\_n\_orb\_pts\_nmax} and/or too infrequent a\textit{ time-slice} save.\footnote{I would not recommend exceeding a product of \texttt{bg\_n\_orb\_pts\_nmax} X number of locations X number of variables of ... \(10,000,000\) (whether disk space exists to save a long run, is another matter)}
 
-bg\_n\_orb\_pts\_nmax=10000
+The frequency of data sampling is given in units of \textbf{GOLDSTEIN} time-steps, and is set by the parameter:
+\begin{verbatim}
+ma_conv_kocn_korb=999999999
+\end{verbatim}
+(the default value, effectively disabling saving).
 
-sets of data points by default.
-BIOGEM will warn you if you run out of internal storage, should you have
-e.g. too low a value 
-of bg\_n\_orb\_pts\_nmax, or too infrequent a time-slice save.
+\vspace{8mm}
+\pagebreak
 
-I would not recommend exceeding a product of
-bg\_n\_orb\_pts\_nmax X number of locations X number of variables
-of ... 10,000,000
-(whether disk space exists to save a long run, is another matter)
+For example\footnote{Likely you'll want a larger  value of \texttt{ma\_conv\_kocn\_korb} than the above examples,  because it is still effectively saving some data each and every year.}:
 
-The frequency of data sampling is set by:
-
-ma\_conv\_kocn\_korb 
-
-(which by default has a value of 9999999 or something to disable it)
-
-ma\_conv\_kocn\_korb is the number of *ocean* timesteps between data
-sampling.
-
-ma\_conv\_kocn\_korb = 2
-would sample each and every BIOGEM time-step (48 per year) for the
-standard 16 level 
-ocean (96 time-steps per year in the ocean model).
-
-ma\_conv\_kocn\_korb = 96
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item 
+\begin{verbatim}
+ma_conv_kocn_korb = 2
+\end{verbatim}
+would sample each and every \textbf{BIOGEM} time-step (48 per year) for the
+standard 16 level ocean (96 time-steps per year in the ocean model).
+\item 
+\begin{verbatim}
+ma_conv_kocn_korb = 96
+\end{verbatim}
 would sample once per year for the standard 16 level ocean (96 time-steps
-per year in the 
-ocean model).
+per year in the ocean model).
+\item 
+\begin{verbatim}
+ma_conv_kocn_korb = 98
+\end{verbatim}
+would alias the sampling, so that each year, you sample one \textbf{BIOGEM}
+\textit{time-step} later in the year. So after 48 years, you will have sampled each of the \textbf{BIOGEM} \textit{time-steps} once (and hence have sampled the variability in a year), but only have 48 lines of data, rather than 
+48*48 lines for 48 years sampling each and every \textbf{BIOGEM} time-step.
+\end{itemize}
+\vspace{1mm}
 
-ma\_conv\_kocn\_korb = 98
-would alias the sampling, so that each year, you sample one BIOGEM
-time-step later in the 
-year. So after 48 years, you will have sampled each of the BIOGEM
-time-steps once (and 
-hence have sampled the variability in a year), but only have 48 lines of
-data, rather than 
-48*48 lines for 48 years sampling each and every BIOGEM time-step.
+For the variable list -- the format is similar to the netCDF data names. If the sub-string '\textsf{\footnotesize sur}' appears in the variable string, surface data is saved. If the sub-string '\textsf{\footnotesize ben}' appears in the variable string, then benthic data is saved.
 
-Aliasing is the way to go if you want to resolve the seasonal cycle, yet
-still run for millions of 
-years and have a number of locations with a number of variables saved.
-Most likely, you'll 
-need a much higher value of ma\_conv\_kocn\_korb than this in order to be
-able to save the 
-data on a disk that exists on this planet ...
+You can pick any of the ocean tracers listed in \textsf{\footnotesize tracer\_define.ocn } as part of the string (assuming they are even selected and simulated ...)\footnote{Note that if you select an isotope tracer, e.g. the \texttt{13C} tracer, the output is saved as per mil.}, e.g.
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{ocn\_sur\_PO4.}
+\item[] \texttt{ocn\_sur\_DIC.}
+\item[] \texttt{ocn\_ben\_sal.}
+\end{itemize}
+\vspace{1mm}
 
-For the variable list. The format is similar to the netCDF names.
-If the sub-string 'sur' appears in the variable string, surface data is
-saved.
-If the sub-string 'ben' appears in the variable string, benthic data is
-saved.
+Carbonate variables can also be chosen -- the full list of possibilities is:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{H.}
+\item[] \texttt{fug\_CO2.}
+\item[] \texttt{conc\_CO2.}
+\item[] \texttt{conc\_CO3.}
+\item[] \texttt{conc\_HCO3.}
+\item[] \texttt{ohm\_cal.}
+\item[] \texttt{ohm\_arg.}
+\item[] \texttt{dCO3\_cal.}
+\item[] \texttt{dCO3\_arg.}
+\item[] \texttt{RF0.}
+\end{itemize}
+\vspace{1mm}
 
-Pick any of the ocean tracers listed in 
-tracer\_define.ocn
-as part of the string
+2D atm-ocn physics variables (no sur or ben) include:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{seaice.}
+\item[] \texttt{seaice\_th.}
+\item[] \texttt{solfor.}
+\item[] \texttt{fxws.}
+\item[] \texttt{cost.}
+\item[] \texttt{KCO2.}
+\item[] \texttt{MLD.}
+\item[] \texttt{evap.}
+\item[] \texttt{precip.}
+\end{itemize}
+\vspace{1mm}
 
-e.g.
-ocn\_sur\_PO4
-ocn\_sur\_DIC
-ocn\_ben\_sal
+In addition, atmospheric -- \texttt{atm\_*} and biological export -- \texttt{bio\_fpart\_*} tracers are also supported.
 
-Carbonate variables can also be chosen, the list is:
-
-H     
-fug\_CO2   
-conc\_CO2    
-conc\_CO3    
-conc\_HCO3   
-ohm\_cal   
-ohm\_arg     
-dCO3\_cal  
-dCO3\_arg     
-RF0            
-
-(for both sur and ben)
-
-3D physics array variables (both ben and sur):
-
-rho   
-u     
-v
-dzrho  
-diffv  
-rho\_go  
-
-(the most useful ones)
-
-and 2D atm-ocn physics only (no sur or ben):
-
-seaice 
-seaice\_th 
-solfor  
-fxws  
-cost   
-KCO2 
-MLD  
-evap     
-precip     
-
-This has taken me the entirety of Saturday and I have not been inclined to
-output isotopes in 
-units of per mil.
-For now -- save DIC and DIC\_13C (concentration of bulk DIC and
-concentration of 13C of 
-DIC) and calculate the d13C ...
+\uline{Important}. A DOT is required at the end of each output variable line, which helps the algorithm distinguish different tracers.
 
 
 
-
-Now you only have to select the 13C tracer and it saves as per mil.
-
-For format of the variable list has changed slightly -- in the example
-file:
-
-ocn\_sur\_PO4.
-ocn\_sur\_DIC\_13C.
-ocn\_ben\_temp.
-ipoa\_seaice.
-ipoa\_cost.
-atm\_pCO2.
-atm\_pCO2\_13C.
-bio\_fpart\_POC\_13C.
-
-So -- a DOT has been added at the end of each line, which helps the
-algorithm distinguish 
-different tracers.
-
-Other than the 'physics' -- see earlier email -- you simply write the name
-of any atm, ocn, of 
-sed tracer from the tracer definition file. There are all listed in:
-cgenie.muffin/genie-main/data/input
-And add a DOT to the end.
-Add 'sur' or 'ben' to the start of you want ot specify surface or
-benthic.
-
-*NOTE* I have not tested this beyond check that it runs and that the
-values reported look 
-'reasonabe'. It is up to YOU to confirm that the values outputted are
-representative of that 
-location and that point in the year. (Remember that these outputs are
-instantaneous values, 
-whereas the 2D and 3D netCDF is an average of multple points in time.)
-
-
-/andy
-
-
-
-
-Sorry it has taken so long to get to this -- revision 10205 should have it
-all fixed and working.
-
-I have also modified the way different variables are defined for saving
-very slightly.
-
-Firstly, the variable name itself, as defined in BIOGEM, must be
-immediately followed by a 
-decimal point ('.') -- as before. The variable names are as defined in
-tracer\_define.atm, 
-tracer\_define.ocn, and tracer\_define.sed in column \#1 (CASE is important
-here).
-
-Because there is an ambiguity between atmosphere and ocean temperature, as
+Note that because there is an ambiguity between atmosphere and ocean temperature, as
 they have 
 the same name, when specifying any of atm, ocn, or sed tracers for saving,
-add 'atm', 'ocn', 
-or 'sed' to the string. I use underscores (\_) to separate parts of the
-string.
-
-For now, all 'sed' tracers requested are assumed to be particulate fluxes.
+add '\texttt{atm}', '\texttt{ocn}', 
+or '\texttt{sed}' to the string. Use underscores ('\texttt{\_}') to separate parts of the
+string. 
+For now, all '\texttt{sed}' tracers requested are assumed to be particulate fluxes.
 (Again, as before.)
 
-I have removed 'ocean physics' variable saving because there is nothing
-particularly useful 
-there and there is an ambiguity between some of the ocean and ocn-atm
-interface variables. 
-All the most useful variables, such as sea-ice cover etc. are ocn-atm
-interface variables.
-(But I can bring back the phys variables if you need them.)
 
-Carb chem variable saving is as before.
-
-Also as before -- for 3D variables -- fluxes and ocean tracers -- you add
-'sur' or 'ben' to 
-specify surface or benthic, otherwise surface is assumed.
-
-Examples of valid (although I have not tried them all ...) ocn tracer
-strings:
-
-sur\_ocn\_temp.
-surocntemp.
-ocnsurtemp.
-ocn\_tmp.
-benocntemp.
-
-Valid ocn-atm interface variables include:
-
-seaice.
-seaice\_th.
-solfor.
-
-and carbonate chem:
-
-conc\_CO2.
-ohm\_cal.
-H.
-
-Note that for saving carbonate chemistry anywhere in the ocean and at any
-time (not just 
-associated with time slice saving), you need to specify that the carbonate
-system is re-solved 
-frequently. The setting for this is:
-
-bg\_ctrl\_carbchemupdate\_full=.true.
-
+Also note that for saving carbonate chemistry anywhere in the ocean and at any
+time (not just associated with time slice saving), you need to specify that the carbonate system is re-solved frequently. The setting for this is:
+\begin{verbatim}
+bg_ctrl_carbchemupdate_full=.true.
+\end{verbatim}
 Note that there may be considerable computational overheads to this.
-However, the surface 
-equilibrium is solved frequently by default, and if you only want surface,
-you do not need to 
-add this setting. (So I guess it is only if you want benthic carbonate
-chem saved is there any 
-issue.)
-
-
-
+However, the surface equilibrium is solved frequently by default, and if you only want surface, you do not need to add this setting. (So I guess it is only if you want benthic carbonate chem saved is there any issue.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
