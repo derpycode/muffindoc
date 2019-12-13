@@ -3949,9 +3949,9 @@ bg_ctrl_force_ocn_age=.true.
 
 \cleardoublepage
 
-%\chapterimage{} % Chapter heading image
+\chapterimage{Hurricane-Irma.png} % Chapter heading image
 
-\chapter{Atmopsheric dynamics}
+\chapter{Atmospheric dynamics}
 
 \hfill \break
 
@@ -7305,7 +7305,7 @@ No! Because you might destroy the planet.
 
 %------------------------------------------------
 
-\section{Ocean biogeochemistry questions}
+\section{Ocean biogeochemistry-y questions}
 
 %------------------------------------------------
 %
@@ -8646,70 +8646,6 @@ If you want to hold a previously-calculated (spatially variable) CaCO\begin{math
 
 %------------------------------------------------
 %
-\subsubsection{Implement an alternative fixed remineralization profile for POC (e.g. Martin curve)}
-\vspace{1mm}
-
-There are several options for utilizing a fixed remineralization profile for POC, which by default is a double exponential (See: \textit{Ridgwell et al.} [2007a]).
-The fixed remineralziation profile scheme is set by the string parameter: \texttt{bg\_par\_bio\_remin\_fun}. By default, it has a value of '\texttt{efolding}'. Currently available options are:
-
-\begin{itemize}[noitemsep]
-
-\vspace{1mm}
-\item \texttt{Martin1987}, which applies a globally-uniform power, set by:
-  \\ \texttt{bg\_par\_bio\_remin\_martin\_b}
-  \\(which by default has a value of -0.858)
-  
-\vspace{1mm}
-\item \texttt{Henson2012}, which calculates the value of b according to sea surface temperature (SST):
-  \\b = (0.024 * SST) - 1.06
-  
-\end{itemize}
-
-To user either (on their own), all organic matter should be assigned to a single phase, with the 2nd (recalcitrant) fraction set to zero:
-\vspace{-2pt}\begin{verbatim}
-bg_par_bio_remin_POC_frac2=0.0
-\end{verbatim}\vspace{-2pt}
-
-Note that these parameterizations can be combined with ballasting and will act on the 'free' POC phase (i.e. the one not controlled by the ballasting parameterization).
-
-%------------------------------------------------
-%
-\subsubsection{Implement particulate organic carbon 'ballasting'}
-\vspace{1mm}
-
-The default particulate organic carbon (POC) ocean interior remineralization scheme is based on fixed, prescribed profiles of relative POC flux to depth (e.g. see: \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2007a]). A 'ballasting' control on POC transport to depth can instead be implemented by:
-\vspace{-2pt}\begin{verbatim}
-bg_ctrl_bio_remin_POC_ballast=.true.
-bg_ctrl_bio_remin_POC_fixed=.false.
-\end{verbatim}\vspace{-2pt}
-
-The POC 'carrying coefficients' for CaCO3, opal, and detrital (lithogenic) material are set by the parameters:
-\vspace{-2pt}\begin{verbatim}
-bg_par_bio_remin_ballast_kc
-bg_par_bio_remin_ballast_ko
-bg_par_bio_remin_ballast_kl
-\end{verbatim}\vspace{-2pt}
-(for CaCO3, opal, and lithogenics, respectively). Note that the ballast coefficient units are: g POC m-2 yr-1 (g ballast m-2 yr-1)-1 (i.e. \textbf{g g-1}), which are internally converted to: mol POC m-2 yr-1 (mol ballast m-2 yr-1)-1 (i.e. \textbf{mol mol-1}).
-
-A fixed (in time), but spatially heterogeneous field can also be prescribed instead of global uniform values (akin to setting a pattern of the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio}). The parameters setting whether to substitute a globally-uniform value with a specified pattern are:
-\vspace{-2pt}\begin{verbatim}
-bg_ctrl_force_CaCO3ballastcoeff=.true.
-bg_ctrl_force_opalballastcoeff=.true.
-bg_ctrl_force_detballastcoeff=.true.
-\end{verbatim}\vspace{-2pt}
-and which by default are \texttt{.false.}.
-The patterns of carrying coefficient are determined by files read in from \texttt{cgenie\slash genie-biogem\slash data\slash input}. The filenames are specified by:
-\vspace{-2pt}\begin{verbatim}
-bg_par_CaCO3ballastcoeff_file
-bg_par_opalballastcoeff_file
-bg_par_detballastcoeff_file
-\end{verbatim}\vspace{-2pt}
-(again, akin to the methodology for setting the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio})).
-
-Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does nto have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
-
-%------------------------------------------------
-%
 \subsubsection{Prescribe biological export production}
 \vspace{1mm}
 
@@ -8866,6 +8802,123 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... remineralize ... differently}
+
+%------------------------------------------------
+%
+\subsection*{Overview}
+\vspace{1mm}
+
+\hfill \break
+
+\subsubsection{Implement 'instantaneous remineralization'}
+\vspace{1mm}
+
+By default in the original version of cGENIE, biogenic particles exported out of the surface ocean layer were assumed to settle at velocity of \(125md^{-1}\). The parameter controlling this was: \break\texttt{bg\_par\_bio\_remin\_sinkingrate}. The consequence was that particles took more than a single tim-step to reach the ocean floor and be fully remineralized. Hence, particles could be found at intermediate depth at the ocean at the end of any particular time-step; settling further during the next time-step (and so on to the deepest ocean layer at that grid point).
+
+An associated parameter was defined to control the residence time of particles in any one layer for the purpose of calculating scavenging. A separate parameter was created so that the residence time and hence scavenging rate could be varied independently of the settling rate of the bulk particles. This parameter was: \texttt{bg\_par\_bio\_remin\_sinkingrate\_scav}. The default value of this is also \(125md^{-1}\).
+
+This all became pretty confusing ... what is 'real' settling and what the 'scav' bit is ... so a new pair of parameters was created. These are:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \texttt{bg\_par\_bio\_remin\_sinkingrate\_physical}
+\item \texttt{bg\_par\_bio\_remin\_sinkingrate\_reaction}
+\end{itemize}
+\vspace{1mm}
+The former defining the 'real' (physical) sinking speed, and the latter the effective sinking speed for the purpose of calculating the residence time in each ocean layer and hence reaction rates. Here, reaction rates include scavenging as well as opal dissolution, and organic matter remineralization driven by temperature.
+
+By default these are set to zero, and the values of \texttt{bg\_par\_bio\_remin\_sinkingrate} and \texttt{bg\_par\_bio\_remin\_sinkingrate\_scav} are used. 
+
+As an alternative to the default, of particles setting a finite distance down through the water column each time-step, the products of remineralziation can be instantaneously distributed down through the water column -- as if the particles settled with infinite velocity, yet still dissolved and reacted as the same rates as before,i.e. at a finite settling speed. To do this one would set, e.g.:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item[] \texttt{bg\_par\_bio\_remin\_sinkingrate\_physical=1.0E9}
+\item[] \texttt{bg\_par\_bio\_remin\_sinkingrate\_reaction=125.0}
+\end{itemize}
+\vspace{1mm}
+At a velocity of \(1.0^{9}md^{-1}\), particles would reach the ocean floor (regardless of the depth at that grid point) in a single time-step. Remineralization is therefore calculated throughout the water column within that time-step -- 'instantaneous'. The second parameter says that for the purposes of residence time and reactions, sinking should be considered to have occurred at \(125md^{-1}\).
+
+Why do this? It simplifies calculation of flux mass balances, as material leaving the ocean surface is 'seen' (arriving) at the sediment surface at the same time-step. This behaviour is likely to become the \textbf{muffin} default in the future.
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsection*{Alternative schemes}
+\vspace{1mm}
+
+%------------------------------------------------
+%
+\subsubsection{Implement an alternative fixed remineralization profile for POC (e.g. Martin curve)}
+\vspace{1mm}
+
+There are several options for utilizing a fixed remineralization profile for POC, which by default is a double exponential (See: \textit{Ridgwell et al.} [2007a]).
+The fixed remineralziation profile scheme is set by the string parameter: \texttt{bg\_par\_bio\_remin\_fun}. By default, it has a value of '\texttt{efolding}'. Currently available options are:
+
+\begin{itemize}[noitemsep]
+
+\vspace{1mm}
+\item \texttt{Martin1987}, which applies a globally-uniform power, set by:
+  \\ \texttt{bg\_par\_bio\_remin\_martin\_b}
+  \\(which by default has a value of -0.858)
+  
+\vspace{1mm}
+\item \texttt{Henson2012}, which calculates the value of b according to sea surface temperature (SST):
+  \\b = (0.024 * SST) - 1.06
+  
+\end{itemize}
+
+To user either (on their own), all organic matter should be assigned to a single phase, with the 2nd (recalcitrant) fraction set to zero:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_remin_POC_frac2=0.0
+\end{verbatim}\vspace{-2pt}
+
+Note that these parameterizations can be combined with ballasting and will act on the 'free' POC phase (i.e. the one not controlled by the ballasting parameterization).
+
+%------------------------------------------------
+%
+\subsubsection{Implement particulate organic carbon 'ballasting'}
+\vspace{1mm}
+
+The default particulate organic carbon (POC) ocean interior remineralization scheme is based on fixed, prescribed profiles of relative POC flux to depth (e.g. see: \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2007a]). A 'ballasting' control on POC transport to depth can instead be implemented by:
+\vspace{-2pt}\begin{verbatim}
+bg_ctrl_bio_remin_POC_ballast=.true.
+bg_ctrl_bio_remin_POC_fixed=.false.
+\end{verbatim}\vspace{-2pt}
+
+The POC 'carrying coefficients' for CaCO3, opal, and detrital (lithogenic) material are set by the parameters:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_remin_ballast_kc
+bg_par_bio_remin_ballast_ko
+bg_par_bio_remin_ballast_kl
+\end{verbatim}\vspace{-2pt}
+(for CaCO3, opal, and lithogenics, respectively). Note that the ballast coefficient units are: g POC m-2 yr-1 (g ballast m-2 yr-1)-1 (i.e. \textbf{g g-1}), which are internally converted to: mol POC m-2 yr-1 (mol ballast m-2 yr-1)-1 (i.e. \textbf{mol mol-1}).
+
+A fixed (in time), but spatially heterogeneous field can also be prescribed instead of global uniform values (akin to setting a pattern of the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio}). The parameters setting whether to substitute a globally-uniform value with a specified pattern are:
+\vspace{-2pt}\begin{verbatim}
+bg_ctrl_force_CaCO3ballastcoeff=.true.
+bg_ctrl_force_opalballastcoeff=.true.
+bg_ctrl_force_detballastcoeff=.true.
+\end{verbatim}\vspace{-2pt}
+and which by default are \texttt{.false.}.
+The patterns of carrying coefficient are determined by files read in from \texttt{cgenie\slash genie-biogem\slash data\slash input}. The filenames are specified by:
+\vspace{-2pt}\begin{verbatim}
+bg_par_CaCO3ballastcoeff_file
+bg_par_opalballastcoeff_file
+bg_par_detballastcoeff_file
+\end{verbatim}\vspace{-2pt}
+(again, akin to the methodology for setting the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio})).
+
+Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does nto have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
+
+
+
 
 %------------------------------------------------
 
