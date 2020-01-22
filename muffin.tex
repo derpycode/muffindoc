@@ -8255,43 +8255,99 @@ Errors identified by `\texttt{brew doctor}' are most likely associated with some
 
 %------------------------------------------------
 
-Natively ... \textbf{muffin} does not compile under Windows. However ... \footnote{By Dr. David A. McKay <david.armstrongmckay@su.se>, tested May 2019 }
+Natively ... \textbf{muffin} does not compile under Windows. However ... \footnote{By Dr. David A. McKay <david.armstrongmckay@su.se>, tested May 2019, Jan 2020 }
 
 %------------------------------------------------
 %
 \subsection*{Cygwin}\label{cygwin}
 
-So you want to run \textbf{muffin}, but previous sage advice has failed to deter you from wanting to do it on Windows… Well don’t say we didn’t warn you, but it *is* possible to do – but only be cheating.
+So you want to run \textbf{muffin}, but previous sage advice has
+failed to deter you from wanting to do it on Windows... Well don’t say
+we didn’t warn you, but it *is* possible to do – but only be cheating.
 
-\textbf{muffin} is not able to run directly on Windows, but there are ways to *pretend* that Windows is actually Unix and get it going anyway. But why oh why run \textbf{muffin} in Windows? Big runs are best sent to clusters (which are invariably a Linux machine of some sort) where they can happily run in native Linux and keep at it for ages. But maybe you want to tinker around with the model on your own laptop a bit and do some short runs without bothering with clusters and queuing and the like. Or maybe you don’t have access to a fancy cluster and want to play with a real earth system model on your laptop anyway. Or maybe the normal way of doing it was just too easy for you…
+\textbf{muffin} is not able to run directly on Windows, but there are
+ways to *pretend* that Windows is actually Unix and get it going
+anyway. But why oh why run \textbf{muffin} in Windows? Big runs are
+best sent to clusters (which are invariably a Linux machine of some
+sort) where they can happily run in native Linux and keep at it for
+ages. But maybe you want to tinker around with the model on your own
+laptop a bit and do some short runs without bothering with clusters
+and queuing and the like. Or maybe you don’t have access to a fancy
+cluster and want to play with a real earth system model on your laptop
+anyway. Or maybe the normal way of doing it was just too easy for you...
 
-The main method described here uses \href{https://www.cygwin.com/faq.html#faq.what.what}{\textbf{Cygwin}}, which claims to “provide functionality similar to a Linux distribution on Windows”. Alternatively, if you have Windows 10 you could try using its new-ish Windows Subsystem for Linux (WSL) feature, which in theory means you can have supposedly actual Linux on your Windows machine without having to do anything awkward like dual-installation. However, it’s still a bit Beta, and when I last tried it put the requisite libraries all over the place which was a faff. It may work better at some point, but for the moment proceed there at your own risk (or do a better job than me).
+The main method described here uses
+\href{https://www.cygwin.com/faq.html#faq.what.what}{\textbf{Cygwin}},
+which claims to ``provide functionality similar to a Linux
+distribution on Windows''. Alternatively, if you have Windows 10 you
+could try using its new-ish Windows Subsystem for Linux (WSL) feature,
+which in theory means you can have supposedly actual Linux on your
+Windows machine without having to do anything awkward like
+dual-installation. However, it’s still a bit Beta, and when I last
+tried it put the requisite libraries all over the place which was a
+faff. It may work better at some point, but for the moment proceed
+there at your own risk (or do a better job than me).
 
-\textbf{Cygwin} goes to pains to note that it only provides functionality similar to Linux, and isn’t actually Linux or “… a way to run native Linux apps on Windows”. What this means in practice is that you can’t just take stuff compiled on a Linux machine, dump it on your Windows machine and expect it to work via \textbf{Cygwin} (or vice versa). But if you’re coding and compiling stuff to run within \textbf{Cygwin} then it basically acts the same. Just remember the golden rule: What Compiles In \textbf{Cygwin}, Stays in \textbf{Cygwin}.
+\textbf{Cygwin} goes to pains to note that it only provides
+functionality similar to Linux, and isn’t actually Linux or ``... a
+way to run native Linux apps on Windows''. What this means in practice
+is that you can’t just take stuff compiled on a Linux machine, dump it
+on your Windows machine and expect it to work via \textbf{Cygwin} (or
+vice versa). But if you’re coding and compiling stuff to run within
+\textbf{Cygwin} then it basically acts the same. Just remember the
+golden rule: What Compiles In \textbf{Cygwin}, Stays in
+\textbf{Cygwin}.
 
-We’ll assume you don’t already have \textbf{Cygwin} installed (and if you do, you may need to check you’ve got all the packages you need anyway – skip to running the installation executable from wherever you saved it). It’s best to use this guide in parallel to the main muffin manual too (which provides extra troubleshooting). Here goes:
+We’ll assume you don’t already have \textbf{Cygwin} installed (and if
+you do, you may need to check you’ve got all the packages you need
+anyway – skip to running the installation executable from wherever you
+saved it). It’s best to use this guide in parallel to the main muffin
+manual too (which provides extra troubleshooting). Here goes:
 
 \begin{enumerate}[noitemsep]
 
 \vspace{2mm}
-\item \textbf{Download Cygwin:} 
-Head to https://www.cygwin.com/ and click the link named \textsf{\small setup-x86\_64.exe} under \textsf{\small Install} to download the executable (pick 64/32 bit depending on your system). Save it – maybe adding \textsf{\small Cygwin} to the name so you know what it is later – and then run it from your downloads tab when it’s ready (it will also no doubt have a security popup; say yes, or this will be a very short tutorial)
+\item \textbf{Download Cygwin:} Head to
+  \href{https://www.cygwin.com/}{www.cygwin.com} and click the link
+  named \textsf{\small setup-x86\_64.exe} under \textsf{\small
+    Install} to download the executable (pick 64/32 bit depending on
+  your system). Save it -- maybe adding \textsf{\small Cygwin} to the
+  name so you know what it is later -- and then run it from your
+  downloads tab when it’s ready (it will also no doubt have a security
+  popup; say yes, or this will be a very short tutorial.)
 
 \vspace{2mm}
-\item \textbf{Start Cygwin Setup:} 
-In \textbf{Cygwin} setup, say \textsf{\small Next} to all the things [assuming you want to install from the internet (rather than somewhere else?), use the default root directory (best not change this), install for all users on your machine, and default local package directory, \& use system proxy settings for downloading]. It will ask you what mirror you want to download from too – it doesn’t really matter where, I tend to go for somewhere local but they should all be the same anyway
+\item \textbf{Start Cygwin Setup:} In \textbf{Cygwin} setup, say
+  \textsf{\small Next} to all the things [assuming you want to install
+    from the internet (rather than somewhere else?), use the default
+    root directory (best not change this), install for all users on
+    your machine, and default local package directory, \& use system
+    proxy settings for downloading]. It will ask you what mirror you
+  want to download from too – it doesn’t really matter where, I tend
+  to go for somewhere local but they should all be the same anyway.
 
 \vspace{2mm}
-\item \textbf{Select Packages:} 
-Next in Setup, it will present you with Select Packages to install. \textbf{Cygwin} doesn’t automatically come with every useful Unix package and library ever (as it’d be enormous), so you have to go through the tedium of picking what you actually think you need (and inevitably miss something). Here is what you’ll need for \textbf{muffin} install to work beyond the default Basics (find them using the search bar, then change the dropdown bit where it says ‘Skip’ to the latest non-test version number. Libraries for each package should be automatically selected by this as well):
+\item \textbf{Select Packages:} Next in Setup, it will present you
+  with Select Packages to install. \textbf{Cygwin} doesn’t
+  automatically come with every useful Unix package and library ever
+  (as it’d be enormous), so you have to go through the tedium of
+  picking what you actually think you need (and inevitably miss
+  something). Here is what you’ll need for \textbf{muffin} install to
+  work beyond the default Basics (find them using the search bar, then
+  change the dropdown bit where it says 'Skip' to the latest non-test
+  version number. Libraries for each package should be automatically
+  selected by this as well):
 
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item gcc-core; gcc-fortran; gcc-g++ – compilers for c, c++, & fortran for compiling the model
-\item nano – a standard text editor (or your favourite Unix one, e.g. emacs or vim) so you can edit
-\item git –for downloading/cloning \textbf{muffin} (and updating it in future)
+\item gcc-core; gcc-fortran; gcc-g++ – compilers for c, c++, & fortran
+  for compiling the model
+\item nano – a standard text editor (or your favourite Unix one,
+  e.g. emacs or vim) so you can edit
+\item git –for downloading/cloning \textbf{muffin} (and updating it in
+  future)
 \item make – for testing and installing the model
-\item Python?
+\item Python2
 \item gambas3-gb-xml-xslt – needed for xsltproc
 \item Bc
 \item Anything else you fancy?
@@ -8299,58 +8355,96 @@ Next in Setup, it will present you with Select Packages to install. \textbf{Cygw
 \end{enumerate}
 \vspace{1mm}
 
-If you forget something, you can simply rerun the install executable and you can select new packages and update old ones (NB this is the only way it updates, so you have to do this occasionally anyway if you want any updates!)
+If you forget something, you can simply rerun the install executable
+and you can select new packages and update old ones (NB this is the
+only way it updates, so you have to do this occasionally anyway if you
+want any updates!)
 
-NB-2 – eagle-eyed readers may have noticed we didn’t mention \textbf{netCDF} here. There’s a good (and annoying) reason for this, to be revealed shortly
+NB-2 – eagle-eyed readers may have noticed we didn’t mention
+\textbf{netCDF} here. There’s a good (and annoying) reason for this,
+to be revealed shortly
 
-NB-3: you may later find \textbf{Cygwin} claiming some really core commands (like rm) is missing, so cgenie won’t compile. If this happens, uninstall and then reinstall \textbf{Cygwin} from scratch… 
+NB-3: you may later find \textbf{Cygwin} claiming some really core
+commands (like rm) is missing, so cgenie won’t compile. If this
+happens, uninstall and then reinstall \textbf{Cygwin} from scratch...
 
 \vspace{2mm}
-\item \textbf{Click Finish when Setup is done}, adding system icons if you want them
+\item \textbf{Click Finish when Setup is done}, adding system icons if
+  you want them
 
 \vspace{2mm}
-\item  \textbf{Launch Cygwin:} Go find Cygwin Terminal (either from an icon or the Start bar) and launch it – you should get a bash-like terminal popping up ready to go
+\item \textbf{Launch Cygwin:} Go find Cygwin Terminal (either from an
+  icon or the Start bar) and launch it – you should get a bash-like
+  terminal popping up ready to go
 
 \vspace{2mm}
-\item \textbf{Download Netcdf:} This is the other annoying step, in that netcdf should already be available as a library via Cygwin but for irritating reasons (to do with naming, library locations, and compilers) isn’t properly recognised by \textbf{muffin} without some tiresome edits. So it’s a lot easier just to download it yourself, install it exactly where you want it, and tell \textbf{muffin} where it is. Inelegant, but effective. If you’d prefer to make Cygwin netcdf work instead, then feel free to have a go!
+\item \textbf{Download Netcdf:} This is the other annoying step, in
+  that netcdf should already be available as a library via Cygwin but
+  for irritating reasons (to do with naming, library locations, and
+  compilers) isn’t properly recognised by \textbf{muffin} without some
+  tiresome edits. So it’s a lot easier just to download it yourself,
+  install it exactly where you want it, and tell \textbf{muffin} where
+  it is. Inelegant, but effective. If you’d prefer to make Cygwin
+  netcdf work instead, then feel free to have a go!
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item Download the netcdf4 library from the \textbf{muffin} website\footnote{http://www.seao2.info//cgenie/software/netcdf-4.0.tar.gz} and save it somewhere handy like in your brand new \textbf{Cygwin} directory user area (something like C:\cygwin64\home\User) where you can find it using the \textbf{Cygwin} terminal
+\item Download the netcdf4 library from the \textbf{muffin}
+  \href{http://www.seao2.info//cgenie/software/netcdf-4.0.tar.gz}{website}
+  and save it somewhere handy like in your brand new \textbf{Cygwin}
+  directory user area (something like C:\cygwin64\home\User) where you
+  can find it using the \textbf{Cygwin} terminal
 \vspace{1mm}
-\item In \textbf{Cygwin} Terminal, navigate to where you downloaded the library to (using cd and ls commands) and then untar, configure, and install the libraries with the following code:
+\item In \textbf{Cygwin} Terminal, navigate to where you downloaded
+  the library to (using cd and ls commands) and then unzip and untar
+  (you may need to use a utility like pzip in Windows 10), configure,
+  and install the libraries with the following code:
 \begin{verbatim}
 tar -xzf netcdf-4.0.tar.gz
 cd netcdf-4.0
 ./configure --disable-shared --prefix=${HOME} FC=gfortran CC=gcc CXX=g++
 \end{verbatim}
-\# N.B. no new line here. This will also take a while…
+\# N.B. no new line here. This will also take a while...
 \begin{verbatim}
 make check
 \end{verbatim}
-\#this checks \textbf{netCDF}. All the tests should pass. If not, then try again…
+\#this checks \textbf{netCDF}. All the tests should pass. If not, then
+try again...
 \begin{verbatim}
 make install
 \end{verbatim}
-\#this installs \textbf{netCDF}. It should finish with a congratulations. If not, then try again…
-\\The key thing here is making sure we use *exactly* the same compilers that installing cGENIE will use to make sure it all matches up. Also note that this is an older version of netcdf with both c and fortran libraries combined – this is to make life simpler here, and still works fine
+\#this installs \textbf{netCDF}. It should finish with a
+congratulations. If not, then try again...  \\The key thing here is
+making sure we use *exactly* the same compilers that installing cGENIE
+will use to make sure it all matches up. Also note that this is an
+older version of netcdf with both c and fortran libraries combined –
+this is to make life simpler here, and still works fine
 \end{enumerate}
 
 \vspace{2mm}
-\item Download \textbf{muffin}: In \textbf{Cygwin} Terminal navigate back to your Home directory 8where you started) and run the following code:
+\item Download \textbf{muffin}: In \textbf{Cygwin} Terminal navigate
+  back to your Home directory (where you started) and run the
+  following code:
 \begin{verbatim}
 cd ..
 git clone https://github.com/derpycode/cgenie.muffin.git
 \end{verbatim}
-This clones the entire current cGENIE.muffin repository from github to your computer via Cygwin. Magical!
+This clones the entire current cGENIE.muffin repository from github to
+your computer via Cygwin. Magical!
 
 \vspace{2mm}
-\item Configure cGENIE settings: Before installing, we need to edit a bit of code to tell cGENIE where we put netcdf. There are 2 files to edit: 
+\item Configure cGENIE settings: Before installing, we need to edit a
+  bit of code to tell cGENIE where we put netcdf. There are 2 files to
+  edit:
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item Type: \texttt{cd cgenie.muffin/genie-main} to go to the main \textbf{muffin} directory
 \vspace{1mm}
-\item Type: \texttt{nano user.mak} in your \textbf{Cygwin} terminal to edit \textsf{\small user.mak} – at the end of the file, the \textbf{netCDF} path will need to be changed because we’ve put netcdf somewhere different (your home user area) to what it’s expecting. Change:
+\item Type: \texttt{nano user.mak} in your \textbf{Cygwin} terminal to
+  edit \textsf{\small user.mak} – at the end of the file, the
+  \textbf{netCDF} path will need to be changed because we’ve put
+  netcdf somewhere different (your home user area) to what it’s
+  expecting. Change:
 \begin{verbatim}
 NETCDF_DIR=/usr/local
 \end{verbatim}
@@ -8362,9 +8456,13 @@ and make sure this line is the same:
 \begin{verbatim}
 NETCDF_NAME=netcdf
 \end{verbatim}
-To do so, move to the line with your keyboard arrow keys, type it in, and save on exit (in nano, press ‘Ctrl-X’ to exit and then ‘y’ to save changes or ‘n’ to not, then hit enter)
+To do so, move to the line with your keyboard arrow keys, type it in,
+and save on exit (in nano, press ‘Ctrl-X’ to exit and then ‘y’ to save
+changes or ‘n’ to not, then hit enter)
 \vspace{1mm}
-\item  Now type: \texttt{nano makefile.arc} in your \textbf{Cygwin} terminal to edit \textsf{\small makefile.arc}– towards the end of the file, under the heading: 
+\item Now type: \texttt{nano makefile.arc} in your \textbf{Cygwin}
+  terminal to edit \textsf{\small makefile.arc}– towards the end of
+  the file, under the heading:
 \begin{verbatim}
 # === NetCDF paths ===
 \end{verbatim}
@@ -8376,14 +8474,17 @@ and comment the 2 lines under (i.e. add a # in front):
 \begin{verbatim}
 ### FOR SEPERATE C AND FORTRAN NETCDF ###
 \end{verbatim}
-so as to select, combined, rather than separate, netCDF libraries. Save and exit.
+so as to select, combined, rather than separate, netCDF
+libraries. Save and exit.
 \end{enumerate}
 
 \vspace{2mm}
-\item \textbf{Test muffin:} now we need to check \textbf{muffin} is working.
+\item \textbf{Test muffin:} now we need to check \textbf{muffin} is
+  working.
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item First, make sure you’re still in the directory cgenie.muffin/genie-main (type ls to find out). Then enter:
+\item First, make sure you’re still in the directory
+  cgenie.muffin/genie-main (type ls to find out). Then enter:
 \begin{verbatim}
 make testbiogem
 \end{verbatim}
@@ -8395,9 +8496,21 @@ If not, try:
 \begin{verbatim}
 make cleanall
 \end{verbatim}
-and then try again. If that doesn’t work, see the full \textbf{muffin} manual FAQs for pointers, or check the earlier steps with \textbf{Cygwin} packages, \textbf{netCDF}, and \textbf{muffin} configuration worked properly 
+and then try again. If that doesn’t work, see the full \textbf{muffin}
+manual FAQs for pointers, or check the earlier steps with
+\textbf{Cygwin} packages, \textbf{netCDF}, and \textbf{muffin}
+configuration worked properly
 \vspace{1mm}
-\item To see if it works for a proper model run, try out the following code to run a real experiment\footnote{no new line}:
+\item To see if it works for a proper model run, in the directory
+  cgenie.muffin/genie-main, \texttt{nano makefile.txt}, find the
+  section entitled ``CLEANING RULES'' and delete the leading
+  backslashes in front of the four rm commands in this section, so
+  those lines look like the following, and save the results.
+\begin{verbatim}
+rm -f ...
+\end{verbatim}
+\item Try out the following code to run a real experiment\footnote{no
+  new line}:
 \begin{verbatim}
 ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 10
 \end{verbatim}
@@ -8410,11 +8523,18 @@ with the command structure following:
 #4 : Run the experiment for X years. Here it is: 10
 #5 : The (optional) restart file. Here there is no restart, so no 5th parameter passed
 \end{verbatim}\normalsize
-You should see code compiling, and then after a while some results start appearing. After 10 model years (a few minutes), the model should save and finish, and you can find the outputs in \textsf{\small cgenie\_outputs} in your Home directory.
+You should see code compiling, and then after a while some results
+start appearing. After 10 model years (a few minutes), the model
+should save and finish, and you can find the outputs in \textsf{\small
+  cgenie\_outputs} in your Home directory.
 \end{enumerate}
 
 \vspace{2mm}
-\item \textbf{Success!} If you’ve made it this far, congratulations, you now having \textbf{muffin} running on your Windows machine! Remember that big runs will take a long time though, so beyond tinkering and short runs be prepared to leave your computer running for a lonnnng time. But on the upside, no queuing required!
+\item \textbf{Success!} If you’ve made it this far, congratulations,
+  you now having \textbf{muffin} running on your Windows machine!
+  Remember that big runs will take a long time though, so beyond
+  tinkering and short runs be prepared to leave your computer running
+  for a lonnnng time. But on the upside, no queuing required!
 
 \end{enumerate}
 
