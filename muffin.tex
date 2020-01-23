@@ -8255,13 +8255,9 @@ Errors identified by `\texttt{brew doctor}' are most likely associated with some
 
 %------------------------------------------------
 
-<<<<<<< HEAD
 Natively ... \textbf{muffin} does not compile under Windows. However
 ... \footnote{By Dr. David A. McKay <david.armstrongmckay@su.se>,
   tested May 2019, Jan 2020 }
-=======
-Natively ... \textbf{muffin} does not compile under Windows. However ... \footnote{By Dr. David A. McKay <david.armstrongmckay@su.se>, tested May 2019, Jan 2020 }
->>>>>>> c7307d8cff152e8e016bcb512615c05aaf9afae3
 
 %------------------------------------------------
 %
@@ -8269,11 +8265,7 @@ Natively ... \textbf{muffin} does not compile under Windows. However ... \footno
 
 So you want to run \textbf{muffin}, but previous sage advice has
 failed to deter you from wanting to do it on Windows... Well don’t say
-<<<<<<< HEAD
 we didn’t warn you, but it *is* possible to do – but only by cheating.
-=======
-we didn’t warn you, but it *is* possible to do – but only be cheating.
->>>>>>> c7307d8cff152e8e016bcb512615c05aaf9afae3
 
 \textbf{muffin} is not able to run directly on Windows, but there are
 ways to *pretend* that Windows is actually Unix and get it going
@@ -8350,7 +8342,7 @@ manual too (which provides extra troubleshooting). Here goes:
 
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item gcc-core; gcc-fortran; gcc-g++ – compilers for c, c++, & fortran
+\item gcc-core; gcc-fortran; gcc-g++ – compilers for c, c++, \& fortran
   for compiling the model
 \item nano – a standard text editor (or your favourite Unix one,
   e.g. emacs or vim) so you can edit
@@ -8370,7 +8362,6 @@ and you can select new packages and update old ones (NB this is the
 only way it updates, so you have to do this occasionally anyway if you
 want any updates!)
 
-<<<<<<< HEAD
 NB-1: This how-to was most recently tested with Cygwin 3.1.2,
 downloaded/installed 22 Jan 2020. % update as necessary as Cygwin is
                                   % updated...
@@ -8379,12 +8370,6 @@ NB-2: eagle-eyed readers may have noticed we didn’t mention
 \textbf{netCDF} here. There’s a good (and annoying) reason for this,
 to be revealed shortly
 
-=======
-NB-2 – eagle-eyed readers may have noticed we didn’t mention
-\textbf{netCDF} here. There’s a good (and annoying) reason for this,
-to be revealed shortly
-
->>>>>>> c7307d8cff152e8e016bcb512615c05aaf9afae3
 NB-3: you may later find \textbf{Cygwin} claiming some really core
 commands (like rm) is missing, so cgenie won’t compile. If this
 happens, uninstall and then reinstall \textbf{Cygwin} from scratch...
@@ -8396,7 +8381,7 @@ happens, uninstall and then reinstall \textbf{Cygwin} from scratch...
 \vspace{2mm}
 \item \textbf{Launch Cygwin:} Go find Cygwin Terminal (either from an
   icon or the Start bar) and launch it – you should get a bash-like
-  terminal popping up ready to go
+  terminal popping up ready to go.
 
 \vspace{2mm}
 \item \textbf{Download Netcdf:} This is the other annoying step, in
@@ -8413,7 +8398,7 @@ happens, uninstall and then reinstall \textbf{Cygwin} from scratch...
 \item Download the netcdf4 library from the \textbf{muffin}
   \href{http://www.seao2.info//cgenie/software/netcdf-4.0.tar.gz}{website}
   and save it somewhere handy like in your brand new \textbf{Cygwin}
-  directory user area (something like C:\cygwin64\home\User) where you
+  directory user area (something like C:\textbackslash cygwin64\textbackslash home\textbackslash User) where you
   can find it using the \textbf{Cygwin} terminal
 \vspace{1mm}
 \item In \textbf{Cygwin} Terminal, navigate to where you downloaded
@@ -8487,11 +8472,11 @@ changes or ‘n’ to not, then hit enter)
 \begin{verbatim}
 # === NetCDF paths ===
 \end{verbatim}
-uncomment the line under (i.e. remove the # in front):
+uncomment the line under (i.e. remove the \# in front):
 \begin{verbatim}
 ### FOR COMBINED C+FORTRAN NETCDF LIBRARIES #######
 \end{verbatim}
-and comment the 2 lines under (i.e. add a # in front):
+and comment the 2 lines under (i.e. add a \# in front):
 \begin{verbatim}
 ### FOR SEPERATE C AND FORTRAN NETCDF ###
 \end{verbatim}
@@ -10171,7 +10156,7 @@ order, i.e. from the bottom to the top. Thus, for file \footnotesize\textsf{orbi
 
 The value for parameter \texttt{ea\_41} depends on the resolution of the model that is used. By default, for a 16-level ocean circulation model configuration, \textbf{muffin} employs 96  time-steps per year in the \textbf{GOLDSTEIN} ocean circulation model component. When the astronomical solution is provided as one orbital value per \(1000\) years, this equates to \(1000\times96=96000\) \textbf{GOLDSTEIN} time steps. For lower resolution configurations of \textbf{muffin}, \textbf{GOLDSTEIN} may be operating on \(48\) time steps per year, which means that \texttt{ea\_41} need to be changed to \(48000\) (when the astronomical solution is provided \(1000\) year time steps).
 
-\uline{Important}. When using one of the paleo configurations of \textbf{muffin} defined in the \textsf{\footnotesize genie-paleo } directory, the file containing the astronomical solution must be present in that directory. For all other configurations, the file lives in \footnotesize\textsf{genie-embm/data/input}\normalsize}. A warning messgage will be generated and the \textbf{muffin} will exit if the file is not found in the correct directory.
+\uline{Important}. When using one of the paleo configurations of \textbf{muffin} defined in the \textsf{\footnotesize genie-paleo } directory, the file containing the astronomical solution must be present in that directory. For all other configurations, the file lives in \footnotesize\textsf{genie-embm/data/input}\normalsize. A warning messgage will be generated and the \textbf{muffin} will exit if the file is not found in the correct directory.
 
 %------------------------------------------------
 %
