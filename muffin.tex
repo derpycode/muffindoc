@@ -7296,6 +7296,54 @@ ea_radfor_scl_co2=1.0
 
 %------------------------------------------------
 %
+\subsubsection{How does the fresh water flux adjustment work?}
+
+Without a dynamical atmosphere and sufficient resolution e.g. North American topography, the EMBM atmospheric component component produces an overly weak net transport of fresh water from the North Atlantic into the North Pacific -- too weak to maintain an AMOC (how sad).
+
+A fix is provided in the form of a prescribed transport of fresh water from the Atlantic to Pacific (or salt from the Pacific to Atlantic). The transport is split up into 3 zones\footnote{Also see notes in the xml parameter definition in addition to description below and references.} -- approximately:
+
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\item South Atlantic into the (South) Pacific
+\\\noindent [latitude band \texttt{j=9,12} (\texttt{36x36} grid)]
+\item Equatorial and southern subtropical Atlantic into the Pacific
+\\\noindent [latitude band \texttt{j=13,25} (\texttt{36x36} grid)]
+\item North Atlantic (and Arctic) into the North Pacific
+\\\noindent [latitude band \texttt{j=26,36} (\texttt{36x36} grid)]
+\end{enumerate}
+\vspace{1mm}
+See Figure 1 in \textit{Marsh et al.} [2004] (\textit{Climate Dynamics}) for an illustration. By default [\textit{Edwards and Marsh}, 2004], the fluxes combine for a total net transfer of 0.32 Sv following Oort [1983] and individually are (with parameter name):
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\item (xml name: \texttt{extra1a}) \texttt{ea\_25=-0.03}
+\item (xml name: \texttt{extra1b}) \texttt{ea\_26=0.17}
+\item (xml name: \texttt{extra1c}) \texttt{ea\_27=0.18}
+\end{enumerate}
+\vspace{1mm}
+and giving a total net flux adjustment (\texttt{extra1a+extra1b+extra1c}) of 0.32 Sv.
+
+These parameters were subsequently tuned, and in the \textsf{\small worbe2} (e.g. \textit{Ridgwell et al.} [2007]) configuration, become:
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\item \texttt{ea\_25=-2.1228021E-02}
+\item \texttt{ea\_26=0.1202921}
+\item \texttt{ea\_27=0.1273681}
+\end{enumerate}
+\vspace{1mm}
+giving a lower total net flux adjustment of 0.226 Sv.
+
+Now ... subsequent tunings ... rather than modifying each of the 3 individual fluxes,instead introduced an overall scaling factor that is applied to the \uline{default} values. For instance, in the \textsf{\small worjh2} tuning, this parameter was:
+\vspace{-1mm}
+\begin{verbatim}
+ea_28=0.726862013339996340
+\end{verbatim}
+\vspace{-1mm}
+and whose value is applied to each default individual flux region value (i.e. -0.03, 0.17, 0.18 Sv), giving a total  flux of \(0.7268\times\ 0.32 = 0.233 Sv\) (or \(0.7268\times\ (-0.03+0.17+0.18) = 0.233 Sv\)).\footnote{Note that if values for the 3 individual flux parameters are specified, then the scaling factor applies to these values (which replace the defaults.)}
+
+There are other ways to prescribe a flux adjustment -- for instance  by creating a salinity flux forcing, with positive values in the North Atlantic, and negative ones in the North Pacific. The total/net flux forcing in Sv can then be specified more directly and unambiguously.
+
+%------------------------------------------------
+%
 \subsubsection{How do I change the orbital configuration of cGENIE.muffin?}
 
 [see Orbits HOW-TO]
