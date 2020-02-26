@@ -6750,7 +6750,7 @@ This file (\texttt{FILENAME.m}), must either be present in the directory where y
 
 The \textbf{muffingen} model configuration generator then starts, and depending on the specific settings in the configuration file, may require no user input, or may require user input, either because this option was requested, or because a re-gridding issue arose that requires manual intervention to resolve. A series of plots are created (and saved) as the configuration generation progresses together with the \textbf{muffin} model configuration files themselves. All the various steps plus details of how the contents of the configuration files are generated are reported at the command line, and saved in a n ASCII format \texttt{*.log} file for future reference.
 
-Depending on the specific configuration file settings (see later), \textbf{muffingen} has 4 main modes of operation, which are summarized as follows (and described in more detail, along with specific examples, below):
+Depending on the specific configuration file settings (see later), \textbf{muffingen} has 5 main modes of operation, which are summarized as follows (and described in more detail, along with specific examples, below):
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -6759,14 +6759,17 @@ Depending on the specific configuration file settings (see later), \textbf{muffi
 \item \textbf{Configuration derivation based on re-gridding climate output from a GCM.}
 \\ The most common usage of \textbf{muffingen}, and enabling a new (typically paleo) configuration to be derived from the output of a GCM experiment. Currently options for utilizing 4 different GCMs are provided: HadCM3(l), FOAM, CESM, and ROCKE-3D.
 \vspace{1mm}
-\item \textbf{Derivation based on an existing model topography ('\texttt{.k1}') file.}
-\\ Allowing a topography to be re-created, or adapted/altered, all directly from an existing model 'k1' file (and hence existing model configuration).
+\item \textbf{Derivation based on re-gridding a high resolution input topography.}
+\\ Land-sea mask and ocean bathymetry are re-gridded from a high(er) resolution ,mat (\textbf{MATLAB}) topography file. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
+\vspace{1mm}
+\item \textbf{Derivation based on an existing model topography '\texttt{.k1}' file (or simplified \texttt{.k2}) format variant).} 
+\\ Allowing a topography to be re-created, or adapted/altered, all directly from an existing model 'k1' file (and hence existing model configuration). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \vspace{1mm}
 \item \textbf{Derivation based on a prescribed land-sea mask.}
-\\ This option will create a new configuration from any specified land-sea mask, whether 'real' or completely hypothetical.
+\\ This option will create a new configuration from any specified land-sea mask, whether 'real' or completely hypothetical. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \vspace{1mm}
 \item \textbf{From a blank (all ocean) initial template.}
-\\ Finally, this option enables a topography to be 'drawn' within \textbf{muffingen} and hence represents an interactive alternative to (3) (rather than editing a land-sea mask in a text editor).
+\\ Finally, this option enables a topography to be drawn by hand within \textbf{muffingen} and hence represents an interactive alternative to (4) (rather than editing a land-sea mask in a text editor). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \end{enumerate} 
 
 \vspace{2mm}
@@ -6860,7 +6863,7 @@ The configuration file is divided up into a series of sections of different para
 \vspace{1mm}
 
 \item [] \texttt{par\_max\_D} [default: \texttt{5000.0}]
-\\Sets the maximum ocean depth (in m).
+\\Sets the maximum ocean (scale) depth (in m).
 \end{itemize}
 
 \vspace{2mm}
@@ -6884,25 +6887,45 @@ The configuration file is divided up into a series of sections of different para
 
 A series of example configurations are provided in the main \textbf{muffingen} directory. These illustrate parameter settings and the primary ways of using \textbf{muffingen}. They also serve as useful template parameter setting files.  They are:
 
-
 \vspace{1mm}
 \begin{itemize}[noitemsep]
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template.  User input (allowing continents and seafloor topography to be 'drawn') is activated by default.
+\item \textsf{\footnotesize EXAMPLE\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template. User input (allowing continents and seafloor topography to be 'drawn') is automatically activated whether you want it or not!\footnote{Because it assumes that you are going to go on and draw something ...}\footnote{Edit the \textbf{muffingen} code to be able to turn off.}
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_wppcont1} -- Starts from a land-sea mask: \footnotesize\textsf{wppcont1.dat}\normalsize, which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The mask defines an idealized pole-to-pole super-continent. There is no user input by default (so no modifications can be made, by default), but this can be enabled (\texttt{opt\_user=true}).
+\item \textsf{\footnotesize EXAMPLE\_BLANKDEEP} -- As above, except with a deeper ocean -- 18 levels with the first 16 spanning 5000.0 m.\footnote{Refer to subsequence explanation re. the details fo these parameters.}
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). As per \footnotesize\textsf{muffingen\_settings\_wppcont1}\normalsize, this tarts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature). 
+\item \textsf{\footnotesize EXAMPLE\_DAT\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). This starts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature). 
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_eqpasworld} -- As above, except with an equatorial (only) gateway.
+\item \textsf{\footnotesize EXAMPLE\_DAT\_eqpasworld} -- As above, except with an equatorial (only) gateway.
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_ridgeworld} -- As above, except with no gateway.
+\item \textsf{\footnotesize EXAMPLE\_DAT\_ridgeworld} -- As above, except with no gateway.
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_waterworld} -- As above, but with no barriers, i.e. a 'water world'.
+\item \textsf{\footnotesize EXAMPLE\_DAT\_waterworld} -- As above, but with no barriers, i.e. a 'water world'.
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_wor0251b1} -- Start from a muffin model configuration 'k1' topography defining file: \texttt{p0251b.k1}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k1 file defines a late Permian continental configuration (and bathymetry). User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
+\item \textsf{\footnotesize EXAMPLE\_GCMFOAM\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \footnotesize\textsf{GCMFOAM }\normalsize in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES }\normalsize) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
+
 \vspace{1mm}
-\item \texttt{muffingen\_settings\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \footnotesize\textsf{xbowl }\normalsize in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES }\normalsize) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
+\item \textsf{\footnotesize EXAMPLE\_GCMHadCM3L\_modern} -- Similar to the above -- takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \footnotesize\textsf{GCMHadCM3L }\normalsize in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES }\normalsize) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
+
+\vspace{1mm}
+\item \textsf{\footnotesize EXAMPLE\_K1\_permian} -- Starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k1 file defines a late Permian continental configuration (and bathymetry). User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
+
+\vspace{1mm}
+\item \textsf{\footnotesize EXAMPLE\_K2\_supercontinent} -- Starts from a simplified version of the muffin model configuration 'k1' topography defining file -- here given  the extension 'k2'. This (\textsf{\footnotesize wppcont1.k2}) is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k2 file defines an idealized pole-to-pole super-continent. User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
+
+\vspace{1mm}
+\item \textsf{\footnotesize EXAMPLE\_K1\_SEDGEMonly} -- Similar to \textsf{\footnotesize EXAMPLE\_K1\_permian} -- starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, but only generates the SEDGEM sediment model files (and nothing else).
+
+\vspace{1mm}
+\item \textsf{\footnotesize EXAMPLE\_MAT\_present\_bathymetry} -- Takes as input a high resolution topography in a \textbf{MATLAB} \textsf{\footnotesize .mat} file format. In this specific example, the file (subdirectory \texttt{INPUT.EXAMPLES}) inputted is \textsf{\footnotesize present\_bathymetry} (\textsf{\footnotesize .mat}) which describes at 1 degree resolution, the modern plate configurations plus seafloor topography (as negative height).\footnote{The specific grid resolution is defined, and the file loaded and the grid orientation assumed, in the \texttt{LOAD GRID (AXES) DATA} and \texttt{LOAD TOPO \& MASK DATA} sections. Different resolutions and orientations (and file formats) can be dealt with here by editing the code.}
+
 \end{itemize}
 \vspace{2mm}
 
@@ -6920,7 +6943,7 @@ Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} fun
 \begin{enumerate}
 
 \vspace{1mm}
-\item Firstly, copy/transfer the entire  configuration subdirectory (the directory with the same name as whatever you called your 'world')  and its contents, from the \textbf{muffingen} output directory (e.g. \textsf{muffingen/OUTPUT.EXAMPLES}) on your local computer, to:
+\item Firstly, copy/transfer the entire  configuration subdirectory (the directory with the same name as whatever you called your 'world')  and its contents, from the \textbf{muffingen} output directory (e.g. \textsf{\small muffingen/OUTPUT.EXAMPLES}) on your local computer, to:
 
 \vspace{1mm}
 \texttt{cgenie.muffin/genie-paleo}
@@ -6984,47 +7007,106 @@ Rename and copy this (or copy and rename) to \textbf{muffin} model directory:
 \vspace{2mm}
 
 %------------------------------------------------
+%------------------------------------------------
 
 \newpage
 
 \section{muffingen parameter settings -- details}
 
-***UNDER\ CONSTRUCTION ...***
-
-
-
+%------------------------------------------------
 
 \subsubsection{Zonal wind-stress}
 
 For non GCM-based configurations, no prior wind fields exist. \textbf{muffingen} hence creates and configures an idealized zonal wind-stress field (from which wind velocity and wind speed is derived). The zonal wind-stress can take alternative strengths, depending on whether a high latitude gateway (in either hemisphere) exists. This can be prescribed directly, or \textbf{muffingen} can be enabled to 'choose' whether or not a high latitude gateway exists and hence whether or not to apply a strong or weak zonal flow. The parameter options (in the \textbf{muffingen} configuration file) are:
 
+\vspace{1mm}
 \begin{itemize}
 \item \texttt{par\_tauopt=0;}
-\\\textbf{muffingen} chooses whether or not to apply a strong or weak zonal flow, and in which hemisphere.
+\\\textbf{muffingen} chooses whether or not to apply a strong or weak zonal flow, and in which hemisphere, depending on whether it thinks a high-latitude gateway exists or not.
 \item \texttt{par\_tauopt=1;}
-\\A weak zonal flow is applied in both hemispheres.
+\\A weak zonal flow is applied in both hemispheres (e.g. assuming land prevents the existence of an ocean-only circumpolar high latitude pathway  in both hemispheres).
+The presence of a pole-to-pole super-continent (or 'ridge-world') would be an example of when this option might be selected\footnote{But note that in the ridgeworld EXAMPLE provided, the automatic assignment option (\#3) is instead set to be consistent with the series of fake .dat based configurations.)}.
 \item \texttt{par\_tauopt=2;}
-\\A strong zonal flow is applied in both hemispheres.
+\\A strong zonal flow is applied in both hemispheres (e.g. assuming there is no land to prevent the existence of an ocean-only circumpolar high latitude pathway  in both hemispheres). The presence of an Equatorial-only super-continent (or 'water-world') would be an example of when this option might be selected\footnote{But note that in the waterworld EXAMPLE provided, the automatic assignment option (\#3) is instead set to be consistent with the series of fake .dat based configurations.)}.
+\item \texttt{par\_tauopt=3;}
+\\'grey' world -- an intermediate strength zonal flow is applied in both hemispheres. For hedging your bets of for use across a wide range of different continental configuration where you do not want to manually chose and prescribe either strong (\texttt{2}) or weak (\texttt{1}) and don't dare trust \textbf{muffingen} to make the choice for you (option \texttt{0}).
 \end{itemize} 
+\vspace{1mm}
 
 For reference -- the modern world has a mix of strong (southern) and weak (northern) hemisphere zonal flows.
 
-The different EXAMPLE (\small\textsf{.m}\normalsize) configuration files have a mixture of default choices:
+The different \textsf{\footnotesize EXAMPLE} (\textsf{\footnotesize .m}) configuration files have a mixture of default choices, for example (not exhaustively listing all the different example configurations ...):
 
+\vspace{1mm}
 \begin{itemize}
-\item \small\textsf{muffingen\_settings\_BLANK}\normalsize, 
-\\\small\textsf{muffingen\_settings\_drakeworld}\normalsize, 
-\small\textsf{muffingen\_settings\_eqpasworld}\normalsize, 
-\\\small\textsf{muffingen\_settings\_ridgeworld}\normalsize, 
-\small\textsf{muffingen\_settings\_waterworld}\normalsize:
-\\\texttt{par\_tauopt=0;}
-\item \small\textsf{muffingen\_settings\_wppcont1}\normalsize:
-\\\texttt{par\_tauopt=2;}
-\item \small\textsf{muffingen\_settings\_modern}\normalsize:
-\\n/a (wind-stress derived from GCM fields)
+\item \textsf{\footnotesize EXAMPLE\_DAT\_drakeworld}, \textsf{\footnotesize EXAMPLE\_DAT\_eqpasworld}, etc.:
+\\\texttt{par\_tauopt=0;}\footnote{Note that some of these could be pre-determined -- e.g. water-world could be set with option \#2 (strong zonal winds), and ridge-world with \#1 (weak zonal winds). For configurations with a circumpolar passage only in one hemisphere such as drake-world, option \#0 will configure this with a weak northern zonal wind field and a strong southern one.}
+\item \textsf{\footnotesize EXAMPLE\_K1\_permian}, \textsf{\footnotesize EXAMPLE\_K2\_supercontinent}:
+\\\texttt{par\_tauopt=1}
+\item (none of the current examples prescribe strong zonal winds, but could (see footnotes)):
+\\\texttt{par\_tauopt=2}
+\item \textsf{\footnotesize EXAMPLE\_BLANK}:
+\\\texttt{par\_tauopt=3}\footnote{By default, a water world is created, which would normally be wind stress option \#2. However, assuming some unknown continental configuration may be drawn, the 'grey world' intermediate wind stress option is set (\#3).}
+\item \textsf{\footnotesize EXAMPLE\_GCMHadCM3L\_modern}\normalsize, \textsf{\footnotesize EXAMPLE\_GCMFOAM\_modern}\normalsize:
+\\n/a\footnote{(so any value can be set as it is ignored)} (wind-stress derived from GCM fields)
 \end{itemize}
+\vspace{1mm}
 
-\noindent (No EXAMPLE configurations currently specify a strong zonal field, although \\\small\textsf{muffingen\_settings\_ridgeworld }\normalsize will be prescribed one automatically in \textbf{muffingen}.) 
+%------------------------------------------------
+
+\subsubsection{Ocean depth (and maximum levels)}
+
+The standard configurations of muffin assume a maximum ocean depth of 5000 m. (In fact, until recent code changes, the scale-depth in the GOLDSTEIN ocean model component was hard-coded as 5000.0 m.) This depth is then divided up into 16 (typically) or 8 ocean levels with a logarithmic distribution of ocean layer thicknesses.
+
+The number of layers in the ocean is set by the parameter:
+
+\vspace{1mm}
+\texttt{par\_max\_k}
+\vspace{1mm}
+
+\noindent and the maximum (scale) depth is:
+
+\vspace{1mm}
+\texttt{par\_max\_D}
+\vspace{1mm}
+ 
+You need not have all \texttt{par\_max\_k} layers spread over depth \texttt{par\_max\_D}. You can specify the minimum (deepest) depth level used in the muffin depth grid via the parameter:
+
+\vspace{1mm}
+\texttt{par\_min\_k}
+\vspace{1mm}
+
+\noindent By default this has a value of \texttt{1}. Setting a high value truncates the ocean floor. e.g. for a flat-bottom ocean, a common value is \texttt{3}, meaning that the ocean model consists only of layers 16 down through 3, giving it a maximum depth of about 3500 m. This, in conjunction with a modern-like land fraction, gives a modern-like ocean volume (given that the modern ocean has an average seafloor depth of ca. 3500 m).
+
+If you require a deeper (maximum depth) ocean than 5000 m, be aware that retaining the same (e.g. 16) value of \texttt{par\_max\_k} means that that the same number of ocean layers are distributed over the greater ocean depth, and hence, your surface layer will be deeper, potentially changing biological productivity and biogeochemical cycling. There is hence a facility provided for maintaining the thickness depth distribution in the upper ocean while adding additional layers to the bottom of the ocean to create a greater (than 5000.0) maximum ocean depth. This is implemented by setting the parameter:
+
+\vspace{1mm}
+\texttt{par\_add\_Dk}
+\vspace{1mm}
+
+\noindent (the additional number of depth (k) levels) to a non-zero value. The effect of this is assume that the maximum ocean depth parameter (\texttt{par\_max\_D}) corresponds to the specified maximum number of ocean layers (\texttt{par\_max\_k}) minus the number of additional layers (\texttt{par\_add\_Dk})\footnote{(rather than the maximum number of ocean levels as usually applied)}.  The maximum ocean depth is then re-calculated based on \texttt{par\_max\_k} minus \texttt{par\_add\_Dk} number of levels, corresponding to depth \texttt{par\_max\_D} (with the same logarithmic distribution of layer thicknesses with ocean depth applied to the additional layers deeper than \texttt{par\_max\_D}).
+
+For example, setting:
+
+\vspace{1mm}
+\texttt{par\_add\_Dk=2}
+\vspace{1mm}
+
+\noindent in conjunction with a total number of ocean levels:
+
+\vspace{1mm}
+\texttt{par\_max\_k=18}
+\vspace{1mm}
+
+\noindent and:
+
+\vspace{1mm}
+\texttt{par\_max\_D=5000.0}
+\vspace{1mm}
+
+\noindent together configures an 18-level ocean model with the first 16 (18-2=16) levels spanning  5000.0 m, with an automatically re-calculated maximum ocean depth (\texttt{par\_max\_D} value) of 6922.2705 m and the additional 2 levels spanning this additional depth (1922.2705 m).\footnote{Note that there is no way, unless the logarithmic function for the distribution of layer thicknesses with ocean depth is changed, to retain the same modern/default  layer thickness distribution for the upper ocean layers and have a maximum ocean depth that is different to 5000.0 m unless you carry out the calculation yourself for the depth occupied by e.g. 18 levels. (You cannot calculate how many layers occupies e.g. 6000.0 m and still retain the upper ocean depth distribution as the depth profile does not fit neatly into 6000.0 m.)}  
+
+When \textbf{muffingen} writes out the parameter settings (file: \textsf{\footnotesize config\_??????.txt}), the scale depth of the ocean is also written out. By default this will be equal to the value of \texttt{par\_max\_D} (5000.0 m), \uline{unless}, the value of \texttt{par\_add\_Dk} is non-zero, when the above described re-calculation of the maximum ocean depth is made (and written out in the parameter file).
 
 %------------------------------------------------
 %
