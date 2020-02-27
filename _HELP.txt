@@ -73,6 +73,9 @@ NO BULLET IN LIST ITEM
 \begin{fullwidth}
 \end{fullwidth}
 
+ALT SUBSCRIPT
+CO$_{2}$
+
 DOTS
 \ldots
 
