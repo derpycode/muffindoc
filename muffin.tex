@@ -10505,6 +10505,79 @@ By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \te
 The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
 
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... Organic Matter ENabled SEDiment model}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\subsection*{Quick background\footnote{This section was written by Dominik H\"ulse. Any complaints/suggestions should be directed to him:\\ dominik.huelse@ucr.edu or dominik.huelse@gmx.de.}}
+
+In the original version of cGENIE, (particulate) organic matter (OM) reaching the bottom of the ocean is completely remineralized, instantaneously releasing dissolved carbon and nutrients (i.e. a reflective boundary approach). 
+Thus the cycles of OM and associated nutrients (PO$_4$) are closed. The remineralization of OM occurs either in the deepest ocean cell (if SEDGEM is not coupled) using the terminal electron acceptors (TEA) available or within the SEDGEM 
+module assuming all OM is respired using oxygen thus completely neglecting the characteristic redox zonation in marine sediments and its impacts on marine nutrient and carbon cycles. 
+As this reflective boundary approach does not simulate any OM-related burial fluxes it overestimates benthic recycling fluxes and does not allow for direct comparison of model output with the sedimentary record. 
+
+In order to overcome these limitations the new, one-dimensional, numerically efficient early diagenetic model \textbf{OMEN-SED} has been developed and was coupled to cGENIE (H\"ulse et al. [2018]). 
+OMEN-SED is the first analytical diagenetic model to explicitly describe OM cycling as well as associated dynamics of the most important TEAs (i.e. O$_2$ , NO$_3$, SO$_4$), related reduced substances (NH$_4$, H$_2$S), the full suite of 
+secondary-redox reactions, macronutrients (PO$_4$) and associated pore water quantities (ALK, DIC). Thus, OMEN-SED captures most of the features of a complex, numerical diagenetic model, however, its computational efficiency allows the 
+coupling to global Earth system models and therefore the investigation of coupled global biogeochemical dynamics over different timescales.
+
+%------------------------------------------------
+%
+\subsection*{Couple OMEN-SED to cGENIE}
+\vspace{2mm}
+\textbf{\textit{base-config}}\\
+As the new Organic Matter ENabled SEDiment model is a sub-module of \textbf{SEDGEM} and you might want to balance simulated burial fluxes with appropriate (or arbitrary) weathering fluxes using \textbf{ROKGEM} both modules need to be enabled. 
+Thus ensure that at the top of the \textit{base-config} file the following flags are set:
+\vspace{-1mm}\small\begin{verbatim}
+ma_flag_sedgem=.TRUE.
+ma_flag_rokgem=.TRUE.
+\end{verbatim}\normalsize\vspace{2mm}
+
+\noindent
+\textbf{\textit{user config}}\\
+The default version of OMEN-SED is selected by setting:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_Corgopt = 'huelse2016'
+\end{verbatim}\vspace{-1mm}
+As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
+\vspace{-1mm}\begin{verbatim}
+bg_ctrl_force_sed_closedsystem=.false.
+\end{verbatim}\vspace{-1mm}
+Because the nitrogen cycle is not modeled explicitly in the current version of \textbf{BIOGEM} alkalinity (ALK) is directly linked to uptake and remineralization of PO$_4$ using the standard 16:1 N:P ratio (compare Ridgwell et al. [2007]). 
+Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now also tie ALK in \textbf{BIOGEM} to POC by setting the following namelist flag:
+\vspace{-1mm}\begin{verbatim}
+bg_ctrl_bio_red_ALKwithPOC=.true.
+\end{verbatim}\vspace{-1mm}
+
+In the following experiments we assume the simplest scenario, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate), and assuming globally uniform detrital field. Very simplified but we can still calculate OM wt\%. 
+
+For the modern ocean we ran experiments with prescribed fixed solid fields of CaCO$_3$, opal and detritus to the sediments. Say why:
+
+In OMEN-SED you have the following options:
+play around with degradation rate constants. 
+make degradation rate constant for refractory OM redox dependent!
+use different schemes to parameterise k1 and k2. 
+
+\vspace{2mm}\noindent
+\textbf{PO$_4$ cycle}
+
+\vspace{2mm}\noindent
+\textbf{Running transient simulations}
+Two step process:\\
+1) Run to steady-state with forced atmospheric concentrations (e.g. CO$_2$, O$_2$ and \(\delta^{13}C\))\\
+2) Diagnose organic burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres\\
+3) Set the weathering rates accordingly.
+%------------------------------------------------
+%
+\subsection*{Example config-files}
+
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
 %----------------------------------------------------------------------------------------
