@@ -180,7 +180,7 @@ You will be using the current version of the cGENIE Earth system model, code-nam
 
 \subsection*{linux ...}
 
-The \textbf{(cGENIE.)muffin} model currently compiles and runs only under \textbf{linux}\footnote{For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)} (e.g. distributions such as \textbf{Ubuntu}) and unix-like operating systems (such as \textbf{macOS}). Furthermore, \textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or \textbf{macOS} equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press \small\textsf{Return}\normalsize, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
+The \textbf{(cGENIE.)muffin} model currently natively compiles and runs only under \textbf{linux}\footnote{For some of you, the mechanics of running the model will be about as much fun as sticking your tongue in an electrical outlet (a popular hobby in England). (However, if you are an experienced linux/unix/tongue-in-electrical-socket user, you can skip onto the next Section and save yourself an entire 15 seconds of reading words.)} (e.g. distributions such as \textbf{Ubuntu}) and unix-like operating systems (such as \textbf{macOS}). Furthermore, \textbf{muffin} has traditionally been configured and accessed (aka ‘run') at the ‘command line’ of the linux (or \textbf{macOS} equivalent, which is unix-like) operating system. The command line is a place where you type text and when you press \small\textsf{Return}\normalsize, something (hopefully, good!) happens. Typically the stuff you type started with a ‘command’ word, and often followed by one or more options and parameters. The command word and any options / parameters MUST be separated by SPACEs.
 
 The start of each line of the command line is indicated with something like: \texttt{\$}. The \texttt{\$} is called the ‘prompt’ and is ... prompting you to type some input (commands, Tweets, swear words, etc.). See – the computer is just sat there waiting for you to command it to go do something (stupid?). Typically, you will also be informed (reminded) of the user-name, computer name, and current directory, e.g.:
 
@@ -190,7 +190,7 @@ The start of each line of the command line is indicated with something like: \te
 \end{verbatim}
 \vspace{-2mm}
 
-\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer name ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory -- represented by the \texttt{\~} symbol. If, for example, you were instead currently in the \texttt{myfolder} directory, you would see at the command prompt:
+\noindent which is in this example is user ‘\texttt{username}’ (yours will be different!) on computer name ‘\texttt{host}’\footnote{Sprout the cat will eventually appear under ‘cat-of-the-day’ on my home-page if you press \textsf{F5} enough times – all my computing clusters are named after my cats …} and the current directory is the ‘home’ directory -- represented by the \texttt{\~} symbol. If, for example, you were instead currently in the \texttt{myfolder} directory, you would see at the command prompt something like:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -198,11 +198,14 @@ The start of each line of the command line is indicated with something like: \te
 \end{verbatim}
 \vspace{-2mm}
 
-If you are not or not very familiar with the linux/unix command line, such as how to navigate up and down the directory tree and to display the contents of the current directory you are in – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see Section \ref{how-to-linux} (page \pageref{how-to-linux}).
+If you are not or not very familiar with the linux/unix command line, such as how to navigate up and down the directory tree and to display the contents of the current directory you are in – for a brief summary of some basic/useful \textbf{linux} commands and usage -- see HOW-TO Section \ref{how-to-linux} (page \pageref{how-to-linux}).
 
-NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ...
+NOTE: BE VERY CAREFUL that spaces are not missed out when typing out example lines. Also be careful not to confuse the number one (\texttt{1}) for the letter el (\texttt{l}). Mis-spelling/typing will probably be the primary reason for any wailing and gnashing of teeth ... 
 
-NOTE-the-second: In places, instructions ma be given for specific programs and computer platforms and hence may differ slightly from the software reality in front of you. Use your judgement in translating such instructions. Many other alternative software choices exist for editing files or viewing results, as are other ways of configuring software and file editing/transferring methodologies. Do what suits you best – you can view such instructions where they occur, as  more representing an example methodology rather than a literal interpretation of the Constitution.
+NOTE-the-second: If you find yourself terminally bored typing in long long instructions lines, you may be tempted to simply copy-paste from the muffin manual PDF to the command line, This can work, but firstly be aware that trying to copy-paste multiple lines at once is doomed to failure -- copy-paste the first line and then following that add the second (or subsequent) line.
+Also note that the inverted comma symbol in the PDF is not the same inverted comma symbol that linux is expecting ... You should also make liberal use of the up arrow key that bring back the previously entered command (keep pressing the key for progressively older commands). For instance, a mistake in a command line can be corrected by bringing back the offending line and using the left/right arrows to navigate through the characters and correct any mistake.
+
+NOTE-the-third: In places, instructions may be given for specific programs and computer platforms and hence may differ slightly from the software reality in front of you. Use your judgement in translating such instructions. Many other alternative software choices exist for editing files or viewing results, as are other ways of configuring software and file editing/transferring methodologies. Do what suits you best – you can view such instructions where they occur, as  more representing an example methodology rather than a literal interpretation of the Constitution.
 
 %------------------------------------------------
 
@@ -261,7 +264,7 @@ If you fiddle about with the settings under Options/Preferences in the \textbf{W
 
 \subsection*{Model documentation in general}
 
-This, and additional documentation (of varying degrees of up-to-date-ness) can be found:
+This (the \textbf{muffin} manual), and additional documentation (of varying degrees of up-to-date-ness) can be found:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -312,7 +315,9 @@ $ ssh username@clustername
 \vspace{-1mm}
 
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
-\\  \texttt{catname.ggy.bris.ac.uk}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\\  \texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).\footnote{\textbf{IMPORTANT!}
+ When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs.}
+
 \item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client) or \textbf{PuTTY} (a 'shell', or 'terminal' window). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
 \\You will also need a terminal window (assuming you did not open that first). This can be opened by clicking on the ‘\textsf{Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
@@ -325,18 +330,18 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 
 The next step is to download a copy of the source code for \textbf{muffin}.
 
-As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form \textbf{svn} to \textbf{git} -- a “distributed” version control systems (DVCS). The address of the new (centralized) home for muffin is:
+As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form \textbf{svn} to \textbf{git} -- a “distributed” version control systems (DVCS)\footnote{\textbf{ALSO IMPORTANT}: if you had previously installed a version of \textbf{muffin} under \textbf{svn}, note that the default name of the installation (\texttt{cgenie.muffin}) is the same. If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename, or simply delete (\texttt{rm -f -r cgenie.muffin}) the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
+
+\texttt{\$ mv cgenie.muffin cgenie.muffin.svn}
+
+\noindent will rename the installation directory, adding the extension \texttt{.svn} on the end. You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
+
+The address of the new (centralized) home for muffin is:
 
 \vspace{2mm}
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
 \vspace{2mm}
 
-\newpage
-\noindent \textbf{IMPORTANT}: if you had previously installed a version of \textbf{muffin} under \textbf{svn}, note that the default name of the installation (\texttt{cgenie.muffin}) is the same.\footnote{If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename, or simply delete (\texttt{rm -f -r cgenie.muffin}) the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
-
-\texttt{\$ mv cgenie.muffin cgenie.muffin.svn}
-
-\noindent will rename the installation directory, adding the extension \texttt{.svn} on the end. You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
 
 From here, there are 2 ways to get your mitts on the model code:
 
@@ -348,7 +353,7 @@ From here, there are 2 ways to get your mitts on the model code:
 \\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
 \vspace{1mm}
-\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line, using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
+\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME diectory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
@@ -362,7 +367,19 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \subsection{Configuring the code}
 
-\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to).
+\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to). This will be your first real test of editing (and saving) a file on the remote server. You'll need to do this a bunch later and so it is worth developing a working strategy now if you are not already linux-friendly. For instance, you might:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Transfer the file locally (to your laptop/desktop). Edit and save it. transfer it back (hence replacing the original with the edited version).
+\vspace{1mm}
+\item Edit the file \textit{in situ} on the remote account using e.g. \textbf{vi} (see linux HOW-TO for brief notes). 
+\vspace{1mm}
+\item Pray that the file edits itself.\footnote{9 out of 10 cats have demonstrated this does not work.}
+\end{enumerate}
+
+\vspace{1mm}
+\noindent Depending on the platform, the required changes are:
 
 \begin{itemize}
 
@@ -409,7 +426,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \subsection{Testing the model code}
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
- First, change directory (see: Figure \ref{fig:directories}) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
+ First, change directory (see: Figure \ref{fig:directories} and refer to the linux HOW-TO) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -446,9 +463,7 @@ $ make testbiogem
 \normalsize
 \vspace{-2mm}
 
-\noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
-
-If the test doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
+\noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills). If the test doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -538,7 +553,7 @@ If unlucky, there will be conflict as your stashed changed are merged back onto 
 
 \section{Running the model}
 
-The overall sequence of configuring and running \textbf{muffin}, is shown in Figure \ref{fig:chx-jobcreation}.
+The overall sequence of configuring and running \textbf{muffin} (job submission to a cluster queue), is shown in Figure \ref{fig:chx-jobcreation}. Refer to this if in any doubt at any point.
 
 At the command-line (\texttt{\$}) in the genie-main directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
 
@@ -740,15 +755,15 @@ The second data format for model output is much more closely spaced in time. Mod
 
 \subsection{File naming convention}
 
-The \texttt{biogem} results directory will contain files with names of the form:
+The \textsf{\footnotesize biogem} results directory will contain files with names of the form:
 
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
-\item  \texttt{\_restart.nc} (is the re-start file created form the run you have just complete, and can be ignored).
-\item \texttt{biogem\_series\_*.res} – these are the time-series files (in ASCII / plain text format).
-\item \texttt{biogem\_year\_*\_diag\_GLOBAL.res} – these contain (global diagnostics) summary information and are saved at the same frequency as the time-slices (also as ASCII / plain text).
-\item \texttt{fields\_biogem\_2d.nc} – 2-D fields of ocean and atmosphere properties, as NetCDF.
-\item \texttt{fields\_biogem\_3d.nc} – 3-D fields of ocean properties, as NetCDF.
+\item  \textsf{\footnotesize \_restart.nc} (is the re-start file created form the run you have just complete, and can be ignored).
+\item \textsf{\footnotesize biogem\_series\_*.res} – these are the time-series files (in ASCII / plain text format).
+\item \textsf{\footnotesize biogem\_year\_*\_diag\_GLOBAL.res} – these contain (global diagnostics) summary information and are saved at the same frequency as the time-slices (also as ASCII / plain text).
+\item \textsf{\footnotesize fields\_biogem\_2d.nc} – 2-D fields of ocean and atmosphere properties, as NetCDF.
+\item \textsf{\footnotesize fields\_biogem\_3d.nc} – 3-D fields of ocean properties, as NetCDF.
 \end{itemize}
 
 %------------------------------------------------
@@ -781,7 +796,7 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 
 \noindent One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
 
-Instead – change to the experiment results directory and then to the \texttt{biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the \textbf{WinSCP} preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
+Instead – change to the experiment results directory and then to the \textsf{\footnotesize biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the \textbf{WinSCP} preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
 
 Note: \textbf{WinSCP} does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run, 99 times out of 100, it is because the display of the \textbf{WinSCP} needs to be refreshed -- there is an icon at the top of the program window or hit the ‘\textsf{F5}’ key.
 
@@ -791,9 +806,9 @@ Note: \textbf{WinSCP} does not automatically refresh the directory listing. If y
 
 \noindent For your information and edification (only): \textbf{Excel}, or \textbf{MUTLAB} if you prefer, can be used to graph the time-series results. Either way you will have to deal with the header line(s) that are present at the top of the file (and preceding the rows of data).
 
-In \textbf{Excel}: Choose \textsf{File} then \textsf{Open}.  You will want to select \textsf{Files of Type} ‘\textsf{All Files (*.*)}’. In the \textsf{Text Import Wizard} window you can request that \textbf{Excel} skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in \textbf{Excel} to ensure that the columns of data are correctly imported.
+In \textbf{Excel}: Choose \textsf{\footnotesize File} then \textsf{\footnotesize Open}.  You will want to select \textsf{\footnotesize Files of Type} ‘\textsf{\footnotesize All Files (*.*)}’. In the \textsf{\footnotesize Text Import Wizard} window you can request that \textbf{Excel} skips the first few lines to start the import on the 2nd or 3rd line of the text file. Alternatively: set an appropriate column width manually in \textbf{Excel} to ensure that the columns of data are correctly imported.
 
-\textbf{MUTLAB} will ignore lines starting with a \textsf{\%}, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \textsf{\%}. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
+\textbf{MUTLAB} will ignore lines starting with a \textsf{\footnotesize \%}, which the time-series starts with. However, it may be that the header line wraps-around and there is in effect a 2nd header line but without a \textsf{\footnotesize \%}. In this case, extra care (or a quick edit of the header in the ASCII file) will be required to load the data into \textbf{MUTLAB}.
 
 %------------------------------------------------
 
@@ -853,9 +868,14 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 \vspace{2mm}
 
 \noindent Running jobs interactively is all very well, but there are three important limitations:
-(1) The connection between your terminal and the server computer running the model must remain unbroken. Anything more than a fleeting loss of internet connectively may result in the experiment terminating.
-(2) You can only run one experiment at a time … unless you want to have thousands of separate terminal open …? I thought not …
-(3) Any cluster or computer you are likely to be accessing using a shell will not have many computing cores itself, either because it is a single machine with only one or two processors, or if a cluster, by using a terminal you are running on the ‘head node’, which will have similar computing core limitations to running on a single machine. The more experiments you run simultaneously, the slower they will all run …
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item The connection between your terminal and the server computer running the model must remain unbroken. Anything more than a fleeting loss of internet connectively may result in the experiment terminating.
+\vspace{1mm}
+\item You can only run one experiment at a time … unless you want to have thousands of separate terminal open …? I thought not …
+\vspace{1mm}
+\item Any cluster or computer you are likely to be accessing using a shell will not have many computing cores itself, either because it is a single machine with only one or two processors, or if a cluster, by using a terminal you are running on the ‘head node’, which will have similar computing core limitations to running on a single machine. The more experiments you run simultaneously, the slower they will all run …
+\end{enumerate}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -871,7 +891,7 @@ $ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
 \end{verbatim}\normalsize
 \vspace{-1mm}
 
-\noindent(Again: SINGLE, CONTINUOUS LINE.) Here, the particular queue name is \textsf{dog}.
+\noindent(Again: SINGLE, CONTINUOUS LINE.) Here, the particular queue name is \textsf{dog.q}.
 
 Note that now you should omit the ‘\texttt{./}’ bit before \texttt{runmuffin.sh}.
 (If you are interested (I know that you are not): the options following \texttt{qsub} and before \texttt{runmuffin.sh} do things like re-directing screen output and error messaging to a file and specify which linux ‘shell’ to assume. It is even possible to receive an email when the job is done :) )
@@ -958,7 +978,9 @@ The run-time output should now look noticeably different. There should be no (or
 \noindent Stuff to keep in mind:
 
 \begin{itemize}
+\vspace{1mm}
 \item Models ARE NOT the ‘real World’ (it is going to be pretty obvious this is the case here).
+\vspace{1mm}
 \item Don’t believe what you read in Nature or Science.
 \end{itemize}
 
@@ -978,7 +1000,7 @@ $ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
 \end{verbatim}
 \vspace{-2mm}
 
-This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has been run for 5,000 years for you. Extract the contents of this archive by typing:
+This downloads an archived/compressed copy of the experiment \texttt{LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has already been run for 5,000 years for you. Extract the contents of this archive by typing:
 \vspace{-2mm}
 \begin{verbatim}
 $ tar xfzv LAB_1.SPIN.tar.gz 
@@ -988,6 +1010,14 @@ $ tar xfzv LAB_1.SPIN.tar.gz
 A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself, and you could in fact have done so (remember to refresh the \textbf{WinSCP} directory view window if you are using this particular software, or it might appear that nothing has been extracted).
 
 You’ll then need to change directory back to \texttt{genie-main} to run the model.
+
+If ... when you subsequently try and use this \textit{restart} in an experiment, \textbf{muffin} stops and complains that it cannot find it, check:
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item That you in fact downloaded it to the correct directory, which should be:\texttt{cgenie\_output}, and not randomly to e.g. your home directory ...
+\vspace{1mm} 
+\item That you unpacked it.
+\end{enumerate}
 
 %------------------------------------------------
 
@@ -1008,8 +1038,11 @@ To illustrate how ‘easy’ it can be to configure an Earth system / climate mo
 \small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.SPIN 
 \end{verbatim}\normalsize
-  
-\noindent But ... rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE} (which is provided for you), why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time, while having  2 (or more) experiments running simultaneously with exactly the same name causes havoc as they try and over-write each others results files in a somewhat entertaining but ultimately useless way.
+\noindent But ... rather than use the provided experiment configuration file \texttt{LAB\_1.EXAMPLE} (which is provided for you), why not get into the habit of creating new and uniquely named \textit{user-config} files (no harder than copying it and renaming it!). If you keep using the same experiment name, the results will be over-written each time, while having  2 (or more) experiments running simultaneously with exactly the same name causes havoc as they try and over-write each others results files in a somewhat entertaining but ultimately useless way. So -- copy and rename the file \texttt{LAB\_1.EXAMPLE} to ... \texttt{LAB\_1.EXP1} or whatever (in the subdirectory \texttt{LABS}), and then run you newly created experiments (at this point, identical to ):
+\vspace{-1mm}
+\small\begin{verbatim}
+$ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXP1 100 LAB_1.SPIN 
+\end{verbatim}\normalsize 
 
 Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
 
@@ -1031,14 +1064,21 @@ ma_genie_solar_constant= 1285.92
 
 \vspace{1mm}
 
+\pagebreak
+
 Other questions to think about with regards to numerical modeling (and this experiment) are:
 
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
+\vspace{1mm}
 \item  (Is the model configuration and experimental design ‘realistic’ ... ?)
+\vspace{1mm}
 \item  What is ‘missing’ in the model and what might the implications for your predictions and conclusions be? For example, there is no land-surface scheme (and hence no concept of ‘snow’) in this particular configuration.
+\vspace{1mm}
 \item Are the simulations being run for sufficiently long? Why not if not (i.e., justify your choices of parameter values and experimental assumptions)? How might the results and conclusions be biased (if at all)?
+\vspace{1mm}
 \item How would you test model predictions and your overall conclusions?
+\vspace{1mm}
 \item How could the experimental design be improved?
 \end{itemize}
 
@@ -1083,7 +1123,7 @@ ea_radfor_scl_co2=1.0
 this would give you a modern (x1, or 1x278 = 278 ppm) radiative forcing. (Technically: the pre-industrial \(CO_{2}\) value rather than ‘modern’ \textit{per se.})
 Note: \(CO_{2}\) is not being explicitly modeled in this experiment, but the long-wave radiative forcing associated with a specified concentration of \(CO_{2}\) (in ratio to modern) is being set instead.
 
-Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher) and save the file. Re-run the experiment to see whether sea-ice extent is approaching a new steady state. You may want to try even longer simulations (than 100 years) if it becomes clear that the model is still far from steady-state. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
+Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher) and save the file (with a different filename!). Re-run the experiment to see whether sea-ice extent is approaching a new steady state. You may want to try even longer simulations (than 100 years) if it becomes clear that the model is still far from steady-state. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
 
 HINT: Submitting the experiments to the cluster will allow you to run many many experiments (i.e. each with a different radiative forcing value) simultaneously.
 
@@ -1091,7 +1131,7 @@ HINT: Submitting the experiments to the cluster will allow you to run many many 
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent For each experiment you want to be assessing how far towards the Equator the sea-ice limit encroaches through some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
+\noindent In each experiment, you want to be assessing how far towards the Equator the sea-ice limit encroaches by viewing some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little in area and volume at times.)
 
 For the \textit{time-slice} data: atmospheric and ocean surface temperature and sea-ice extent (2-D biogem \textbf{NetCDF} file) may be informative.
 
@@ -1595,7 +1635,7 @@ A current concern regarding anthropogenic climate change is the ocean circulatio
 
 You can explore the transient response of ocean circulation to warming by simply adjusting the radiative forcing parameter as per used in the snowball Earth experiments: \texttt{ea\_radfor\_scl\_co2}. By default in the modern continental configuration, this has a value of 1.0, corresponding to 278 ppm atmospheric \(CO_{2}\). A value of 2.0 would reflect warming equivalent to 556 ppm \(CO_{2}\). And 3.0 more like an end-of-the-century warming. Note that you are applying the warming instantaneously by manipulating the climate system in this way and hence the changes will be more extreme than those occurring over the time-scale of this century. Also note that a cooling could be applied instead. A \textit{user-config} – \texttt{LAB\_2.EXAMPLE} – is provided as a template for these experiments.
 
-Potentially interesting properties of the Earth system to look at include sea-ice extent and AMOC strength (in the ASCII time-series files), and the overturning streamfunction and sea-ice extent in the 2-D \textbf{netCDF} output.
+Potentially interesting properties of the Earth system to look at include sea-ice extent and AMOC strength (in the ASCII time-series files), and the overturning stream-function and sea-ice extent in the 2-D \textbf{netCDF} output.
 
 \textbf{How much radiative forcing is required to collapse the AMOC? What atmospheric \(CO_{2}\) value does this approximately correspond to?
 }
