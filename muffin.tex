@@ -2571,6 +2571,36 @@ There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\
 \vspace{1mm}
 Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g., starting in year 2010).
 
+%------------------------------------------------
+
+\subsection{Future atmospheric CO$_{2}$ concentration pathways ('RCPs')}
+
+The more recent/current incarnation of IPCC future scenarios revolves around not projected future greenhouse gas emissions rates, but rather future greenhouse gas concentration pathways. (The reasoning is partly to cut out the differences in carbon cycle feedback between models, where for the same unit \(CO_{2}\) release, different climate/Earth system models might project a different atmospheric \(CO_{2}\) concentration and hence climate change (in addition to differences between models in climate sensitivity).) In muffin, these work pretty well much like in the historical forcing scenario, where the observed change in atmospheric \(CO_{2}\) concentration in the atmosphere with time, is prescribed and the model 'forced' to conform to this trajectory.
+
+A series of RCP scenarios for how atmospheric \(CO_{2}\) concentrations may evolve with time are provided. Each actually starts at year 1765 and hence incorporates the historical transient. They can hence be used with an experiment starting at 1765 and re-starting from a steady-state preindustrial spin-up. Or they can be jumped into at ay point, and e.g. experiments started at year 2010, when only the year 2010 onwards part of the \(CO_{2}\) restoring \textit{forcing} is utilized. The RCP \textit{forcings} currently available are:
+
+\vspace{2pt}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item \textsf{\footnotesize pyyyyz.RpCO2\_Rp13CO2.RCP3PD}
+\item \textsf{\footnotesize pyyyyz.RpCO2\_Rp13CO2.RCP4p5}
+\item \textsf{\footnotesize pyyyyz.RpCO2\_Rp13CO2.RCP6p0}
+\item \textsf{\footnotesize pyyyyz.RpCO2\_Rp13CO2.RCP8p5}
+\end{itemize}
+\vspace{2pt}
+
+\noindent and can be selected simply by changing the name of the forcing in the \textit{user-confi}g, e.g.:
+\vspace{-2pt}\begin{verbatim}
+bg_par_forcing_name=’pyyyyz.RpCO2_Rp13CO2.RCP8p5'
+\end{verbatim}\vspace{-2pt}
+\noindent which would select the RCP8.5 scenario. Ensure that
+the scaling parameters are either commented out, e.g.:
+\vspace{-2pt}\begin{verbatim}
+#bg_par_atm_force_scale_val_3=8.3333e+013
+#bg_par_atm_force_scale_val_4=-27.0
+\end{verbatim}\vspace{-2pt}
+\noindent or simply deleted in their entirety (because the RCP forcing contains the actual values/correct units and you do not need to modify them any further).
+
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
 %----------------------------------------------------------------------------------------
@@ -2596,13 +2626,14 @@ Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (
 
 \section*{READ.ME}
 
-You will need to download a new \textit{restart} file prior to embarking on the experiments. This differs from previous provided restarts in that it now includes an iron cycle in the ocean and hence co-limitation of biological productivity by Fe.
-\vspace{-2mm}
+You will need to download a couple of new \textit{re-start} files prior to embarking on the experiments in the Chapter. One is of a basic single (\(PO_{4}\)) nutrient biological export scheme, and the other includes an iron cycle in the ocean and hence co-limitation of biological productivity by Fe.
+\vspace{-2mm} \small
 \begin{verbatim}
 $ wget http://www.seao2.info/cgenie_output/LAB_4.SPIN.tar.gz
-\end{verbatim}
+$ wget http://www.seao2.info/cgenie_output/EXAMPLE.worbe2.Ridgwelletal1997.SPIN.tar.gz
+\end{verbatim} \normalsize 
 
-Extract the results in the usual way and in the usual place ... and return to \texttt{genie-main}.
+Extract the results in the usual way and in the usual place ... and return to \texttt{genie-main} in the usual way ... all ... as usual.
 
 %------------------------------------------------
 
@@ -2610,7 +2641,128 @@ Extract the results in the usual way and in the usual place ... and return to \t
 
 %------------------------------------------------
 
-\section{xxx}
+\section{The ocean's biological pump}
+
+In this Chapter we'll step through some of the facets of the cycle of carbon (and nutrients) in the ocean -- the 'biological pump'. (And then in the following section we'll look at the same processes in a different way via 'geoengineering' and hopefully learn something further about how it all  'works'.)
+
+\textbf{muffin} incorporates a variety of options for simulating biological export production. To date, these have all been rooted in what is effectively a nutrient mass balance approach to estimating export production, nicely encapsulated by Ernst Maier-Reimer as: “conceptually not a model of biology in the ocean but rather a model of biogenically induced chemical fluxes [from the surface ocean]” [\textit{Maier-Reimer,} 1993]. Hence in schemes of this nature, which we will term ‘biogenic export’, there is no attempt to explicitly account for changes in cell numbers/biomass and hence, nor zooplankton, which will impact a bias particularly in the seasonal time-dependent response of export. Previous biogenic export schemes utilized in  \textbf{muffin}  considered a single nutrient (P limitation) only and took either restoring to observations [Cameron et al., 2005] or explicit P-limitation [Ridgwell et al., 2007a,b] approaches. More recently, additional limitation by iron (P+Fe) has been implemented, while nitrogen cycling (including N fixation and denitrification) and hence P+N limitation, has been implemented and explored in the context of extreme nutrient and oxygen cycle perturbation associated with the Cretaceous Oceanic Anoxic Events [Monteiro et al., 2012; Naafs et al., 2029]. Work currently in development includes the additional consideration of Si limitation (P+Si limitation) control on production of diatoms vs. non-diatoms following \textit{Ridgwell et al.} [2002].
+
+Overall, biological production and net export of particulate (POM) and dissolved (DOM) organic matter plus calcium carbonate (\(CaCO_{3}\)) are directly determined by the availability of nutrients (phosphate and/or total dissolved iron and/or \(NO^{2-}_{3}\) (and/or \(NH^{+}_{4}\)) and/or dissolved silica) together with the degree to which physical conditions, particularly light and temperature, are conducive to growth. DOM is remineralzied (transformed back to inorganic dissolved constituents) relatively rapidly (a ca. annual time-scale) and hence mostly at or close to the ocean surface, while POM is assumed to sink down into the ocean interior. See: \textit{Hülse at al.} [2017]\footnote{Hülse, D., S. Arndt, J.D. Wilson, G. Munhoven, and A. Ridgwell, Understanding the causes and consequences of past marine carbon cycling variability through models, Earth-Science Reviews 171, dx.doi.org/10.1016/j.earscirev.2017.06.004 (2017).} for a comprehensive review (esp. of implementation in models).
+
+Note that a full description of the various biological and ocean interior remineralization schemes (together constituting the biological pump) is not given here as background. Rather, \uline{the relevant provided references should be read} (rather than e.g. downloaded and forgotten ...).
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Single nutrient (PO$_{4}$) cycling and controls on biological productivity}
+
+The following exercises  will utilize one of the more basic representations of the biological pump -- one with only a single nutrient (PO$_{4}$) potentially limiting to biological export, considered. The scheme is described in full in \textit{Ridgwell et al.} [2007]\footnote{Ridgwell, A., et al., Marine geochemical data assimilation in an efficient Earth System Model of global biogeochemical cycling, Biogeosci. 4, 87-104 (2007). }. We will consider the following scientific questions as a starting point and then devise some model experiments to address them:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item What would the Earth look like with no biological production in the ocean? Specifically: how important is the biological pump in controlling atmospheric \(pCO_{2}\) and how much higher would \(pCO_{2}\) be in the absence of a biological pump in the ocean?
+\vspace{1mm}
+\item Conversely, is the biological pump operating at its maximum efficient in the ocean today, and if not, how much more could atmospheric \(pCO_{2}\) conceivably be lowered.
+\vspace{1mm}
+\item How does the biological pump affect the distribution and hence availability of dissolved oxygen in the ocean? (How more oxygenated would the ocean be with no export of organic matter into the ocean interior, and how much more severe would oxygen depletion be if plankton were able to utilize all the nutrients at the ocean surface?)
+\vspace{1mm}
+\item If carbon and nutrients are returned back to solution (remineralized) much closer to the ocean surface, does atmospheric \(pCO_{2}\) increase or decrease?? (The faster return of DIC to the ocean surface will tend to increase \(pCO_{2}\) while the return of nutrients will tend to enhance biological productivity and decrease \(pCO_{2}\) ...)
+\vspace{1mm}
+\item What about if carbon and nutrients are much more efficiently exported into the very deepest parts of the ocean -- does \(pCO_{2}\) increase or decrease (and what happens to e.g. dissolved oxygen availability)?
+\vspace{1mm}
+\item What about feedback with climate -- how does changing global surface temperature (and hence ocean circulation patterns and sea-ice extent) modulate the impact of changes to the biological pump in the ocean? Is the resulting feedback positive or negative (and why)?
+\end{enumerate}
+\vspace{1mm}
+
+The associated experiments would ideally be run for several thousand and maybe 5000 years to obtain a new (quasi) steady state of carbon and nutrient cycling in the ocean. But some of the impacts in the ocean and on atmospheric \(pCO_{2}\) will develop relatively rapidly (decades). Hence model experiments could be run for a few 10s of years, or e.g. 100 years, or for a full e.g. 5000 years but periodically downloading and viewing the results as the experiment progresses (and not necessarily waiting until the end of the experiment, or even ever looking at the final state!).
+
+All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and be based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).}:
+
+\vspace{-2pt}\begin{verbatim}
+./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASES LABS EXP7.2
+ 5000 EXAMPLE.worbe2.Ridgwelletal1997.SPIN
+\end{verbatim}\vspace{-2pt}
+(here a 5000 year experiment run-time is given, but it need not be this -- see above).
+
+Note that by default in this \textit{user-config}, climate-\(CO_{2}\) feedback is disabled:
+\vspace{-2pt}\begin{verbatim}
+ea_36=n
+\end{verbatim}\vspace{-2pt}
+i.e. changing atmospheric \(pCO_{2}\) does not influence the climate system (which remains implicitly forced with a preindustrial radiative forcing value).
+
+\pagebreak 
+
+The first thing to do is to run an control experiment, for however long you have decided to run all the actual experiment experiments. Then, in terms of the specific 'questions' above, both w.r.t. what parameters and parameter values to change and well as what to 'look for':
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item The parameter controlling the rate of nutrient uptake (and hence biological export) is:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_k0_PO4=1.9582242E-06
+\end{verbatim}\vspace{-2pt}
+Setting this to zero would 'turn off' completely the biological pump.
+\\What to look for? The value of atmospheric \(pCO_{2}\). You might also confirm that biological export really is zero. To obtain both of these values you can refer to the respective time-series results files. Or, in the summary text file, which for the \textit{re-start} is:
+\vspace{-2pt}\begin{verbatim}
+biogem_year_09999_500_diag_GLOBAL_AVERAGE.res
+\end{verbatim}\vspace{-2pt}
+and will differ in your actual experiment only in the value of the year in the filename. This file contains summary information at a specific time-slice tine, including mean atmospheric composition, mean ocean composition, biological export fluxes.
+
+\vspace{1mm}
+\item Similarly to above -- nutrient uptake and the strength of the biological pump can be enhanced by increasing the value of the parameter:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_k0_PO4=1.9582242E-06
+\end{verbatim}\vspace{-2pt}
+
+\vspace{1mm}
+\item The parameters and experiments are as above, except you are looking for how the mean and distribution of dissolved oxygen in the ocean changes. Mean ocean [\(O_{2}\)] values can be obtained form time-series of the summary file. Spatial distributions are recorded in the netCDF output. You might view horizontal or vertical slices (from 3D), or benthic distributions (2D).
+
+\vspace{1mm}
+\item The parameter controlling the depth-scale (and vertical distributed) at which particulate organic matter (POM) is remineralizated in the ocean interior is controlled by:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_remin_POC_eL1=550.5195
+\end{verbatim}\vspace{-2pt}
+Reducing the value of this parameter forces a greater proportion of sinking POM to be remineralized closer to the surface.
+\\What to look for? Largely as before -- the summary file is useful for atmospheric \(CO_{2}\), mean ocean {\(O_{2}\)}, and global (biological0 export fluxes. You might also consider the spatial patterns of nutrients and dissolved oxygen.
+\\See \textit{Meyer et al.} [2016]\footnote{Meyer, K.M., A. Ridgwell, and J.L. Payne, The influence of the biological pump on ocean chemistry: implications for long-term trends in marine redox chemistry, the global carbon cycle, and the evolution of marine animal ecosystems, Geobiology, DOI: 10.1111/gbi.12176 (2016).} for an example of a study testing these sort of model changes and its implications (and hence ideas of what else to look for, and for 'reasonable' parameter values to test).
+
+\vspace{1mm}
+\item Conversely, you can increase the value of the depth scaling parameter. You can also partition more of the total export into a POM form that is assumed to be resistent to degradation and is transported to the ocean floor completely unchanged:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_remin_POC_frac2=6.4591110E-02
+\end{verbatim}\vspace{-2pt}
+Increasing this value forces more of the POM exported from the surface ocean to reach the ocean floor.\footnote{See Ridgwell et al. 2007] for a description of how this all works.}
+
+\vspace{1mm}
+\item Finally, you might explore how in some of all of the above experiments,  a changing climate in response to changing atmospheric \(pCO_{2}\) in turn modulates the impacts. You can re-enable climate feedback by setting:
+\vspace{-2pt}\begin{verbatim}
+ea_36=y
+\end{verbatim}\vspace{-2pt} 
+Impacts may include (but not be limited to): ocean stratification (rapid warming) and/or changes in convection at high latitudes, increased/decreased sea-ice extent that affects the ocean surface area available for biological export, changing solubility of oxygen in sea-water.
+\\Note that in this particular simple biological export scheme, there is no temperature-dependence of biological activity and hence export.
+
+\end{enumerate}
+\vspace{1mm}
+
+You might also consider the effect of the assumption regarding how much organic matter produced is partitioned into particulate form that sinks, vs. dissolved, controlled by:
+\vspace{-2pt}\begin{verbatim}
+bg_par_bio_red_DOMfrac=0.66
+\end{verbatim}\vspace{-2pt}
+which specifies 66\% of organic matter production is diverted into dissolved form. See \textit{Ridgwell and Arndt} [2014]\footnote{Ridgwell, A., and S. Arndt, Why Dissolved Organics Matter: DOC in Ancient Oceans and Past Climate Change, in: Biogeochemistry of Marine Dissolved Organic Matter Eds. Hansell, D. A., and C. A. Carlson, Elsevier (2014).}.
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Iron co-limitation of biological productivity}
+
+
+
 
 %------------------------------------------------
 
@@ -2620,7 +2772,7 @@ Extract the results in the usual way and in the usual place ... and return to \t
 
 \section{Ocean carbon geoengineering}
 
-\noindent In this Secion you'll use the 'excuse' of geoengineering, to perturb and elucidate the response of the global carbon cycle and climate system and hence learn something new/different about Earth system dynamics compared to e.g. its response only under standard future carbon emissions scenarios.
+\noindent Another way to view and understand marine carbon and nutrient cycling and the 'biological pump' in the ocean is through the lens of geoengineering. In this Section you'll use geoengineering as an 'excuse' to perturb and elucidate the response of the global carbon cycle and climate system and hence learn something new/different about Earth system dynamics compared to e.g. its response only under standard future carbon emissions scenarios.
 
 In the following experiments you are going to explore some of the ocean biological controls on atmospheric p\(CO_{2}\) (plus ocean acidification, and the distributions and intensities of oxygen minimum zones). Really, the ‘geoengineering’ focus is just an excuse to be looking at how the biological pump in the ocean works, how it regulates atmospheric p\(CO_{2}\), how sensitive it is to perturbation and what the consequences are of any changes in it. So if you are uncomfortable with ideas of large scale manipulating the Earth system, you might instead think about the relevance of the experiments to e.g. understanding why atmospheric p\(CO_{2}\) was low at the time of the last glacial.
 
