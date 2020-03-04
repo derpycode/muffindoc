@@ -73,8 +73,9 @@ NO BULLET IN LIST ITEM
 \begin{fullwidth}
 \end{fullwidth}
 
-ALT SUBSCRIPT
+SUBJECT HEADING ALTERNATIVES
 CO$_{2}$
+$\delta$
 
 DOTS
 \ldots

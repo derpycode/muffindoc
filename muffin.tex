@@ -4663,6 +4663,13 @@ How  is an event characterized by \(CO_{2}\) removal from the system recorded di
 
 \section*{READ.ME}
 
+You will need to download some new \textit{re-start} files. To fetch these -- change to the \textsf{\footnotesize cgenie\_output} directory, and type:
+\vspace{-1mm}\small\begin{verbatim}
+$ wget EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz
+$ wget muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN.tar.gz
+$ wget muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN.tar.gz
+\end{verbatim}\normalsize\vspace{-1mm}
+\noindent Then extract the contents. Change directory back to \textsf{\footnotesize genie-main } directory to run \textbf{muffin}.
 
 %------------------------------------------------
 
@@ -4670,7 +4677,136 @@ How  is an event characterized by \(CO_{2}\) removal from the system recorded di
 
 %------------------------------------------------
 
-\section{xxx}
+\section{muffin model proxy capability overview}
+
+
+
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{$\delta^{13}$C}
+
+%------------------------------------------------
+
+\subsection{Fossil fuel $\delta^{13}$C}
+
+The earlier experiments on fossil fuel \(CO_{2}\) emissions to the atmosphere included an assumed isotopic composition of the emitted carbon (and a complete ocean-atmosphere \(^{13}C\) cycle, even though we did not pay it any attention at the time. So one useful exercise is to go back to those experiments and explore how the  isotopic composition of fossil fuel carbon is propagated form the atmosphere into the ocean and hence through the ocean via its large-scale circulation (and also through organic matter produced at the ocean surface and subsequently exported into the ocean interior). In this, it is helpful to also take a control experiment (you did run one, right ... ?) and create a difference map to better visualize how the \(\delta^{13}C\) patterns in the ocean evolve through time.
+
+By default, fossil fuel carbon is tagged with a mean fossil fuel isotopic signature of \(-27\)\permille. This in set by the parameter:
+\vspace{-1mm}\begin{verbatim}
+bg_par_atm_force_scale_val_4=-27.0
+\end{verbatim}\vspace{-1mm}
+(which scales the value of \(1.0\) specified in the file \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_13C\_sig.dat}in the forcing directory. To create a more pronounced 'tag' of fossil fuel carbon, you could, for instance, make the assumed value of the \(CO_{2}\) more negative.
+
+Note that for organic carbon, in addition to its isotopic composition depending on that of dissolved inorganic carbon (technically, the \(CO_{2(aq)}\) component of DIC), the carbon isotopic fractionation scheme also depends on the \(CO_{2(aq)}\) concentration, which will tend to increase as fossil fuel carbon is taken up by the ocean surface. This scheme (for \(^{13}C\) fractionation into marine organic matter) is described in \textit{Ridgwell} [2001]\footnote{Ridgwell, A. J., Glacial-interglacial perturbations in the global carbon cycle, PhD thesis, 134 pp., Univ. of East Anglia at Norwich, UK, March 2001 -- http://www.seao2.info/pubs/ridgwell\_thesis.pdf} as well as more briefly in \textit{Kirtland Turner and Ridgwell} [2016]\footnote{Kirtland Turner, S. and A. Ridgwell, Constraints on the rate of carbon injection across the PETM – towards a theoretical framework for hyperthermals, EPSL 435, 1-13 (2016).}. So \(\delta^{13}C\) or organic matter may potentially change in non-intuitive directions or values depending on the relative carbon and climate perturbation vs. the magnitude of the isotopic perturbation of the Earth system. You could explore this further by setting the isotopic composition of the emitted carbo to that of the atmosphere prior to perturbation, or even of the bulk (or surface) ocean (DIC), such that the applied perturbation becomes one only of surface ocean carbonate chemistry and climate and hence revealing more clearly the influence of changing  \(CO_{2(aq)}\) concentrations alone.
+
+You can also view the \textit{re-start} experiment \textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz} which is isotope-enabled and described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}. 
+
+%------------------------------------------------
+
+\subsection{Past ocean states and $\delta^{13}$C}
+
+$\delta^{13}$C can be used to constrain both the strength/efficiency of the biological pump of the ocean, as well as its large-scale circulation (in addition to carbon release to the system and potentially also ocean \(pH\) changes in deep time).
+
+Two example configurations and spin-ups are given -- one for the late Holocene (effectively, modern (preindustrial)) and one for the last Glacial Maximum (LGM), plus the respective observed benthic $\delta^{13}$C data-sets. Both model configurations are derived from fully coupled GCM experiments using the HadCM3 model and hence muffin is forced by 2D stress and speed simulated by the GCM, plus a zonal mean albedo profile. The two configurations\footnote{Note that they differ only minutely in their filename ...} are:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffin.CB.GIteiiaa.BASESFeTDTL\_rb.SPIN}
+\\This experiment is additionally configured with late Holocene atmospheric \(CO_{2}\) and $\delta^{13}$C, modern orbits, and a late Holocene dust flux to the ocean surface.
+\\A plausible circulation in the Atlantic and good statistical fit to the benthic $\delta^{13}$C is achieved with a modern-like flux correction in \textbf{muffin}:
+\vspace{-2mm}\begin{verbatim}
+bg_par_ocn_force_scale_val_2=0.30
+\end{verbatim}\vspace{-2mm}
+here -- \(0.30 Sv\).
+\\The corresponding observed benthic $\delta^{13}$C data-set is: \textsf{\footnotesize Hol\_d13c\_CLEAN.txt} (columns of: latitude, longitude, depth (m), $\delta^{13}$C, and a Site label).
+\vspace{1mm}
+\item \texttt{muffin.CB.GIteiiva.BASESFeTDTL\_rb.SPIN}
+\\This experiment is additionally configured with LGM atmospheric \(CO_{2}\) and $\delta^{13}$C, a 21 ka orbital configuration, and a LGM Holocene dust flux to the ocean surface. Additionally, all the tracers in the ocean have been concentrated by 3\% to reflect the decrease in ocean volume due to the removal of freshwater to the ice sheets.
+\\A plausible circulation in the Atlantic and good statistical fit to the LGM benthic $\delta^{13}$C is achieved with a reduced flux correction in \textbf{muffin}:
+\vspace{-2mm}\begin{verbatim}
+bg_par_ocn_force_scale_val_2=0.05
+\end{verbatim}\vspace{-2mm}
+and so -- \(0.05 Sv\).
+\\The corresponding observed benthic $\delta^{13}$C data-set is: \textsf{\footnotesize LGM\_d13c\_CLEAN.txt} (columns of: longitude\footnote{And so the reverse order to the late Holocene data-set ... :(}, latitude, depth (m), $\delta^{13}$C, and a Site label).
+\end{enumerate}
+\vspace{1mm}
+
+Note that the \textit{user-configs} are not in the sub-directory \textsf{\footnotesize LABS}, but instead in \textsf{\footnotesize MS/odalenetal.CP.2020}. You can either copy them to \textsf{\footnotesize LABS} and run as normal, or run them from \textsf{\footnotesize MS/odalenetal.CP.2020} by changing the \textit{user-config} sub-directory you specify at the command line when running an experiment (better to copy).
+
+Experiments are a little more challenging to really get anything out of because the model steady-state take ca. 5000 or so years to come close to steady-state. Hence it is unlikely that you will see the full impact of any parameter change unless you run an experiment overnight on the queue. 50-100 years would probably the minimum to start to see meaningful adjustments to e.g. ocean circulation and hence patterns of $\delta^{13}$C. For any experiment you run, firstly continue on from the corresponding re-start experiment, and secondly allow atmospheric \(CO_{2}\) and $\delta^{13}$C to respond freely to the perturbation by removing/disabling the atmospheric forcing. TO do this, you can either switch to a different forcing -- one that still has dust deposition and a fresh water transport, but no longer prescribes atmospheric composition, e.g.:
+\vspace{-2mm}\begin{verbatim}
+GIteiiaa.Fsal_SUR.Albani.0ka
+\end{verbatim}\vspace{-2mm}
+Or, in the file:
+\vspace{-2mm}\begin{verbatim}
+configure_forcings_atm.dat
+\end{verbatim}\vspace{-2mm} 
+in the forcings directory, remove the 2 lines that specify application of atmospheric \(CO_{2}\) and $\delta^{13}$C forcing.
+
+Remember to run an control experiment -- restarting from the spin-up provided, and with atmospheric \(CO_{2}\) and $\delta^{13}$C allowed to evolve freely -- there should be (almost) no drift in these variables.
+
+There are fewer obvious interesting experiments for the late Holocene configuration and re-start, but you might still explore some perturbations of ocean circulation on the basis that most (almost without exception all) model deglacial/AMOC collapse experiments are run and published based on a modern or slightly modified modern configuration. SO for instance, you might set the flux adjustment that maintains the AMOC to zero:
+\vspace{-2mm}\begin{verbatim}
+bg_par_ocn_force_scale_val_2=0.0
+\end{verbatim}\vspace{-2mm}
+and see what happens. This should look pretty much like the freshwater hosing experiments (i.e. rather than apply fresh water to the North Atlantic region in a model that already has a constant prescribed net salinity transport from North Pacific to North Atlantic, you are simply taking away the underlying prescribed transport). 
+
+Obviously, you might start simply by viewing the distribution of $\delta^{13}$C in the re-start or in your control experiment, and visualize the pattern of ocean circulation. You might also note that the experiment is configured with a number 'age' tracer that records the mean time since a parcel of water last 'saw' the ocean surface -- the ventilation age. (But these particular experiments are not configured with  $\Delta^{14}$C.)
+
+For the LGM configuration, you might also try completely collapsing the AMOC (reducing the flux correction from \(0.05 Sv\) to zero (or even slightly negative). You are thereby simulating an AMOC collapse from a glacial state -- aka 'H0'. Note that as an alternative to simply removing the default flux adjustment, it is possible to create a time-dependent flux of freshwater (as traditionally applied in models, e.g. a pulse or ramp up/down) by editing:
+\vspace{-2mm}\begin{verbatim}
+biogem_force_flux_ocn_sal_sig.dat
+\end{verbatim}\vspace{-2mm}
+in the \textit{forcing}.
+
+You might also consider what a slightly strong LGM AMOC might look like in terms of e.g. its steam-function, ventilation ages, and/or $\delta^{13}$C patterns. A moderate and reasonable increase in the flux adjustment would be to dial it up to \(0.10 Sv\). (Dialling all the way up to \(0.30 Sv\) would enable you to access what a modern-like AMOC would look like in an otherwise glacial world.)
+
+In whatever flux adjustment perturbation experiments you chose, there should be significant consequences for  atmospheric \(CO_{2}\) and $\delta^{13}$C that will be of interest.
+
+Further experiments might include swapping around late Holocene and LGM orbital configurations, or perhaps applying LGM dust fields to the late Holocene configuration, or vice versa. Additionally, the prescribe solubility of iron in dust can be modified via the parameter:
+\vspace{-2mm}\begin{verbatim}
+bg_par_det_Fe_sol=0.002014275
+\end{verbatim}\vspace{-2mm}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{$\delta^{14}$C (and $\Delta^{14}$C)}
+
+\textbf{muffin} also has the capability to track radiocarbon throughout all the atmosphere and marine carbon reservoirs. \(^{14}C\) is treated exactly as per \(^{13}C\), with the exception that the fractionation with \(^{12}C\) is exactly twice that of \(^{13}C\) vs. \(^{12}C\). As such, most of the input and output is in units of \(\delta^{14}C\), and \uline{not} \(\Delta^{14}C\). Additional output for selected carbon variables is provided as \(\Delta^{14}C\) for convenience, but all input is as \(\delta^{14}C\). (Further additional output is provided as radiocarbon age.)
+
+A re-start experiment is provided -- \textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz} which is isotope-enabled and described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}. View the end-of-run summary output file (\textsf{\footnotesize biogem\_year\_09999\_500\_diag\_GLOBAL\_AVERAGE.res}) and note how the atmosphere in this pre-industrial spin-up is reported as being positive 37.4\permille \ in terms of \(\delta^{14}C\) (which equates to approximately \(0\)\permille \ as \(\Delta^{14}C\) (e.g. as recorded in the time-series file \textsf{\footnotesize biogem\_series\_misc\_atm\_D14C.res}).
+
+If you continue on from this spin-up using the provided experiment file \textsf{\footnotesize EXP.12.3}, you'll find that although atmospheric \(CO_{2}\) and its \(\delta^{13}C\) remain at steady state, radiocarbon progressively decays away. This is because in the \textit{spin-up}, atmospheric \(\delta^{14}C\) was continually re-set to a pre-industrial value, but in \textsf{\footnotesize EXP.12.3}, their is neither continual re-setting of atmnospheric \(\delta^{14}C\) nor any explicit production of \(^{14}C\) in the atmosphere. We can correct this by adding the parameter:
+\vspace{-1mm}\begin{verbatim}
+ac_par_atm_F14C
+\end{verbatim}\vspace{-1mm}
+to the \textit{user-config} file and giving it a value in units of \(mol \ yr^{-1}\). How to determine what value you need ... ?
+Fortunately there is a HOW-TO -- '\textit{Determine the atmospheric radiocarbon flux required to achieve a steady state 14C system}'.
+
+If you specify the value of \texttt{ac\_par\_atm\_F14C} as per described in the HOW-TO and based on the final state of the \textit{spin-up}, and then run a continuing experiment, you should find that the radiocarbon state of the system remains approximately constant (e.g. as indicated by atmospheric \(\delta^{14}C\)), with the prescribed production rate balancing the global decay of radiocarbon (across all reservoirs). Hopefully ...
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Model-data visualization (and statistics)}
+
+Observed data-sets can be contrasted directly with model fields, visualized, and the statistics of fit calculated, via the \textbf{muffinplot} \textbf{MATLAB} functions.
+
+\textbf{Panoply} will allow you to create difference maps, but not provide the corresponding statistics. Furthermore, \textbf{Panoply} will require the data to be in the form of a netCDF file in order to plot a difference map with a model field. \textbf{muffindata} contains \textbf{MATLAB} functions to create netCDF format files out of raw (location-by-location) or gridded text-format data.
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -6851,6 +6987,30 @@ Examples:
 %------------------------------------------------
 
 \section{Miscellaneous data processing}
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Model ensembles}
+
+The \textbf{muffindata} \textbf{MATLAB} file: \textsf{\footnotesize fun\_make\_ensemble\_DOUBLE.m} provides a simple/convenient way of generating ensembles of model experiments. By default, the function is designed for generating 2D ensembels of a first varying parameter vs. a econd varying parameter. However, by specifying only a single value of the 2nd (or first) parameter, you'll obtain a 1D ensemble of just a single varuing parameter.
+
+Information about how to configure and generate an ensemble is provided as MATLAB help on this function:
+\vspace{-2mm}
+\begin{verbatim}
+>> help fun_make_ensemble_DOUBLE
+\end{verbatim}
+\vspace{-2mm}
+(There are currently no additional/external instructions.)
+
+Also in \textbf{muffindata} you can find a BASH script for submitting the entire ensemble\footnote{Having first transferred all the \textit{user-config} files to the cluster ...} at the command line (within \textsf{\footnotesize genie-main}) -- \textsf{\footnotesize sub\_ens.muffin.sh}. NOTE: you should be sure to have compiled the model with the required \textit{base-config} prior to using \textsf{\footnotesize sub\_ens.muffin.sh}.
+
+
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
