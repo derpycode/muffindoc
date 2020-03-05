@@ -9645,7 +9645,8 @@ sg_par_sedcore_save_mask_name="sedgem_save_mask.72x72"
 By default, the entire seafloor grid is considered as '\textit{deepsea}' and sedimentary diagenesis options are provided accordingly. In practice, because the simple diagenesis options available, such as for CaCO\(_{3}\) (e.g. \textit{Archer} [1991]; \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2003]) tend not to be applicable to shallower water and particularly high organic carbon delivery (especially in the case of CaCO\(_{3}\) diagenesis) environments, the deep-sea grid is restricted. This can be prescribed 'hard', by defining the sediment grid only at deeper depths and classifying shallowed ocean grid points as invalid (a value of \texttt{0.0}) in the SEDGEM depth definition file\footnote{Set by parameter \texttt{sg\_par\_sed\_topo\_D\_name} that must point to a file in \texttt{cgenie.muffin/genie-sedgem/data/input}.} (e.g. \texttt{worbe2.depth.36x36x0}8).
  Or, and more flexibly, the entire ocean grid can be defined as potentially valid (e.g. \texttt{worbe2.depth.36x36x08.ALL}) and SEDGEM directed to treat any grid points lying shallower than a specific depth as shallow water sediments. This depth cut-off is set via the parameter \texttt{sg\_par\_sed\_Dmax\_neritic} (in units of m below the ocean surface). A typical value is \texttt{176.0}\footnote{Note that the simple (esp. CaCO\(_{3}\) diagenesis schemes) arguably only applicable below depths of ca. 1000 m, although even this is complicated by varying patterns of productivity across the ocean.}, which for an 8-level configuration will exclude the shallowest ocean depth level from the deep-sea grid, and for a 16-level ocean will exclude the two shallowest ocean depth levels.
 
-Sediments that are not classed as 'deepsea', are automatically classed as 'mud', i.e. potentially detrital and organic carbon rich. Such sediment locations  currently have no option for carbonate burial associated with them. Instead, a limited range of extremely simple and crude assumptions regarding organic carbon preservation (and P regeneration) are provided.
+Sediments that are not classed as 'deepsea', are automatically classed as 'mud', i.e. potentially detrital and organic carbon rich. Such sediment locations  currently have no option for carbonate burial associated with them. Instead, a limited range of extremely simple and crude assumptions regarding organic carbon preservation (and P regeneration) are provided. 
+For a new, more mechanistic representation of organic carbon degradation and burial in marine sediments and associated biogeochemical benthic-pelagic fluxes see Section \ref{HOW-TO_OMEN-SED}.
 
 Locations at which  carbonate can be produced and preserved
 are classified
@@ -10511,7 +10512,7 @@ The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the
 
 %------------------------------------------------
 
-\section{HOW-TO ... Organic Matter ENabled SEDiment model}
+\section{HOW-TO ... Organic Matter ENabled SEDiment model}\label{HOW-TO_OMEN-SED}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -10532,7 +10533,7 @@ coupling to global Earth system models and therefore the investigation of couple
 %
 \subsection*{Couple OMEN-SED to cGENIE}
 \vspace{2mm}
-\textbf{\textit{base-config}}\\
+\subsubsection*{\textit{base-config}}
 As the new Organic Matter ENabled SEDiment model is a sub-module of \textbf{SEDGEM} and you might want to balance simulated burial fluxes with appropriate (or arbitrary) weathering fluxes using \textbf{ROKGEM} both modules need to be enabled. 
 Thus ensure that at the top of the \textit{base-config} file the following flags are set:
 \vspace{-1mm}\small\begin{verbatim}
@@ -10540,44 +10541,80 @@ ma_flag_sedgem=.TRUE.
 ma_flag_rokgem=.TRUE.
 \end{verbatim}\normalsize\vspace{2mm}
 
-\noindent
-\textbf{\textit{user config}}\\
+\subsubsection*{\textit{user config}}
 The default version of OMEN-SED is selected by setting:
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_diagen_Corgopt = 'huelse2016'
-\end{verbatim}\vspace{-1mm}
-As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
-\vspace{-1mm}\begin{verbatim}
-bg_ctrl_force_sed_closedsystem=.false.
 \end{verbatim}\vspace{-1mm}
 Because the nitrogen cycle is not modeled explicitly in the current version of \textbf{BIOGEM} alkalinity (ALK) is directly linked to uptake and remineralization of PO$_4$ using the standard 16:1 N:P ratio (compare Ridgwell et al. [2007]). 
 Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now also tie ALK in \textbf{BIOGEM} to POC by setting the following namelist flag:
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_bio_red_ALKwithPOC=.true.
 \end{verbatim}\vspace{-1mm}
+In the following experiments we assume the simplest scenario and focus on OM burial alone, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate). 
+Also, as we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
+\vspace{-1mm}\begin{verbatim}
+# sediment diagenesis options
+sg_par_sed_diagen_CaCO3opt="NONE"
+sg_ctrl_sed_bioturb=.false.
+sg_ctrl_sed_bioturb_Archer=.false.
+...
+# --- WEATHERING -----------------------------------------------
+#
+# set an 'OPEN' system
+bg_ctrl_force_sed_closedsystem=.false.
+# set total weathering rate
+rg_par_weather_CaCO3=0.0
+# set bulk weathering isotopic composition
+rg_par_weather_CaCO3_d13C=0.0
+\end{verbatim}\vspace{-1mm}
+Atmospheric pCO$_2$ and associated \(\delta^{13}C\) is restored by specifying a forcing file and values (i.e. setting  \texttt{bg\_par\_forcing\_name}, \texttt{bg\_par\_atm\_force\_scale\_val\_3} and \texttt{bg\_par\_atm\_force\_scale\_val\_4}. 
 
-In the following experiments we assume the simplest scenario, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate), and assuming globally uniform detrital field. Very simplified but we can still calculate OM wt\%. 
+As we do not model CaCO$_3$ preservation we have to apply a globally uniform nonbiogenic, noncarbonate detrital flux in order to simulate a (somehow) meaningful OM weight percentages (OM wt\%) in the sediments. This is set by:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_fdet=0.180
+\end{verbatim}\vspace{-1mm}
+The prescribed flux of 0.18 g cm$^{-2}$ky$^{-1}$ represents a value characteristic of early Cenozoic open-ocean sediments [Zeebe\&Zachos, 2007]. (For the modern ocean (as in H\"ulse et al. [2018]) we ran experiments with prescribed fixed solid 
+fields of CaCO$_3$, opal and detritus to the sediments. These were regridded from observations.) 
 
-For the modern ocean we ran experiments with prescribed fixed solid fields of CaCO$_3$, opal and detritus to the sediments. Say why:
+The most important parameters in OMEN-SED are the first-order degradation constants of the two simulated OM pools (comparable to BIOGEM a labile and a refractory pool is simulated). A considerable amount of effort has been expended to link these rate 
+constants for instance to sedimentation rate and various empirical parameterizations have been proposed of which some are implemented in OMEN-SED (e.g. Tromp et al. [1995], Boudreau [1997], Stolpovsky et al. [2015]. Also a temperature dependent 
+degradation scheme exists). However, here only the use of globally uniform degradation rate constants is described. By default the degradation rate constant for the refractory OM pool depends on the oxygenation of the overlying ocean waters 
+(i.e. a lower rate constant is specified for [O$_2$] < $\mu$M). The degradation rate constant for the labile OM pool does not depend on oxygen concentration. The three degradation rate constant can be specified by setting:
+\vspace{-1mm}\begin{verbatim}
+# global OM degradation rate constants (1/yr)
+sg_par_sed_huelse2017_k1=0.0065
+sg_par_sed_huelse2017_k2=0.005
+# k2 under anoxic bottom water:
+sg_par_sed_huelse2017_k2_anoxic=1E-6
+\end{verbatim}\vspace{-1mm}
+where the values above represent the default degradation rate constants as used in in H\"ulse et al. [2019].
 
-In OMEN-SED you have the following options:
-play around with degradation rate constants. 
-make degradation rate constant for refractory OM redox dependent!
-use different schemes to parameterise k1 and k2. 
 
-\vspace{2mm}\noindent
-\textbf{PO$_4$ cycle}
+\subsubsection*{Do something with the P-cycle}
+OMEN-SED also represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. However, in order to fix the global PO$_4$ inventory 
+the default OMEN-SED configuration omits P dynamics and all organic phosphorus is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the 
+P-cycle 'flag' to true
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.TRUE.
+\end{verbatim}\vspace{-1mm}
+However, this will cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored by an appropriate weathering input of riverine dissolved P (i.e. by specifying \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracP} appropriately).
+This will be described in more detail at a later stage. 
 
-\vspace{2mm}\noindent
-\textbf{Running transient simulations}
+OMEN-SED furthermore provides a P-scheme that is able to simulate the positive feedback between productivity, bottom water anoxia and enhanced P-regeneration. In order to simulate the oxygen dependence of the C/P regeneration ratio we employ the 
+empirical function derived by Wallmann [2010]. This will be described in more detail at a later stage. 
+
+
+\subsubsection*{Running transient simulations}
 Two step process:\\
 1) Run to steady-state with forced atmospheric concentrations (e.g. CO$_2$, O$_2$ and \(\delta^{13}C\))\\
 2) Diagnose organic burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres\\
-3) Set the weathering rates accordingly.
+3) Set the weathering rates accordingly.\\
+This will be described in more detail at a later stage. 
 %------------------------------------------------
 %
 \subsection*{Example config-files}
-
+This will be described in more detail at a later stage. 
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
 %----------------------------------------------------------------------------------------
