@@ -10552,7 +10552,7 @@ Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now al
 bg_ctrl_bio_red_ALKwithPOC=.true.
 \end{verbatim}\vspace{-1mm}
 In the following experiments we assume the simplest scenario and focus on OM burial alone, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate). 
-Also, as we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
+As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
 \vspace{-1mm}\begin{verbatim}
 # sediment diagenesis options
 sg_par_sed_diagen_CaCO3opt="NONE"
@@ -10570,17 +10570,17 @@ rg_par_weather_CaCO3_d13C=0.0
 \end{verbatim}\vspace{-1mm}
 Atmospheric pCO$_2$ and associated \(\delta^{13}C\) is restored by specifying a forcing file and values (i.e. setting  \texttt{bg\_par\_forcing\_name}, \texttt{bg\_par\_atm\_force\_scale\_val\_3} and \texttt{bg\_par\_atm\_force\_scale\_val\_4}. 
 
-As we do not model CaCO$_3$ preservation we have to apply a globally uniform nonbiogenic, noncarbonate detrital flux in order to simulate a (somehow) meaningful OM weight percentages (OM wt\%) in the sediments. This is set by:
+As we do not model CaCO$_3$ preservation we have to apply a globally uniform nonbiogenic, noncarbonate detrital flux in order to simulate (somehow) meaningful OM weight percentages (OM wt\%) in the sediments. This is set by:
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_fdet=0.180
 \end{verbatim}\vspace{-1mm}
 The prescribed flux of 0.18 g cm$^{-2}$ky$^{-1}$ represents a value characteristic of early Cenozoic open-ocean sediments [Zeebe\&Zachos, 2007]. (For the modern ocean (as in H\"ulse et al. [2018]) we ran experiments with prescribed fixed solid 
 fields of CaCO$_3$, opal and detritus to the sediments. These were regridded from observations.) 
 
-The most important parameters in OMEN-SED are the first-order degradation constants of the two simulated OM pools (comparable to BIOGEM a labile and a refractory pool is simulated). A considerable amount of effort has been expended to link these rate 
+The most important parameters in OMEN-SED are the first-order degradation rate constants of the two simulated OM pools (comparable to BIOGEM a labile and a refractory pool is simulated). A considerable amount of effort has been expended to link these rate 
 constants for instance to sedimentation rate and various empirical parameterizations have been proposed of which some are implemented in OMEN-SED (e.g. Tromp et al. [1995], Boudreau [1997], Stolpovsky et al. [2015]. Also a temperature dependent 
 degradation scheme exists). However, here only the use of globally uniform degradation rate constants is described. By default the degradation rate constant for the refractory OM pool depends on the oxygenation of the overlying ocean waters 
-(i.e. a lower rate constant is specified for [O$_2$] < $\mu$M). The degradation rate constant for the labile OM pool does not depend on oxygen concentration. The three degradation rate constant can be specified by setting:
+(i.e. a lower rate constant is specified for [O$_2$] < 5.0 $\mu$M). The degradation rate constant for the labile OM pool does not depend on oxygen concentration. The three degradation rate constant can be specified by setting:
 \vspace{-1mm}\begin{verbatim}
 # global OM degradation rate constants (1/yr)
 sg_par_sed_huelse2017_k1=0.0065
@@ -10592,14 +10592,14 @@ where the values above represent the default degradation rate constants as used 
 
 
 \subsubsection*{Do something with the P-cycle}
-OMEN-SED also represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. However, in order to fix the global PO$_4$ inventory 
-the default OMEN-SED configuration omits P dynamics and all organic phosphorus is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the 
-P-cycle 'flag' to true
+OMEN-SED also represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. However, in order to achieve a steady-state the global 
+PO$_4$ inventory must be fixed fixed and thus the default OMEN-SED configuration omits P dynamics and all organic phosphorus is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. 
+The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the P-cycle 'flag' to true
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_huelse2017_P_cycle=.TRUE.
 \end{verbatim}\vspace{-1mm}
-However, this will cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored by an appropriate weathering input of riverine dissolved P (i.e. by specifying \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracP} appropriately).
-This will be described in more detail at a later stage. 
+However, this will cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored by an appropriate weathering input of riverine dissolved P (i.e. by specifying \texttt{rg\_par\_weather\_CaSiO3=1.0} 
+and \texttt{rg\_par\_weather\_CaSiO3\_fracP} appropriately). This will be described in more detail at a later stage. 
 
 OMEN-SED furthermore provides a P-scheme that is able to simulate the positive feedback between productivity, bottom water anoxia and enhanced P-regeneration. In order to simulate the oxygen dependence of the C/P regeneration ratio we employ the 
 empirical function derived by Wallmann [2010]. This will be described in more detail at a later stage. 
@@ -10609,7 +10609,7 @@ empirical function derived by Wallmann [2010]. This will be described in more de
 Two step process:\\
 1) Run to steady-state with forced atmospheric concentrations (e.g. CO$_2$, O$_2$ and \(\delta^{13}C\))\\
 2) Diagnose organic burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres\\
-3) Set the weathering rates accordingly.\\
+3) Set the weathering rates accordingly: \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracC}\\
 This will be described in more detail at a later stage. 
 %------------------------------------------------
 %
