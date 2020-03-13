@@ -4665,9 +4665,9 @@ How  is an event characterized by \(CO_{2}\) removal from the system recorded di
 
 You will need to download some new \textit{re-start} files. To fetch these -- change to the \textsf{\footnotesize cgenie\_output} directory, and type:
 \vspace{-1mm}\small\begin{verbatim}
-$ wget EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz
-$ wget muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN.tar.gz
-$ wget muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN.tar.gz
+$ wget http://www.seao2.info/cgenie_output/muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN.tar.gz
 \end{verbatim}\normalsize\vspace{-1mm}
 \noindent Then extract the contents. Change directory back to \textsf{\footnotesize genie-main } directory to run \textbf{muffin}.
 
@@ -4701,11 +4701,21 @@ By default, fossil fuel carbon is tagged with a mean fossil fuel isotopic signat
 \vspace{-1mm}\begin{verbatim}
 bg_par_atm_force_scale_val_4=-27.0
 \end{verbatim}\vspace{-1mm}
-(which scales the value of \(1.0\) specified in the file \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_13C\_sig.dat}in the forcing directory. To create a more pronounced 'tag' of fossil fuel carbon, you could, for instance, make the assumed value of the \(CO_{2}\) more negative.
+which scales the value of \(1.0\) specified in the file \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_13C\_sig.dat} in the forcing directory, which in the previous fossil fuel release experiments was the \textsf{\footnotesize genie-forcing} sub-directory:
+\vspace{2pt}
+\\\noindent \footnotesize\textsf{pyyyyz.FpCO2\_Fp13CO2}\normalsize
+\vspace{2pt}
+\\To create a more pronounced 'tag' of fossil fuel carbon, you could, for instance, make the assumed value of the \(CO_{2}\) more negative.
 
 Note that for organic carbon, in addition to its isotopic composition depending on that of dissolved inorganic carbon (technically, the \(CO_{2(aq)}\) component of DIC), the carbon isotopic fractionation scheme also depends on the \(CO_{2(aq)}\) concentration, which will tend to increase as fossil fuel carbon is taken up by the ocean surface. This scheme (for \(^{13}C\) fractionation into marine organic matter) is described in \textit{Ridgwell} [2001]\footnote{Ridgwell, A. J., Glacial-interglacial perturbations in the global carbon cycle, PhD thesis, 134 pp., Univ. of East Anglia at Norwich, UK, March 2001 -- http://www.seao2.info/pubs/ridgwell\_thesis.pdf} as well as more briefly in \textit{Kirtland Turner and Ridgwell} [2016]\footnote{Kirtland Turner, S. and A. Ridgwell, Constraints on the rate of carbon injection across the PETM – towards a theoretical framework for hyperthermals, EPSL 435, 1-13 (2016).}. So \(\delta^{13}C\) or organic matter may potentially change in non-intuitive directions or values depending on the relative carbon and climate perturbation vs. the magnitude of the isotopic perturbation of the Earth system. You could explore this further by setting the isotopic composition of the emitted carbo to that of the atmosphere prior to perturbation, or even of the bulk (or surface) ocean (DIC), such that the applied perturbation becomes one only of surface ocean carbonate chemistry and climate and hence revealing more clearly the influence of changing  \(CO_{2(aq)}\) concentrations alone.
 
-You can also view the \textit{re-start} experiment \textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz} which is isotope-enabled and described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}. 
+You can also view the \textit{re-start} experiment \textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN} which is isotope-enabled and described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}.
+
+Experiments can  be run similar to before (Chapter 6)\footnote{But noting that we are using a different \textit{base-config} now: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.ANTH}}, assuming that you copy and rename the \textit{user-config} \textsf{\footnotesize LAB\_3.CO2emissions} to e.g. \textsf{\footnotesize LAB\_3.d13CO2emissions}, by:
+\vspace{-2pt}\begin{verbatim}
+$ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.ANTH LABS
+   LAB_3.d13CO2emissions 20 EXAMPLE.worjh2.Caoetal2009.SPIN
+\end{verbatim}\vspace{-2pt}
 
 %------------------------------------------------
 
@@ -4713,7 +4723,7 @@ You can also view the \textit{re-start} experiment \textsf{\footnotesize EXAMPLE
 
 $\delta^{13}$C can be used to constrain both the strength/efficiency of the biological pump of the ocean, as well as its large-scale circulation (in addition to carbon release to the system and potentially also ocean \(pH\) changes in deep time).
 
-Two example configurations and spin-ups are given -- one for the late Holocene (effectively, modern (preindustrial)) and one for the last Glacial Maximum (LGM), plus the respective observed benthic $\delta^{13}$C data-sets. Both model configurations are derived from fully coupled GCM experiments using the HadCM3 model and hence muffin is forced by 2D stress and speed simulated by the GCM, plus a zonal mean albedo profile. The two configurations\footnote{Note that they differ only minutely in their filename ...} are:
+Two example configurations and spin-ups are given -- one for the late Holocene (effectively, modern (preindustrial)) and one for the last Glacial Maximum (LGM), plus the respective observed benthic $\delta^{13}$C data-sets (refer to the Section: \textit{Model-data visualization (and statistics)}). Both model configurations are derived from fully coupled GCM experiments using the HadCM3 model and hence muffin is forced by 2D stress and speed simulated by the GCM, plus a zonal mean albedo profile. The two configurations\footnote{Note that they differ only minutely in their filename ...} are:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -4737,9 +4747,25 @@ and so -- \(0.05 Sv\).
 \end{enumerate}
 \vspace{1mm}
 
-Note that the \textit{user-configs} are not in the sub-directory \textsf{\footnotesize LABS}, but instead in \textsf{\footnotesize MS/odalenetal.CP.2020}. You can either copy them to \textsf{\footnotesize LABS} and run as normal, or run them from \textsf{\footnotesize MS/odalenetal.CP.2020} by changing the \textit{user-config} sub-directory you specify at the command line when running an experiment (better to copy).
+Note that the \textit{user-configs} are not in the sub-directory \textsf{\footnotesize LABS}, but instead in \textsf{\footnotesize MS/odalenetal.CP.2020}. You can either copy them to \textsf{\footnotesize LABS} and run as normal, or run them from \textsf{\footnotesize MS/odalenetal.CP.2020} by changing the \textit{user-config} sub-directory you specify at the command line when running an experiment (better to copy). Also note that in that sub-directory is a README file (\textsf{\footnotesize readme.txt}) that describes more about the experiment configurations as well as telling you now to run them, e.g.
+\small\vspace{-2pt}\begin{verbatim}
+$ ./runmuffin.sh muffin.CB.GIteiiaa.BASESFeTDTL_rb MS/odalenetal.CP.2019
+ muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN 10000
+$ ./runmuffin.sh muffin.CB.GIteiiva.BASESFeTDTL_rb MS/odalenetal.CP.2019
+ muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN 10000
+\end{verbatim}\vspace{-2pt}\normalsize
+if you keep the \textit{user-config} files in their original directory, or:
+\small\vspace{-2pt}\begin{verbatim}
+$ ./runmuffin.sh muffin.CB.GIteiiaa.BASESFeTDTL_rb LABS
+ muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN 10000
+$ ./runmuffin.sh muffin.CB.GIteiiva.BASESFeTDTL_rb LABS
+ muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN 10000
+\end{verbatim}\vspace{-2pt}\normalsize
+if you move them. \uline{These are the commands to run the \textit{spin-ups}, so make sure that you copy and re-name the \textit{user-config} files otherwise you'll over-write the re-starts that you just downloaded} ...
 
-Experiments are a little more challenging to really get anything out of because the model steady-state take ca. 5000 or so years to come close to steady-state. Hence it is unlikely that you will see the full impact of any parameter change unless you run an experiment overnight on the queue. 50-100 years would probably the minimum to start to see meaningful adjustments to e.g. ocean circulation and hence patterns of $\delta^{13}$C. For any experiment you run, firstly continue on from the corresponding re-start experiment, and secondly allow atmospheric \(CO_{2}\) and $\delta^{13}$C to respond freely to the perturbation by removing/disabling the atmospheric forcing. TO do this, you can either switch to a different forcing -- one that still has dust deposition and a fresh water transport, but no longer prescribes atmospheric composition, e.g.:
+Experiments are a little more challenging to really get anything out of because the model steady-state take ca. 5000 or so years to come close to steady-state. Hence it is unlikely that you will see the full impact of any parameter change unless you run an experiment overnight on the queue. 50-100 years would probably the minimum to start to see meaningful adjustments to e.g. ocean circulation and hence patterns of $\delta^{13}$C.
+
+For any experiment that you run, firstly continue on from the corresponding \textit{re-start} experiment, and secondly allow atmospheric \(CO_{2}\) and $\delta^{13}$C to respond freely to the perturbation by removing/disabling the atmospheric forcing. TO do this, you can either switch to a different forcing -- one that still has dust deposition and a fresh water transport, but no longer prescribes atmospheric composition, e.g.:
 \vspace{-2mm}\begin{verbatim}
 GIteiiaa.Fsal_SUR.Albani.0ka
 \end{verbatim}\vspace{-2mm}
@@ -4806,6 +4832,16 @@ If you specify the value of \texttt{ac\_par\_atm\_F14C} as per described in the 
 Observed data-sets can be contrasted directly with model fields, visualized, and the statistics of fit calculated, via the \textbf{muffinplot} \textbf{MATLAB} functions.
 
 \textbf{Panoply} will allow you to create difference maps, but not provide the corresponding statistics. Furthermore, \textbf{Panoply} will require the data to be in the form of a netCDF file in order to plot a difference map with a model field. \textbf{muffindata} contains \textbf{MATLAB} functions to create netCDF format files out of raw (location-by-location) or gridded text-format data.
+
+For the late Holocene and LGM \(\delta^{13}C\) experiments, observed benthic \(\delta^{13}C\) data is provided in the same directory as the HOL and LGM experiment \textit{user-config} files \linebreak (\textsf{\footnotesize genie-userconfigs/MS/odalenetal.CP.2020}). Taking these files ... ensuring that the format is \linebreak (lon,lat,depth,value) by removing the data column for the Site label, and then (e.g. in MATLAB -- \texttt{data=rmmissing(data);}) removing the NaN values and corresponding lines ... the data can be re-gridded to the GENIE grid and saved in netCDf format, enabling direct model-data comparison (and anomalies) in Panoply. These (netCDF) files are provided already processed under the \textsf{\footnotesize got data?} box on the left hand side of the mymuffin webpage (\href{http://www.seao2.info/mymuffin.html}{http://www.seao2.info/mymuffin.html}). Note that they are for the full 3D model grid, and e.g. surface and shallow depth layers will not contain any benthic data.
+
+Having processed the raw data as described above (no NaNs or missing values, and in a strict (lon,lat,depth,value) column format), the \textbf{muffindata} function \textsf{\footnotesize make\_regrid\_data2netcdf\_GENIE.m} can be used in \textbf{MATLAB}, e.g.:
+\scriptsize\begin{verbatim}
+>> make_regrid_data2netcdf_GENIE('d13C_HOL.txt','d13C','Holocene benthic d13C','o/oo',36,36,16,-180,'')
+>> make_regrid_data2netcdf_GENIE('d13C_LGM.txt','d13C','LGM benthic d13C','o/oo',36,36,16,-180,'');
+\end{verbatim}\normalsize
+
+
 
 
 %----------------------------------------------------------------------------------------
