@@ -10551,8 +10551,8 @@ Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now al
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_bio_red_ALKwithPOC=.true.
 \end{verbatim}\vspace{-1mm}
-In the following experiments we assume the simplest scenario and focus on OM burial alone, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate). 
-As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must now be specified in the \textit{user config}:
+In the following experiments we assume the simplest scenario and focus on OM burial alone, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate). Therefore, respective CaCO$_3$-diagenesis options are set to \textit{NONE} and \textit{.false.} and weathering fluxes are specified as 0.0 (an alternative closed-system setup without \textbf{ROKGEM} also exists and will be described at a later stage). 
+As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must be specified in the \textit{user config}:
 \vspace{-1mm}\begin{verbatim}
 # sediment diagenesis options
 sg_par_sed_diagen_CaCO3opt="NONE"
@@ -10592,29 +10592,104 @@ where the values above represent the default degradation rate constants as used 
 
 
 \subsubsection*{Do something with the P-cycle}
-OMEN-SED also represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. However, in order to achieve a steady-state the global 
-PO$_4$ inventory must be fixed fixed and thus the default OMEN-SED configuration omits P dynamics and all organic phosphorus is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. 
-The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the P-cycle 'flag' to true
+The default OMEN-SED configuration omits P dynamics and all organic phosphorus reaching the bottom of the ocean is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. 
+However, various options for P burial/regeneration are available. All options described below cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored via weathering. One option is to again setup a closed P-system by setting the following namelist flag:
 \vspace{-1mm}\begin{verbatim}
-sg_par_sed_huelse2017_P_cycle=.TRUE.
+bg_ctrl_force_sed_closed_P = .true.
 \end{verbatim}\vspace{-1mm}
-However, this will cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored by an appropriate weathering input of riverine dissolved P (i.e. by specifying \texttt{rg\_par\_weather\_CaSiO3=1.0} 
-and \texttt{rg\_par\_weather\_CaSiO3\_fracP} appropriately). This will be described in more detail at a later stage. 
+Here, the P-weathering flux equals P-burial and thus closes the P-cycle. A second option (relevant for transient simulations) is to define a weathering input of riverine dissolved P (in mol yr$^{-1}$, i.e. by specifying 
+\texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracP}). The second option will be described in more detail in the section on transient simulations at a later stage. 
 
+\vspace{1mm}
+\noindent 
+\textbf{1) P-cycle as in H\"ulse et al. [2018]:}\\
+OMEN-SED represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. Note, that this representation is not able to represent enhanced P-regeneration under anoxia (i.e. lower than 'Redfield' C/P regeneration ratios -- for this see option 3) below). The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the P-cycle 'flag' to true
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.true.
+\end{verbatim}\vspace{-1mm}
+
+
+\vspace{1mm}
+\noindent 
+\textbf{2) Organic P burial equals organic C burial}\\
+A simpler scheme is to assume that the same fraction of organic P is buried as organic carbon. This means in every grid cell the burial of organic P (Porg$_\mathrm{b}$) is calculated from the amount of buried organic C (Corg$_\mathrm{b}$) as 
+Porg$_\mathrm{b}$ = 1/106 $\times$ Corg$_\mathrm{b}$. This option can be selected by setting:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.false.
+sg_par_sed_huelse2017_sim_P_loss = .true.
+sg_par_sed_huelse2017_sim_P_loss_pres_fracC = .true.
+\end{verbatim}\vspace{-1mm}
+ 
+
+\vspace{1mm}
+\noindent 
+\textbf{3) Redox dependent P-regeneration}\\
 OMEN-SED furthermore provides a P-scheme that is able to simulate the positive feedback between productivity, bottom water anoxia and enhanced P-regeneration. In order to simulate the oxygen dependence of the C/P regeneration ratio we employ the 
-empirical function derived by Wallmann [2010]. This will be described in more detail at a later stage. 
+empirical function derived by Wallmann [2010]. This will be described in more detail at a later stage. This option can be selected by setting:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.false.
+sg_par_sed_huelse2017_sim_P_loss = .true.
+sg_par_sed_huelse2017_sim_P_regeneration = .true.
+\end{verbatim}\vspace{-1mm}
 
 
 \subsubsection*{Running transient simulations}
 Two step process:\\
 1) Run to steady-state with forced atmospheric concentrations (e.g. CO$_2$, O$_2$ and \(\delta^{13}C\))\\
-2) Diagnose organic burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres\\
-3) Set the weathering rates accordingly: \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracC}\\
+2) Diagnose organic carbon burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres -- actually better: diagnose as the mean burial (in mol yr$^{-1}$ over the e.g. last 2000 years using the time-series files: 
+ \texttt{biogem\_series\_focnsed\_POC.res} - (\texttt{biogem\_series\_fsedocn\_DIC.res} - \texttt{biogem\_series\_fsedocn\_Ca.res})\\
+3) Set the weathering rates accordingly: \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracC} (and \texttt{rg\_par\_weather\_CaSiO3\_fracP})\\
 This will be described in more detail at a later stage. 
 %------------------------------------------------
 %
 \subsection*{Example config-files}
-This will be described in more detail at a later stage. 
+This will be described in more detail at a later stage.\\
+An example base-config file has been created (\texttt{muffin.CBS.fkl\_pp01.BASES\_DH}) and is available in \texttt{genie-main/configs/}. It is the same as the respective fake world configuration only here a flat bottom ocean is used. The following 
+user-config files are available in \texttt{genie-userconfigs/OMEN}:\\ 
+
+\vspace{1mm}
+\noindent 
+\textbf{1) No P-cycle in OMEN-SED:}\\
+Here the P-cyle in the sediments is completely ignored, i.e. all organic P reaching the ocean floor is instantaneously remineralized and given back to the lowest ocean grid-cell. This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgoff.SPIN 20000
+\end{verbatim}
+\vspace{-1mm}
+
+\vspace{1mm}
+\noindent 
+\textbf{2) Organic P burial equals organic C burial:}\\
+This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgfix.SPIN 20000
+\end{verbatim}
+\vspace{-1mm}
+
+
+\vspace{1mm}
+\noindent 
+\textbf{3) Redox dependent P-regeneration}\\
+This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgredox 20000
+\end{verbatim}
+\vspace{-1mm}
+
+\subsubsection*{OMEN-SED model output}
+As for CaCO$_3$, 2D sediment properties can be found in  the \textsf{\footnotesize sedgem } sub-directory of your experiment directory  in a netCDF file called \textsf{\footnotesize fields\_sedgem\_2d.nc}. 
+The 2D distribution of wt\% organic matter is saved for two depth levels in the sediment column. First \textsf{\footnotesize OMEN\_wtpct\_top} saves the mean weight fraction of OM in the upper 5cm of the sediment layer. 
+Second \textsf{\footnotesize OMEN\_wtpct\_bottom} saves the mean weight fraction of OM at a sediment depth of 1m -- which is the total depth of the simulated sediment column in OMEN-SED and is assumed as lost to long-term burial. 
+
+The file \texttt{seddiag\_misc\_DATA\_GLOBAL.res} summarizes the mean global preservation flux of organic matter (here POC). Note, that in this file (when using OMEN-SED) 'POC rain' always equals 'Total POC preservation'. The actual value for 
+POC rain is saved in the corresponding \textbf{BIOGEM} summary file \texttt{biogem\_year\_*\_diag\_GLOBAL.res}.
+
+
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
 %----------------------------------------------------------------------------------------
