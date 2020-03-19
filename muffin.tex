@@ -9732,10 +9732,7 @@ bg_par_detballastcoeff_file
 \end{verbatim}\vspace{-2pt}
 (again, akin to the methodology for setting the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio})).
 
-Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does nto have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
-
-
-
+Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does not have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
 
 %------------------------------------------------
 
@@ -9793,6 +9790,7 @@ with \textsf{\footnotesize BEN} for the equivalent BENTHIC, and \textsf{\footnot
  
 %------------------------------------------------
 %
+\newpage
 \subsection*{Prescribe a time-varying history of radiocarbon production in the atmosphere}
 \vspace{1mm}
 
@@ -9821,7 +9819,8 @@ biogem_force_flux_atm_pCO2_sig.dat
 Now that \(^{14}\)C production is being specified explicitly by means of a \textit{forcing}, one can easily then implement a time-dependent change in \(^{14}\)C production.
 
 %------------------------------------------------
-%
+
+\newpage
 \subsubsection{Prescribe an injection of radiocarbon-dead DIC}
 \vspace{1mm}
 
@@ -9887,7 +9886,8 @@ Alternatively, the DIC release can be made over the entire ocean floor or simply
 \end{itemize}
 
 %------------------------------------------------
-%
+
+\newpage
 \subsubsection{Prescribe a spatial map of benthic tracer release}
 \vspace{1mm}
 
@@ -9993,6 +9993,7 @@ at the end of the \textit{user-config}.
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Run the sediments at higher resolution (as compared to the ocean grid)}\label{Run the sediments at higher resolution}
 
 By default (as set in the \textit{base-config} file in \textsf{\footnotesize \~{}/cgenie.muffin/genie-main/configs}) the \textbf{SEDGEM} sediment grid is configured at a resolution of \(36\times 36\) (and on an equal area grid), by:
@@ -10033,7 +10034,8 @@ sg_par_sedcore_save_mask_name="sedgem_save_mask.72x72"
 By default, the entire seafloor grid is considered as '\textit{deepsea}' and sedimentary diagenesis options are provided accordingly. In practice, because the simple diagenesis options available, such as for CaCO\(_{3}\) (e.g. \textit{Archer} [1991]; \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2003]) tend not to be applicable to shallower water and particularly high organic carbon delivery (especially in the case of CaCO\(_{3}\) diagenesis) environments, the deep-sea grid is restricted. This can be prescribed 'hard', by defining the sediment grid only at deeper depths and classifying shallowed ocean grid points as invalid (a value of \texttt{0.0}) in the SEDGEM depth definition file\footnote{Set by parameter \texttt{sg\_par\_sed\_topo\_D\_name} that must point to a file in \texttt{cgenie.muffin/genie-sedgem/data/input}.} (e.g. \texttt{worbe2.depth.36x36x0}8).
  Or, and more flexibly, the entire ocean grid can be defined as potentially valid (e.g. \texttt{worbe2.depth.36x36x08.ALL}) and SEDGEM directed to treat any grid points lying shallower than a specific depth as shallow water sediments. This depth cut-off is set via the parameter \texttt{sg\_par\_sed\_Dmax\_neritic} (in units of m below the ocean surface). A typical value is \texttt{176.0}\footnote{Note that the simple (esp. CaCO\(_{3}\) diagenesis schemes) arguably only applicable below depths of ca. 1000 m, although even this is complicated by varying patterns of productivity across the ocean.}, which for an 8-level configuration will exclude the shallowest ocean depth level from the deep-sea grid, and for a 16-level ocean will exclude the two shallowest ocean depth levels.
 
-Sediments that are not classed as 'deepsea', are automatically classed as 'mud', i.e. potentially detrital and organic carbon rich. Such sediment locations  currently have no option for carbonate burial associated with them. Instead, a limited range of extremely simple and crude assumptions regarding organic carbon preservation (and P regeneration) are provided.
+Sediments that are not classed as 'deepsea', are automatically classed as 'mud', i.e. potentially detrital and organic carbon rich. Such sediment locations  currently have no option for carbonate burial associated with them. Instead, a limited range of extremely simple and crude assumptions regarding organic carbon preservation (and P regeneration) are provided. 
+For a new, more mechanistic representation of organic carbon degradation and burial in marine sediments and associated biogeochemical benthic-pelagic fluxes see Section \ref{HOW-TO_OMEN-SED}.
 
 Locations at which  carbonate can be produced and preserved
 are classified
@@ -10357,6 +10359,192 @@ By default then:
         \item \texttt{gem\_yr} specifies a MAXIMUM duration for a GEM phase.
 \end{itemize}
 Values of \texttt{gem\_yr} much less than 100 are not advisable as you will not reestablish a new equilibrium gradient of tracers in the ocean in that time.
+
+%------------------------------------------------
+
+\newpage
+\subsection{... OMEN-SED}\label{HOW-TO_OMEN-SED}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\subsubsection*{Quick background\footnote{This section was written by Dominik H\"ulse. Any complaints/suggestions should be directed to him:\\ dominik.huelse@ucr.edu or dominik.huelse@gmx.de.}}
+
+In the original version of cGENIE, (particulate) organic matter (OM) reaching the bottom of the ocean is completely remineralized, instantaneously releasing dissolved carbon and nutrients (i.e. a reflective boundary approach). 
+Thus the cycles of OM and associated nutrients (PO$_4$) are closed. The remineralization of OM occurs either in the deepest ocean cell (if SEDGEM is not coupled) using the terminal electron acceptors (TEA) available or within the SEDGEM 
+module assuming all OM is respired using oxygen thus completely neglecting the characteristic redox zonation in marine sediments and its impacts on marine nutrient and carbon cycles. 
+As this reflective boundary approach does not simulate any OM-related burial fluxes it overestimates benthic recycling fluxes and does not allow for direct comparison of model output with the sedimentary record. 
+
+In order to overcome these limitations the new, one-dimensional, numerically efficient early diagenetic model \textbf{OMEN-SED} has been developed and was coupled to cGENIE (H\"ulse et al. [2018]). 
+OMEN-SED is the first analytical diagenetic model to explicitly describe OM cycling as well as associated dynamics of the most important TEAs (i.e. O$_2$ , NO$_3$, SO$_4$), related reduced substances (NH$_4$, H$_2$S), the full suite of 
+secondary-redox reactions, macronutrients (PO$_4$) and associated pore water quantities (ALK, DIC). Thus, OMEN-SED captures most of the features of a complex, numerical diagenetic model, however, its computational efficiency allows the 
+coupling to global Earth system models and therefore the investigation of coupled global biogeochemical dynamics over different timescales.
+
+%------------------------------------------------
+%
+\subsubsection*{Couple OMEN-SED to cGENIE}
+
+\textbf{\textit{base-config}}
+\vspace{1mm}
+
+\noindent As the new Organic Matter ENabled SEDiment model is a sub-module of \textbf{SEDGEM} and you might want to balance simulated burial fluxes with appropriate (or arbitrary) weathering fluxes using \textbf{ROKGEM} both modules need to be enabled. 
+Thus ensure that at the top of the \textit{base-config} file the following flags are set:
+\vspace{-1mm}\small\begin{verbatim}
+ma_flag_sedgem=.TRUE.
+ma_flag_rokgem=.TRUE.
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\noindent \textbf{\textit{user config}}
+\vspace{1mm}
+
+\noindent The default version of OMEN-SED is selected by setting:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_Corgopt = 'huelse2016'
+\end{verbatim}\vspace{-1mm}
+Because the nitrogen cycle is not modeled explicitly in the current version of \textbf{BIOGEM} alkalinity (ALK) is directly linked to uptake and remineralization of PO$_4$ using the standard 16:1 N:P ratio (compare Ridgwell et al. [2007]). 
+Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now also tie ALK in \textbf{BIOGEM} to POC by setting the following namelist flag:
+\vspace{-1mm}\begin{verbatim}
+bg_ctrl_bio_red_ALKwithPOC=.true.
+\end{verbatim}\vspace{-1mm}
+In the following experiments we assume the simplest scenario and focus on OM burial alone, i.e. neglecting any CaCO$_3$ burial (hence also no CaCO$_3$ weathering rate). Therefore, respective CaCO$_3$-diagenesis options are set to \textit{NONE} and \textit{.false.} and weathering fluxes are specified as 0.0 (an alternative closed-system setup without \textbf{ROKGEM} also exists and will be described at a later stage). 
+As we now employ OMEN-SED to calculate benthic recycling and burial fluxes an \textit{open system} must be specified in the \textit{user config}:
+\vspace{-1mm}\begin{verbatim}
+# sediment diagenesis options
+sg_par_sed_diagen_CaCO3opt="NONE"
+sg_ctrl_sed_bioturb=.false.
+sg_ctrl_sed_bioturb_Archer=.false.
+...
+# --- WEATHERING -----------------------------------------------
+#
+# set an 'OPEN' system
+bg_ctrl_force_sed_closedsystem=.false.
+# set total weathering rate
+rg_par_weather_CaCO3=0.0
+# set bulk weathering isotopic composition
+rg_par_weather_CaCO3_d13C=0.0
+\end{verbatim}\vspace{-1mm}
+Atmospheric pCO$_2$ and associated \(\delta^{13}C\) is restored by specifying a forcing file and values (i.e. setting  \texttt{bg\_par\_forcing\_name}, \texttt{bg\_par\_atm\_force\_scale\_val\_3} and \texttt{bg\_par\_atm\_force\_scale\_val\_4}. 
+As we do not model CaCO$_3$ preservation we have to apply a globally uniform nonbiogenic, noncarbonate detrital flux in order to simulate (somehow) meaningful OM weight percentages (OM wt\%) in the sediments. This is set by:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_fdet=0.180
+\end{verbatim}\vspace{-1mm}
+The prescribed flux of 0.18 g cm$^{-2}$ky$^{-1}$ represents a value characteristic of early Cenozoic open-ocean sediments [Zeebe\&Zachos, 2007]. (For the modern ocean (as in H\"ulse et al. [2018]) we ran experiments with prescribed fixed solid 
+fields of CaCO$_3$, opal and detritus to the sediments. These were regridded from observations.) 
+
+The most important parameters in OMEN-SED are the first-order degradation rate constants of the two simulated OM pools (comparable to BIOGEM a labile and a refractory pool is simulated). A considerable amount of effort has been expended to link these rate 
+constants for instance to sedimentation rate and various empirical parameterizations have been proposed of which some are implemented in OMEN-SED (e.g. Tromp et al. [1995], Boudreau [1997], Stolpovsky et al. [2015]. Also a temperature dependent 
+degradation scheme exists). However, here only the use of globally uniform degradation rate constants is described. By default the degradation rate constant for the refractory OM pool depends on the oxygenation of the overlying ocean waters 
+(i.e. a lower rate constant is specified for [O$_2$] < 5.0 $\mu$M). The degradation rate constant for the labile OM pool does not depend on oxygen concentration. The three degradation rate constant can be specified by setting:
+\vspace{-1mm}\begin{verbatim}
+# global OM degradation rate constants (1/yr)
+sg_par_sed_huelse2017_k1=0.0065
+sg_par_sed_huelse2017_k2=0.005
+# k2 under anoxic bottom water:
+sg_par_sed_huelse2017_k2_anoxic=1E-6
+\end{verbatim}\vspace{-1mm}
+where the values above represent the default degradation rate constants as used in in H\"ulse et al. [2019].
+
+%------------------------------------------------
+%
+\subsubsection*{Do something with the P-cycle}
+
+The default OMEN-SED configuration omits P dynamics and all organic phosphorus reaching the bottom of the ocean is instantaneously recycled and returned to the deepest ocean grid-cell as PO$_4$. 
+However, various options for P burial/regeneration are available. All options described below cause a decline in oceanic [PO$_4$] due to P-burial which needs to be restored via weathering. One option is to again setup a closed P-system by setting the following namelist flag:
+\vspace{-1mm}\begin{verbatim}
+bg_ctrl_force_sed_closed_P = .true.
+\end{verbatim}\vspace{-1mm}
+Here, the P-weathering flux equals P-burial and thus closes the P-cycle. A second option (relevant for transient simulations) is to define a weathering input of riverine dissolved P (in mol yr$^{-1}$, i.e. by specifying 
+\texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracP}). The second option will be described in more detail in the section on transient simulations at a later stage. 
+
+\vspace{1mm}
+\noindent 
+\textbf{1) P-cycle as in H\"ulse et al. [2018]:}\\
+OMEN-SED represents a redox-dependent P-cycle which accounts for P recycling through OM degradation and the formation and burial of Fe-bound P and authigenic Ca--P minerals. Note, that this representation is not able to represent enhanced P-regeneration under anoxia (i.e. lower than 'Redfield' C/P regeneration ratios -- for this see option 3) below). The P-cycle as described in H\"ulse et al. [2018] can be selected by changing the P-cycle 'flag' to true
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.true.
+\end{verbatim}\vspace{-1mm}
+
+\vspace{1mm}
+\noindent 
+\textbf{2) Organic P burial equals organic C burial}\\
+A simpler scheme is to assume that the same fraction of organic P is buried as organic carbon. This means in every grid cell the burial of organic P (Porg$_\mathrm{b}$) is calculated from the amount of buried organic C (Corg$_\mathrm{b}$) as 
+Porg$_\mathrm{b}$ = 1/106 $\times$ Corg$_\mathrm{b}$. This option can be selected by setting:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.false.
+sg_par_sed_huelse2017_sim_P_loss = .true.
+sg_par_sed_huelse2017_sim_P_loss_pres_fracC = .true.
+\end{verbatim}\vspace{-1mm}
+ 
+\vspace{1mm}
+\noindent 
+\textbf{3) Redox dependent P-regeneration}\\
+OMEN-SED furthermore provides a P-scheme that is able to simulate the positive feedback between productivity, bottom water anoxia and enhanced P-regeneration. In order to simulate the oxygen dependence of the C/P regeneration ratio we employ the 
+empirical function derived by Wallmann [2010]. This will be described in more detail at a later stage. This option can be selected by setting:
+\vspace{-2mm}\begin{verbatim}
+sg_par_sed_huelse2017_P_cycle=.false.
+sg_par_sed_huelse2017_sim_P_loss = .true.
+sg_par_sed_huelse2017_sim_P_regeneration = .true.
+\end{verbatim}\vspace{-2mm}
+
+%------------------------------------------------
+%
+\subsubsection*{Running transient simulations}
+Two step process:\\
+1) Run to steady-state with forced atmospheric concentrations (e.g. CO$_2$, O$_2$ and \(\delta^{13}C\))\\
+2) Diagnose organic carbon burial in seddiag\_misc\_DATA\_GLOBAL.res as total POC pres -- actually better: diagnose as the mean burial (in mol yr$^{-1}$ over the e.g. last 2000 years using the time-series files: 
+ \texttt{biogem\_series\_focnsed\_POC.res} - (\texttt{biogem\_series\_fsedocn\_DIC.res} - \texttt{biogem\_series\_fsedocn\_Ca.res})\\
+3) Set the weathering rates accordingly: \texttt{rg\_par\_weather\_CaSiO3=1.0} and \texttt{rg\_par\_weather\_CaSiO3\_fracC} (and \texttt{rg\_par\_weather\_CaSiO3\_fracP})\\
+This will be described in more detail at a later stage.
+ 
+%------------------------------------------------
+%
+\subsubsection*{Example config-files}
+This will be described in more detail at a later stage.\\
+An example base-config file has been created (\texttt{muffin.CBS.fkl\_pp01.BASES\_DH}) and is available in \texttt{genie-main/configs/}. It is the same as the respective fake world configuration only here a flat bottom ocean is used. The following 
+user-config files are available in \texttt{genie-userconfigs/OMEN}:\\ 
+
+\vspace{1mm}
+\noindent 
+\textbf{1) No P-cycle in OMEN-SED:}\\
+Here the P-cyle in the sediments is completely ignored, i.e. all organic P reaching the ocean floor is instantaneously remineralized and given back to the lowest ocean grid-cell. This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgoff.SPIN 20000
+\end{verbatim}
+\vspace{-1mm}
+
+\vspace{1mm}
+\noindent 
+\textbf{2) Organic P burial equals organic C burial:}\\
+This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgfix.SPIN 20000
+\end{verbatim}
+\vspace{-1mm}
+
+\vspace{1mm}
+\noindent 
+\textbf{3) Redox dependent P-regeneration}\\
+This can be executed for instance as:
+\vspace{-1mm}
+\begin{verbatim}
+$ ./runmuffin.sh muffin.CBS.fkl_pp01.BASES_DH  OMEN 
+muffin.CBS.fkl_pp01.BASES.OMEN_Porgredox 20000
+\end{verbatim}
+\vspace{-1mm}
+
+%------------------------------------------------
+%
+\subsubsection*{OMEN-SED model output}
+As for CaCO$_3$, 2D sediment properties can be found in  the \textsf{\footnotesize sedgem } sub-directory of your experiment directory  in a netCDF file called \textsf{\footnotesize fields\_sedgem\_2d.nc}. 
+The 2D distribution of wt\% organic matter is saved for two depth levels in the sediment column. First \textsf{\footnotesize OMEN\_wtpct\_top} saves the mean weight fraction of OM in the upper 5cm of the sediment layer. 
+Second \textsf{\footnotesize OMEN\_wtpct\_bottom} saves the mean weight fraction of OM at a sediment depth of 1m -- which is the total depth of the simulated sediment column in OMEN-SED and is assumed as lost to long-term burial. 
+
+The file \texttt{seddiag\_misc\_DATA\_GLOBAL.res} summarizes the mean global preservation flux of organic matter (here POC). Note, that in this file (when using OMEN-SED) 'POC rain' always equals 'Total POC preservation'. The actual value for 
+POC rain is saved in the corresponding \textbf{BIOGEM} summary file \texttt{biogem\_year\_*\_diag\_GLOBAL.res}.
 
 %------------------------------------------------
 
@@ -10820,20 +11008,11 @@ In addition, atmospheric -- \texttt{atm\_*} and biological export -- \texttt{bio
 
 \uline{Important}. A DOT is required at the end of each output variable line, which helps the algorithm distinguish different tracers.
 
+Note that because there is an ambiguity between atmosphere and ocean temperature, as they have the same name, when specifying any of atm, ocn, or sed tracers for saving, add '\texttt{atm}', '\texttt{ocn}', or '\texttt{sed}' to the string. Use underscores ('\texttt{\_}') to separate parts of the string. 
+For now, all '\texttt{sed}' tracers requested are assumed to be particulate fluxes. (Again, as before.)
 
 
-Note that because there is an ambiguity between atmosphere and ocean temperature, as
-they have 
-the same name, when specifying any of atm, ocn, or sed tracers for saving,
-add '\texttt{atm}', '\texttt{ocn}', 
-or '\texttt{sed}' to the string. Use underscores ('\texttt{\_}') to separate parts of the
-string. 
-For now, all '\texttt{sed}' tracers requested are assumed to be particulate fluxes.
-(Again, as before.)
-
-
-Also note that for saving carbonate chemistry anywhere in the ocean and at any
-time (not just associated with time slice saving), you need to specify that the carbonate system is re-solved frequently. The setting for this is:
+Also note that for saving carbonate chemistry anywhere in the ocean and at any time (not just associated with time slice saving), you need to specify that the carbonate system is re-solved frequently. The setting for this is:
 \begin{verbatim}
 bg_ctrl_carbchemupdate_full=.true.
 \end{verbatim}
@@ -10891,7 +11070,6 @@ with the the SW (shortwave) flux (\texttt{swflux}) being equivalent to the incid
 
 By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \texttt{bg\_par\_sig\_j\_S} a value of \texttt{1} (on account of the maximum grid size not being \textit{a priori} known).
 The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
-
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
