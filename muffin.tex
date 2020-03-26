@@ -9861,6 +9861,29 @@ with \textsf{\footnotesize BEN} for the equivalent BENTHIC, and \textsf{\footnot
 %------------------------------------------------
 %
 \newpage
+\subsection*{Add a \textit{second} salinity forcing}
+\vspace{1mm}
+
+Soooooooooo greedy! This really shouldn't be allowed. (But it is, hence the manual entry ...)
+
+Why would you even want do this? Well, you might want regions of salinity forcing to operate independent of each other. For instance, a pattern of salinity that provides an AMOC-controlling flux adjustment, together with a salinity forcing elsewhere that might vary in time, or simply to simplify the additional forcing rather than have to combine it within the same spatial pattern file. Or you might want 2 different patterns of flux adjustment that both vary in time and independently of each other. A practical situation would be to have 2 flux forcings -- one for the North Atlantic and one for the Southern Ocean (independently controlling northern vs. southern soured deep water).
+
+If you have already selected and configured a salinity flux forcing, then selecting (in the \textit{base-config}) the blue numerical dye tracer -- \texttt{ocn\_colb} (tracer number \(49\)) and configuring a flux \textit{forcing} for this, will automatically be interpreted by \textbf{muffin} as a 2nd and independent salinity \textit{forcing}. You configure the spatial pattern and units scaling of the blue salinity \textit{forcing} in \uline{exactly} the same way as for salinity. e.g. in the forcing file \textsf{\footnotesize configure\_forcings\_ocn.dat}, you would have:
+
+\vspace{-2mm}\small\begin{verbatim}
+-START-OF-DATA-
+  2  f  f  0.1  t  f  -1  01  01  01  '[salinity (PSU)]'
+ 49  f  f  0.1  t  f  -1  01  01  01  '[blue salinity (PSU)]'
+-END-OF-DATA-
+\end{verbatim}\normalsize\vspace{-2mm}
+
+The files \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_sig.dat} and \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_SUR.dat} can be simply copied and renamed with \textsf{\footnotesize colb} replacing \textsf{\footnotesize sal} in the filename (and then edited as required).
+
+Note that with the blue numerical tracer used for a second salinity forcing, if you want to also diagnose water mass age, you will have to use the (new) single-tracer approach that only requires the red numerical tracer.
+
+%------------------------------------------------
+%
+\newpage
 \subsection*{Prescribe a time-varying history of radiocarbon production in the atmosphere}
 \vspace{1mm}
 
@@ -9889,12 +9912,12 @@ biogem_force_flux_atm_pCO2_sig.dat
 Now that \(^{14}\)C production is being specified explicitly by means of a \textit{forcing}, one can easily then implement a time-dependent change in \(^{14}\)C production.
 
 %------------------------------------------------
-
+%
 \newpage
 \subsubsection{Prescribe an injection of radiocarbon-dead DIC}
 \vspace{1mm}
 
-First ... a \textit{base-config} with 14C tracers is needed, e.g.,:
+First ... a \textit{base-config} with \(^{14}C\) tracers is needed, e.g.,:
 \vspace{-2mm}\small\begin{verbatim}
 cgenie_eb_go_gs_ac_bg_itfclsd_16l_JH_ANTH
 \end{verbatim}\normalsize\vspace{-2mm}
@@ -9956,7 +9979,7 @@ Alternatively, the DIC release can be made over the entire ocean floor or simply
 \end{itemize}
 
 %------------------------------------------------
-
+%
 \newpage
 \subsubsection{Prescribe a spatial map of benthic tracer release}
 \vspace{1mm}
@@ -9993,6 +10016,7 @@ In the forcing configuration file, if the \texttt{COLUMN \#5} flag ('\texttt{sca
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Applying a geoengineering 'liming' flux to the ocean surface}
 
 \vspace{1mm}
