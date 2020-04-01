@@ -7821,9 +7821,8 @@ while the solubility and iron scavenging rates from from the \texttt{worjh2} cal
 \\The only particularly novel addition, is that of a fake and globally uniform dust field in order to supply dissolved iron to the ocean surface:
 \small\vspace{-1mm}\begin{verbatim}
 bg_par_forcing_name="pyyyyz.RpCO2_Rp13CO2.DUST"
-...
-bg_par_sed_force_scale_val_22=0.1660401E+14
 \end{verbatim}\vspace{-1mm}\normalsize
+Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the tiem-series file: \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
 
 \vspace{2mm}
 \item \textsf{\footnotesize USERCONFIG.PALEO.ECOGEM.PO4.SPIN}
