@@ -7165,19 +7165,19 @@ Depending on the specific configuration file settings (see later), \textbf{muffi
 \setcounter{enumi}{0}
 \vspace{1mm}
 \item \textbf{Configuration derivation based on re-gridding climate output from a GCM.}
-\\ The most common usage of \textbf{muffingen}, and enabling a new (typically paleo) configuration to be derived from the output of a GCM experiment. Currently options for utilizing 4 different GCMs are provided: HadCM3(l), FOAM, CESM, and ROCKE-3D.
+\\ The most common usage of \textbf{muffingen}, and enabling a new (typically paleo) configuration to be derived from the output of a GCM experiment. Currently options for utilizing 4 different GCMs are provided: HadCM3(l) (\texttt{'hadcm3'} or \texttt{'hadcm3l'}), FOAM (\texttt{'foam'}), CESM (\texttt{'cesm'}), and ROCKEE-3D (\texttt{'rockee'}).
 \vspace{1mm}
 \item \textbf{Derivation based on re-gridding a high resolution input topography.}
-\\ Land-sea mask and ocean bathymetry are re-gridded from a high(er) resolution ,mat (\textbf{MATLAB}) topography file. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
+\\ In this option -- \texttt{'mat'} -- a land-sea mask and ocean bathymetry are re-gridded from a high(er) resolution \textsf{\footnotesize .mat} (\textbf{MATLAB}) topography file. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \vspace{1mm}
 \item \textbf{Derivation based on an existing model topography '\texttt{.k1}' file (or simplified \texttt{.k2}) format variant).} 
-\\ Allowing a topography to be re-created, or adapted/altered, all directly from an existing model 'k1' file (and hence existing model configuration). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
+\\ This option -- \texttt{'k1'} or \texttt{'k2'} -- allows a topography to be re-created, or adapted/altered, all directly from an existing model 'k1' file (and hence existing model configuration). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \vspace{1mm}
 \item \textbf{Derivation based on a prescribed land-sea mask.}
-\\ This option will create a new configuration from any specified land-sea mask, whether 'real' or completely hypothetical. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
+\\ This option -- \texttt{'mask'} -- will create a new configuration from any specified land-sea mask, whether 'real' or completely hypothetical. Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \vspace{1mm}
 \item \textbf{From a blank (all ocean) initial template.}
-\\ Finally, this option enables a topography to be drawn by hand within \textbf{muffingen} and hence represents an interactive alternative to (4) (rather than editing a land-sea mask in a text editor). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
+\\ Finally, this option -- \texttt{''} -- enables a topography to be drawn by hand within \textbf{muffingen} and hence represents an interactive alternative to (4) (rather than editing a land-sea mask in a text editor). Zonal wind-stress and speed, and zonal planetary albedo, are prescribed.
 \end{enumerate} 
 
 \vspace{2mm}
@@ -7193,7 +7193,7 @@ Once you have successfully run \textbf{muffingen}, copy/transfer the entire  con
 
 %------------------------------------------------
 
-When \textbf{muffingen} is run, a configuration file with a specified filename\footnote{i.e. the single parameter passed to \textbf{muffingen} when it is invoked at the command line} is loaded. The configuration file is in a simple plain text (ASCII) format, but is given a \textsf{.m} extension, enabling the values of a number of controlling parameter values to be set directly in \textbf{MATLAB}.\footnote{Note that the parameter filename is passed as a string without the .m extension (which is implicitly assumed). An error message will be generated if the file does not exist or has the incorrect extension.} The configuration file parameters control facets of \textbf{muffingen} behavior such as the primary model of operation, input and output filenames, what types of configuration files you want to generate, as well as there being a number of parameters controlling the finer details of re-gridding and configuration file generation, including whether to enable user-input or not.
+When \textbf{muffingen} is run, a configuration file with a specified filename\footnote{i.e. the single parameter passed to \textbf{muffingen} when it is invoked at the command line.} is loaded. The configuration file is in a simple plain text (ASCII) format, but is given a \textsf{.m} extension, enabling the values of a number of controlling parameter values to be set directly in \textbf{MATLAB}.\footnote{Note that the parameter filename is passed as a string without the .m extension (which is implicitly assumed). An error message will be generated if the file does not exist or has the incorrect extension.} The configuration file parameters control facets of \textbf{muffingen} behavior such as the primary model of operation, input and output filenames, what types of configuration files you want to generate, as well as there being a number of parameters controlling the finer details of re-gridding and configuration file generation, including whether to enable user-input or not.
 
 The configuration files can be edited with the \textbf{MATLAB} editor (indeed, as a \textsf{\small .m} file, they are inherently a \textbf{MATLAB} format file), or any plain text (ASCII) editor. They must have a \textsf{\small .m} filename extension. 
 The configuration file is divided up into a series of sections of different parameter options. The main (most commonly used) parameters are summarized as follows (and are more fully described later):
@@ -7215,7 +7215,7 @@ The configuration file is divided up into a series of sections of different para
 
 \item [] \texttt{par\_gcm}
 \\Defines the format of the input. The string is blank for an interactive user-defined world, i.e. \texttt{par\_gcm=''}
-\\See Section 16.1.3.
+
 
 \item [] \texttt{par\_expid}
 \\Defines the name of the GCM experiment if a GCM input is selected, or the '\textsf{\small .k1}' or '\textsf{\small .dat}' files if those respective input formats are selected by the above option.
@@ -7274,6 +7274,7 @@ The configuration file is divided up into a series of sections of different para
 
 \item [] \texttt{par\_max\_D} [default: \texttt{5000.0}]
 \\Sets the maximum ocean (scale) depth (in m).
+\\ See subsequent sub-sub-section on 'Ocean depth (and maximum levels)' for further details and usage.
 \end{itemize}
 
 \vspace{2mm}
@@ -7301,22 +7302,22 @@ A series of example configurations are provided in the main \textbf{muffingen} d
 \begin{itemize}[noitemsep]
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template. User input (allowing continents and seafloor topography to be 'drawn') is automatically activated whether you want it or not!\footnote{Because it assumes that you are going to go on and draw something ...}\footnote{Edit the \textbf{muffingen} code to be able to turn off.}
+\item \textsf{\footnotesize EXAMPLE\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template. User input (allowing continents and seafloor topography to be 'drawn') is automatically activated whether you want it or not!\footnote{Because it assumes that you are going to go on and draw something ...}\(^{,}\)\footnote{Edit the \textbf{muffingen} code to be able to turn off.}
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_BLANKDEEP} -- As above, except with a deeper ocean -- 18 levels with the first 16 spanning 5000.0 m.\footnote{Refer to subsequence explanation re. the details fo these parameters.}
+\item \textsf{\footnotesize EXAMPLE\_BLANK\_deep} -- As above, except with a deeper ocean -- 18 levels with the first 16 spanning 5000.0 m.\footnote{Refer to subsequence explanation re. the details of these parameters.}
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_DAT\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). This starts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature). 
+\item \textsf{\footnotesize EXAMPLE\_MASK\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). This starts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature). 
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_DAT\_eqpasworld} -- As above, except with an equatorial (only) gateway.
+\item \textsf{\footnotesize EXAMPLE\_MASK\_eqpasworld} -- As above, except with an equatorial (only) gateway.
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_DAT\_ridgeworld} -- As above, except with no gateway.
+\item \textsf{\footnotesize EXAMPLE\_MASK\_ridgeworld} -- As above, except with no gateway.
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_DAT\_waterworld} -- As above, but with no barriers, i.e. a 'water world'.
+\item \textsf{\footnotesize EXAMPLE\_MASK\_waterworld} -- As above, but with no barriers, i.e. a 'water world'.
 
 \vspace{1mm}
 \item \textsf{\footnotesize EXAMPLE\_GCMFOAM\_modern} -- Takes the continental configuration and climate simulation output from a fully coupled GCM experiment (files in directory \footnotesize\textsf{GCMFOAM }\normalsize in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES }\normalsize) and derives full \textbf{muffin} model boundary conditions. User input (allowing continents and seafloor topography to be 'edited') is activated by default.
@@ -7334,7 +7335,17 @@ A series of example configurations are provided in the main \textbf{muffingen} d
 \item \textsf{\footnotesize EXAMPLE\_K1\_SEDGEMonly} -- Similar to \textsf{\footnotesize EXAMPLE\_K1\_permian} -- starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, but only generates the SEDGEM sediment model files (and nothing else).
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_MAT\_present\_bathymetry} -- Takes as input a high resolution topography in a \textbf{MATLAB} \textsf{\footnotesize .mat} file format. In this specific example, the file (subdirectory \texttt{INPUT.EXAMPLES}) inputted is \textsf{\footnotesize present\_bathymetry} (\textsf{\footnotesize .mat}) which describes at 1 degree resolution, the modern plate configurations plus seafloor topography (as negative height).\footnote{The specific grid resolution is defined, and the file loaded and the grid orientation assumed, in the \texttt{LOAD GRID (AXES) DATA} and \texttt{LOAD TOPO \& MASK DATA} sections. Different resolutions and orientations (and file formats) can be dealt with here by editing the code.}
+\item \textsf{\footnotesize EXAMPLE\_MAT\_present\_bathymetry} -- Takes as input a high resolution topography in a \textbf{MATLAB} \textsf{\footnotesize .mat} file format. In this specific example, the file (subdirectory \texttt{INPUT.EXAMPLES}) inputted is \textsf{\footnotesize present\_bathymetry} (\textsf{\footnotesize .mat}) which describes at \(1^{\circ}\) resolution, the modern plate configurations plus seafloor topography (as negative height).\footnote{The specific grid resolution is defined, and the file loaded and the grid orientation assumed, in the \texttt{LOAD GRID (AXES) DATA} and \texttt{LOAD TOPO \& MASK DATA} sections. Different resolutions and orientations (and file formats) can be dealt with here by editing the code.}
+\\If you want anything other than a \(1^{\circ}\) resolution (or a different longitude origin) then you need to edit the code: 
+\small\begin{verbatim}
+% NOTE: assume equal Dlon, Dlat grid (non equal area) and 1 degree
+%       also that the input grid starts at -180E
+% >>> EDIT ME >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+gi_lonce = [-180.0:1.0:180.0];
+gi_latce = [-90.0:1.0:90.0];
+% <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+\end{verbatim}\normalsize
+Non-rectilinear grids are not supported. If you have 3 poles in your grid ... too bad.
 
 \end{itemize}
 \vspace{2mm}
@@ -7350,14 +7361,16 @@ A series of conceptual ('fake') worlds have been generated and are provided for 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item GCM conceptual worlds
-\\These include 'water world', 'ridge world', 'drake world', etc. and associated variants, e.g. as published in fully coupled GCMs\footnote{REFS}. They are designed to test controls on large-scale ocean circulation and do conform to an Earth-appropriate ocean volume or total cratonic area.  
+\\These include 'water world', 'ridge world', 'drake world', etc. and associated variants, e.g. as published in fully coupled GCMs\footnote{Example of aquaplanets and drake worlds in the MITgcm with simplified atmosphere:
+\\Rose, B. E. J., Ferreira, D. \& Marshall, J. The role of oceans and sea ice in abrupt transitions between multiple climate states. J. Clim. 26, 2862–2879 (2013).
+\\Ferreira, D., Marshall, J. \& Rose, B. Climate determinism revisited: Multiple equilibria in a complex climate model. J. Clim. 24, 992–1012 (2011).}. They are designed to test controls on large-scale ocean circulation and do conform to an Earth-appropriate ocean volume or total cratonic area.  
 \vspace{1mm}
 \item Idealized-continent worlds
 \\These involve idealized super-continental configurations but aim to retain modern ocean volume and total cratonic area characteristics.
 \end{enumerate}
 \vspace{1mm}
 
-Both \textsf{\footnotesize genie-paleo} configuration file sets (sub-directories), and example \textit{base-configs} are provided as part of the muffin code base. The details of these two series of fake worlds are as follows. Remember that the \textsf{\footnotesize .m} file configurations that create each of the fake world configurations are saved in the respective \(genie-paleo\) sub-directory, and hence both the specific details of how the world was created are available, as well as the ability to exactly recreate the world. 
+Both \textsf{\footnotesize genie-paleo} configuration file sets (sub-directories), and example \textit{base-configs} are provided as part of the muffin code base. The details of these two series of fake worlds are as follows. Remember that the \textsf{\footnotesize .m} file configurations that create each of the fake world configurations are saved in the respective \textsf{\footnotesize genie-paleo} sub-directory, and hence both the specific details of how the world was created are available, as well as the ability to exactly recreate the world. 
 
 %------------------------------------------------
 %
@@ -7438,7 +7451,7 @@ All the oceans are ca. \(3500 m\) deep, i.e. truncated at ocean level \(3\), in 
 
 Provided \textit{base-configs} follow the same naming convention and have full filenames of the form: \textsf{\footnotesize muffin.CB.\(\ast\ast\ast\ast\ast\ast\ast\ast\).BASES.config}, where \(\ast\ast\ast\ast\ast\ast\ast\ast\) is the 8-character fake world 'k1' configuration name (see above). A basic set of tracers is provided (\textsf{\footnotesize BASES}).
 
-Other than the rate at which the shelves step down\footnote{(and that the earlier generation was for a pole-to-pole super-continent only)}, the only other difference between the 2 generation of worlds, is in the applied zonal wind field strength. In the earlier fake world series, the 'zonal wind-stress generation option' (\texttt{par\_tauopt}) was \texttt{0}. This attempts to automatically determine the presence of high latitude ocean gateways and if they exist, apply a stronger zonal wind field in that hemisphere (otherwise, a wind stress appropriate for a modern northern-hemisphere configuration with no zonal gateway is applied). To reduce the number of boundary conditions that change and co-vary between different fake worlds, in the second generation of fake worlds, an intermediate strength zonal wind field is applied to all, regardless of the presence of absence of high latitude circumpolar ocean gateways. This is  'zonal wind-stress generation option' \texttt{3}. Note that for the same resolution, wind-fields can be substituted/replaced, and using the saved \textsf{\footnotesize .m} configuration file, worlds can be re-generated with different wind-stress options if desired.
+Other than the rate at which the shelves step down\footnote{(and that the earlier generation was for a pole-to-pole super-continent only)}, the only other difference between the 2 generations of worlds, is in the applied zonal wind field strength. In the earlier fake world series, the 'zonal wind-stress generation option' (\texttt{par\_tauopt}) was \texttt{0}. This attempts to automatically determine the presence of high latitude ocean gateways and if they exist, apply a stronger zonal wind field in that hemisphere (otherwise, a wind stress appropriate for a modern northern-hemisphere configuration with no zonal gateway is applied). To reduce the number of boundary conditions that change and co-vary between different fake worlds, in the second generation of fake worlds, an intermediate strength zonal wind field is applied to all, regardless of the presence of absence of high latitude circumpolar ocean gateways. This is  'zonal wind-stress generation option' \texttt{3}. Note that for the same resolution, wind-fields can be substituted/replaced, and using the saved \textsf{\footnotesize .m} configuration file, worlds can be re-generated with different wind-stress options if desired.
 
 %------------------------------------------------
 %
@@ -7470,7 +7483,7 @@ Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} fun
 
 Templates are provided and more detailed instructions follow. However, note that if you have similar \textit{base-config} and \textit{user-config} files already, then you can simply adapt these. Another option is to utilize \textit{base-config} and \textit{user-config} files associated with any of the published experiments listed in \textsf{\footnotesize genie-userconfigs/MS}, or any of the described \textsf{\footnotesize EXAMPLE.*} example configurations.
 
-Note that steps 1c, 1d, and 2 are not independent of each other and need to be consistent -- e.g. if you define Fe co-limitation of biological productivity in step 2, you need to have selected the appropriate tracers in step 1c. And if you specific biological productivity calculated by \textbf{ECOGEM} in step 2, you need to have selected the \textbf{ECOGEM} module in step 1d.
+Note that steps 1c, 1d, and 2 are not independent of each other and need to be consistent -- e.g. if you define Fe co-limitation of biological productivity in step 2, you need to have selected the appropriate tracers in step 1c. And if you specify biological productivity calculated by \textbf{ECOGEM} in step 2, you need to have selected the \textbf{ECOGEM} module in step 1d.
 
 Finally ... 
 \begin{enumerate}[noitemsep]
@@ -7483,9 +7496,10 @@ Finally ...
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{1a. Choosing a template \textit{base-config}}
 
-If you do not want to adapt an existing \textit{base-config} (see suggestions above) or want to start 'fresh', a a pair of alterative template files are provided with \textbf{muffingen} (copy and rename the file, and then edit). The template files are missing the definitions of the world settings and tracers, which will be rectified in steps 1b and 1c, respectively. They also only specify a basic set of science modules (addressed in step 1d). Otherwise, they differ only in the tunable physics parameter values, under the heading:
+If you do not want to adapt an existing \textit{base-config} (see suggestions above) or want to start 'fresh', a pair of alterative template files are provided with \textbf{muffingen} (copy and rename the file, and then edit). The template files are missing the definitions of the world settings and tracers, which will be rectified in steps 1b and 1c, respectively. They also only specify a basic set of science modules (addressed in step 1d). Otherwise, they differ only in the tunable physics parameter values, under the heading:
 
 \footnotesize\vspace{-2pt}\begin{verbatim}
 # *******************************************************************
@@ -7500,11 +7514,13 @@ The files are:
 \item \textsf{\small BASECONFIG.08lvl.config}
 \vspace{1mm}
 \\This is based on the physics calibration as used in e.g. \textit{Ridgwell et al.} [2007] and \textit{Ridgwell and Hargreaves} [2007] with the parameters tuned for an 8-level ocean modern world (specifically: \texttt{worbe2}). For fake and paleo worlds with an 8-level ocean, this is the recommended template.\footnote{If you want \uline{exactly} the same physics as per e.g. \textit{Ridgwell et al.} [2007];  \textit{Ridgwell and Hargreaves} [2007] , use: \linebreak\textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worbe2.BASES.config} as a template.}
-\\The differences are:
-\pagebreak
+
+\pagebreak 
+
+The differences are:
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item The ocean starts warmer (\(5^{\circ}C\))\footnote{These parameters could potentially be increased further, to sat (\(10^{\circ}C\)).} that the default (\(0^{\circ}C\)). This helps the ocean circulation come to an equilibrium state more rapidly, particularly for greenhouse climates:
+\item The ocean starts warmer (\(5^{\circ}C\))\footnote{These parameters could potentially be increased further (to say ...  \(10^{\circ}C\)).} than the default (\(0^{\circ}C\)). This helps the ocean circulation come to an equilibrium state more rapidly, particularly for greenhouse climates:
 \small\vspace{-2pt}\begin{verbatim}
 # temp0 -- start with a warm ocean
 go_10=5.0
@@ -7549,7 +7565,6 @@ In all modern and 'realistic' paleo configurations, isopycnal/diapycnal mixing i
 \end{itemize}
 \vspace{1mm}
 
-\pagebreak
 \vspace{1mm}
 \item \textsf{\small BASECONFIG.16lvl.config}
 \vspace{1mm}
@@ -7589,6 +7604,7 @@ Finally, it should be noted that compared to the \textit{Cao et al.} [2009] conf
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{1b. Defining your 'world' in the \textit{base-config}}
 
 You are now going to copy-paste in the block of parameters that defines the \textbf{muffingen}-generated world.
@@ -7607,9 +7623,9 @@ In the template \textit{base-config} there is a highlighted (\(<<<\;\;\;\;\;>>>\
 Copy and paste the contents of the \textbf{muffingen} output file\footnote{In the filename, \texttt{yymmdd} is the date of the configuration creation.}: \textsf{\footnotesize config\_yymmdd.txt}
 into the template file where indicated -- immediately above, immediately below, or simply replacing the entire \(<<<\;\;\;\;\;>>>\) line.
 
-
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{1c. Defining tracers in the \textit{base-config}}
 
 As per for defining the specific world, there is an explicit section of the template \textit{base-config} that needs to be edited: 
@@ -7654,7 +7670,7 @@ GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
 \vspace{1mm}
 \item \texttt{\# list biogeochemical tracer initial values}
 \\Then, if you wish for any of the gaseous and dissolved (there is no initialization option for particulate/solid tracers) not to be initialized at zero, list their initial values.
-\\Units of gas partial pressure are \(atmopsheres \;(atm)\). Units of dissolved tracers in the ocean are \(mol\:kg^{-1}\).
+\\Units of gas partial pressure are \(atmospheres \;(atm)\). Units of dissolved tracers in the ocean are \(mol\:kg^{-1}\).
 \\Note that if you employ a \textit{re-start}, then these values are over-written.
 \end{enumerate}
 \vspace{1mm}
@@ -7664,13 +7680,13 @@ A series of template tracer lists, taken from published configurations, are also
 \begin{itemize}[noitemsep]
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.ABIOTIC.txt}
+\item \textsf{\small TRACERCONFIG.ABIOTIC.txt}
 \vspace{1mm}
 \\This is rather trivially ... the same as in the \textit{base-config} templates and defines an ocean (and atmosphere) with no biogeochemical tracers, just T and S in the ocean.
 \\You might use this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean (see HOW-TO on diagnosing how the model works).
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.Ridgwelletal.2007.txt}
+\item \textsf{\small TRACERCONFIG.Ridgwelletal.2007.txt}
 \vspace{1mm}
 \\This is the set of tracers used in \textit{Ridgwell et al.} [2007] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools, and the capability for accounting for sulphate-reduction with dissolved \(O_{2}\) is depleted. Alternative (non-modern) \(Mg/Ca\) ratios are also allowed for.
 \\This is one of the simplest but most versatile tracer sets, particularly for paleo, when simulating \(^{13}C\) may be important. It is usable with any \(PO_{4}\)-only based biological scheme, including \textbf{ECOGEM} with \(Fe\) cell quotas disabled (e.g. as in \textit{Wilson et al.} [2018]). Other past (published) applications include:
@@ -7681,20 +7697,20 @@ A series of template tracer lists, taken from published configurations, are also
 \end{itemize}
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.Caoetal.2009.txt}
+\item \textsf{\small TRACERCONFIG.Caoetal.2009.txt}
 \vspace{1mm}
 \\This is the set of tracers used in \textit{Cao et al.} [2009] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools. \\Unlike \textsf{\footnotesize TRACERCONFIG.Ridgwelletal.2007.txt}, there are no \(SO_{4}\) or \(H_{2}S\) tracers defined in the ocean and hence no potential for sulphate-reduction. Excess oxygen consumption then results in the creation and transport (and subsequent destruction) of negative concentrations of \(O_{2}\). Kinetically (and in terms of large-scale patterns of oxygenation), this is very similar to creating and then re-oxidizing hydrogen sulphide -- see Meyer et al. [2016].
 \\This set of tracers also includes radiocarbon \(^{14}C\) in all the carbon pools, for diagnosing ocean circulation (and water mass ages). Additionally, both \(CFC-11\) and \(CFC-12\) are included for tracing deep-water formation. See \textit{Cao et al.} [2009] for how these tracers are used.
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.Odalenetal.2019.txt}
+\item \textsf{\small TRACERCONFIG.Odalenetal.2019.txt}
 \vspace{1mm}
 \\This is the set of tracers used in \textit{Odalen et al.} [2019] and defines a biological pump with both \(PO_{4}\) and \(Fe\) co-limitation. There are no \(SO_{4}\) or \(H_{2}S\) tracers defined in the ocean and hence no potential for sulphate-reduction, but \(^{13}C\) is included in all the carbon pools.
 \\This set of tracers includes a variety of numerical/color tracers for diagnosing pre-formed properties -- here of \(DIC\), \(ALK\), \(O_{2}\), \(PO_{4}\), and \(\delta^{13}C\) (see: 'diagnose how the model works' HOW-TO).
-\\The iron cycle is the original configuration, where 3 sperate tracers are included: \(Fe\) (free dissolved iron), \(L\) (free ligands), and \(FeL\) (iron bound to ligands). Because the equilibrium between these tracers is re-solved every time-step (and used to determine the \(Fe\) concentration for scavenging), there is redundancy, and in practice, only 2 tracers are needed. Subsequent iron cycle scheme hence use only 2 tracers (e.g. see: \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}). The 3-tracer scheme was also used in \textit{Tagliabue et al.} [2016].
+\\The iron cycle is the original configuration, where 3 separate tracers are included: \(Fe\) (free dissolved iron), \(L\) (free ligands), and \(FeL\) (iron bound to ligands). Because the equilibrium between these tracers is re-solved every time-step (and used to determine the \(Fe\) concentration for scavenging), there is redundancy, and in practice, only 2 tracers are needed. Subsequent iron cycle scheme hence use only 2 tracers (e.g. see: \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}). The 3-tracer scheme was also used in \textit{Tagliabue et al.} [2016].
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}
+\item \textsf{\small TRACERCONFIG.Wardetal.2018.txt}
 \vspace{1mm}
 \\This is the set of tracers used in \textit{Ward et al.} [2018] and defines a biological pump with both \(PO_{4}\) and \(Fe\) co-limitation of biological productivity (in \textbf{ECOGEM}). \(SO_{4}\) or \(H_{2}S\) tracers as well as \(^{13}C\) are included. There are no circulation diagnostic and/or numerical/color tracers.
 \\The configuration of the marine iron cycle differs from that of \textit{Odalen et al.} [2019] and \textit{Tagliabue et al.} [2016] in that only two tracers are now explicitly represented and transported in the ocean -- \(TDFe\) (total dissolved iron, including iron bound to ligands) and \(TL\) -- total dissolved ligand concentration (both free and bound to iron). At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
@@ -7703,6 +7719,7 @@ A series of template tracer lists, taken from published configurations, are also
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{1d. Enabling science modules in the \textit{base-config}}
 
 The final step in configuring your \textit{base-config} file, is to ensure that all the science modules you wish to include are included (and those you do not want, are not). The template base-config files specify the basic/simply climate system combination of \textbf{GOLDSTEIN} ocean circulation model, \textbf{GOLDSTEIN} sea-ice model, and the \textbf{EMBM} atmospheric model. In addition, the atmospheric geochemistry module (\textbf{ATCHEM}) and the ocean biogeochemsitry module (\textbf{BIOGEM}) are selected. These settings look like:
@@ -7725,45 +7742,109 @@ ma_flag_ecogem=.FALSE.
 # *******************************************************************
 \end{verbatim}\vspace{-2pt}\normalsize
 
-\noindent Note that \textbf{ATCHEM} and \textbf{BIOGEM} have to be selected together, as do \textbf{SEDGEM} and \textbf{ROKGEM}. \textbf{ECOGEM} is a replacement for the implicit biological export scheme in \textbf{BIOGEM} and hence requires \textbf{BIOGEM} to be selected (and hence also \textbf{ATCHEM}).
+\noindent Note that \textbf{ATCHEM} and \textbf{BIOGEM} have to be selected together, as do \textbf{SEDGEM} and \textbf{ROKGEM} (if you want an 'open system because \textbf{ROKGEM} provides the weathering input). \textbf{ECOGEM} is a replacement for the implicit biological export scheme in \textbf{BIOGEM} and hence requires \textbf{BIOGEM} to be selected (and hence also \textbf{ATCHEM}).
+
+\uline{Remember} -- if you want the ECOGEM marine ecosytem model, to set \texttt{ma\_flag\_ecogem=.TRUE.}
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{2. Choosing a template \textit{user-config}}
 
-The final file creation step is for/of a \textit{user-config} file. once again -- you could take a published configuration from one of the \textsf{\footnotesize genie-userconfigs/MS} sub-directories or an EXAMPLE, copy and rename it and then edit in any changes you need. 
+The final file creation step is for/of a \textit{user-config} file. Once again -- you could take a published configuration from one of the \textsf{\footnotesize genie-userconfigs/MS} sub-directories or an EXAMPLE, copy and rename it and then edit in any changes you need. 
 
 A series of template \textit{user-config} files, some directly derived from published configurations (esp. for the MODERN \textit{user-configs}), are also provided as part of the \textbf{muffingen} release. Where alternative parameter choices exist in the \textit{user-config}, these are highlighted and commented out (\#\#\#).
 
-The template \textit{user-configs} are:
+Also in the MODERN template \textit{user-configs}, are some suggestions to parameter changes that align the MODERN \textit{user-configs} with the corresponding PALEO \textit{user-configs} (where a correspondence exists). These suggested alternative parameter choices are also included commented out (\#\#\#) and are:
+
+\begin{itemize}[leftmargin=0.6in]
+\vspace{1mm}
+\item[--] Under \texttt{*** REMINERALIZATION ***}:
+\small\vspace{-1mm}\begin{verbatim}
+#### set 'instantaneous' water column remineralziation
+###bg_par_bio_remin_sinkingrate_physical=9.9E9
+###bg_par_bio_remin_sinkingrate_reaction=125.0
+\end{verbatim}\vspace{-1mm}\normalsize
+which enables instantaneous water-column remineralization of POM -- see \linebreak \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN} for a full description.
+\vspace{1mm}
+\item[--] Under \texttt{*** MISC ***}:
+\small\vspace{-1mm}\begin{verbatim}
+#### maximum time-scale to geochemical reaction completion (days)
+###bg_par_bio_geochem_tau=90.0
+#### extend solubility and geochem constant T range (leave S range as default)
+###gm_par_geochem_Tmin  = -2.0
+###gm_par_geochem_Tmax  = 45.0
+###gm_par_carbchem_Tmin = -2.0
+###gm_par_carbchem_Tmax = 45.0
+\end{verbatim}\vspace{-1mm}\normalsize
+The first of these imposes a maximum reactant uptake time-scale. The second extends the temperature limits imposed on gas solubility and carbonate chemistry dissociation parameters. See: \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN} for a full description.
+\end{itemize}
+
+\vspace{1mm}
+In  all the PALEO templates, a series of recommendations are made that differ from some of the defaults in the MODERN template \textit{user-configs}. These include changes to:
+\begin{itemize}[leftmargin=0.6in]
+\item[1.] biological scheme
+\item[2.] inorganic matter export ratios
+\item[3.] water column remineralization
+\item[4.] reactant consumption limitation
+\item[5.] extended temperature ranges of solubility and geochemistry constants
+\end{itemize}
+These are all described in detail for \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN}.
+\\\noindent As mentioned above -- the same/similar settings also appear in the MODERN templates (but commented out) should one which to align all the model assumptions across model and paleo applications.
+
+\vspace{2mm}
+
+The template \textit{user-configs} in full, are:
 
 \begin{itemize}[noitemsep]
 
 \vspace{2mm}
-\item \textsf{\footnotesize TRACERCONFIG.ABIOTIC.TRACER.SPIN}
+\item \textsf{\small USERCONFIG.ABIOTIC.TRACER.SPIN}
 \vspace{1mm}
-\\This is rather trivially ... the same as in the \textit{base-config} templates and defines an ocean (and atmosphere) with no biogeochemical tracers, just T and S in the ocean.
-\\You might use this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean (see HOW-TO on diagnosing how the model works).
+\\This is as very basic template for an ocean (and atmosphere) with no carbon cycle.
+\\You might use or adapt this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean\footnote{If so, un-comment the 'optional' parameter setting.} (see HOW-TO on diagnosing how the model works).\\While the template \textit{user-config} could be used with any degree of complexity of tracers, it is designed for use with \textsf{\footnotesize TRACERCONFIG.ABIOTIC.txt}, with or without the 3rd tracer in the \textit{base-config} needed for diagnosing ventilation age: \texttt{gm\_ocn\_select\_4=.true.}
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.MODERN.BIOGEM.PO4.SPIN}
+\item \textsf{\small USERCONFIG.MODERN.BIOGEM.PO4.SPIN}
 \vspace{1mm}
-\\This provides the \textit{user-config} parameter settings for the pre-industrial \textit{spin-up} experiment described in \textit{Cao et al.} [2009], as well as, commented-out, the settings for the configuration of \textit{Ridgwell et al.} [2007]. (The differences in parameters primarily relate to the two difference vertical resolutions and the calibrations performed on them.) Refer to the EXAMPLES for e.g. the parameter changes needed to the \textit{Cao et al.} [2009] historical transient experiment. 
+\\This provides the \textit{user-config} parameter settings for the pre-industrial \textit{spin-up} experiment described in \textit{Cao et al.} [2009], as well as, commented-out, the settings for the configuration of \textit{Ridgwell et al.} [2007]. (The differences in parameters primarily relate to the two difference vertical resolutions and the calibrations performed on them.) Refer to the EXAMPLES for e.g. the parameter changes needed to the \textit{Cao et al.} [2009] historical transient experiment.
+\\Suitable template tracer sets include: \textsf{\footnotesize TRACERCONFIG.Ridgwelletal.2007.txt} and \linebreak \textsf{\footnotesize TRACERCONFIG.Caoetal.2009.txt}, depending on whether you intend to make use of the additional diagnostic ocean circulation tracers or not.
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.MODERN.BIOGEM.PO4Fe.SPIN}
+\item \textsf{\small USERCONFIG.MODERN.BIOGEM.PO4Fe.SPIN}
 \vspace{1mm}
 \\This provides the \textit{user-config} parameter settings for a modern (pre-industrial) marine iron cycle (biological productivity limited by both \(PO_{4}\) and \(Fe\)). It is based on a configuration used by \textit{Odalen et al.} [2019] as well as in \textit{Tagliabue et al.} [2016] and was calibrated for the \texttt{worjh2} world configuration. An alternative set of biological uptake and \(Fe\) cycle parameters are provided (commented out) which are also in use [unpublished work] and was calibrated for the \texttt{worlg4} world configuration.
+\\Suitable template tracer sets include: \textsf{\footnotesize TRACERCONFIG.Odalenetal.2019.txt} and \linebreak \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}, depending on the \(Fe\) tracer scheme selected.
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.MODERN.ECOGEM.PO4Fe.SPIN}
+\item \textsf{\small USERCONFIG.MODERN.ECOGEM.PO4Fe.SPIN}
 \vspace{1mm}
-\\This is the \textit{user-config} for the modern \textbf{ECOGEM} experiment following \textit{Ward et al.} [2018] and bar some comments and tidying up is the same as \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN} that can be found in \textsf{\footnotesize genie-userconfigs/MS/wardetal.2018}.
+\\This is basically, the \textit{user-config} for the modern \textbf{ECOGEM} experiment following \textit{Ward et al.} [2018] and bar some comments and tidying up is the same as \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN} that can be found in \textsf{\footnotesize genie-userconfigs/MS/wardetal.2018}.
+\\The only difference are a couple of optional suggestions that will align the configuration with the corresponding recommended paleo configurations (in addition to the POM remineralization and geochemical constant temperature range suggestions listed earlier):
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item Under \texttt{*** REMINERALIZATION ***}:
+\small\vspace{-1mm}\begin{verbatim}
+#### DOC lifetime (yrs) -- following Doney et al. [2006]
+###bg_par_bio_remin_DOMlifetime=0.5
+\end{verbatim}\vspace{-1mm}\normalsize
+which aligns the lifetime of DOM with the \textit{Doney et al.} [2006] value adopted in the original \textbf{BIOGEM} configuration.
+\vspace{1mm}
+\item Under \texttt{*** MISC ***}:
+\small\vspace{-1mm}\begin{verbatim}
+#### add seaice attenuation of PAR
+###eg_ctrl_PARseaicelimit=.true.
+#### relative partitioning of C into DOM
+###eg_par_beta_POCtoDOC=0.70
+\end{verbatim}\vspace{-1mm}\normalsize
+which firstly limits light available under sea-ice in proportion to the fractional sea-ice cover in that grid cell, and secondly, re-partitions carbon from POM to DOM and is tuned to produce an approximately Redfield ratio (\(106\)) of \(104.7:1\) in \(C:P\) of exported POM.
+\end{itemize}
+The intended corresponding template tracer is: \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}.
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN}
+\item \textsf{\small USERCONFIG.PALEO.BIOGEM.PO4.SPIN}
 \vspace{1mm}
-\\This is a recommended template \textit{user-config} for paleo applications. Several parameters have been changed or added compared to published paleo configurations (these recommendations need not be adopted):
+\\This is a recommended template \textit{user-config} for paleo applications. Several parameters have been changed or added compared to published paleo configurations (these recommendations need not be adopted and alternatives are given commended out in the file):
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item \textbf{biological scheme}
@@ -7777,9 +7858,25 @@ bg_par_bio_c0_PO4=0.10E-06
 \end{verbatim}\vspace{-1mm}\normalsize
 This differs from most of the published paleo applications in that it has a biological export scheme that is temperature-dependent and more responsive to changes in ocean \(PO_{4}\) inventory (a similar configuration was used by \textit{Meyer et al.} [2016]).
 \vspace{1mm}
+\item \textbf{inorganic matter export ratios}
+\\While it would be perfectly acceptable to utilize the default carbonate saturation-dependent scheme for the ratio of exported \(CaCO_{3}\) compared to \(POC\) (see Ridgwell et al. [2007, 2009]), published paleo implementations of \textbf{muffin} have tended to utilize a simple spatially uniform and invariant with time, \(CaCO_{3}:POC\) ratio. This is enacted via:
+\small\vspace{-1mm}\begin{verbatim}
+# fixed CaCO3:POC
+bg_opt_bio_CaCO3toPOCrainratio='FIXED'
+# underlying export CaCO3 as a proportion of particulate organic matter 
+bg_par_bio_red_POC_CaCO3=0.200
+\end{verbatim}\vspace{-1mm}\normalsize
+with the first parameter specifying a fixed and invariant ratio, and the second parameter specifying what the ratio actually is. As an alternative to the first parameter, one can set the power in the carbonate saturation parameterization, to zero, i.e.:
+\small\vspace{-1mm}\begin{verbatim}
+# exponent for modifier of CaCO3:POC export ratio
+bg_par_bio_red_POC_CaCO3_pP=0.0
+\end{verbatim}\vspace{-1mm}\normalsize
+The default/recommended paleo value of \(0.2\) derives from the model-data analysis of \textit{Panchuk et al.} [2008], and as such is both subject to the specific caveats of that study, and may not necessarily be appropriate for later in the Cenozoic (or earlier in the Mesozoic).
+\\For deeper time -- prior to ca. the mid Mesozoic -- the recommended parameter value is \(0.0\), on the basis that pelagic calcifiers had not yet evolved and the surface ocean export of biogenic \(CaCO_{3}\) is effectively zero -- e.g. see \textit{Ridgwell} [2005].
+\vspace{1mm}
 \item \textbf{water column remineralization}
-In the default and previously published (in all applications) remineralization scheme, particulate matter only sinks a finite distance each time-step. At the next time-step, it starts from the ocean layer it reaches and sinks further (determined by the default sinking rate of \(125\:ms^{-1}\))\footnote{It always has to travel at least 1 ocean layer downwards on each time-step -- more for faster sinking rates and/or thinner layers nearer the surface.)}. This can make it difficult to e.g. check flux mass balances because there is a lag between export and particulate matter reaching the sediment surface.
-\\Alternatively, a 'cleaner' approach is to instantaneously remineralize all particulate organic matter throughout the water column according to the remineralization profile and/or reaction rates. This is activated via \texttt{bg\_par\_bio\_remin\_sinkingrate\_physical} which is simply assigned a very 'large'\footnote{Sufficient that the deepest ocean model layer can be reached within a single time-step.} value for the sinking rate. At the same time, reaction rates (including scavenging) are calcuated as if the sinking rate was finite and equivalent to the value of \texttt{bg\_par\_bio\_remin\_sinkingrate\_reaction} (\(ms^{-1}\)). Hence:
+In the default and previously published (in all applications) remineralization scheme, particulate matter only sinks a finite distance each time-step. At the next time-step, it starts from the ocean layer it reaches and sinks further (determined by the default sinking rate of \(125\:m\:d^{-1}\))\footnote{It always has to travel at least 1 ocean layer downwards on each time-step -- more for faster sinking rates and/or thinner layers nearer the surface.)}. This can make it difficult to e.g. check flux mass balances because there is a lag between export and particulate matter reaching the sediment surface.
+\\Alternatively, a 'cleaner' approach is to instantaneously remineralize all particulate organic matter throughout the water column according to the remineralization profile and/or reaction rates. This is activated via \texttt{bg\_par\_bio\_remin\_sinkingrate\_physical} which is simply assigned a very 'large'\footnote{Sufficient that the deepest ocean model layer can be reached within a single time-step.} value for the sinking rate. At the same time, reaction rates (including scavenging) are calculated as if the sinking rate was finite and equivalent to the value of \texttt{bg\_par\_bio\_remin\_sinkingrate\_reaction} (\(m\:d^{-1}\)). Hence:
 \small\vspace{-1mm}\begin{verbatim}
 # set 'instantaneous' water column remineralziation
 bg_par_bio_remin_sinkingrate_physical=9.9E9
@@ -7794,38 +7891,53 @@ bg_par_bio_geochem_tau=90.0
 \end{verbatim}\vspace{-1mm}\normalsize
 By setting the value of \texttt{bg\_par\_bio\_geochem\_tau}\footnote{By default it is set to zero which is interpreted as allowing complete reactant consumption as per previously.}, the maximum consumption of any particular reactant by a single reaction is limited by an imposed lifetime (days). Here, the value is set to \(90\:d\).
 \vspace{1mm}
+\item \textbf{extended temperature ranges of solubility and geochemistry constants}
+\\As described in \textit{Ödalen et al.} [2018]: "The dissociation constants used in the cGENIE calculations of solubility for \(CO_{2}\) in seawater follow \textit{Mehrbach et al.} [1973], which are only defined for waters between \(2\) and \(35^{\circ}C\). Hence, the expression for \(CO_{2}\) solubility in the model is restricted so that all water below \(2^{\circ}C\) has the same \(CO_{2}\) solubility (similarly for all water above \(35^{\circ}C\))."
+\\The recommended parameter changes:
+\small\vspace{-1mm}\begin{verbatim}
+# extend solubility and geochem constant T range (leave S range as default)
+gm_par_geochem_Tmin  = -2.0
+gm_par_geochem_Tmax  = 45.0
+gm_par_carbchem_Tmin = -2.0
+gm_par_carbchem_Tmax = 45.0
+\end{verbatim}\vspace{-1mm}\normalsize
+extend the valid range to \(-2 - 45^{\circ}C\). Note that the valid salinity range is left unchanged.
 \end{enumerate}
+
+\vspace{1mm}
 Finally, it should be noted that the parameter settings for activating temperature-dependent remineralization (as per \textit{John et al.} [2014] and \textit{Crichton et al.} [2020]) are given (and commented out (\#\#\#)):
 \small\vspace{-1mm}\begin{verbatim}
-# *** Crichton et al. [2020] temeprature-dependent remin ************
+# *** Crichton et al. [2020] temperature-dependent remin ************
 ###bg_ctrl_bio_remin_POC_fixed=.false.
 ###bg_par_bio_remin_POC_K1=9.0E11
 ###bg_par_bio_remin_POC_Ea1=54000.0
 ###bg_par_bio_remin_POC_K2=1.0E14
 ###bg_par_bio_remin_POC_Ea2=80000.0
-###bg_par_bio_remin_POC_frac2=0.002
+###bg_par_bio_remin_POC_frac2=0.008
 \end{verbatim}\vspace{-1mm}\normalsize
 Note that in \textit{Crichton et al.} [2020], a different biological scheme is used, with a faster time-scale of nutrient uptake (but different light limitation) -- also given commented out in the \textit{user-config}\footnote{There is no strict necessity to use the alternative biological export scheme.}.
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4Fe.SPIN}
+\item \textsf{\small USERCONFIG.PALEO.BIOGEM.PO4Fe.SPIN}
 \vspace{1mm}
-\\This is very similar to \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN}, with the exception that it adds iron co-limitation of biological productivity and a marine iron cycle to the \(PO_{4}\)-only paleo settings, including the recommend changes to sinking and water column remineralziation, and reaction completion time-scales.
+\\This is very similar to \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4.SPIN}, with the exception that it adds iron co-limitation of biological productivity and a marine iron cycle to the \(PO_{4}\)-only paleo settings, including the recommend changes to sinking and water column remineralziation, reaction completion time-scales, and gas solubility.
 \\A simplified 2-tracer (\(TDFe\), \(TL\)) iron system is assumed:
 \small\vspace{-1mm}\begin{verbatim}
 # iron tracer scheme
 # NOTE: the base-config requires TFe and TL tracers
 bg_opt_geochem_Fe='hybrid'
 \end{verbatim}\vspace{-1mm}\normalsize
-while the solubility and iron scavenging rates from from the \texttt{worjh2} calibrated configuration (see: \textsf{\footnotesize USERCONFIG.MODERN.BIOGEM.PO4Fe.SPIN}).
+while the solubility and iron scavenging rates  come from from the \texttt{worjh2} calibrated configuration (see: \textsf{\footnotesize USERCONFIG.MODERN.BIOGEM.PO4Fe.SPIN}).
 \\The only particularly novel addition, is that of a fake and globally uniform dust field in order to supply dissolved iron to the ocean surface:
 \small\vspace{-1mm}\begin{verbatim}
 bg_par_forcing_name="pyyyyz.RpCO2_Rp13CO2.DUST"
 \end{verbatim}\vspace{-1mm}\normalsize
-Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the tiem-series file: \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
+This is configured to give the same total dust supply to the ocean surface as per in the dust field used in \textit{Ward et al.} [2018], but is supplied evenly across the global ocean surface.
+\\Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the time-series file: \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
+\\Also note that for a different total ocean area, the flux per \(m^{-2}\) will change as only the global total flux to the ocean surface is conserved.
 
 \vspace{2mm}
-\item \textsf{\footnotesize USERCONFIG.PALEO.ECOGEM.PO4.SPIN}
+\item \textsf{\small USERCONFIG.PALEO.ECOGEM.PO4.SPIN}
 \vspace{1mm}
 \\This is based on the configurations published by \textit{Wilson et al.} [2019], with iron quotas and usage disabled in \textbf{ECOGEM}.
 \\In its modern tuning, \textbf{ECOGEM} has a high carbon export and high \(C/P\) ratio. This leads to a less well oxygenated modern ocean than observations. In removing iron and configuring \(PO_{4}\) as the sole limiting nutrient for paleo experiments where the dust flux field is not \textit{a priori} known, the \(C/P\) ratio increases still further and with it, a further depletion of ocean oxygen. This situation is rectified for paleo applications (under '\texttt{recommended}') by:
@@ -7844,6 +7956,7 @@ and
 # relative partitioning of C into DOM
 eg_par_beta_POCtoDOC=0.70
 \end{verbatim}\vspace{-1mm}\normalsize
+The alternative calibrated value is given should \(Fe\) limitation is included. For dust and aeolian iron supply, simply follow the instructions and parameter values for \linebreak \textsf{\footnotesize USERCONFIG.PALEO.BIOGEM.PO4Fe.SPIN}.
 \end{enumerate}
 In addition:
 \begin{enumerate}[noitemsep]
@@ -7857,6 +7970,8 @@ eg_ctrl_PARseaicelimit=.true.
 \end{verbatim}\vspace{-1mm}\normalsize
 which reduces light proportionally to the local fractional sea-ice cover.
 \end{enumerate}
+Additional recommend changes for sinking and water column remineralziation, reaction completion time-scales, and gas solubility, are the same as per for the \textbf{BIOGEM} PALEO template \textit{user-configs}, described previously.
+
 \end{itemize}
 
 %------------------------------------------------
@@ -7868,7 +7983,7 @@ which reduces light proportionally to the local fractional sea-ice cover.
 \item First, ensure that you have remembered to copy/transfer the entire configuration subdirectory to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
 \vspace{1mm}
 \item Next, your new \textit{base-config} will need to be transferred to: \textsf{\footnotesize cgenie.muffin/genie-main/configs}.
-\\Ensure that it has a \textsf{\footnotesize .config} file extension. configuration subdirectory to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
+\\Ensure that it has a \textsf{\footnotesize .config} file extension. Configuration subdirectory to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
 \vspace{1mm}
 \item Your \textit{user-config} can go 'anywhere' ... ish. Putting it directly in \textsf{\footnotesize genie-userconfigs}\footnote{The directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then just \texttt{/}} may eventually make things over-crowded. Better is to create a sub-directory of \textsf{\footnotesize genie-userconfigs} (or even a sub-directory of this) and place it there.\footnote{If you place the \textit{user-config} file into a sub-directory  \textsf{\footnotesize myexperiments}, the directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then \texttt{myexperiments}}
 \vspace{1mm}
@@ -7901,9 +8016,9 @@ For non GCM-based configurations, no prior wind fields exist. \textbf{muffingen}
 \\\textbf{muffingen} chooses whether or not to apply a strong or weak zonal flow, and in which hemisphere, depending on whether it thinks a high-latitude gateway exists or not.
 \item \texttt{par\_tauopt=1;}
 \\A weak zonal flow is applied in both hemispheres (e.g. assuming land prevents the existence of an ocean-only circumpolar high latitude pathway  in both hemispheres).
-The presence of a pole-to-pole super-continent (or 'ridge-world') would be an example of when this option might be selected\footnote{But note that in the ridgeworld EXAMPLE provided, the automatic assignment option (\#3) is instead set to be consistent with the series of fake .dat based configurations.)}.
+The presence of a pole-to-pole super-continent (or 'ridge-world') would be an example of when this option might be selected\footnote{But note that in the ridgeworld EXAMPLE provided, the automatic assignment option (\#0) is instead set to be consistent with the series of fake .dat based configurations.)}.
 \item \texttt{par\_tauopt=2;}
-\\A strong zonal flow is applied in both hemispheres (e.g. assuming there is no land to prevent the existence of an ocean-only circumpolar high latitude pathway  in both hemispheres). The presence of an Equatorial-only super-continent (or 'water-world') would be an example of when this option might be selected\footnote{But note that in the waterworld EXAMPLE provided, the automatic assignment option (\#3) is instead set to be consistent with the series of fake .dat based configurations.)}.
+\\A strong zonal flow is applied in both hemispheres (e.g. assuming there is no land to prevent the existence of an ocean-only circumpolar high latitude pathway  in both hemispheres). The presence of an Equatorial-only super-continent (or 'water-world') would be an example of when this option might be selected\footnote{But note that in the waterworld EXAMPLE provided, the automatic assignment option (\#0) is instead set to be consistent with the series of fake .dat based configurations.)}.
 \item \texttt{par\_tauopt=3;}
 \\'grey' world -- an intermediate strength zonal flow is applied in both hemispheres. For hedging your bets of for use across a wide range of different continental configuration where you do not want to manually chose and prescribe either strong (\texttt{2}) or weak (\texttt{1}) and don't dare trust \textbf{muffingen} to make the choice for you (option \texttt{0}).
 \end{itemize} 
@@ -7915,7 +8030,7 @@ The different \textsf{\footnotesize EXAMPLE} (\textsf{\footnotesize .m}) configu
 
 \vspace{1mm}
 \begin{itemize}
-\item \textsf{\footnotesize EXAMPLE\_DAT\_drakeworld}, \textsf{\footnotesize EXAMPLE\_DAT\_eqpasworld}, etc.:
+\item \textsf{\footnotesize EXAMPLE\_MASK\_drakeworld}, \textsf{\footnotesize EXAMPLE\_MASK\_eqpasworld}, etc.:
 \\\texttt{par\_tauopt=0;}\footnote{Note that some of these could be pre-determined -- e.g. water-world could be set with option \#2 (strong zonal winds), and ridge-world with \#1 (weak zonal winds). For configurations with a circumpolar passage only in one hemisphere such as drake-world, option \#0 will configure this with a weak northern zonal wind field and a strong southern one.}
 \item \textsf{\footnotesize EXAMPLE\_K1\_permian}, \textsf{\footnotesize EXAMPLE\_K2\_supercontinent}:
 \\\texttt{par\_tauopt=1}
