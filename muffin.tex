@@ -10488,7 +10488,15 @@ If you have already selected and configured a salinity flux forcing, then select
 
 The files \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_sig.dat} and \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_SUR.dat} can be simply copied and renamed with \textsf{\footnotesize colb} replacing \textsf{\footnotesize sal} in the filename (and then edited as required).
 
-Note that with the blue numerical tracer used for a second salinity forcing, if you want to also diagnose water mass age, you will have to use the (new) single-tracer approach that only requires the red numerical tracer.
+Note that with the blue numerical tracer used for a second salinity forcing, if you want to also diagnose water mass age, you will have to use the (new) single-tracer approach that only requires the red numerical tracer. If so, set:
+\vspace{-2pt}\small\begin{verbatim}
+bg_ctrl_force_ocn_age1=.true.
+\end{verbatim}\normalsize\vspace{-2pt}
+\uline{Ensure} that you have:
+\vspace{-2pt}\small\begin{verbatim}
+bg_ctrl_force_ocn_age=.false.
+\end{verbatim}\normalsize\vspace{-2pt}
+or simply do not list that parameter in the \textit{user-config} file, otherwise the blue tracer will be used along-side the red one to create a combined age tracer (and no additional salinity input will occur) ...
 
 %------------------------------------------------
 %
