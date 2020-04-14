@@ -8985,63 +8985,8 @@ To exit the editing mode and back to the command mode, press the \textsf{Esc} (e
 %
 
 
-%------------------------------------------------
 
-\newpage
 
-%------------------------------------------------
-
-\section{HOW-TO ... Sun Grid Engine}\label{how-to-sge}
-\vspace{2mm}
-
-%------------------------------------------------
-
-For submitting jobs using \textbf{Sun Grid Engine} (\textbf{SGE}) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
-\vspace{-2pt}\begin{verbatim}
-$ qsub -S /bin/bash runmuffin.sh <options>
-\end{verbatim}\vspace{-2pt}
-Here: the \texttt{-S /bin/bash} part is to ensure that \textbf{SGE} uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
-
-Take care that the installed \textbf{FORTRAN} compiler can be seen by the cluster nodes. If not, the \textbf{muffin} executable must have already been built prior to submitting a job. The easiest way to do this is to run \textbf{muffin} interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
-
-Other useful submission options for \textbf{SGE}:
-
-\begin{itemize}[noitemsep]
-\setlength{\itemindent}{.2in}
-
-        \item To redirect the standard output stream:
-        \vspace{-2pt}\begin{verbatim}$ qsub -o genie_log ...\end{verbatim}
-        
-        \item To redirect the standard error stream:
-        \vspace{-2pt}\begin{verbatim}$ qsub -e genie_log ...\end{verbatim}
-        
-        \item To merge standard output and error streams into standard output:
-        \vspace{-2pt}\begin{verbatim}$ qsub -j y ...\end{verbatim}
-        
-        \item To specify particular resources, such as the nodes with 8 GB of RAM:
-        \vspace{-2pt}\begin{verbatim}$ qsub -l mem_total = 8.0G ...\end{verbatim}
-        
-        \item To decrease the priority of a job\footnote{The default priority is 0. A lower priority has a higher value ... !}:
-        \vspace{-2pt}\begin{verbatim}$ qsub -p 1 ...\end{verbatim}
-        
-        \item To submit a job from the current working directory:
-        \vspace{-2pt}\begin{verbatim}$ qsub –cwd\end{verbatim}
-        
-        \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
-        
-        \item A complete example for the \texttt{domino} UCR clusters would be:
-\small
-        \vspace{-2pt}\begin{verbatim}$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
-        cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
-\normalsize
-        which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
-        Note that to redirect output as per in this particular example, the directory \texttt{\~{}cgenie\_log} \textbf{MUST} be present. I have no idea what happens if it is not ... but it can't be good ;)
-        
-\end{itemize}
-
-\noindent You can check the status of the \textbf{SGE} job queue\footnote{Depending on the cluster setup, it may be possible to graphically check what is going on via the www.} with the command:
-\vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
-and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
 
 %------------------------------------------------
 
@@ -9692,6 +9637,80 @@ should save and finish, and you can find the outputs in \textsf{\small
   for a lonnnng time. But on the upside, no queuing required!
 
 \end{enumerate}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... run and submit muffins}
+\vspace{2mm}
+
+%------------------------------------------------
+
+\subsection*{\texttt{runmuffin.sh} options}
+\vspace{2mm}
+
+
+
+\vspace{20mm}
+
+
+%------------------------------------------------
+
+\subsection*{Submitting jobs with Grid Engine}\label{how-to-sge}
+\vspace{2mm}
+
+%------------------------------------------------
+
+For submitting jobs using \textbf{Sun Grid Engine} (\textbf{SGE}) on a cluster, a basic command\footnote{With a different queue management environment it may be necessary to place the call to \texttt{runmuffin.sh} together with its list of parameters into an executable shell, and submit that instead. } would look like this:
+\vspace{-2pt}\begin{verbatim}
+$ qsub -S /bin/bash runmuffin.sh <options>
+\end{verbatim}\vspace{-2pt}
+Here: the \texttt{-S /bin/bash} part is to ensure that \textbf{SGE} uses the \texttt{BASH} shell to submit the job because this is the language that \texttt{runmuffin.sh} has been written in.
+
+Take care that the installed \textbf{FORTRAN} compiler can be seen by the cluster nodes. If not, the \textbf{muffin} executable must have already been built prior to submitting a job. The easiest way to do this is to run \textbf{muffin} interactively briefly (e.g., with a run length of just a couple of years or kill it) and then submit the full run to the cluster.
+
+Other useful submission options for \textbf{SGE}:
+
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+
+        \item To redirect the standard output stream:
+        \vspace{-2pt}\begin{verbatim}$ qsub -o genie_log ...\end{verbatim}
+        
+        \item To redirect the standard error stream:
+        \vspace{-2pt}\begin{verbatim}$ qsub -e genie_log ...\end{verbatim}
+        
+        \item To merge standard output and error streams into standard output:
+        \vspace{-2pt}\begin{verbatim}$ qsub -j y ...\end{verbatim}
+        
+        \item To specify particular resources, such as the nodes with 8 GB of RAM:
+        \vspace{-2pt}\begin{verbatim}$ qsub -l mem_total = 8.0G ...\end{verbatim}
+        
+        \item To decrease the priority of a job\footnote{The default priority is 0. A lower priority has a higher value ... !}:
+        \vspace{-2pt}\begin{verbatim}$ qsub -p 1 ...\end{verbatim}
+        
+        \item To submit a job from the current working directory:
+        \vspace{-2pt}\begin{verbatim}$ qsub –cwd\end{verbatim}
+        
+        \item Request an email is sent when the job starts and/or when it finishes -- see the main pages for \texttt{qsub} for the required syntax).
+        
+        \item A complete example for the \texttt{domino} UCR clusters would be:
+\small
+        \vspace{-2pt}\begin{verbatim}$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
+        cgenie.eb_go_gs_ac_bg.worjh2.ANTH / EXAMPLE.worjh2.Caoetal2009.SPIN 10000\end{verbatim}
+\normalsize
+        which merges standard output and error streams and redirects the resulting file to the directory \texttt{\~{}/cgenie\_log}.
+        Note that to redirect output as per in this particular example, the directory \texttt{\~{}cgenie\_log} \textbf{MUST} be present. I have no idea what happens if it is not ... but it can't be good ;)
+        
+\end{itemize}
+
+\noindent You can check the status of the \textbf{SGE} job queue\footnote{Depending on the cluster setup, it may be possible to graphically check what is going on via the www.} with the command:
+\vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
+and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
+
 
 %------------------------------------------------
 
