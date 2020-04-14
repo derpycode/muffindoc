@@ -10299,6 +10299,34 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 %------------------------------------------------
 
+\section{HOW-TO ...  ecology}
+
+%------------------------------------------------
+%
+\subsubsection{Prescribe SSTs for plankton only}
+\vspace{1mm}
+
+Plankton growth in \textbf{ECOGEM} is temperature-dependent and so a change in climate will drive both a physical response from ocean circulation and an ecological response. You can separate these effects by prescribing an annual mean field of SSTs for plankton in \textbf{ECOGEM} as done by \textit{Wilson et al.,} [2018] in Paleoceanography and Paleoclimatology. 
+
+To enable this option set the following parameter in the \textit{user-config}:
+\vspace{-1mm}\begin{verbatim}
+eg_ctrl_force_T=.true.
+\end{verbatim}\vspace{-1mm}
+The field of prescribed SSTs (in \(^{\circ} C\)) arranged by longitude-latitude) should be saved as a text file within \textsf{\footnotesize \(\sim\)/cgenie.muffin/genie-ecogem/data/input}. See the corresponding forcing files from \textit{Wilson et al.} [2018] as an example, e.g.
+\vspace{1mm}
+\\\textsf{\footnotesize \(\sim\)/cgenie.muffin/genie-ecogem/data/input/20170811.worjh2.PO4.8P8Z.pal.1x\_SST.dat}.
+\vspace{1mm}
+\\Specify the SST field in the \textit{user-config} for plankton using:
+\vspace{-2mm}\begin{verbatim}
+eg_par_ecogem_force_T_file="20170811.worjh2.8P8Z.pal.3x_SST.dat"
+\end{verbatim}\vspace{-1mm}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
 \section{HOW-TO ... remineralize ... differently}
 
 %------------------------------------------------
@@ -10406,28 +10434,6 @@ bg_par_detballastcoeff_file
 (again, akin to the methodology for setting the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio})).
 
 Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does not have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\section{HOW-TO ...  ecology}
-
-%------------------------------------------------
-%
-\subsubsection{Prescribe SSTs for plankton only}
-\vspace{1mm}
-
-Plankton growth in ECOGEM is temperature-dependent and so a change in climate will drive both a physical response from ocean circulation and an ecological response. You can separate these effects by prescribing an annual mean field of SSTs for plankton in ECOGEM as done by \textit{Wilson et al.,} [2018] in Paleoceanography and Paleoclimatology. To enable this option set the following parameter in the \textit{user-config}:
-\vspace{-5mm}\small\begin{verbatim}
-eg_ctrl_force_T=.true.
-\end{verbatim}\vspace{-1mm}\normalsize
-The field of prescribed SSTs (in deg C arranged by longitude-latitude) should be saved as a text file within \textit{~/cgenie.muffin/genie-ecogem/data/input}. See the corresponding forcing files from Wilson et al., (2018) as an example, e.g., \textit{~/cgenie.muffin/genie-ecogem/data/input/20170811.worjh2.PO4.8P8Z.pal.1x_SST.dat}. Specify the SST field in the \textit{user-config} for plankton using:
-\vspace{-5mm}\small\begin{verbatim}
-eg_par_ecogem_force_T_file="20170811.worjh2.8P8Z.pal.3x_SST.dat"
-\end{verbatim}\vspace{-1mm}\normalsize
 
 %------------------------------------------------
 
