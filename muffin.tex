@@ -8197,7 +8197,7 @@ before dropping dead. If so, there should be an error message telling you that a
 
 %------------------------------------------------
 
-\subsection{Other sources of error}
+\subsection{Other sources of initialization error}
 
 \noindent Other sources of error are due to the configuration of \textbf{cGENIE.muffin} (or more rarely, due to the model itself):
 
@@ -8213,32 +8213,132 @@ before dropping dead. If so, there should be an error message telling you that a
 \vspace{1mm}
 \item Further trouble can occasionally arise when using \textbf{Windoz} and editing files (e.g., the \textit{user-config} file) and it is possible to corrupt the format of the file. For what file(s) you have edited, use the command \texttt{dos2unix} to strip off \textbf{Windoz} formatting characters (which are invariably invisible in most editors). The syntax for this (or see the \textbf{linux} 'man' pages, or even Google it) is \texttt{\$ dos2unix FILENAME}.
 
-\vspace{1mm}
-\item If the model starts running, but dies with a reported failure to solve the aqueous carbonate system, it may be that you need to force a re-compile (\texttt{\$ make cleanall}). Running \textbf{cGENIE.muffin} with array dimensions which do not match the number of tracers selected is a common cause of failures to solve the aqueous carbonate system, as often calcium ion or other tracer concentrations become corrupted and get assigned nutty and all but impossible values.
-\\Also, if a \textit{re-start} is used which was generated with a different land-sea mask (and \textit{base-config}) to the current experiment and associated \textit{base-config}. Try running without the \textit{re-start} and see if that solves it (identifies the source of the problem).
-
 \end{enumerate}
 \vspace{2mm}
 
 %------------------------------------------------
+%
+\newpage
+\subsection{Carbonate chemistry errors}
 
-\subsection{Meaning of specific error messages}
+The most common error as \textbf{muffin} starts to run, or during the course of a run relates to the solution of the aqueous carbonate chemistry  system and specifically, for \(pH\). There are 2 different errors that can be reported in this respect:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{2mm}
+\item 
+\small\begin{verbatim}
+Numerical instability at step; ...
+Data; dum_DIC,dum_ALK,dum_Ca,dum_SO4tot,dum_H2Stot,dum_NH4tot
+pH(SWS), pH (OLD), pH (guess #1), pH (guess #2)
+CARBONATE CHEMISTRY COULD NOT BE UPDATED :(
+\end{verbatim}\normalsize
+followed by a series of values (corresponding to the listed tracers),
+\\and then a block of text summerizing possible meanings of the error (and tracer values).
+
+\vspace{2mm}
+\item 
+\small\begin{verbatim}
+Number of steps taken without successfully solving for pH = ...
+Data; dum_DIC,dum_ALK,dum_Ca,dum_SO4tot,dum_H2Stot,dum_NH4tot
+pH(SWS), pH (OLD), pH (guess #1), pH (guess #2)
+CARBONATE CHEMISTRY COULD NOT BE UPDATED :(
+\end{verbatim}\normalsize
+also followed by tracer values and possible explanations.
+\end{enumerate}
+
+\vspace{1mm}
+\noindent Both errors relate to the implicit solution for the \(pH\) (technically: \([H^{+}]\)) value at the current time-step. The scheme takes an assumed value at model initialization or from a re-start, or during an experiment -- the last calculated value at that location in the ocean, and uses this to make an updated estimate of \(pH\). The calculation is carried out iteratively, with the new assumed value of \(pH\) being taken from the previous iteration, until the solution converges, or not.
+
+The first error -- instability -- is triggered by a negative value of \(pH\) being calculated. The second error (much more common) occurs if the maximum number of iterations has been reached -- i.e. if the solution of the carbonate chemistry system is not converging within a reasonable number of iterations. \footnote{The default number of iterations is set as \(100\) and is specified by the parameter: \texttt{gm\_par\_carbchem\_pH\_iterationmax=100}}
+
+The default behavior in response to either situations occurring is for muffin to forego updating \(pH\) in the troublesome ocean grid call and continue to the end of the current time-step, save data snapshot, and then exit the run.
+
+Why does the error arise, and what can be done about it?
+
+\begin{enumerate}[noitemsep]
+
+\vspace{2mm}
+\item 
+Running \textbf{muffin} with array dimensions which do not match the number of tracers selected is a common cause of failures to solve the aqueous carbonate system, as often calcium ion or other tracer concentrations become corrupted and get assigned nutty and all but impossible values. 
+\\As per the error message text:
+\small\begin{verbatim}
+(1) Check the FIRST TWO lines of the ERROR DATA (ocean DIC and ALK):
+    -> These should be ... reasonable ... of order a few thousand umol kg-1
+       (units reported are mol kg-1)'
+    -> NaNs, negative values, obsenely low (<< a few hundred umol kg-1) or,
+       high (>> tens of thousands) are indicative of array bounds problems.
+       Array bounds problems are mostly commonly due to:
+       (A) incorrect ocean dimension compared to the compiled executable,
+       (B) incorrect number of biogeochem tracers in the ocean compared to
+           the compiled executable.
+    => Carry out a *** make cleanall *** (from ~/genie/genie-main). 
+(2) ...
+(3) Extreme values of Ca and SO4 (#3, #4) are only vanishingly possible except
+    due to incorrect compiled array dimension or extreme salinity.
+\end{verbatim}\normalsize
+so try forcing a re-compile (\texttt{\$ make cleanall}).
+\\Also, if a \textit{re-start} is used which was generated with a different land-sea mask (and \textit{base-config}) to the current experiment and associated \textit{base-config}, spurious tracer values can occur and crash the carbonate chemistry scheme. Try running without the \textit{re-start} and see if that solves it (identifies the source of the problem).
+
+\vspace{2mm}
+\item Failure to converge (the second error) is unlikely to be due to mis-compiled tracer selections or incomparable restart ocean grids, but rather as a consequence of extreme geochemical conditions occurring somewhere in the ocean. This can be due to excessively intense export production and remineralization, as well as at excessively high dissolved silica concentrations -- all may be plausible early Earth states, but ones that require an adjustment of how aqueous carbonate chemistry is solved:
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item At very high nutrient (\(PO_{4}\)) concentrations, and/or at high ocean temperatures with a temperature-dependent remineralization scheme, and/or with a slow prescribed sinking speed\footnote{i.e. much slower than the default of \(125 md^{-1}\)}, oxygen consumption can be complete and subsequently, sulphate reduction intense. Sulphate reduction results in the release of two mol alkalinities per mol \(SO^{2-}_{4}\) consumed, impacting carbonate chemistry in that ocean cell (in addition to the release of \(DIC\) from the remineralized organic matter). Where the resulting \(H_{2}S\) is re-oxidized, alkalinity is removed and local carbonate chemistry impacted in the opposite sense.
+\\The problems are likely to occur in the ocean sub-surface, although difficulties at the surface and associated with air-sea gas exchange are also possible. Plotting out surface or sub-surface (and ideally; 2D surfaces of the distribution of minimum and maximum values using \textbf{muffinplot}) can help in the identification of the nature of the underlying problem(s).
+\\There are 2 main possible courses of action to take (as an alternative to modifying the experimental design and reducing the intensity of biological export and sub-surface recycling):
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Increase the number of iterations allowed in solving for seawater \(pH\).
+\footnote{Conversely, one could decrease the \(pH\) tolerance criteria for convergence: \texttt{gm\_par\_carbchem\_pH\_tolerance}, which by default has a value of \(0.001\) -- increasing will result in a faster solution and a greater change of passing the convergence criteria, but at the expense of accuracy.}
+The parameter controlling this is:
+\vspace{-0pt}\small\begin{verbatim}
+# number of pH solution iterations
+gm_par_carbchem_pH_iterationmax=100
+\end{verbatim}\normalsize\vspace{-0pt}
+and could, for instance, be increased to a value of \(1000\) (iterations).
+\vspace{1mm}
+\item In addition to the \(100\)\footnote{The default value unless it has been changed.} iterations that \textbf{muffin} is allowed in trying to converge on a solution for \(pH\), \textbf{muffin} can also try a different initial (seed) \(pH\) value if it encounters one of the error conditions. The iteration counter is re-set and the iterative convergence calculation is carried out once again. 
+\\The controlling parameter is:
+\vspace{-0pt}\small\begin{verbatim}
+# re-seed pH?
+gm_ctrl_carbchem_pHseed_retry=.false.
+\end{verbatim}\normalsize\vspace{-0pt}
+and is \texttt{false} by default.
+\\In a situation by which \(pH\) never ever converges, it may be that the initial value is too far from the (true) solution value. Setting the parameter \texttt{true} and re-seeding with randomly varying values then help find a sufficiently close initial guess that convergence occurs.
+\end{enumerate}
+\vspace{1mm}
+Option (a) is arguably the better one to test first.
+
+There is a third (and typically less effective) possibility:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item[(c)] Assuming that the underlying issue is 'nutrient trapping' -- the rapid biological removal of (\(PO_{4}\)) from the surface, following by shallow remineralization of the organic matter, re-release of the (\(PO_{4}\)) and then efficient return back to the surface to fuel further biological productivity -- adding \(Fe\) co-limitation of biological productivity may help, because loss of dissolved \(Fe\) from the water column will tend to scale with the flux of organic matter, hence acting as a negative feedback on the nutrient trapping. 
+\end{enumerate}
+
+\vspace{2mm}
+\item Very high\footnote{Orders of magnitude higher than modern} high dissolved silica (\(H_{4}SiO_{4}\)) concentrations in the ocean can cause issues. This is because \(H_{3}SiO^{-}_{4}\) appears in the calculation of carbonate alkalinity from total alkalinity.
+\\A parameter is provided to remove \(H_{3}SiO^{-}_{4}\) from the alkalinity carbonate calculation -- by setting:
+\vspace{-1pt}\small\begin{verbatim}
+gm_ctrl_carbchem_noH3SiO4=.true.
+\end{verbatim}\normalsize\vspace{-1pt}
+
+\end{itemize}
+
+\end{enumerate}
+
+%------------------------------------------------
+
+\subsection{Meaning of specific error and warning messages}
 
 \vspace{2mm}
 \subsubsection{'ERROR: path integral around island too long'}
 
 Such an error is possible when developing new or modifying existing continental configurations (and associated 'island' and 'path' definition files), but not in normal running of the model.
 First try a \texttt{make cleanall} and then try re-running.
-If the problem persists, it is possible that a key configuration file has accidently/somehow been changed. To check for this -- do a \texttt{make cleanall}, and then from the \textsf{\footnotesize cgenie.muffin} directory:
-\vspace{-2pt}\begin{verbatim}
-svn status -u
-\end{verbatim}\vspace{-2pt}
-Any file that you have modified is labeled with an \texttt{m}. Any new files on the server that you don't have will have a \texttt{*}. Files with a \texttt{?} are files that exist locally and are not on SVN (and can be ignored).
-If there is a file with an \texttt{m} that should not have been modified:
-\vspace{-2pt}\begin{verbatim}
-svn revert FILENAME
-\end{verbatim}\vspace{-2pt}
-will re-set the file \texttt{FILENAME} (also include the relative path) it to the current SVN version status.
+If the problem persists, it is possible that a key configuration file has accidently/somehow been changed.
 
 \vspace{2mm}
 \subsubsection{'ERROR MESSAGE: Particulate tracer CaCO3 ...'}
