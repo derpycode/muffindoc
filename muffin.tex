@@ -10558,9 +10558,10 @@ This is set automatically as part of the \texttt{runmuffin.sh} shell script\foot
 Taking the example of the ocean (dissolved tracers): flux and restoring \textit{forcings} are defined in the \textit{forcings} specification file: \texttt{configure\_forcings\_ocn.dat}. As detailed in the notes to this file, there is a flag (\texttt{COLUMN \#6}) which sets the spatial attributes of the \textit{forcing} as follows:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
-\item [3] -- '3D' -- force the entire ocean volume uniformly
-\item [2] -- '2D' -- force the entire ocean surface uniformly
-\item [0] -- '0D' -- force a specified point
+\item [3] -- '3D' -- force the entire ocean volume \uline{uniformly}
+\item [2] -- '2D' -- force the entire ocean surface \uline{uniformly}
+\item [1] -- [currently there is no option for forcing a single ocean column]
+\item [0] -- '0D' -- force a specified point in the ocean
 \item [-1] -- 'SURFACE' -- force with/to specified surface ocean pattern
 \item [-2] -- 'BENTHIC' -- force with/to specified benthic pattern
 \item [-3] -- 'LEVEL' -- force a specific layer in the ocean with/to specified pattern\footnote{For k=k\_max, this duplicates the SURFACE forcing.}
@@ -10625,6 +10626,58 @@ bg_ctrl_force_ocn_age1=.true.
 bg_ctrl_force_ocn_age=.false.
 \end{verbatim}\normalsize\vspace{-2pt}
 or simply do not list that parameter in the \textit{user-config} file, otherwise the blue tracer will be used along-side the red one to create a combined age tracer (and no additional salinity input will occur) ...
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{Modify a dissolved Fe (dust) forcing}
+\vspace{1mm}
+
+Dissolved iron, required in co-limitation of biological productivity in a number of BIOGEM biological options (as well as in ECOGEM), is supplied via dust deposited to the ocean surface in the basic marine iron cycling schemes. This is implemented as a sediment flux forcing -- the solid detrital component deposited to the ocean surface is assumed to sink through the water column to the sediment surface\footnote{Dust may react with species in the water column and/or in the sediments, and/or act as a ballasting or scavenging particle, depending on the options selected.} 
+
+For example -- \textsf{\footnotesize worjh2.RpCO2\_Rp13CO2.FeMahowald2006} -- in addition to implementing a restoring of atmospheric \(pCO_{2}\) and associated \(\delta ^{13}C\), applies a dust flux forcing on the \texttt{worjh2} continental grid. The dust flux is activated in \textsf{\footnotesize configure\_forcings\_sed.dat} by the line:
+\vspace{-1mm}\begin{verbatim}
+ 22  t  F  -1  01  01  '[detrital (refractory) material (wt%)]'
+\end{verbatim}\vspace{-1mm}
+and the associated 2D surface\footnote{Option \texttt{1} in '\texttt{COLUMN \#03: make forcing uniform over this dimension}' in the \textsf{\scriptsize configure\_forcings\_sed.dat} file.} flux distribution \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_SUR.dat} and time-series \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat} files
+
+To change the supply of iron to the ocean surface, it is as simple as changing the pattern of dust flux, either by substituting a completely different field (e.g. using a LGM-derived dust flux field in place of a present-day one, or using an idealized field, perhaps completely uniform or with a simple regional pattern). Note that the units of flux to the ocean in \textbf{muffin} are \uline{mol (dust) per grid cell}(!), so some units conversion may be required in setting a particular dust (and hence iron) flux.
+
+However, the default configuration of the solubility scheme for iron in dust employs a non-linear relationship between dust loading and solubility\footnote{Instead, you can select a uniform iron solubility by setting: \texttt{bg\_par\_det\_Fe\_sol\_exp=1.0}}, and adjusts local solubilities to achieve a specified global flux-weighted mean solubility, given by parameter:
+\vspace{-1mm}\begin{verbatim}
+bg_par_det_Fe_sol
+\end{verbatim}\vspace{-1mm}
+\noindent The consequence of this is that if the dust flux is changed anywhere in the 2D field, all local (in each grid cell) solubilities will change in order to retain the same global flux-weighted mean solubility. To implement a proportion change in solubility is easy -- by changing the specified global flux-weighted mean solubility or the assumed (uniform) iron content of dust, but otherwise, not :(
+
+Modifying the pattern of iron supply to the ocean surface is hence most easily accomplished either by (1) creating a flux of iron in addition to a dust field (with its inherent global mean iron solubility), or (2) completely substituting dust-supplied iron with an explicit dissolved iron flux to the ocean surface that can then be more readily modified. 
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item See: \textbf{7.4.1 Iron fertilization}
+\vspace{1mm}
+\item First, de-select the dust forcing -- simply a matter  deleting the line in \textsf{\footnotesize configure\_forcings\_sed.dat}.\footnote{Between the \texttt{-START-OF-DATA-} and \texttt{-END-OF-DATA-} tags.}
+\\ Then create a 2D \(Fe\) forcing -- adding to the \textsf{\footnotesize configure\_forcings\_ocn.dat} file, the line (for iron cycle schemes: \texttt{ALT}, \texttt{OLD}, \texttt{FeFe2TL}): 
+\vspace{-1mm}\begin{verbatim}
+  9  f  f  0.0  t  f  -1  01  01  01  '[Fe]'
+\end{verbatim}\vspace{-1mm}
+\noindent (where the \texttt{-1} specifies a surface ocean pattern of iron flux) file, or if you are using a scheme involving the total dissolved iron tracer (e.g. \texttt{hybrid}, \texttt{lookup\_4D}), adding:
+\vspace{-1mm}\begin{verbatim}
+ 90  f  f  0.0  t  f  -1  01  01  01  '[TDFe]'
+\end{verbatim}\vspace{-1mm}
+You then just need to obtain the spatial field of dissolved iron flux to the ocean surface that was calculated and applied in the dust-driven version. This can be found in \textsf{\footnotesize fields\_biogem\_2d} \textbf{netCDF} variable: \texttt{misc\_sur\_fFe} ('Solulablized aeolian iron flux to surface grid points') in units of \(mol \:Fe \:yr^{-1}\) (per model grid point). From \textbf{MATLAB} or \textbf{Panoply}, copy the 2D array (table) of values, paste into a text file, and save it as \textsf{\footnotesize biogem\_force\_flux\_ocn\_Fe\_SUR.dat} (or \textsf{\footnotesize biogem\_force\_flux\_ocn\_TDFe\_SUR.dat}, depending on which primary iron tracer is selected). You will also need a corresponding time-series (\textsf{\footnotesize *\_sig.dat}) file. In creating the \textsf{\footnotesize *\_SUR.dat} Ensure:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item That the iron flux field is the right way up!!!! (It should be map-orientation, with North upwards.)
+\item That it is not in MS-DOS/Windows format ASCII -- the line-ending format must be Unix (LF). \uline{DO NOT} use Windows Notepad to create the file.
+\\If you are unsure/concerned, from the directory containing the file, at the linux command line, type:
+\vspace{-1mm}\begin{verbatim}
+$ dos2unix biogem_force_flux_ocn_TDFe_SUR.dat
+\end{verbatim}\vspace{-1mm}
+which will strip out any accidental CR characters.
+\item Ensure there is a blank line at the bottom of the file.
+\end{itemize}
+\end{enumerate}
+\vspace{1mm}
 
 %------------------------------------------------
 %
