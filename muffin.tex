@@ -241,7 +241,7 @@ To edit files and visualize results, you will need some specific software. The e
 (\textbf{linux} and \textbf{Mac} users need no special/different editor compared with your standard editor – everything will display just fine). You can also use \textbf{linux} command line based editors such as \textbf{vi}.
 \end{enumerate}
 
-\noindent If operating \textbf{muffin} remotely (e.g. on a computing cluster), the you also will need:
+\noindent If instead operating \textbf{muffin} remotely (e.g. on a computing cluster), the you  will need:
 
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -271,14 +271,14 @@ This (the \textbf{muffin} manual), and additional documentation (of varying degr
 \item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
 \\Here, the \textbf{latex} source for the documentation lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the \textbf{git} repository. Make changes. Commit them locally. Make a 'pull request' ...}.
 \item On my \href{http://www.seao2.info/mymuffin.html}{website}.
-\\Here, are only compiled, PDF versions of the documentation are provided, and may be somewhat out-of-date.
+\\Here, are only compiled, PDF versions of the documentation are provided, and may be somewhat out-of-date (the current versions of everything live on GitHub).
 \end{enumerate}
 
 %------------------------------------------------
 
 \subsection*{This document in particular}
 
-The instructions in general may not be bug-free – use your judgment.
+The instructions  may not be entirely bug-free – use your judgment.
 
 %------------------------------------------------
 
@@ -300,12 +300,13 @@ You are going to be installing the model from scratch – why? Why not? It will 
 
 \subsection{Logging in!}
 
-Log into your \textbf{linux}/\textbf{macOS} box!\footnote{If you fail at this step, you'll have to take up box-modelling instead.}
+In running \textbf{muffin} locally -- log into your \textbf{linux}/\textbf{macOS} box (and skip on to the next section)! \footnote{If you fail at this step, you'll have to take up box-modelling instead.}
 
-\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a cluster account), log into the remote account from a suitable terminal\footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
+\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a user account on a computing cluster or server) -- log into the remote account using a suitable terminal program \footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
 
 \begin{itemize}
-\item If logging in via a \textbf{linux}/\textbf{macOS} box, open a terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
+\vspace{1mm}
+\item If logging in via a \textbf{linux}/\textbf{macOS} box, open the terminal/shell window and simply SSH in\footnote{If your current directory looks something like this: \texttt{[username@clustername \(\sim\)]\$}
 then you are probably already logged in! Otherwise, it will look like: \texttt{username@localcomputername:\(\sim\)\$}}, e.g.
 
 \vspace{-1mm}
@@ -316,11 +317,12 @@ $ ssh username@clustername
 
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
 \\  \texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).\footnote{\textbf{IMPORTANT!}
- When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs.}
+ When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs. As you type (the password), characters are being entered ... you just cannot see them. Don't panic -- type in the password and hit \textsf{\scriptsize Enter}.}
 
+\vspace{1mm}
 \item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client) or \textbf{PuTTY} (a 'shell', or 'terminal' window). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
 \\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
-\\You will also need a terminal window (assuming you did not open that first). This can be opened by clicking on the ‘\textsf{Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
+\\You will also need a terminal window (assuming you did not open that first). This can be opened by clicking on the ‘\textsf{\footnotesize Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{\footnotesize Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 \\ You can also log in directly from the shell/terminal window of e.g. \textbf{PuTTY} rather than first opening an sftp connection.
 \end{itemize}
 
@@ -348,18 +350,18 @@ From here, there are 2 ways to get your mitts on the model code:
 \begin{enumerate}
 
 \vspace{1mm}
-\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\small{Clone or Download}} button, and select \textsf{\small{Download ZIP}}.
-\\You then unpack/unzip the files and directory structure where you want it.
-\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
-
-\vspace{1mm}
-\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME diectory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
+\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME directory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
 \end{verbatim}
 
-By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.
+By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. \footnote{Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.}
+
+\vspace{1mm}
+\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button, and select \textsf{\footnotesize Download ZIP}.
+\\You then unpack/unzip the files and directory structure where you want it.
+\\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
 \end{enumerate}
 
@@ -367,7 +369,7 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \subsection{Configuring the code}
 
-\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to). This will be your first real test of editing (and saving) a file on the remote server. You'll need to do this a bunch later and so it is worth developing a working strategy now if you are not already linux-friendly. For instance, you might:
+\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to). This will be your first real test of editing (and saving) a file on the remote server. You'll need to do this a bunch later and so it is worth developing a working strategy now if you are not already linux-friendly. For instance:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -375,25 +377,52 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{1mm}
 \item Edit the file \textit{in situ} on the remote account using e.g. \textbf{vi} (see linux HOW-TO for brief notes).
 \vspace{1mm}
-\item Pray that the file edits itself.\footnote{9 out of 10 cats have demonstrated this does not work.}
+\item Pray that the file edits itself. \footnote{9 out of 10 cats have demonstrated this does not work.}
 \end{enumerate}
 
 \vspace{1mm}
-\noindent Depending on the platform, the required changes are:
+\noindent The required configuration settings for \textbf{muffin} depend on the specific computing platform that you are running on. What follows is a list of the changes associated with some possible platforms that you might be using -- find the list name (\textbf{bold}) that corresponds to the platform that you are using.\footnote{If you are using a platform not listed here, you may be able to simply adapt the instructions for one of the ones listed.}
 
 \begin{itemize}
 
 \vspace{1mm}
-\item \textbf{Ubuntu}. This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.} And you have also jumped the shark with a successful install of other libraries and softwares ... see Section \ref{how-to-ubuntu}.
+\item \textbf{Ubuntu}. 
+\vspace{1mm}
+\\ This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.} And you have also jumped the shark with a successful install of other libraries and softwares ... see Section \ref{how-to-ubuntu}.
 
 \vspace{1mm}
-\item \texttt{domino} (UCR cluster). There is a single file to edit (which lives in the \texttt{genie-main} directory):
+\item \textbf{domino} (UCR cluster).
+\vspace{1mm} 
+\\ There is a single file to edit (which lives in the \texttt{genie-main} directory):
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}.
+\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}. The resulting section of code at the end of \texttt{user.mak}  should then look something like:
+\vspace{-1mm}
+\footnotesize\begin{verbatim}
+### DEFAULT ###
+#NETCDF_DIR=/usr/local
+### domino ###
+NETCDF_DIR=/share/apps
+### eevee ###
+#NETCDF_DIR=/share/apps/netcdf-c-4.4.1.1-fortran-4.4.4
+### iwan ###
+#NETCDF_DIR=/share/apps/netcdf/4.0/gnu_fc_4.4.4
+### sprout ###
+#NETCDF_DIR=/share/apps/netcdf/4.0/gnu_fc_4.4.6
+### almond ###
+#NETCDF_DIR=/share/apps/netcdf-4.0/gcc-4.4.7
+### VM ###
+#NETCDF_DIR=/home/mushroom/netcdf/ifort
+### Ben Mac Pro ###
+#NETCDF_DIR=/opt/local
+\end{verbatim}\normalsize
+\vspace{-1mm}
 \end{enumerate}
 
 \vspace{1mm}
-\item \texttt{eevee} (UCR cluster). There are 2 files to edit (all of which live in the \texttt{genie-main} directory):
+\item \textbf{eevee} (UCR cluster).
+\vspace{1mm}
+\\ There are 2 files to edit (both of which of which live in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- as per for \texttt{domino} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# eevee \#\#\#}).
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
@@ -401,7 +430,9 @@ By doing this, you have created your own code repository (and an identical copy 
 \end{enumerate}
 
 \vspace{1mm}
-\item \texttt{sprout} (UoB cluster). There are 2 files to edit:
+\item \textbf{sprout} (UoB cluster). 
+\vspace{1mm}
+\\ There are 2 files to edit:
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# sprout \#\#\#}.
 \item In \texttt{makefile.arc} -- towards the end of the file, under the heading:
@@ -410,14 +441,18 @@ By doing this, you have created your own code repository (and an identical copy 
 \\\texttt{\#\#\# FOR COMBINED C+FORTRAN NETCDF LIBRARIES \#\#\#\#\#\#\#}
 \\and comment the 2 lines under:
 \\\texttt{\#\#\# FOR SEPERATE C AND FORTRAN NETCDF LIBRARIES \#\#\#}
-(so as to select, combined, rather than sperate, netCDF libraries).
+\\(so as to select, combined, rather than sperate, netCDF libraries).
 \end{enumerate}
 
 \vspace{1mm}
-\item \texttt{almond} (UoB cluster). As per for \texttt{sprout} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# almond \#\#\#}).
+\item \textbf{almond} (UoB cluster). 
+\vspace{1mm}
+\\ As per for \texttt{sprout} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# almond \#\#\#}).
 
 \vspace{1mm}
-\item \textbf{macOS}. Please refer to the separate macOS instructions in Section \ref{how-to-macos}.
+\item \textbf{macOS}. 
+\vspace{1mm}
+\\ Please refer to the separate macOS instructions in Section \ref{how-to-macos}.
 
 \end{itemize}
 
@@ -427,7 +462,6 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
  First, change directory (see: Figure \ref{fig:directories} and refer to the linux HOW-TO) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
-
 \vspace{-2mm}
 \begin{verbatim}
 cgenie.muffin/genie-main
@@ -435,7 +469,6 @@ cgenie.muffin/genie-main
 \vspace{-2mm}
 
 \noindent If you are not ‘linux-friendly’ (see: Section \ref{how-to-linux} for \textbf{linux} basics) – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
-
 \vspace{-2mm}
 \begin{verbatim}
 $ make testbiogem
@@ -444,16 +477,26 @@ $ make testbiogem
 
 \noindent This compiles a basic carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. There may be some ’Warnings’ reported (== somepony’s sloppy programming) but these are not detrimental to the ultimate science results (we hope!).
 
-‘Success’ of this test is indicated by:
-
+If you see the error message:
 \vspace{-2mm}
+\begin{verbatim}
+make: *** No rule to make target 
+\end{verbatim}
+\vspace{-2mm}
+when you try this, you are probably in the wrong directory (it should be \textsf{\footnotesize cgenie.muffin/genie-main}).
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent ‘Success’ of this test is indicated by the message:
+\vspace{-1mm}
 \begin{verbatim}
 **TEST OK**
 \end{verbatim}
-\vspace{-2mm}
+\vspace{-1mm}
 
-\noindent You can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line:
-
+\noindent If you see this -- you can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line:
 \vspace{-2mm}
 \small
 \begin{verbatim}
@@ -463,23 +506,30 @@ $ make testbiogem
 \normalsize
 \vspace{-2mm}
 
-\noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills). If the test doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
+\noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
 
+That completes the basic code installation.
+
+\newpage
+
+If the test  doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
 \vspace{-2mm}
 \begin{verbatim}
 $ make cleanall
 \end{verbatim}
 \vspace{-2mm}
 
-\noindent and then re-try the test. Refer to the FAQ section at the end of this book for further clues as to non-working model installations.
+\noindent and then re-try the test. 
+
+Refer to the FAQ section at the end of this book for further clues as why the model installation appears not to be working.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent That is it as far basic installation goes. But ...
+\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file.
 
-\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file, and if a (open) silica cycle is to be employed in \textbf{muffin} experiments, it needs to be unpacked. A script is provided for this. From \texttt{genie-main}:
+If (and \uline{only if}) a (open) silica cycle is to be employed in your \textbf{muffin} experiments, does this file need to be unpacked. A script is provided for this -- from \texttt{genie-main}:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -615,8 +665,6 @@ REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C
 
 \noindent What should happen is: First, you will end up twiddling your thumbs a while, as all the components of \textbf{muffin} are compiled from the raw source code (\textbf{FORTRAN}). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
 
-\newpage
-
 \begin{itemize}
 \item[] \texttt{model year}  -- ... guess!
 \item[] \texttt{ice(\%)} -- global sea-ice fraction (\%)
@@ -654,7 +702,7 @@ You can stop the model at any point (all data up to that time will have been sav
 
 Just from examining the screen output: how close to steady state does the system appear to have come after just 10 years? i.e., do SST and/or sea-ice extents appear to be converging towards stable (constant) values? This will be an important question to think about later on: ‘has the model reached steady-state (and does it matter)?’
 
-In this example, the output should look something like the following:
+In this particular example, the output should look something like the following:
 
 \newpage
 
