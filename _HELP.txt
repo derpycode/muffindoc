@@ -68,6 +68,9 @@ NO BULLET IN LIST ITEM
 \begin{verbatim}
 \end{verbatim}
 
+\vspace{-1mm}\small\begin{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+
 \newthought{}
 
 \begin{fullwidth}

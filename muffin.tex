@@ -791,7 +791,7 @@ Now you can edit the parameter values, re-save it, drag it back to the cluster (
 
 \end{enumerate}
 
-Remember that the new \textit{user-config} file needs to be saved in the \textsf{\footnotesize genie-userconfigs/LABS} sub-directory (in the case of experiments carried out as part of the tutorials described in this manual), or anywhere else, as long as you specify the correct path to the directory where you save the new file to\footnote{See previous Section and the use of the 2nd parameter passed to \texttt{runmuffin.sh}}.
+\noindent Remember that the new \textit{user-config} file needs to be saved in (or copied to) the \textsf{\footnotesize genie-userconfigs/LABS} sub-directory (in the case of experiments carried out as part of the tutorials described in this manual), or anywhere else as long as you specify the correct path to the directory where you save the new file to\footnote{See previous Section and the use of the 2nd parameter passed to \texttt{runmuffin.sh}}.
 
 %------------------------------------------------
 
@@ -2531,34 +2531,35 @@ if you, for instance, called your new \textit{forcing} directory (in \footnotesi
 
 \subsection{Historical (real-world!) emissions forcing}
 
-Historical and future (e.g. IPCC 'SRES') emissions scenarios can also be prescribed explicitly. A historical emissions forcing (technically: a prescribed concentration profile of p\(CO_{2}\) and other anthropogenic gases) can be specified by adding/substituting the following lines to the \textit{\textit{user-config}}:
-
+Historical and future (e.g. IPCC 'SRES') emissions scenarios can also be prescribed explicitly. An example is given as \textit{user-config} file: \textsf{\footnotesize LAB\_3.historical}. In this, a historical emissions forcing (technically: a prescribed concentration profile of p\(CO_{2}\) and other anthropogenic gases) is specified by the \textit{forcing}:
 \vspace{-2pt}\begin{verbatim}
 bg_par_forcing_name=’worjh2.historical2010’
 \end{verbatim}\vspace{-2pt}
-Now, no additional scaling is needed because the forcing specification directly follows the observed change in atmospheric concentration with time (in units of atm \(CO_{2}\)), and the line containing the scaling parameter:
-\vspace{-2pt}\begin{verbatim}
-bg_par_atm_force_val_time_3=1.0
-\end{verbatim}\vspace{-2pt}
-should be deleted (or commented out with a \texttt{\#} at the start of the line, as the default value is \texttt{1.0}).
-For completeness, you might also set the scaling of atmospheric \(CO_{2}\) \(\delta^{13}C\)\footnote{\texttt{bg\_par\_atm\_force\_scale\_val\_4}} to a value of \texttt{1.0}, even fi we are not interested in \(\delta^{13}C\) at this time ...
+In contrast to before, no additional scaling is needed because the forcing specification directly follows the observed change in atmospheric concentration with time (in units of atm \(CO_{2}\)).
 
-An additional line is now needed in the \textit{user-config} because the historical p\(CO_{2}\) transient starts in the 1700s (for which a nominal date of 1765 is often used) rather than year zero. For example, to start \textbf{muffin} from year 1765 rather than zero, the start year parameter must be set:
+An additional line appears in the \textit{user-config} because the historical p\(CO_{2}\) transient starts in the 1700s (for which a nominal date of 1765 is often used) rather than year zero. For example, to start \textbf{muffin} from year 1765 rather than zero, the start year parameter is set thus:
 \vspace{-2pt}\begin{verbatim}
 bg_par_misc_t_start=1765.0
 \end{verbatim}\vspace{-2pt}
-Now because the start year has changed ... it is convenient to specify a set of time save points that are consistent with the historical period, e.g. you might add the parameter settings:
+Now because the start year has changed ... it is convenient to specify a set of time save points that are consistent with the historical period. In the example \textit{user-config}, the addition of the parameter settings:
 \vspace{-2pt}\begin{verbatim}
 bg_par_infile_slice_name=’save_timeslice_historicalfuture.dat’
 bg_par_infile_sig_name=’save_timeseries_historicalfuture.dat’
 \end{verbatim}\vspace{-2pt}
-which specify a seties of time points at which data is saved that aligns with historically relevant years. View the contents of these (text) files, which can be found in the directory \footnotesize\textsf{genie-biogem/data/input }\normalsize, to get a sense of how frequently and when data will be saved, and how this differs from the default settings, which are defined in the files:
+ specifies a series of time points at which data is saved that aligns with historically relevant years.
+
+Try viewing the contents of these (text) files:
 \vspace{2pt}
-\\ \footnotesize\textsf{save\_timeseries.dat }\normalsize
-\\ \footnotesize\textsf{save\_timeslice.dat }\normalsize
+\\ \small\textsf{save\_timeslice\_historicalfuture.dat }\normalsize
+\\ \small\textsf{save\_timeseries\_historicalfuture.dat }\normalsize
+\vspace{2pt}
+\\which can be found in the directory: \footnotesize\textsf{genie-biogem/data/input }\normalsize to get a sense of how frequently the data will be saved, and how this differs from the default settings, which are defined in the files:
+\vspace{2pt}
+\\ \small\textsf{save\_timeseries.dat }\normalsize
+\\ \small\textsf{save\_timeslice.dat }\normalsize
 \vspace{2pt}
 
-A \textit{user-config} with these specific changes is provided for your convenience (or to double-check you were following it all) -– \footnotesize\textsf{LAB\_3.historical}\normalsize. A suitable experiment would then be one run for 245 years so that it reaches year 2010 (having started from year 1765):
+A suitable experiment would then be one run for 245 years so that it reaches year 2010 (having started from year 1765):
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.BASE LABS
    LAB_3.historical 245 LAB_3.SPIN
@@ -2569,9 +2570,9 @@ WARNING! Ignore the ‘WARNING’s at the start -- these are simply telling you 
 
 Don’t forget: you could submit this experiment to the cluster and do more (idealized emissions) ‘playing’.
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
+%\vspace{1mm}
+%\noindent\rule{4cm}{0.1mm}
+%\vspace{2mm}
 
 \noindent Given that there is observationally-based information on the distribution of anthropogenic \(CO_{2}\) taken up by the ocean (e.g., \textit{Sabine et al.} [2004]) ... and you are running a historical transient experiment with the model driven by observed increases in atmospheric p\(CO_{2}\) ... you are in a position to critically evaluate the models ability (or lack of) to represent the future-critical process of oceanic fossil fuel \(CO_{2}\) uptake and transport by large scale ocean circulation.
 
@@ -4906,6 +4907,71 @@ to the \textit{user-config} file and giving it a value in units of \(mol \ yr^{-
 Fortunately there is a HOW-TO -- '\textit{Determine the atmospheric radiocarbon flux required to achieve a steady state 14C system}'.
 
 If you specify the value of \texttt{ac\_par\_atm\_F14C} as per described in the HOW-TO and based on the final state of the \textit{spin-up}, and then run a continuing experiment, you should find that the radiocarbon state of the system remains approximately constant (e.g. as indicated by atmospheric \(\delta^{14}C\)), with the prescribed production rate balancing the global decay of radiocarbon (across all reservoirs). Hopefully ...
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{I/Ca}
+
+The redox chemistry of iodine in the atmosphere and seawater may involve
+many different iodine species. However, the iodine species most relevant
+to the I/Ca proxy are iodide (I-) and iodate (IO3-), which are
+thermodynamically most stable in anoxic and oxic seawaters, respectively.
+Laboratory crystal synthesis experiments, a synchrotron study and modeling
+show that it is the iodate species that is incorporated in the calcite
+structure, whereas iodide may be excluded from the mineral lattice. Hence,
+I/Ca values of carbonate should record changes in iodate concentrations in
+the water. If the dissolved oxygen level is the dominant control on the
+iodate concentration, then I/Ca can, to a first-order approximation, be
+used as a proxy for dissolved oxygen.
+
+Publications involving \textbf{muffin} simulations of ocean iodine cycling (and the \(I/Ca\) proxy) include:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item Wanyi, L., A. Ridgwell, E. Thomas, D.S. Hardisty, G. Luo, T.J. Algeo, M.R. Saltzman, B.C. Gill, Y.Shen, H-F. Ling, C.T. Edwards, M.T. Whalen, X. Zhou, K.M. Gutchess, L. Jin, R.E.M. Rickaby, H.C. Jenkyns, T.W. Lyons, T.M. Lenton, L.R. Kump, and Z. Lu1, Late inception of a resiliently oxygenated upper ocean, Science DOI: 10.1126/science.aar5372 (2018).
+\end{itemize}
+\vspace{1mm}
+
+Publications involving \(I/Ca\) proxy data, but with \textbf{muffin} simulations lacking an explicit iodine cycle (but including oxygen and sulphate), include:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item Zhou, X., E. Thomas, A.M.E. Winguth, A. Ridgwell, H. Scher, B.A.A. Hoogakker, R.E.M. Rickaby, and Z. Lu, Expanded oxygen minimum zones during the late Paleocene-early Eocene: Hints from multiproxy comparison and ocean modeling, Paleoceanography 31, 1532–1546, doi:10.1002/2016PA003020 (2016).
+\item Zhou, X., H.C. Jenkyns, J.D. Owens, C.K. Junium, X. Zheng, B.B. Sageman, D.S. Hardisty, T.W. Lyons, A. Ridgwell, and Z. Lu, Upper ocean oxygenation dynamics across the Cenomanian–Turonian OAE 2, Paleoceanography 30, 510–526, doi:10.1002/2014PA002741 (2015).
+\end{itemize}
+\vspace{1mm}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent To enable the iodine cycle in \textbf{muffin} -- refer to '\textit{Include an iodine cycle in the ocean}' in the (Bio)geochemical cycles HOW-TO.
+
+For instance -- one might take the pair of Holocene and LGM configurations from previously (and the \(\delta^{13}C\) proxy worksheet) and enable an iodine cycle -- adding the relevant additional tracers to the \textit{base-configs} (and updating the total number of defined tracers), and adding the relevant parameters to the \textit{user-configs}.\footnote{The additional tracer definitions are given in the \textbf{muffingen} file: \textsf{\footnotesize TRACERADDITION.iodinecycle.txt} for convenience, while the \textit{user-config} parameter settings needed are described in the HOT-TO.}
+
+The \(\delta^{13}C\) proxy \textit{base-configs} are:
+\vspace{-1mm}\small\begin{verbatim}
+muffin.CB.GIteiiaa.BASESFeTDTL_rb.config
+muffin.CB.GIteiiva.BASESFeTDTL_rb.config
+\end{verbatim}\normalsize\vspace{-1mm}
+for Holocene and LGM, respectively, and the associated EXAMPLE \textit{user-configs} are:
+\vspace{-1mm}\small\begin{verbatim}
+muffin.CB.GIteiiaa.BASESFeTDTL_rb.SPIN
+muffin.CB.GIteiiva.BASESFeTDTL_rb.SPIN
+\end{verbatim}\normalsize\vspace{-1mm}
+
+%\vspace{1mm}
+%\noindent\rule{4cm}{0.5pt}
+%\vspace{2mm}
+
+\newpage 
+
+\noindent An interesting further exercise would be to take the Cretaceous and/or late Paleocene configurations used in the publications listed above in which \textbf{muffin} lacked an explicit ocean iodine cycle, \uline{add an iodine cycle}, re-run, and contrast with the published \(I/Ca\) proxy data ...
 
 %------------------------------------------------
 
@@ -10189,168 +10255,14 @@ There is also option for treating all tracers the same way (including DIC ALK, P
 
 %------------------------------------------------
 
-\section{HOW-TO ...  configure ocean geochemistry}
+\section{HOW-TO ...  (bio)geochemical cycles}
+
+\hfill \break
+
 
 %------------------------------------------------
 %
-\subsubsection{Modify the ocean inventory of a tracer of a \textit{re-started} experiment}
-\vspace{1mm}
-
-There are three different ways in which for a closed system, the inventory of a tracer can be modified:
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-\item Add a flux forcing, to the ocean surface or the ocean as a whole. The tracer change is then the total global flux times the duration of the forcing. Note that the forcing can be positive or negative (to effect a decrease in the tracer inventory)
-
-\vspace{1mm}
-\item There is a parameter that add to or subtract from, the tracer inventory at the very beginning of an experiment (and assuming it is running on from a \textit{re-start}). The parameter name is \texttt{bg\_ocn\_dinit\_nn}, where \texttt{nn} is the tracer \textit{number} (which can be found in the parameter list table PDF, or by inspection of the file \texttt{tracer\_define.ocn} (for ocean, dissolved tracers) in the directory \texttt{cgenie.muffin/genie-main/data/input}. For example:
-\\\texttt{bg\_ocn\_dinit\_8=1.0E-6}
-\\will add 1 \(\mu\)M kg\(^{-1}\) of PO\(_{4}\) (\#8 is the tracer number of dissolved phosphate), uniformly to the ocean.
-Note that a negative value will result in the subtraction of a uniform concentration form every grip cell in the ocean (meaning that care has to be taken to ensure that negative numbers to not appear following subtraction).
-
-\vspace{1mm}
-\item There is a variant to the concentration adjusting parameter that is enabled by setting the parameter
-\\ \texttt{bg\_ctrl\_ocn\_dinit} to \texttt{false} (it is \texttt{true} by default). \texttt{bg\_ocn\_dinit\_nn} now acts as a scaling factor that is applied to the tracer concentration field. The new concentration field is equal to the old concentration field (from the \textit{re-start}), times \texttt{(1.0 + bg\_ocn\_dinit\_nn)}, e.g.:
-\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
-\\\texttt{bg\_ocn\_dinit\_8=0.5}
-\\will result in a 50\% increase in the concentration of dissolved phosphate   everywhere in the ocean (and a value of \texttt{1.0} doubles  concentrations). Conversely, a value less than one will result in a proportional reduction everywhere, e.g.:
-\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
-\\\texttt{bg\_ocn\_dinit\_8=-0.2}
-\\generates a 20\% decrease everywhere.
-
-\end{enumerate}
-
-Obviously, if the experiment is not being run from a re-start, or is being run from a re-start which does not include the particular tracer, then the initial value of the trace can be set. The parameter name is \texttt{bg\_ocn\_init\_nn}, where \texttt{nn} is the tracer \textit{number}.
-
-%------------------------------------------------
-%
-\subsubsection{Determine the CH4 flux required to achieve a particular atmospheric pCH4 value}
-\vspace{1mm}
-
-Unlike the concentration of CO\(_{2}\) in the atmosphere, which if restored to a chosen value during a \textit{spin-up} experiment, will remain at that value in a \textit{continuation} experiment (if no other perturbation of the carbon cycle or CO2 emissions have been prescribed), CH\(_{4}\) in the atmosphere decays with a lifetime of ca. 8 years (with a small fraction dissolving in ocean surface waters and being oxidized in the ocean). Hence, atmospheric CH\(_{4}\) \textit{restored} to a particular value in a spin-up, requires that restoring to be maintained in any \textit{continuation} experiment or CH\(_{4}\) will quickly decay to zero. However, doing this (\textit{restoring} CH\(_{4}\) concentrations), prevents the effect of CH\(_{4}\) emissions on being assessed (as the atmospheric composition is being help constant).\\
-An alternative would be carry out the \textit{spin-up} experiment with no \textit{restoring} of atmospheric CH\(_{4}\) (or \textit{restoring} to zero), and then run the \textit{continuation} experiment with no CH\(_{4}\) \textit{restoring}. This would enable e.g. CH\(_{4}\) emissions experiments to be carried out and the change in atmospheric CH\(_{4}\) in response to be simulated. The problem here is that the lifetime of  CH\(_{4}\) in the atmosphere scales with the CH\(_{4}\) concentration. So in starting with no CH\(_{4}\) in the atmosphere, the CH\(_{4}\) lifetime is relatively short, and the response to CH\(_{4}\) emissions will be underestimated.\\
-What is in effect 'missing' are the (natural) sources of CH4 to the atmosphere such as wetlands, which at steady state, provide a CH\(_{4}\) flux that balances the oxidation rate of CH\(_{4}\) in the atmosphere (and ocean). cGENIE has a \textit{parameter} for this: \texttt{ac\_par\_atm\_wetlands\_FCH4} (mol yr\(^{-1}\)) (with the isotopic composition of this source set by: \texttt{ac\_par\_atm\_wetlands\_FCH4\_d13C}). All that then remains is to determine the flux of CH\(_{4}\) that balances the rate of oxidative loss for the desired atmospheric CH\(_{4}\) concentration. To do this:
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-        \item Carry out a \textit{spin-up} with atmospheric CH\(_{4}\) \textit{restored} to the desired concentration.\footnote{For an example: see experiment \texttt{EXAMPLE\_p0055c\_PO4\_CH4\_SPIN} described in \textit{cGENIE.Examples}.}
-
-\vspace{1mm}
-        \item Determine the total loss rate of CH\(_{4}\) (including both atmospheric oxidation and invasion (and subsequent oxidation) into the ocean) -- this is recorded in the \textit{time-series} results file:\\ \texttt{biogem\_series\_focnatm\_pCH4.res}\footnote{Second column (the value in units of mol yr-1)}.
-
-\vspace{1mm}
-        \item Set the \textit{parameter} \texttt{ac\_par\_atm\_wetlands\_FCH4} equal to this value.
-\end{enumerate}
-
-An example of a spin-up in which a prescribed ('wetland') flux of CH\(_{4}\) to the atmosphere is set, is described in:\\ \textit{cGENIE.Examples} -- \textit{spin-up} example \texttt{EXAMPLE\_p0055c\_PO4\_CH4\_SPIN2}
-
-%------------------------------------------------
-%
-\subsubsection{Determine the atmospheric radiocarbon flux required to achieve a steady state 14C system}
-\vspace{1mm}
-
-First, you need to spin the system with the atmosphere restored to the e.g. pre-industrial \(\Delta^{14}\)C value desired. There are two ways then to diagnose the equivalent \(^{14}\)C flux:
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-\item Sum the total mol inventory of \(\Delta^{14}\)C in the ocean (as DIC) and atmosphere (CO\(_{2}\)), both of which can be found in the relevant time-series output. The radiocarbon decay rate multiplied by the (steady state) inventory then gives the total decay, which of course is equal to the cosmogenic input flux needed to maintain steady state.
-
-\vspace{1mm}
-\item Rather simpler, enabled by some recent output code changes, is simply to read off the reported atmospheric flux forcing that is being applied to restore the atmosphere \(\Delta^{14}\)C value. The relevant time-series output file is:
-\\\texttt{biogem\_series\_diag\_misc\_specified\_forcing\_pCO2\_14C.res}
-
-\end{enumerate}
-
-Once the balancing \(^{14}\)C flux value has been obtained,  the namelist parameter controlling the rate of cosmogenic \(^{14}\)C production (by default, zero): \texttt{ac\_par\_atm\_F14C}
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\section{HOW-TO ...  biology}
-
-%------------------------------------------------
-%
-\subsubsection{Configure an abiotic ocean}
-\vspace{1mm}
-
-Biological productivity in the ocean can be completely turned off to create an abiotic ocean (why you would want to do this is another matter ... perhaps analyzing the solubility pump or a 'deep-time' and prior to significant marine life study ... (?)). The biological option is set by the \textit{parameter}:
-\vspace{-5mm}\small\begin{verbatim}
-bg_par_bio_prodopt
-\end{verbatim}\vspace{-1mm}\normalsize
- which by default takes a value of \texttt{"1N1T\_PO4MM"} which selects the scheme described in \textit{Ridgwell et al.} [2007a]. To have no biological production in the ocean, add the following line to the end of the \textit{user-config} file\footnote{Or edit the existing line under the section '\texttt{--- BIOLOGICAL NEW PRODUCTION ---}'}:
-\vspace{-2mm}\small\begin{verbatim}
-bg_par_bio_prodopt="NONE"
-\end{verbatim}\normalsize\vspace{-2mm}
-With this set, you do not have to specify any biological production or remineralization \textit{namelist parameter} values in the \textit{user-config} file.
-
-%------------------------------------------------
-%
-\subsubsection{Prescribe the CaCO3:POC export ratio}
-\vspace{1mm}
-
-In the default\footnote{The default biological scheme is given by: \texttt{bg\_par\_bio\_prodopt='1N1T\_PO4MM'}.} 'biological' scheme in GENIE the CaCO3:POC export ratio from the surface ocean in BIOGEM is parameterized as a power law function of the degree of ambient over-saturation w.r.t. calcite [\textit{Ridgwell et al.}, 2007a,b]. The calculated CaCO\begin{math}_3\end{math}:POC ratio will vary therefore both spatially, particularly w.r.t. latitude (and temperature), as well as in time, if the surface ocean saturation state changes. The latter can arise from climatic (temperature) or circulation changes, or through a change in the DIC and/or ALK inventory of the ocean (such as resulting from emissions of fossil fuel CO2) or the re-partitioning of these species vertically within the ocean (e.g., as a result of any change in the strength of the biological pump).
-
-There may be situations in which it is advisable to hold the CaCO\begin{math}_3\end{math}:POC export ratio invariant. For instance, considering the current very considerable uncertainties in the impacts of ocean acidification on marine calcifiers [\textit{Ridgwell et al.}, 2007a] the safest assumption is arguably to exclude any acidification impact on calcification and carbonate export. Specifying a spatially uniform value of the CaCO\begin{math}_3\end{math}:POC ratio ratio (e.g. 0.25 or 0.3) also allows comparison with the results of early carbon cycle model studies. For deeper-time geological studies where little about marine carbonate production may be known \textit{a priori}, a spatially uniform value represents the simplest possible assumption (e.g., \textit{Panchuk et al.} [2008]).
-
-BIOGEM can be told to use a prescribed (spatially and temporally invariant) 2D field of CaCO\begin{math}_3\end{math}:POC export rain ratios (instead of calculating these internally as a function of ocean chemistry) by setting the 'Replace internal CaCO3:POC export rain ratio?' \textit{namelist parameter} flag to \texttt{.true.}:
-\vspace{-2pt}\begin{verbatim}
-bg_ctrl_force_CaCO3toPOCrainratio=.true.
-\end{verbatim}\vspace{-2pt}
-You must also then provide a 2D data field that specifies the value of the rain ratio at each and every surface ocean grid point. The filename of this field is set by default to:
-\vspace{-2mm}\begin{verbatim}
-bg_par_CaCO3toPOCrainratio_file="CaCO3toPOCrainratio.dat"
-\end{verbatim}\vspace{-2mm}
-and the file must be located in the 'BIOGEM data input directory'\footnote{\texttt{\$RUNTIME\_ROOT} being equal to \texttt{\~{}/genie}.}, which by default is:
-\\\texttt{bg\_par\_indir\_name="} \texttt{\$RUNTIME\_ROOT/genie-biogem/data/input"}
-
-This 2-D field must be in the form of an ASCII file with space (or tab) separated values arranged in rows and columns of latitude and longitude. The format of the file must follow the GOLDSTEIN ocean grid with the first line being the most Northerly row, and the last line the most Southerly row of grid points. Data along a row is from West to East. The latitude of the first column of values must be consistent with the defined starting latitude of the model grid, which is specified by the namelist parameter \texttt{gm\_par\_grid\_lon\_offset}\footnote{-260E by default}. Examples are given in the code repository\footnote{e.g., \texttt{\~{}/genie/genie-biogem/data/input/CaCO3toPOCrainratio\_worbe2\_preindustrial.dat}}.
-
-If you are using a uniform value, it is an easy enough job to create a \begin{math}36\times36\end{math} array of the value you so desire\footnote{It doesn't matter if you specify a value over land because only values associated with wet cells will be acted on.}.
-
-If you want to hold a previously-calculated (spatially variable) CaCO\begin{math}_3\end{math}:POC field constant, then the easiest way to achieve this is to copy the information contained in the \textit{time-slice} results field:\\
-\texttt{misc\_sur\_rCaCO3toPOC} in the results netCDF file \texttt{fields\_biogem\_2d.nc}\footnote{You must have the 'miscellaneous properties' time-slice save flag set to:\\
-\texttt{bg\_ctrl\_data\_save\_slice\_misc=.true.} (the default) for this field to be saved.}. Because this is a 3D data field (\begin{math}36\times36\times8\end{math}), carefully highlight just the surface ocean (2D) distribution (e.g., from the Panoply viewer) or extract from the netCDF file by some other means, and then copy and paste into:\\
-\texttt{CaCO3toPOCrainratio.dat} (or whatever you have specified the filename as). When copying Panoply data, 'NaN's should be replaced by values of zero. Take care that the final (steady-state) time-slice is being copied and not the first (un-spunup) one ...
-
-\textbf{TIP}: In order to quantify the importance of calcification feedbacks with CO2 and climate, two model integrations are required: one with the CaCO\begin{math}_3\end{math}:POC ratio held constant and the other with it allowed to vary, thereby allowing the effect of a changing CaCO\begin{math}_3\end{math}:POC ratio on the system to to elucidated.
-
-%------------------------------------------------
-%
-\subsubsection{Prescribe biological export production}
-\vspace{1mm}
-
-Two possibilities:
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-        \item \textbf{Via a full prescription of all particulate fluxes in surface ocean}
-                \\Create a full set of particulate (sediment tracer) flux forcings fields for the surface ocean, one for each biologically-related sediment tracer selected in the model, including isotopes (and trace metals). Everything except for the surface layer can be left as a zero (0.0) in the two 3D spatial fields required for each tracer.
-        \\You must also create a set of dissolved (ocean) tracer flux forcings fields for the surface ocean, one for each dissolved tracer associated with the particulates and selected in the model (including isotopes etc). The dissolved tracer flux fields must be create so as to exactly cancel out the particulate fields to conserve mass. For most tracers this is trivial, i.e., the fields for P in particulate organic matter (sed\_POP) need be associated with fields for dissolved PO4 (ocn\_PO4) which will simply be equal in magnitude but opposite in sign to POP. Complications start to arise for CaCO3 and there is also the question of alkalinity changes associated with organic matter creation/destruction (via changes in NO3), so this method, whilst the most flexible, is not without its complications and degree of tediousness (i.e. would not recommend).
-
-\vspace{1mm}
-        \item \textbf{By just prescribing just the POC flux}
-                \\An alternative has been provided enabling a full biological productivity in the surface ocean, but controlled by prescribing just the particulate organic carbon export flux. This 'biological' scheme is selected with:
-\vspace{-2.5mm}\begin{verbatim}bg_par_bio_prodopt="bio_POCflux"\end{verbatim}\vspace{-2.5mm}
-What happens in practice is that the POC flux is used to calculate the equivalent PO4 change in the surface ocean, and then this is passed to the biological scheme and export production calculated 'as usual'. (The POC flux forcing is set to zero once the associated PO4 (uptake) flux has been calculated.)
-                \\A particulate (sediment tracer) flux forcing for POC in the surface ocean still has to be defined and selected, but no other \textit{forcings} (including the associated removed dissolved tracers) are required. An example forcing configuration is given in \texttt{worjh2.FPOC\_Caoetal2009} (and selected by: \texttt{bg\_par\_forcing\_name="worjh2.FPOC\_Caoetal2009"})
-An example \textit{user-config}: \texttt{EXAMPLE.worjh2.Caoetal2009\_FPOC} illustrating this is provided.
-
-\noindent \textbf{NOTE}: Take care with dissolved organic matter (DOM) production, as the specified POC flux is automatically increased to take into account DOM production. i.e. is 50\% of export is specified to be partitioned into dissolved rather than particulate organic matter export, whatever is specified in the POC export forcing would be internally doubled, before being partitioned into POM and DOM.
-\noindent \textbf{NOTE}: Also take care with the units of the flux \textit{forcing} to the surface layer in the ocean, which are in mol yr-1. The main particulate flux output is in units of mol m-2 yr-1, but since \textit{c}GENIE is invariably run on a equal area grid it is not difficult to convert export production densities to mol yr-1 (you either need to divide the area of the Earth's surface by the number of grid points, or save the ocean grid information -- see netCDF save options in the User Manual). Alternatively, as of revision \textit{r}8825, \textit{c}GENIE saves the primary particulate flux fields also in units of mol yr-1 (assuming you have the biological or full netCDF save options selected -- see netCDF save options in the User Manual).
-\\Be aware that if there is insufficient PO4 to support the require POC flux, the entire POC flux will still be created, meaning that you may end up with regions of negative nutrient concentration.
-
-\end{enumerate}
-
-%------------------------------------------------
-%
-\subsubsection{Include a R-DOM cycle in the ocean}
+\subsection*{Include a R-DOM cycle in the ocean}
 \vspace{1mm}
 
 The parameter: \texttt{bg\_ctrl\_bio\_remin\_RDOM\_photolysis} determines whether RDOM degradation is restricted to the surface layer and occurs only by/associated with photolysis. It can be \texttt{.true.} or \texttt{.false.} and by default is set to:
@@ -10361,7 +10273,8 @@ When set \texttt{.true.}, RDOM degradation is set to zero everywhere in the ocea
 
 %------------------------------------------------
 %
-\subsubsection{Include a Cd cycle in the ocean}
+\newpage
+\subsection*{Include a Cd cycle in the ocean}
 \vspace{1mm}
 
 In order to run cGENIE with ocean cadmium cycle, the following \textit{base config}: \\
@@ -10382,21 +10295,40 @@ qsub -q kitten.q -j y -o cgenie_log -S
 
 %------------------------------------------------
 %
-\subsubsection{Include an iodine cycle in the ocean}
+\newpage
+\subsection*{Include an iodine cycle in the ocean}
 \vspace{1mm}
 
-In order to run cGENIE with a marine iodine cycle, one of the following \textit{base-config}s is needed:
-\vspace{-1mm}\begin{verbatim}
+In order to run \textbf{muffin} with a marine iodine cycle, several additional tracers need to be selected and initialized in the base configuration file:
+\vspace{-1mm}\small\begin{verbatim}
+# list selected biogeochemical tracers
+gm_ocn_select_92=.true.     #   I   -- 'iodide' 
+gm_ocn_select_93=.true.     #   IO3 -- 'iodate' 
+gm_sed_select_79=.true.     #   POI -- 'particulate organic iodine (POI)'
+# list biogeochemical tracer initial values
+bg_ocn_init_93=500.0E-09
+bg_ocn_init_94=0.0E-09
+\end{verbatim}\normalsize\vspace{-1mm}
+Remember, when adding 2 ocean tracers, the value of the parameter defining the total number of tracers:
+\vspace{-2mm}\small\begin{verbatim}
+GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=xxx'
+\end{verbatim}\normalsize\vspace{-2mm}
+must be increased by 2.
+
+This information is also provided as part of the \textbf{muffingen} software release as the file \textsf{\footnotesize TRACERADDITION.iodinecycle.txt} 
+A couple of EXAMPLE \textit{base-config} files are also provided:
+\vspace{-1mm}\small\begin{verbatim}
 cgenie.eb_go_gs_ac_bg.worjh2.BASEI
 cgenie.eb_go_gs_ac_bg.worjh2.BASEI
 cgenie.eb_go_gs_ac_bg.worbe2.BASESI
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 Of these, recommended is one of the 16-level ocean \texttt{worjh2} configurations\footnote{The difference between the two \texttt{worjh2} configurations is that one (with the '\texttt{S}' in '\texttt{BASESI}' also includes a sulphur cycle.} as the oxygen minimum zones in the 8-level ocean \texttt{worbe2} configuration are much more poorly developed (see \textit{Ridgwell et al.} [2007a]).
 
-Example configurations of several different levels of complexity of iodine cycling are given in the follow sections.
+The ocean iodine cycle can then be configured in several different ways and  levels of complexity, as described in the following sections.
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{Basic ('abiotic') iodine cycle}
 \vspace{1mm}
 
@@ -10445,6 +10377,7 @@ EXAMPLE.worjh2.PO4Ibasic.SPIN 10000\end{verbatim}\vspace{-1mm}
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{'Biotic' component to the iodine cycle}
 \vspace{1mm}
 
@@ -10478,6 +10411,90 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ...  biological production}
+
+%------------------------------------------------
+%
+\subsection*{Configure an abiotic ocean}
+\vspace{1mm}
+
+Biological productivity in the ocean can be completely turned off to create an abiotic ocean (why you would want to do this is another matter ... perhaps analyzing the solubility pump or a 'deep-time' and prior to significant marine life study ... (?)). The biological option is set by the \textit{parameter}:
+\vspace{-5mm}\small\begin{verbatim}
+bg_par_bio_prodopt
+\end{verbatim}\vspace{-1mm}\normalsize
+ which by default takes a value of \texttt{"1N1T\_PO4MM"} which selects the scheme described in \textit{Ridgwell et al.} [2007a]. To have no biological production in the ocean, add the following line to the end of the \textit{user-config} file\footnote{Or edit the existing line under the section '\texttt{--- BIOLOGICAL NEW PRODUCTION ---}'}:
+\vspace{-2mm}\small\begin{verbatim}
+bg_par_bio_prodopt="NONE"
+\end{verbatim}\normalsize\vspace{-2mm}
+With this set, you do not have to specify any biological production or remineralization \textit{namelist parameter} values in the \textit{user-config} file.
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{Prescribe the CaCO3:POC export ratio}
+\vspace{1mm}
+
+In the default\footnote{The default biological scheme is given by: \texttt{bg\_par\_bio\_prodopt='1N1T\_PO4MM'}.} 'biological' scheme in GENIE the CaCO3:POC export ratio from the surface ocean in BIOGEM is parameterized as a power law function of the degree of ambient over-saturation w.r.t. calcite [\textit{Ridgwell et al.}, 2007a,b]. The calculated CaCO\begin{math}_3\end{math}:POC ratio will vary therefore both spatially, particularly w.r.t. latitude (and temperature), as well as in time, if the surface ocean saturation state changes. The latter can arise from climatic (temperature) or circulation changes, or through a change in the DIC and/or ALK inventory of the ocean (such as resulting from emissions of fossil fuel CO2) or the re-partitioning of these species vertically within the ocean (e.g., as a result of any change in the strength of the biological pump).
+
+There may be situations in which it is advisable to hold the CaCO\begin{math}_3\end{math}:POC export ratio invariant. For instance, considering the current very considerable uncertainties in the impacts of ocean acidification on marine calcifiers [\textit{Ridgwell et al.}, 2007a] the safest assumption is arguably to exclude any acidification impact on calcification and carbonate export. Specifying a spatially uniform value of the CaCO\begin{math}_3\end{math}:POC ratio ratio (e.g. 0.25 or 0.3) also allows comparison with the results of early carbon cycle model studies. For deeper-time geological studies where little about marine carbonate production may be known \textit{a priori}, a spatially uniform value represents the simplest possible assumption (e.g., \textit{Panchuk et al.} [2008]).
+
+BIOGEM can be told to use a prescribed (spatially and temporally invariant) 2D field of CaCO\begin{math}_3\end{math}:POC export rain ratios (instead of calculating these internally as a function of ocean chemistry) by setting the 'Replace internal CaCO3:POC export rain ratio?' \textit{namelist parameter} flag to \texttt{.true.}:
+\vspace{-2pt}\begin{verbatim}
+bg_ctrl_force_CaCO3toPOCrainratio=.true.
+\end{verbatim}\vspace{-2pt}
+You must also then provide a 2D data field that specifies the value of the rain ratio at each and every surface ocean grid point. The filename of this field is set by default to:
+\vspace{-2mm}\begin{verbatim}
+bg_par_CaCO3toPOCrainratio_file="CaCO3toPOCrainratio.dat"
+\end{verbatim}\vspace{-2mm}
+and the file must be located in the 'BIOGEM data input directory'\footnote{\texttt{\$RUNTIME\_ROOT} being equal to \texttt{\~{}/genie}.}, which by default is:
+\\\texttt{bg\_par\_indir\_name="} \texttt{\$RUNTIME\_ROOT/genie-biogem/data/input"}
+
+This 2-D field must be in the form of an ASCII file with space (or tab) separated values arranged in rows and columns of latitude and longitude. The format of the file must follow the GOLDSTEIN ocean grid with the first line being the most Northerly row, and the last line the most Southerly row of grid points. Data along a row is from West to East. The latitude of the first column of values must be consistent with the defined starting latitude of the model grid, which is specified by the namelist parameter \texttt{gm\_par\_grid\_lon\_offset}\footnote{-260E by default}. Examples are given in the code repository\footnote{e.g., \texttt{\~{}/genie/genie-biogem/data/input/CaCO3toPOCrainratio\_worbe2\_preindustrial.dat}}.
+
+If you are using a uniform value, it is an easy enough job to create a \begin{math}36\times36\end{math} array of the value you so desire\footnote{It doesn't matter if you specify a value over land because only values associated with wet cells will be acted on.}.
+
+If you want to hold a previously-calculated (spatially variable) CaCO\begin{math}_3\end{math}:POC field constant, then the easiest way to achieve this is to copy the information contained in the \textit{time-slice} results field:\\
+\texttt{misc\_sur\_rCaCO3toPOC} in the results netCDF file \texttt{fields\_biogem\_2d.nc}\footnote{You must have the 'miscellaneous properties' time-slice save flag set to:\\
+\texttt{bg\_ctrl\_data\_save\_slice\_misc=.true.} (the default) for this field to be saved.}. Because this is a 3D data field (\begin{math}36\times36\times8\end{math}), carefully highlight just the surface ocean (2D) distribution (e.g., from the Panoply viewer) or extract from the netCDF file by some other means, and then copy and paste into:\\
+\texttt{CaCO3toPOCrainratio.dat} (or whatever you have specified the filename as). When copying Panoply data, 'NaN's should be replaced by values of zero. Take care that the final (steady-state) time-slice is being copied and not the first (un-spunup) one ...
+
+\textbf{TIP}: In order to quantify the importance of calcification feedbacks with CO2 and climate, two model integrations are required: one with the CaCO\begin{math}_3\end{math}:POC ratio held constant and the other with it allowed to vary, thereby allowing the effect of a changing CaCO\begin{math}_3\end{math}:POC ratio on the system to to elucidated.
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{Prescribe biological export production}
+\vspace{1mm}
+
+There are two main possibilities:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+        \item \textbf{Via a full prescription of all particulate fluxes in surface ocean}
+                \\Create a full set of particulate (sediment tracer) flux forcings fields for the surface ocean, one for each biologically-related sediment tracer selected in the model, including isotopes (and trace metals). Everything except for the surface layer can be left as a zero (0.0) in the two 3D spatial fields required for each tracer.
+        \\You must also create a set of dissolved (ocean) tracer flux forcings fields for the surface ocean, one for each dissolved tracer associated with the particulates and selected in the model (including isotopes etc). The dissolved tracer flux fields must be create so as to exactly cancel out the particulate fields to conserve mass. For most tracers this is trivial, i.e., the fields for P in particulate organic matter (sed\_POP) need be associated with fields for dissolved PO4 (ocn\_PO4) which will simply be equal in magnitude but opposite in sign to POP. Complications start to arise for CaCO3 and there is also the question of alkalinity changes associated with organic matter creation/destruction (via changes in NO3), so this method, whilst the most flexible, is not without its complications and degree of tediousness ...
+
+\vspace{1mm}
+        \item \textbf{By just prescribing just the POC flux}
+                \\An alternative has been provided enabling a full biological productivity in the surface ocean, but controlled by prescribing just the particulate organic carbon export flux. This 'biological' scheme is selected with:
+\vspace{-2.5mm}\begin{verbatim}bg_par_bio_prodopt="bio_POCflux"\end{verbatim}\vspace{-2.5mm}
+What happens in practice is that the POC flux is used to calculate the equivalent PO4 change in the surface ocean, and then this is passed to the biological scheme and export production calculated 'as usual'. (The POC flux forcing is set to zero once the associated PO4 (uptake) flux has been calculated.)
+                \\A particulate (sediment tracer) flux forcing for POC in the surface ocean still has to be defined and selected, but no other \textit{forcings} (including the associated removed dissolved tracers) are required. An example forcing configuration is given in \texttt{worjh2.FPOC\_Caoetal2009} (and selected by: \texttt{bg\_par\_forcing\_name="worjh2.FPOC\_Caoetal2009"})
+An example \textit{user-config}: \texttt{EXAMPLE.worjh2.Caoetal2009\_FPOC} illustrating this is provided.
+
+\noindent \textbf{NOTE}: Take care with dissolved organic matter (DOM) production, as the specified POC flux is automatically increased to take into account DOM production. i.e. is 50\% of export is specified to be partitioned into dissolved rather than particulate organic matter export, whatever is specified in the POC export forcing would be internally doubled, before being partitioned into POM and DOM.
+\noindent \textbf{NOTE}: Also take care with the units of the flux \textit{forcing} to the surface layer in the ocean, which are in mol yr-1. The main particulate flux output is in units of mol m-2 yr-1, but since \textit{c}GENIE is invariably run on a equal area grid it is not difficult to convert export production densities to mol yr-1 (you either need to divide the area of the Earth's surface by the number of grid points, or save the ocean grid information -- see netCDF save options in the User Manual). Alternatively, as of revision \textit{r}8825, \textit{c}GENIE saves the primary particulate flux fields also in units of mol yr-1 (assuming you have the biological or full netCDF save options selected -- see netCDF save options in the User Manual).
+\\Be aware that if there is insufficient PO4 to support the require POC flux, the entire POC flux will still be created, meaning that you may end up with regions of negative nutrient concentration.
+
+\end{enumerate}
 
 %------------------------------------------------
 
@@ -10522,6 +10539,7 @@ eg_par_ecogem_force_T_file="20170811.worjh2.8P8Z.pal.3x_SST.dat"
 
 \hfill \break
 
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{Implement 'instantaneous remineralization'}
 \vspace{1mm}
 
@@ -10553,12 +10571,15 @@ Why do this? It simplifies calculation of flux mass balances, as material leavin
 
 %------------------------------------------------
 %
-\noindent\rule{4cm}{0.5pt}
-\subsection*{Alternative schemes}
+\newpage
+\subsection*{Alternative remin schemes}
 \vspace{1mm}
+
+\hfill \break
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{Implement an alternative fixed remineralization profile for POC (e.g. Martin curve)}
 \vspace{1mm}
 
@@ -10587,6 +10608,7 @@ Note that these parameterizations can be combined with ballasting and will act o
 
 %------------------------------------------------
 %
+\noindent\rule{4cm}{0.5pt}
 \subsubsection{Implement particulate organic carbon 'ballasting'}
 \vspace{1mm}
 
@@ -10764,6 +10786,51 @@ which will strip out any accidental CR characters.
 \end{itemize}
 \end{enumerate}
 \vspace{1mm}
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{Determine the CH4 flux required to achieve a particular atmospheric pCH4 value}
+\vspace{1mm}
+
+Unlike the concentration of CO\(_{2}\) in the atmosphere, which if restored to a chosen value during a \textit{spin-up} experiment, will remain at that value in a \textit{continuation} experiment (if no other perturbation of the carbon cycle or CO2 emissions have been prescribed), CH\(_{4}\) in the atmosphere decays with a lifetime of ca. 8 years (with a small fraction dissolving in ocean surface waters and being oxidized in the ocean). Hence, atmospheric CH\(_{4}\) \textit{restored} to a particular value in a spin-up, requires that restoring to be maintained in any \textit{continuation} experiment or CH\(_{4}\) will quickly decay to zero. However, doing this (\textit{restoring} CH\(_{4}\) concentrations), prevents the effect of CH\(_{4}\) emissions on being assessed (as the atmospheric composition is being help constant).\\
+An alternative would be carry out the \textit{spin-up} experiment with no \textit{restoring} of atmospheric CH\(_{4}\) (or \textit{restoring} to zero), and then run the \textit{continuation} experiment with no CH\(_{4}\) \textit{restoring}. This would enable e.g. CH\(_{4}\) emissions experiments to be carried out and the change in atmospheric CH\(_{4}\) in response to be simulated. The problem here is that the lifetime of  CH\(_{4}\) in the atmosphere scales with the CH\(_{4}\) concentration. So in starting with no CH\(_{4}\) in the atmosphere, the CH\(_{4}\) lifetime is relatively short, and the response to CH\(_{4}\) emissions will be underestimated.\\
+What is in effect 'missing' are the (natural) sources of CH4 to the atmosphere such as wetlands, which at steady state, provide a CH\(_{4}\) flux that balances the oxidation rate of CH\(_{4}\) in the atmosphere (and ocean). cGENIE has a \textit{parameter} for this: \texttt{ac\_par\_atm\_wetlands\_FCH4} (mol yr\(^{-1}\)) (with the isotopic composition of this source set by: \texttt{ac\_par\_atm\_wetlands\_FCH4\_d13C}). All that then remains is to determine the flux of CH\(_{4}\) that balances the rate of oxidative loss for the desired atmospheric CH\(_{4}\) concentration. To do this:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+        \item Carry out a \textit{spin-up} with atmospheric CH\(_{4}\) \textit{restored} to the desired concentration.\footnote{For an example: see experiment \texttt{EXAMPLE\_p0055c\_PO4\_CH4\_SPIN} described in \textit{cGENIE.Examples}.}
+
+\vspace{1mm}
+        \item Determine the total loss rate of CH\(_{4}\) (including both atmospheric oxidation and invasion (and subsequent oxidation) into the ocean) -- this is recorded in the \textit{time-series} results file:\\ \texttt{biogem\_series\_focnatm\_pCH4.res}\footnote{Second column (the value in units of mol yr-1)}.
+
+\vspace{1mm}
+        \item Set the \textit{parameter} \texttt{ac\_par\_atm\_wetlands\_FCH4} equal to this value.
+\end{enumerate}
+
+An example of a spin-up in which a prescribed ('wetland') flux of CH\(_{4}\) to the atmosphere is set, is described in:\\ \textit{cGENIE.Examples} -- \textit{spin-up} example \texttt{EXAMPLE\_p0055c\_PO4\_CH4\_SPIN2}
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{Determine the atmospheric radiocarbon flux required to achieve a steady state 14C system}
+\vspace{1mm}
+
+First, you need to spin the system with the atmosphere restored to the e.g. pre-industrial \(\Delta^{14}\)C value desired. There are two ways then to diagnose the equivalent \(^{14}\)C flux:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Sum the total mol inventory of \(\Delta^{14}\)C in the ocean (as DIC) and atmosphere (CO\(_{2}\)), both of which can be found in the relevant time-series output. The radiocarbon decay rate multiplied by the (steady state) inventory then gives the total decay, which of course is equal to the cosmogenic input flux needed to maintain steady state.
+
+\vspace{1mm}
+\item Rather simpler, enabled by some recent output code changes, is simply to read off the reported atmospheric flux forcing that is being applied to restore the atmosphere \(\Delta^{14}\)C value. The relevant time-series output file is:
+\\\texttt{biogem\_series\_diag\_misc\_specified\_forcing\_pCO2\_14C.res}
+
+\end{enumerate}
+
+Once the balancing \(^{14}\)C flux value has been obtained,  the namelist parameter controlling the rate of cosmogenic \(^{14}\)C production (by default, zero): \texttt{ac\_par\_atm\_F14C}
 
 %------------------------------------------------
 %
@@ -12054,6 +12121,46 @@ with the the SW (shortwave) flux (\texttt{swflux}) being equivalent to the incid
 
 By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \texttt{bg\_par\_sig\_j\_S} a value of \texttt{1} (on account of the maximum grid size not being \textit{a priori} known).
 The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... re-start}
+
+%------------------------------------------------
+%
+\subsubsection{Modify the ocean inventory of a tracer of a \textit{re-started} experiment}
+\vspace{1mm}
+
+There are three different ways in which for a closed system, the inventory of a tracer can be modified:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Add a flux forcing, to the ocean surface or the ocean as a whole. The tracer change is then the total global flux times the duration of the forcing. Note that the forcing can be positive or negative (to effect a decrease in the tracer inventory)
+
+\vspace{1mm}
+\item There is a parameter that add to or subtract from, the tracer inventory at the very beginning of an experiment (and assuming it is running on from a \textit{re-start}). The parameter name is \texttt{bg\_ocn\_dinit\_nn}, where \texttt{nn} is the tracer \textit{number} (which can be found in the parameter list table PDF, or by inspection of the file \texttt{tracer\_define.ocn} (for ocean, dissolved tracers) in the directory \texttt{cgenie.muffin/genie-main/data/input}. For example:
+\\\texttt{bg\_ocn\_dinit\_8=1.0E-6}
+\\will add 1 \(\mu\)M kg\(^{-1}\) of PO\(_{4}\) (\#8 is the tracer number of dissolved phosphate), uniformly to the ocean.
+Note that a negative value will result in the subtraction of a uniform concentration form every grip cell in the ocean (meaning that care has to be taken to ensure that negative numbers to not appear following subtraction).
+
+\vspace{1mm}
+\item There is a variant to the concentration adjusting parameter that is enabled by setting the parameter
+\\ \texttt{bg\_ctrl\_ocn\_dinit} to \texttt{false} (it is \texttt{true} by default). \texttt{bg\_ocn\_dinit\_nn} now acts as a scaling factor that is applied to the tracer concentration field. The new concentration field is equal to the old concentration field (from the \textit{re-start}), times \texttt{(1.0 + bg\_ocn\_dinit\_nn)}, e.g.:
+\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
+\\\texttt{bg\_ocn\_dinit\_8=0.5}
+\\will result in a 50\% increase in the concentration of dissolved phosphate   everywhere in the ocean (and a value of \texttt{1.0} doubles  concentrations). Conversely, a value less than one will result in a proportional reduction everywhere, e.g.:
+\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
+\\\texttt{bg\_ocn\_dinit\_8=-0.2}
+\\generates a 20\% decrease everywhere.
+
+\end{enumerate}
+
+Obviously, if the experiment is not being run from a re-start, or is being run from a re-start which does not include the particular tracer, then the initial value of the trace can be set. The parameter name is \texttt{bg\_ocn\_init\_nn}, where \texttt{nn} is the tracer \textit{number}.
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
