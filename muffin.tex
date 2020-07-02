@@ -340,7 +340,7 @@ As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin
 
 The address of the new (centralized) home for muffin is:
 
-\vspace{2mm}
+\vspace{1mm}
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
 \vspace{2mm}
 
@@ -351,10 +351,11 @@ From here, there are 2 ways to get your mitts on the model code:
 
 \vspace{1mm}
 \item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME directory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
-
+\vspace{-1mm}
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
 \end{verbatim}
+\vspace{-1mm}
 
 By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. \footnote{Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.}
 
@@ -393,7 +394,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \vspace{1mm}
 \item \textbf{domino} (UCR cluster).
 \vspace{1mm} 
-\\ There is a single file to edit (which lives in the \texttt{genie-main} directory):
+\\ For running \textbf{muffin} on this cluster, there is a single file to edit (which lives in the \texttt{genie-main} directory):
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}. The resulting section of code at the end of \texttt{user.mak}  should then look something like:
@@ -417,12 +418,13 @@ NETCDF_DIR=/share/apps
 #NETCDF_DIR=/opt/local
 \end{verbatim}\normalsize
 \vspace{-1mm}
+with just a single line and assignment of the value of \texttt{NETCDF\_DIR} left un-commented.
 \end{enumerate}
 
 \vspace{1mm}
 \item \textbf{eevee} (UCR cluster).
 \vspace{1mm}
-\\ There are 2 files to edit (both of which of which live in the \texttt{genie-main} directory):
+\\ For using this particular cluster, there are 2 files to edit (both of which of which live in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- as per for \texttt{domino} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# eevee \#\#\#}).
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
@@ -432,7 +434,7 @@ NETCDF_DIR=/share/apps
 \vspace{1mm}
 \item \textbf{sprout} (UoB cluster). 
 \vspace{1mm}
-\\ There are 2 files to edit:
+\\ For this cluster, there are 2 files to edit:
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out the default setting (with a \texttt{\#} symbol) and then un-comment the line under the heading \texttt{\#\#\# sprout \#\#\#}.
 \item In \texttt{makefile.arc} -- towards the end of the file, under the heading:
@@ -754,6 +756,42 @@ In this particular example, the output should look something like the following:
 \caption{Schematic of the sequence-of-events in configuring and running an experiment.}
 \label{fig:chx-jobcreation}
 \end{figure}
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Creating new experiments!}
+
+The key to creating new experiments is to remember that the name of the user-configuration file, that contains the parameter settings that define that specific experiment, becomes the name of the experiment and hence name of the model results sub-directory in \textsf{\footnotesize cgenie\_output}. Changing the name of the \textit{user-config} file, hence leads to a new experiment name and a new model results sub-directory. (Conversely, not changing the name of the  \textit{user-config} file and re-running it results in the results of any previous experiment run using that \textit{user-config} file, being over-written.)
+
+To create a new \textit{user-config} file and hence new experiment, you can:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Create a blank text file \footnote{\texttt{\$ touch file.txt} will achieve this at the linux command line.} and populate the contents with the parameter value assignments you need for your new experiment.
+\\Inevitably, it is difficult to remember all the names and even values you want to specify, meaning that you'll end up looking at existing \textit{user-config} files and copying and pasting lines (or even the entire contents) from the old file(s) into your new \textit{user-config} file. So then you may was well ...
+
+\vspace{1mm}
+\item Copy and edit an existing file!
+\\This is the most practical approach -- pick an existing \textit{user-config} file that is closest to the specific experiment that you want to run -- copy and rename it, then edit the contents and save. You can do this by:
+\begin{itemize}[noitemsep]
+\item At the linux command line and working from the same directory (e.g. \textsf{\footnotesize LABS}) that the file you want to copy, lives in, by:
+\\\texttt{\$ cp oldfile newfile }
+\\(after which you can edit the new \textit{user-config} file \textsf{\footnotesize newfile}, re-save, and then run the experiment.)
+\item Or, using your sftp client (program):
+\\First -- drag the existing \textit{user-config} file to your local computer. On your local computer, rename the file. 
+
+Now you can edit the parameter values, re-save it, drag it back to the cluster (from your local computer) using the sftp client ... and finally run the experiment.
+\end{itemize}
+\vspace{1mm}
+
+\end{enumerate}
+
+Remember that the new \textit{user-config} file needs to be saved in the \textsf{\footnotesize genie-userconfigs/LABS} sub-directory (in the case of experiments carried out as part of the tutorials described in this manual), or anywhere else, as long as you specify the correct path to the directory where you save the new file to\footnote{See previous Section and the use of the 2nd parameter passed to \texttt{runmuffin.sh}}.
 
 %------------------------------------------------
 
