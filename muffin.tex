@@ -302,7 +302,7 @@ You are going to be installing the model from scratch – why? Why not? It will 
 
 In running \textbf{muffin} locally -- log into your \textbf{linux}/\textbf{macOS} box (and skip on to the next section)! \footnote{If you fail at this step, you'll have to take up box-modelling instead.}
 
-\noindent Or ... if you are running \textbf{muffin} remotely (e.g. on a user account on a computing cluster or server) -- log into the remote account using a suitable terminal program \footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
+\noindent Or ... and much more likely to be the case -- if you are running \textbf{muffin} \uline{remotely} (e.g. on a user account on a computing cluster or server), then log into the remote server or cluster account using a 'suitable terminal program'\footnote{It very much depends on what software you are using. Provided are instructions for some \uline{examples}, but only examples, and your reality may be rather different.}:
 
 \begin{itemize}
 \vspace{1mm}
@@ -320,10 +320,11 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
  When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs. As you type (the password), characters are being entered ... you just cannot see them. Don't panic -- type in the password and hit \textsf{\scriptsize Enter}.}
 
 \vspace{1mm}
-\item On a \textbf{Windoz} machine – first start e.g. the \textbf{WinSCP} program (an sftp file transfer client) or \textbf{PuTTY} (a 'shell', or 'terminal' window). Under ‘Host Name’, enter the clustername (e.g. \texttt{catname.ucr.edu}):
-\\The ‘Port number’ should be set to 22. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
-\\You will also need a terminal window (assuming you did not open that first). This can be opened by clicking on the ‘\textsf{\footnotesize Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{\footnotesize Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
-\\ You can also log in directly from the shell/terminal window of e.g. \textbf{PuTTY} rather than first opening an sftp connection.
+\item On a \textbf{Windoz} machine – first start the \textbf{WinSCP} program (an sftp file transfer client). Under \textsf{\footnotesize Host Name}, enter the remote server or cluster name (e.g. \texttt{catname.ucr.edu}):
+\\The \textsf{\footnotesize Port number} should be set to \textsf{\footnotesize 22}. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
+\\You will also need a terminal window. This can be opened by clicking on the ‘\textsf{\footnotesize Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{\footnotesize Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
+\\ You can also log in directly from the shell/terminal window e.g. \textbf{PuTTY} first (rather than first opening an sftp connection first).
+ You will sill have to open an sftp connection for file transfer.
 \end{itemize}
 
 %------------------------------------------------
