@@ -329,7 +329,7 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 
 %------------------------------------------------
 
-\subsection{Downloading the model code}
+\subsection{Downloading/installing the model code}
 
 The next step is to download a copy of the source code for \textbf{muffin}.
 
@@ -361,7 +361,7 @@ $ git clone https://github.com/derpycode/cgenie.muffin.git
 By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. \footnote{Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.}
 
 \vspace{1mm}
-\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button, and select \textsf{\footnotesize Download ZIP}.
+\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button on GitHub, and select \textsf{\footnotesize Download ZIP}.
 \\You then unpack/unzip the files and directory structure where you want it.
 \\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
@@ -371,11 +371,11 @@ By doing this, you have created your own code repository (and an identical copy 
 
 \subsection{Configuring the code}
 
-\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. where you have just cloned the code repository to). This will be your first real test of editing (and saving) a file on the remote server. You'll need to do this a bunch later and so it is worth developing a working strategy now if you are not already linux-friendly. For instance:
+\noindent You now need to configure some local environment settings so that \textbf{muffin} can find all the libraries etc. that it needs when the model compiles. The changes you need to make will depend on the platform where you will be running \textbf{muffin} (i.e. the computer where you have just cloned the code repository to). This will be your first real test of editing (and saving) a file on the remote server(!) You'll need to do this a bunch later and so it is worth developing a working strategy now if you are not already linux-friendly. For instance:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item Transfer the file locally (to your laptop/desktop). Edit and save it. transfer it back (hence replacing the original with the edited version).
+\item Transfer the file locally (to your laptop/desktop). Edit and save it. Then transfer it back again (hence replacing the original with the edited version). (You can also configure many sftp clients to allow you to edit and re-save the file more directly.)
 \vspace{1mm}
 \item Edit the file \textit{in situ} on the remote account using e.g. \textbf{vi} (see linux HOW-TO for brief notes).
 \vspace{1mm}
@@ -383,7 +383,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \end{enumerate}
 
 \vspace{1mm}
-\noindent The required configuration settings for \textbf{muffin} depend on the specific computing platform that you are running on. What follows is a list of the changes associated with some possible platforms that you might be using -- find the list name (\textbf{bold}) that corresponds to the platform that you are using.\footnote{If you are using a platform not listed here, you may be able to simply adapt the instructions for one of the ones listed.}
+\noindent The required configuration settings for \textbf{muffin} depend on the specific computing platform that you are running on. What follows is a list of the changes associated with some possible platforms that you might be using -- \uline{find the list name (\textbf{bold}) that corresponds to the platform that you are using} and ignore all the other options.\footnote{If you are using a platform not listed here, you may be able to simply adapt the instructions for one of the ones listed.}
 
 \begin{itemize}
 
@@ -398,7 +398,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \\ For running \textbf{muffin} on this cluster, there is a single file to edit (which lives in the \texttt{genie-main} directory):
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}. The resulting section of code at the end of \texttt{user.mak}  should then look something like:
+\item In the file \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}. The resulting section of code at the end of \texttt{user.mak}  should then look something like:
 \vspace{-1mm}
 \footnotesize\begin{verbatim}
 ### DEFAULT ###
@@ -419,7 +419,11 @@ NETCDF_DIR=/share/apps
 #NETCDF_DIR=/opt/local
 \end{verbatim}\normalsize
 \vspace{-1mm}
-with just a single line and assignment of the value of \texttt{NETCDF\_DIR} left un-commented.
+where the line:
+\\\texttt{\small NETCDF\_DIR=/share/apps}
+\\now has no comment symbol before it, and the line:
+\\\texttt{\small \#NETCDF\_DIR=/usr/local}
+\\is now 'commented out'.
 \end{enumerate}
 
 \vspace{1mm}
@@ -457,6 +461,11 @@ with just a single line and assignment of the value of \texttt{NETCDF\_DIR} left
 \vspace{1mm}
 \\ Please refer to the separate macOS instructions in Section \ref{how-to-macos}.
 
+\vspace{1mm}
+\item \textbf{Windows}. 
+\vspace{1mm}
+\\ Please refer to the separate Windows instructions in Section \ref{how-to-windows}.
+
 \end{itemize}
 
 %------------------------------------------------
@@ -464,14 +473,14 @@ with just a single line and assignment of the value of \texttt{NETCDF\_DIR} left
 \subsection{Testing the model code}
 
 \noindent Finally, you need to test the code to ensure that all the files have been cloned/installed correctly.
- First, change directory (see: Figure \ref{fig:directories} and refer to the linux HOW-TO) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
+ First, change directory (see: Figure \ref{fig:directories}, and refer to the linux HOW-TO) to\footnote{Note: the model is *always* run from \texttt{cgenie.muffin/genie-main}}:
 \vspace{-2mm}
 \begin{verbatim}
 cgenie.muffin/genie-main
 \end{verbatim}
 \vspace{-2mm}
 
-\noindent If you are not ‘linux-friendly’ (see: Section \ref{how-to-linux} for \textbf{linux} basics) – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type:
+\noindent If you are not ‘linux-friendly’ (see: Section \ref{how-to-linux} for \textbf{linux} basics) – maybe at first do this in steps – list the contents of the directory (\texttt{ls}) to check where you are (i.e. what directories are available to chance to), then change to \texttt{cgenie.muffin} (\texttt{cd cgenie.muffin}), then list again (\texttt{ls}) (and see what further directories are there), then change to \texttt{genie-main} (\texttt{cd genie-main}), and only then … type\footnote{Remembering that the \texttt{\$} is to indicate the command line, and you do not actually type it in.}:
 \vspace{-2mm}
 \begin{verbatim}
 $ make testbiogem
@@ -499,7 +508,7 @@ when you try this, you are probably in the wrong directory (it should be \textsf
 \end{verbatim}
 \vspace{-1mm}
 
-\noindent If you see this -- you can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o n g time at the line:
+\noindent If you see this -- you can then be certain that the model you have installed is producing identical (within tolerance) results to everyone else in the World who has ever installed \textbf{muffin}. Note that the model will pause for a l o o o o n g time at the line:
 \vspace{-2mm}
 \small
 \begin{verbatim}
@@ -530,9 +539,9 @@ Refer to the FAQ section at the end of this book for further clues as why the mo
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. Ridgwell et al. [2003]) is larger than this. It has hence been committed to the git repo as an archived file.
+\noindent GitHub does not host files larger than 100 MB, and the 'lookup table' for calculating opal dissolution in sediments (see e.g. \textit{Ridgwell et al.} [2003]) is larger than this. It has hence been committed to the git repo as an archived file.
 
-If (and \uline{only if}) a (open) silica cycle is to be employed in your \textbf{muffin} experiments, does this file need to be unpacked. A script is provided for this -- from \texttt{genie-main}:
+If (and \uline{only if}) a (open) silica cycle is to be employed in your \textbf{muffin} experiments, does this file need to be unpacked. A script is provided for this -- from \texttt{genie-main}, type:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -540,7 +549,7 @@ $ ./installmuffin.sh
 \end{verbatim}
 \vspace{-2mm}
 
-\noindent will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as well as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
+\noindent and this will unpack the opal lookup table to \texttt{genie-sedgem/data/input} as well as unpacking a copy of the calcium carbonate lookup table\footnote{For now, the \(CaCO_{3}\) lookup table also included in the git repo in its expended (unpacked) form.}.
 
 %------------------------------------------------
 
@@ -608,7 +617,7 @@ If unlucky, there will be conflict as your stashed changed are merged back onto 
 
 The overall sequence of configuring and running \textbf{muffin} (job submission to a cluster queue), is shown in Figure \ref{fig:chx-jobcreation}. Refer to this if in any doubt at any point.
 
-At the command-line (\texttt{\$}) in the genie-main directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
+At the command-line (\texttt{\$}) in the \textsf{\footnotesize genie-main} directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
 
 \vspace{-1mm}
 \begin{verbatim}
@@ -629,9 +638,10 @@ These parameters are:
 \item[\textbf{\#2}] ... is the name of the subdirectory (if any) containing the user configuration (‘\textit{user-config}’) file (i.e., the file containing the specification of a particular experiment).
 \item[\textbf{\#3}] ... is the name of the experiment itself. There must exist a file in the directory specified by parameter \#2 (\texttt{LABS}) with exactly the same name as you enter here for parameter \#3 (i.e. parameter \#3 points to a file in the directory given by parameter \#2).
 \item[\textbf{\#4}] ... is the run length of the experiment in years – this must be entered as an integer.
+\item[\textbf{(\#5)}] ... There is also one optional (5th) parameter (described later).
 \end{enumerate}
 
-There is also one optional (5th) parameter (described later).
+
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -683,6 +693,7 @@ The choice of what information to display on screen as the model is running is r
 \item[] \texttt{<DIC>} -- global mean ocean dissolved inorganic carbon (DIC) concentration (\(\mu\)mol kg-1)
 \item[] \texttt{<ALK>}   – global mean ocean alkalinity (ALK) concentration (\(\mu\)eq kg-1) and in experiments with a modern continental configuration, also:
 \item \texttt{AMO(Sv)} -- Atlantic meridional overturning circulation (Sv)
+\\(and assuming that you have a modern continental configuration to even have an Atlantic ocean!)
 \end{itemize}
 
 This information is reported at the same intervals as time-series data (see later and/or refer to the User Manual) is saved and is indicated by:
@@ -768,7 +779,7 @@ In this particular example, the output should look something like the following:
 
 The key to creating new experiments is to remember that the name of the user-configuration file, that contains the parameter settings that define that specific experiment, becomes the name of the experiment and hence name of the model results sub-directory in \textsf{\footnotesize cgenie\_output}. Changing the name of the \textit{user-config} file, hence leads to a new experiment name and a new model results sub-directory. (Conversely, not changing the name of the  \textit{user-config} file and re-running it results in the results of any previous experiment run using that \textit{user-config} file, being over-written.)
 
-To create a new \textit{user-config} file and hence new experiment, you can:
+There are two obvious ways to create a new \textit{user-config} file and hence new experiment (although the simplest and recommended way, is the 2nd one):
 
 \begin{enumerate}[noitemsep]
 
@@ -778,21 +789,21 @@ To create a new \textit{user-config} file and hence new experiment, you can:
 
 \vspace{1mm}
 \item Copy and edit an existing file!
-\\This is the most practical approach -- pick an existing \textit{user-config} file that is closest to the specific experiment that you want to run -- copy and rename it, then edit the contents and save. You can do this by:
+\\This is the most practical approach -- pick an existing \textit{user-config} file that is closest to the specific experiment that you want to run -- copy and rename it, then edit the contents and save. For the purpose of trying this out, you can literally pick on any existing file in the \textsf{\footnotesize LABS } subdirectory (of \textsf{\footnotesize genie-userconfigs}).
+\\ You can do this by:
 \begin{itemize}[noitemsep]
-\item At the linux command line and working from the same directory (e.g. \textsf{\footnotesize LABS}) that the file you want to copy, lives in, by:
+\item Using your sftp client (program):
+\\First -- drag the existing \textit{user-config} file to your local computer. On your local computer, rename the file as per how you would 'normally' rename any file. 
+\\Now you can edit the parameter values, re-save it, drag it back to the cluster (from your local computer) using the sftp client ... and finally run the experiment.
+\item Or, if you are comfortable working at the linux command line; working from the same directory (e.g. \textsf{\footnotesize LABS}) that the file you want to copy lives in, you can copy a file (to a new filename) by:
 \\\texttt{\$ cp oldfile newfile }
 \\(after which you can edit the new \textit{user-config} file \textsf{\footnotesize newfile}, re-save, and then run the experiment.)
-\item Or, using your sftp client (program):
-\\First -- drag the existing \textit{user-config} file to your local computer. On your local computer, rename the file. 
-
-Now you can edit the parameter values, re-save it, drag it back to the cluster (from your local computer) using the sftp client ... and finally run the experiment.
 \end{itemize}
 \vspace{1mm}
 
 \end{enumerate}
 
-\noindent Remember that the new \textit{user-config} file needs to be saved in (or copied to) the \textsf{\footnotesize genie-userconfigs/LABS} sub-directory (in the case of experiments carried out as part of the tutorials described in this manual), or anywhere else as long as you specify the correct path to the directory where you save the new file to\footnote{See previous Section and the use of the 2nd parameter passed to \texttt{runmuffin.sh}}.
+\noindent Remember that the new \textit{user-config} file needs to be saved in (or copied to) the \textsf{\footnotesize genie-userconfigs/LABS} sub-directory (in the case of experiments carried out as part of the tutorials described in this manual), or anywhere else ... as long as you specify the correct path to the directory where you save the new file to\footnote{See previous Section and the use of the 2nd parameter passed to \texttt{runmuffin.sh}}.
 
 %------------------------------------------------
 
@@ -816,6 +827,8 @@ We will primarily consider only results saved by the ocean biogeochemical module
 ~/cgenie_output/LAB_0.EXAMPLE/biogem
 \end{verbatim}
 \textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, the atmospheric chemistry module '\textbf{ATCHEM}' does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while the marine sediment module \textbf{SEDGEM} does save its own results, but only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
+
+\noindent NOTE: If in an sftp client window, you cannot 'see' the \textsf{\footnotesize cgenie\_output} directory, or cannot find any of the results sub-directories you are expecting, \uline{you will need to refresh the directory listing} (e.g. for \textbf{WinSCP}, there is a double green-arrow \textsf{\footnotesize Refresh} icon button near the top right of the window that you can click on). sftp client programs generally do not automatically refresh directory listing on the remote computer.
 
 %------------------------------------------------
 
@@ -9597,7 +9610,7 @@ Errors identified by `\texttt{brew doctor}' are most likely associated with some
 %------------------------------------------------
 
 
-\section{HOW-TO ... Windows(!) muffin}\label{how-to-redhat}
+\section{HOW-TO ... Windows(!) muffin}\label{how-to-windows}
 \vspace{2mm}
 
 %------------------------------------------------
