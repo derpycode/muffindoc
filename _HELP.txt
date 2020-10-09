@@ -93,6 +93,9 @@ HAT (POWER) SYMBOL
 ~ SYMBOL
 \(\sim\)
 
+\ SYMBOL
+\textbackslash 
+
 PERMIL
 \textperthousand
 \def\permille{\ensuremath{{}^\text{o}\mkern-5mu/\mkern-3mu_\text{oo}}}
