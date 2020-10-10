@@ -1227,15 +1227,14 @@ Note: \(CO_{2}\) is not being explicitly modeled in this experiment, but the lon
 
 Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher -- your choice) and save the file (with a different filename!). Re-run the experiment until sea-ice extent starts to approach a new steady state. You may want to try  longer simulations than suggested (\textgreater 100 years) if it becomes clear that the model is still far from steady-state by the end of the experiment. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
 
-HINT: Submitting the experiments to the cluster will allow you to run many many experiments (i.e. each with a different radiative forcing value) simultaneously.
+%\vspace{1mm}
+%\noindent\rule{4cm}{0.5pt}
+%\vspace{2mm}
 
-It is your choice whether you change the radiative forcing parameter value, run the experiment, but wait for it to finish before deciding the radiative forcing parameter value to try for the next experiment -- i.e. a sequential approach, or try running multiple different 'guesses' simultaneously by submitting multiple different experiments to the queue.
+\noindent 
+In terms of methodology -- or; 'how am I going to answer the question' -- you will need to run mutilple different model experiments, each with a different value for the radiative forcing parameter, and find out for what value of the parameter, the Earth becomes completely ice-covered. It is your choice whether you change the radiative forcing parameter value, run the experiment, but wait for it to finish before deciding the radiative forcing parameter value to try for the next experiment -- i.e. a sequential approach, or try running multiple different 'guesses' simultaneously by submitting multiple different experiments to the queue. Ideally, each experiment will have a different name.
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
-
-\noindent In each experiment, you want to be assessing how far towards the Equator the sea-ice limit encroaches by viewing some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming that you are running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but are not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little. This is also true for sea-ice area. Sea-ice volume is then the most reliable data (column) to keep track of in the \textit{time-series} output.)
+In each experiment, you want to be assessing how far towards the Equator the sea-ice limit encroaches by viewing some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming that you are running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but are not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little. This is also true for sea-ice area. Sea-ice volume is then the most reliable data (column) to keep track of in the \textit{time-series} output.)
 
 For the \textit{time-slice} data: atmospheric and ocean surface temperature and particularly sea-ice extent (fractional cover), (2-D biogem \textbf{NetCDF} file) may be informative.
 
