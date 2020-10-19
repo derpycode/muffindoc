@@ -1512,7 +1512,7 @@ You’ll then need to change directory back to \texttt{genie-main} to run the mo
 
 The ocean biogeochemistry module (\textbf{BIOGEM}) in \textbf{muffin} provides a framework for applying time- and spatially-variable ‘forcings’ of the Earth system\footnote{Refer to the '\textit{force the system}' \textsf{HOW-TO} in the muffin manual for further details on \textit{forcings}.} – fluxes or restored-to boundary conditions that can be prescribed for any gas, dissolved substance (including temperature and salinity), or particulate matter. Examples include freshwater input (== a negative salinity flux forcing) of the North Atlantic to alter ocean circulation, fossil fuel \(CO_{2}\) emissions to the atmosphere (== a \(CO_{2}\) gas flux forcing), or aeolian iron supply to the surface ocean (a 2-D dust flux forcing).
 
-For example: view the \textit{user-config} file: \texttt{LAB\_2.colorinjection} – you will see the following lines (under the heading: ‘\texttt{\# --- FORCINGS ---}’)
+For example: view the \textit{user-config} file: \textsf{\footnotesize LAB\_2.colorinjection} – you will see the following lines (under the heading: ‘\texttt{\# --- FORCINGS ---}’)
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -1524,9 +1524,9 @@ bg_par_ocn_force_scale_val_48=0.0
 \end{verbatim}
 \vspace{-2mm}
 
-The first line points \textbf{muffin} to a directory located in \texttt{cgenie.muffin/genie-forcings} that contains a set of files that define what geochemical property is going to be altered plus information about how the magnitude of the forcing changes with time.
+The first line points \textbf{muffin} to a directory located in \textsf{\footnotesize cgenie.muffin/genie-forcings} that contains a set of files that define what geochemical property is going to be altered plus information about how the magnitude of the forcing changes with time.
 
-There are then three lines (\texttt{bg\_par\_force\_point\_i=20}, ...) that specify the location in the ocean of the geochemical forcing is going to be applied. The point sources are specified in (i,j,k) coordinates, which in this case is (22,33,08). For the ocean model resolution we are using, the grid is 36x36x16, longitude (i) is counted from left-to-right (1 to 36); latitude (j) is counted from bottom-to-top (1 to 36); level depth (k) is counted from downwards top-to-bottom (16 down to 1). Thus, (22,33,08) is a release of tracer in the North Atlantic, a little south of Greenland, and intermediate depth (level = 8 out of 16). Refer to the Figures for how the horizontal (Figure \ref{fig:ch3-ijgrid}) and vertical (Figure \ref{fig:ch3-kgrid}) grid is specified.
+There are then three lines (\texttt{bg\_par\_force\_point\_i=20}, ...) that specify the location in the ocean of the geochemical forcing that is going to be applied. The point sources are specified in (i,j,k) coordinates, which in this case is (22,33,08). For the ocean model resolution we are using, the grid is 36x36x16, and in which: longitude (i) is counted from left-to-right (1 to 36); latitude (j) is counted from bottom-to-top (1 to 36); level depth (k) is counted from downwards top-to-bottom (16 down to 1). Thus, (22,33,08) is a release of tracer in the North Atlantic, a little south of Greenland, and intermediate depth (level = 8 out of 16). Refer to the Figures for how the horizontal (Figure \ref{fig:ch3-ijgrid}) and vertical (Figure \ref{fig:ch3-kgrid}) grid is specified.
 
 Finally, there is a scaling parameter (\texttt{bg\_par\_ocn\_force\_scale\_val\_48}) which modifies the magnitude of the flux to be applied (in units of \(mol yr^{-1}\)).
 
@@ -1550,11 +1550,11 @@ The longitude of the western edge of this particular modern ocean grid is at 260
 \label{fig:ch3-kgrid}
 \end{figure}
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\noindent You are going to run a brief experiment in which you will be injecting a conservative ‘dye’ tracer into the ocean. The \textbf{BIOGEM} module has two tracers defined for this purpose – ‘blue’ and ‘red’. Open the \textit{user-config} file: \texttt{LAB\_2.colorinjection} and edit the parameter controlling the flux of red dye to read:
+\noindent You are going to run a brief experiment in which you will be injecting a conservative ‘dye’ tracer into the ocean. The \textbf{BIOGEM} module has two tracers defined for this purpose – ‘blue’ and ‘red’. Open the \textit{user-config} file: \textsf{\footnotesize LAB\_2.colorinjection} and edit the parameter controlling the flux of red dye to read:
 
 \vspace{-2mm}
 \begin{verbatim}
@@ -1564,11 +1564,13 @@ bg_par_ocn_force_scale_val_48=1.0E12
 
 \noindent which specifies a flux of \(1.0\times10^{12}\) ( \(mol yr^{-1}\)) rather than zero as given as the default in the example \textit{user-config} file\footnote{i.e. don't leave the value as zero ... otherwise you'll have no flux forcing applied and will not see anything happen ...}.
 
-The \textit{base-config} you will be using is different from previously: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.rb} – this specifies a 16 vertical levels ocean and also includes seasonality of solar insolation.
+The \textit{base-config} you will be using is different from previously: \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worjh2.rb} – this specifies a 16 vertical levels ocean and also includes seasonality of solar insolation.
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\newpage 
 
 \noindent Run the model for … whatever, 20 years will do. Use the \textit{re-start} experiment that you have just downloaded to start from:
 
@@ -1581,23 +1583,42 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
 
 View the results – for instance how the red tracer distribution evolves with time – in the \textit{time-slice} files (full ocean/atmosphere) properties saved in the \textbf{netCDF} format (\texttt{.nc}) files). You can follow the progress of the dye (and hence diagnose the properties of ocean circulation in the model) by plotting vertical and/or horizontal slices that go through (or near) the cell location in which you inject the dye tracer in the 3D \textbf{netCDF} file. Note that \textbf{Panoply} appears to ‘count’ the ocean layers in the opposite direction to the way in which the ocean model is actually counting them – the correct definition is with ‘1’ being very deepest level possible (and as displayed in the figure).
 
-You can also view the tracer distributions in terms of a water-column integrated tracer inventory (\textbf{netCDF} variable name: \texttt{ocn\_int\_colr}; long name: colr water-column integrated tracer inventory) in the 2D \textbf{netCDF} output. (See: \textit{Sabine et al.} [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file
-
+You can also view the tracer distributions in terms of a water-column integrated tracer inventory (\textbf{netCDF} variable name: \textsf{\footnotesize ocn\_int\_colr}; long name: \textsf{\footnotesize colr water-column integrated tracer inventory}) in the 2D \textbf{netCDF} output. (See: \textit{Sabine et al.} [2004] for the use of water column integrals in the context of the distribution of anthropogenic \(CO_{2}\) uptake and storage.) Changes in tracer inventory with time can be tracked in the time-series file
 \vspace{-2mm}
 \begin{verbatim}
 biogem_series_ocn_colr.res.
 \end{verbatim}
 \vspace{-2mm}
 
-You can also plot the overturning circulation from the 2D netCDF file – variable phys\_opsi == global overturning streamfunction, \texttt{phys\_opsia} == overturning in the Atlantic to provide a visualization of the large-scale ocean circulation that drives tracer movement.
+You can also plot the overturning circulation from the 2D netCDF file – variable phys\_opsi == global overturning streamfunction, \textsf{\footnotesize phys\_opsia} == overturning in the Atlantic to provide a visualization of the large-scale ocean circulation that drives tracer movement.
 
 Spend a little while altering the flux (\texttt{bg\_par\_ocn\_force\_scale\_val\_48}) and/or location (\texttt{bg\_par\_force\_point\_i}, \texttt{bg\_par\_force\_point\_j, bg\_par\_force\_point\_k}) of tracer input. Overall -- note how you can use numerical ‘tracers’ to help diagnose (and better understand) the circulation of the ocean.
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\noindent An interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the \textbf{muffin} ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
+\noindent When you add the numerical dye, particularly early on in the experiment, you may see a 'front' of \uline{negative} tracer concentrations leading the (positive) tracer as it spreads. DON'T PANIC!
+
+The model is ... a model (of the numerical flavor) and not an exact analytical solution. So errors in how it solves ocean transport are to be expected.
+
+Moreover, by default the ocean circulation model employs an isopycnal/diapycnal mixing scheme. This can lead to unwanted negative tracer values when sharp horizontal (or vertical) transitions in concentration occur. (In this example, e.g. by injection dye at a point location into a surrounding ocean of initially zero concentration.)
+
+You can change to a simpler horizontal/vertical (.false.) mixing scheme by adding to the \textit{user-config} file:
+\vspace{-2mm}
+\begin{verbatim}
+# turn OFF (=.false.) isopycnal/diapycnal mixing
+go_diso=.false.
+\end{verbatim}
+\vspace{-2mm}
+
+If you try this, you should (hopefully) find much less (or no) negative tracer concentrations occur. However, also note that by changing the physics of ocean mixing, you also slightly alter the large-scale circulation of the ocean (and e.g. the AMOC might change slightly in strength).
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Finally, an interesting (honest!) and illustrative exercise is to use the dye tracer to pick out the path taken by Mediterranean Intermediate Water. Despite the low resolution of the \textbf{muffin} ocean circulation model component and the highly restricted representation of the Mediterranean, the model does predict a salty Mediterranean as a consequence of P-E in this basin (and its catchments) being negative and this water makes its way out in the subsurface into the Atlantic.
 
 Simply specify a dye injection somewhere in the Mediterranean (be careful with the restricted depth of the Mediterranean – if you inject too deeply (into the crust!) then you will not see anything (refer to the figure for the depth level (k) number of the maximum depth of the water column in each location), and it is better to inject it relatively close to the opening of the gateway (try some different locations and see which ones produce a reasonably instructive tracing of Mediterranean outflow). Run for e.g., 20 or 50 years (from the provided spin-up). Then:
 
@@ -1635,24 +1656,26 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS
 
 \noindent 20 years should be long enough to see a collapse start to occur, but you might want to run the model for longer (and it can be submitted as a job, of course). Running for longer will also allow you to have a smaller, less extreme (and maybe more realistic) freshwater input flux.
 
-The most obvious property of the Earth system to follow is the Atlantic overturning strength (\texttt{biogem\_series\_misc\_opsi.res}). The AMOC stream-function (in \texttt{fields\_biogem\_2d.nc} 2-D time-slice \textbf{netCDF} results file, field: \texttt{phys\_opsia}) is also illustrative. You can also try and identify the salinity anomaly (see below) due to freshwater input in the 3D salinity tracer field.
+The most obvious property of the Earth system to follow is the Atlantic overturning strength (\textsf{\footnotesize biogem\_series\_misc\_opsi.res}). The AMOC stream-function (in \textsf{\footnotesize fields\_biogem\_2d.nc} 2-D time-slice \textbf{netCDF} results file, field: \textsf{\footnotesize phys\_opsia}) is also illustrative. You can also try and identify the salinity anomaly (see below) due to freshwater input in the 3D salinity tracer field.
 
-There are also important impacts on surface air temperatures and maybe sea-ice extent (in \texttt{fields\_biogem\_2d.nc)}. Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
+There are also important (but not necessarily painfully exciting) impacts on surface air temperatures and maybe sea-ice extent (in \texttt{fields\_biogem\_2d.nc)} (but see below for a better way to visualize these changes). Note the importance (sort of) of the AMOC in transporting heat to the N Atlantic region (the film the Day After Tomorrow was not entirely inaccurate in this particular respect). Be aware of the possibility of climate impacts far from the location of fresh water forcing. Look out for any significant-looking impacts on sea-ice extent, etc.
 
 Note that as the model is running rather s l o w e r than in the snowball configuration, you might want to think carefully of making use of cluster queuing possibilities (i.e., running multiple experiments at once in the background).
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+Also -- run a \uline{control} experiment -- an experiment of the same duration of your hosing experiments, but with a zero freshwater flux. The impact of freshwater input, is the difference, at the same model year, between the perturbation experiment and the control. (You only ever need need to run one control, regardless of how many different freshwater flux perturbation experiments  you run.) 
 
-\noindent To more easily assess some of these impacts (and for other sorts of analysis) it is possible to create an anomaly (difference) map in \textbf{Panoply}:
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent To more easily assess some of these impacts (and for other sorts of analysis) it is possible to create an \uline{anomaly (difference) map} in \textbf{Panoply}:
 
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item  First open a dataset, e.g., \texttt{atm\_temp} (surface air temperature) in the 2D \textbf{netCDF} file. You can either double-click the variable name, or, with the variable name highlighted, click the ‘Create Plot’ icon.
+\item  First open a dataset, e.g., \textsf{\footnotesize atm\_temp} (surface air temperature) in the 2D \textbf{netCDF} file. You can either double-click the variable name, or, with the variable name highlighted, click the ‘Create Plot’ icon.
 \vspace{1mm}
-\item Now, with the \texttt{atm\_temp} still selected (and the first plot window still open), click on the ‘Combine Plot’ icon. A dialogue box will appear and ask you to select a plot to combine the new one with. Make sure the name of your first plot window is selected/highlighted. Click ‘Combine’. OR, simply drag a second dataset into the plot window of the first dataset.
+\item Now, with the \textsf{\footnotesize atm\_temp} still selected (and the first plot window still open), click on the ‘Combine Plot’ icon. A dialogue box will appear and ask you to select a plot to combine the new one with. Make sure the name of your first plot window is selected/highlighted. Click ‘Combine’. OR, simply drag a second dataset into the plot window of the first dataset.
 \vspace{1mm}
 \item You now have a plot window that by default it is showing you the difference between two identical (in time) slices. The two different slices are labeled Array 1 (LH side) and Array 2 (RH side).
 \end{enumerate}
@@ -1678,9 +1701,9 @@ Two example plots (using \textbf{Panoply}) are shown in Figure \ref{fig:ch3-amoc
 \label{fig:ch3-amoc2}
 \end{figure}
 
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 \noindent You can also plot ocean current fields which is sort-of fun and maybe even informative(!):
 
@@ -1707,10 +1730,9 @@ Two example plots (using \textbf{Panoply}) are shown in Figure \ref{fig:ch3-amoc
 \caption{Example plot of (normal/default modern) ocean current fields (3D netCDF file). Again scaling has been set manually to create an easy-to-interpret axis scale. On the left is the surface field, and on the right an intermediate depth (illustrating what approximates the Deep Western Boundary current in the model in the Atlantic).}
 \label{fig:ch3-currents1}
 \end{figure}
-
-\hfill \break
-\noindent\rule{4cm}{0.1mm}
-\hfill \break
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 \noindent Finally, a brief note on units ... the freshwater forcing is implemented as negative salinity, just to really screw with your mind. The generic internal \textbf{muffin} model units for the forcing end up as \(PSU kg^{-1} yr^{-1}\). Which sort of does not make much sense ...
 
@@ -1732,11 +1754,11 @@ The literature invariably gives freshwater fluxes in units of \(Sv\) (\(10^{6} m
 
 \subsection{Hosing investigations}
 
-What is the largest freshwater flux that can be sustained without ‘collapsing’ the AMOC? Is there a ‘threshold’ (‘tipping point’) of freshwater input, beyond which the AMOC rapidly decreases in strength?
+What is the largest freshwater flux that can be sustained without ‘collapsing’ the AMOC? Is there a ‘threshold’ (‘tipping point’) of freshwater input, beyond which the AMOC rapidly decreases in strength? For this -- you would run (submit to the cluster) a series of experiments, each with different (increasing) values for the fresh water flux. Remember to include an experiment with zero freshwater flux to act as a 'control'.
 
-Is the precise location of the freshwater input important (i.e., try tipping it in somewhere else)? What would you expect to see in the paleo (e.g., ice core) record of both hemispheres if such a shutdown occurred in the past?
+Is the precise location of the freshwater input important (i.e., try tipping it in somewhere else)? For this -- you could piece-meal run an experiment, analyse the results, then choose a new location to input the freshwater, or, come up with a systematic search pattern of freshwater input patterns.  
 
-Are any other major regions of deep water formation (where are they) sensitive to freshwater perturbation and what are the consequences (could it happen in the future)?
+Outside of the North Atlantic, are any other major regions of deep water formation (where are they) sensitive to freshwater perturbation and what are the consequences (could it happen in the future)?
 
 %------------------------------------------------
 
@@ -1754,7 +1776,7 @@ What you might try then is to inject salt in the Southern Ocean as opposed to fr
 
 A current concern regarding anthropogenic climate change is the ocean circulation (and marine ecological and biogeochemical) response to a strong warming of the surface, as rapid surface warming is assumed (and demonstrated in models) to result in surface stratification of the ocean, likely restricting the nutrient supply to phytoplankton and reducing ventilation of the ocean interior with dissolved oxygen.
 
-You can explore the transient response of ocean circulation to warming by simply adjusting the radiative forcing parameter as per used in the snowball Earth experiments: \texttt{ea\_radfor\_scl\_co2}. By default in the modern continental configuration, this has a value of 1.0, corresponding to 278 ppm atmospheric \(CO_{2}\). A value of 2.0 would reflect warming equivalent to 556 ppm \(CO_{2}\). And 3.0 more like an end-of-the-century warming. Note that you are applying the warming instantaneously by manipulating the climate system in this way and hence the changes will be more extreme than those occurring over the time-scale of this century. Also note that a cooling could be applied instead. A \textit{user-config} – \texttt{LAB\_2.EXAMPLE} – is provided as a template for these experiments.
+You can explore the transient response of ocean circulation to warming by simply adjusting the radiative forcing parameter as per used in the snowball Earth experiments: \texttt{ea\_radfor\_scl\_co2}. By default in the modern continental configuration, this has a value of 1.0, corresponding to 278 ppm atmospheric \(CO_{2}\). A value of 2.0 would reflect warming equivalent to 556 ppm \(CO_{2}\). And 3.0 more like an end-of-the-century warming. Note that you are applying the warming instantaneously by manipulating the climate system in this way and hence the changes will be more extreme than those occurring over the time-scale of this century. Also note that a cooling could be applied instead. A \textit{user-config} –- \textsf{\footnotesize LAB\_2.EXAMPLE} – is provided as a template for these experiments.
 
 Potentially interesting properties of the Earth system to look at include sea-ice extent and AMOC strength (in the ASCII time-series files), and the overturning stream-function and sea-ice extent in the 2-D \textbf{netCDF} output.
 
@@ -1767,7 +1789,7 @@ Potentially interesting properties of the Earth system to look at include sea-ic
 
 \textbf{muffin} has the capability to employ/simulate a ventilation age tracer\footnote{Under the '\textit{screw with and/or diagnose the climate system}' HOW-DO -- see '\textit{Add a water mass age tracer}' (and the 'easy'/automatic method described towards the end of that section).} -- a numerical tracer in the ocean that tracks the time since a parcel of water last 'saw' the surface. To do this, requires both 'red' and 'blue' numerical tracers to be selected.  \textbf{muffin} can then be directly to automatically apply the forcings necessary to each tracer in order to simulate water mass ventilation age.
 
-Provided is an additional \textit{user-config} file: \texttt{muffin.worjh2.NONE\_colage.EXAMPLE}.
+Provided is an additional \textit{user-config} file: \textsf{\footnotesize muffin.worjh2.NONE\_colage.EXAMPLE}.
 
 A new \textit{re-start} experiment is provided called \texttt{muffin.worjh2.NONE\_colage.SPIN} and which can be downloaded as per before:
 
@@ -1802,7 +1824,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.rb LABS muffin.worjh2.NONE_colage.
 
 \noindent (all on one line)
 
-In the 3D netCDF output file -- \texttt{misc\_col\_Dage} is the output variable that is the calculated ventilation age.
+In the 3D netCDF output file -- \textsf{\footnotesize misc\_col\_Dage} is the output variable that is the calculated ventilation age.
 
 First -- explore the distribution of water mass age and think about the physical ocean circulations reasons for this. Are all the modelled distributions reasonable? Are there indicators of facets of the simulated circulation that are not particularly realistic? Try plotting both lon-lat and lat-depth slices through the ocean.
 
@@ -5681,16 +5703,19 @@ fossil fuel CO2 release.)
 
 \section{Overview (and types of model output)}
 
-The results of experiments are written to the directory:
-\begin{verbatim}~/cgenie_output\end{verbatim}
-For any particular experiment, all saved model results, plus copies of input parameters and the model executable, are gathered together in a directory that is assigned the same name as the experiment (== \textit{user-config} file name), e.g.:
-\begin{verbatim}EXAMPLE.worbe2.Ridgwelletal2007.SPIN\end{verbatim}
-Every science module saves its results in its own individual sub-directory within the experiment directory. So for the module that calculates ocean biogeochemical cycles -- \textbf{BIOGEM}, the results files will thus be found in:
-\begin{verbatim}~/cgenie_output/EXAMPLE.worbe2.Ridgwelletal2007.SPIN/biogem\end{verbatim}
-Note that \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, in order to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc. Also note that \textbf{SEDGEM} saves data only at the end of an experiment\footnote{With the exception of sediment core location environmental properties, which are saved more frequently.}.
+The results of experiments are written to the directory: \textsf{\footnotesize \(\sim\)/cgenie\_output}
+
+For any particular experiment, all saved model results, plus copies of input parameters and the model executable, are gathered together in a sub-directory of \textsf{\footnotesize \(\sim\)/cgenie\_output} that is assigned the same name as the experiment (== \textit{user-config} file name), e.g.: \textsf{\footnotesize EXAMPLE.worbe2.Ridgwelletal2007.SPIN}.
+
+Every science module saves its results in its own individual sub-directory within the experiment directory. So for the module that calculates ocean biogeochemical cycles -- \textbf{BIOGEM}, the results files will thus be found in: \textsf{\footnotesize \(\sim\)/cgenie\_output/EXAMPLE.worbe2.Ridgwelletal2007.SPIN/biogem}
+
+Note that the science module \textbf{ATCHEM} does not save its own results (\textbf{BIOGEM} instead saves relevant information about atmospheric composition and air-sea gas exchange) while \textbf{SEDGEM} essentially saves results \uline{only at the very end of a model experiment}\footnote{With the exception of sediment core location environmental properties, which are saved more frequently.}. (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as \textit{time-slices} as well as mean composition as a time-series). Furthermore, in order to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} saves a range of ocean physics properties in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
 
 Saving full spatial distributions for any or all of the tracers at each and every time-step is not practical, not only in terms of data storage but also because of the detrimental effect that repeated disk access has on model performance. Instead, \textbf{BIOGEM} saves the full spatial distribution of whatever tracer, flux, and/or physical properties of the system are required (how what fields are required is specified is discussed later), only at one or more predefined time points (in years). These are called '\textit{time-slices}'. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval.
-The second main data format for model output is that of a '\textit{time-series}' of change in a single (integrated) property of the Earth system. Model characteristics must be reducible to a single meaningful variable for this to be practical (i.e., saving the time-varying nature of 3-D ocean tracer distributions is not). Suitable reduced indicators include: the total inventories in the ocean and/or atmosphere of various tracers (or equivalently, the mean global concentrations / partial pressures, respectively), global sea-ice coverage. Like \textit{time-slices}, the data values saved in the \textit{time-series} files represent averages over a specified integration interval (one year by default). For both \textit{time-slices} and \textit{time-series} output, the files themselves are created during model initialization and are periodically updated (appended to) during the experiment. Hence, even before the experiment has finished they may contain data that is useful to view and can be used to check on the progress of an experiment.
+
+The second main data format for model output is that of a '\textit{time-series}' of change in a single (integrated) property of the Earth system. Model characteristics must be reducible to a single meaningful variable for this to be practical (i.e., saving the time-varying nature of 3-D ocean tracer distributions is not). Suitable metrics include: the total inventories in the ocean and/or atmosphere of various tracers (or equivalently, the mean global concentrations / partial pressures, respectively), global sea-ice coverage. Like \textit{time-slices}, the data values saved in the \textit{time-series} files represent averages over a specified integration interval (one year by default).
+
+For both \textit{time-slices} and \textit{time-series} output, the files themselves are created during model initialization and are periodically updated (appended to) during the experiment. Hence, \uline{even before the experiment has finished they may contain data that is useful to view and can be used to check on the progress of an experiment}.
 
 \subsubsection{ATCHEM}
 
@@ -5698,7 +5723,7 @@ The second main data format for model output is that of a '\textit{time-series}'
 
 \begin{enumerate}
 
-\vspace{1mm}\item \texttt{\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 2D distribution of atmospheric composition at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
+\vspace{1mm}\item \textsf{\footnotesize *\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 2D distribution of atmospheric composition at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
 
 \end{enumerate}\vspace{2mm}
 
@@ -5708,15 +5733,15 @@ The second main data format for model output is that of a '\textit{time-series}'
 
 \begin{enumerate}
 
-\vspace{1mm}\item \texttt{\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 3D distribution of biogeochemical properties of the ocean at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
+\vspace{1mm}\item \textsf{\footnotesize *\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 3D distribution of biogeochemical properties of the ocean at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
 
-\vspace{1mm}\item \texttt{fields\_biogem\_2d.nc} -- 2-D fields of (mostly) ocean bottom, ocean surface, and sediment surface properties.\footnote{The mid-points at which time-slices are saved are specified as described above.} Also: water-column integrals of certain geochemistry diagnostics, air-sea gas exchange fluxes, atmospheric composition.
+\vspace{1mm}\item \textsf{\footnotesize fields\_biogem\_2d.nc} -- 2-D fields of (mostly) ocean bottom, ocean surface, and sediment surface properties.\footnote{The mid-points at which time-slices are saved are specified as described above.} Also: water-column integrals of certain geochemistry diagnostics, air-sea gas exchange fluxes, atmospheric composition (plus some physical atmospheric properties).
 
-\vspace{1mm}\item \texttt{fields\_biogem\_3d.nc} -- 3-D fields ocean dissolved and particulate tracer properties.\footnote{The mid-points at which time-slices are saved are specified as described above.}
+\vspace{1mm}\item \textsf{\footnotesize fields\_biogem\_3d.nc} -- 3-D fields of ocean dissolved and particulate tracer properties (plus some physical ocean properties).\footnote{The mid-points at which time-slices are saved are specified as described above.}
 
-\vspace{1mm}\item \texttt{biogem\_series\_*.res}\footnote{\texttt{.res} is a useful format for processing in \textbf{MATLAB}; for other programs, other extensions are needed. If using the Mathematica data processing scripts - see \texttt{genie-docs/cGENIE.AutomationScripts} - \texttt{.dat} is needed; this can be set with  \texttt{gm\_string\_results\_ext=".dat"}} -- \textit{Time-series} results files -- globally and surface-averaged (and sometimes also benthic (bottom) surface averaged) property values as a function of time in plain text (ASCII) format.
+\vspace{1mm}\item \textsf{\footnotesize biogem\_series\_*.res}\footnote{\texttt{.res} is a useful format for processing in \textbf{MATLAB}; for other programs, other extensions are needed. If using the Mathematica data processing scripts - see \texttt{genie-docs/cGENIE.AutomationScripts} - \texttt{.dat} is needed; this can be set with  \texttt{gm\_string\_results\_ext=".dat"}} -- \textit{Time-series} results files -- globally and surface-averaged (and sometimes also benthic (bottom) surface averaged) property values as a function of time in plain text (ASCII) format.
 
-\vspace{1mm}\item \texttt{biogem\_year\_*\_diag\_GLOBAL.res} -- Miscellaneous global diagnostic information. It is saved at each requested time-slice with the file-name string containing the mid-point of the time-slice (as years). The diagnostics include:
+\vspace{1mm}\item \textsf{\footnotesize biogem\_year\_*\_diag\_GLOBAL.res} -- Miscellaneous global diagnostic information. These files are saved at each requested \textit{time-slice} with the file-name string containing the mid-point of the time-slice (as years). The diagnostics include:
         \begin{itemize}
                 \item time mid-point and integration interval
                 \item global ocean surface area and volume
@@ -5735,18 +5760,18 @@ The second main data format for model output is that of a '\textit{time-series}'
 
 \begin{enumerate}
 
-\vspace{1mm}\item \texttt{\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 2D distribution of sedimentary properties at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
+\vspace{1mm}\item \textsf{\footnotesize *\_restart.nc} -- \textit{Re-start} file -- a snap-shot of the 2D distribution of sedimentary properties at the very end of the experiment. Not intended for user-access, although it can be plotted just like any normal \textit{netCDF} format file.
 
-\vspace{1mm}\item \texttt{fields\_sedgem\_2d.nc} -- Contains 2-D fields of sediment surface and ocean bottom properties.\footnote{This data is saved only at the termination of an experiment (i.e., the \textit{netCDF} file contains only a single time-slice).}
+\vspace{1mm}\item \textsf{\footnotesize fields\_sedgem\_2d.nc} -- Contains 2-D fields of sediment surface and ocean bottom properties.\footnote{This data is saved only at the termination of an experiment (i.e., the \textit{netCDF} file contains only a single time-slice).}
 
-\vspace{1mm}\item \texttt{sedcore.nc} -- \textit{netCDF} format file containing the stacked records of accumulated deep-sea sediment composition.
+\vspace{1mm}\item \textsf{\footnotesize sedcore.nc} -- \textit{netCDF} format file containing the stacked records of accumulated deep-sea sediment composition.
 \\The locations (if any) of sediment cores to be saved is specified in a plain text (ASCII) file pointed to by the string value of the \textit{namelist} parameter \texttt{sg\_par\_sedcore\_save\_mask\_name}\footnote{The location of this file is specified by the \textbf{SEDGEM} data input directory namelist parameter: \texttt{sg\_par\_indir\_name} which by default is \texttt{\~{}/genie-sedgem/data/input}.}. In the mask file, a '\texttt{1}' indicates a location to save a sediment core at, and a '\texttt{0}' indicates that no sediment core should be saved at this location.       This file must be present, so to save no sediment cores, simply populate the file with all zeros in an \texttt{xx} by \texttt{yy} grid.
 
-\vspace{1mm}\item \texttt{sedcoreenv\_*} -- These files contain pseudo time-series of surface sediment environmental properties at each of the requested sediment core locations (if any are chosen).
+\vspace{1mm}\item \textsf{\footnotesize sedcoreenv\_*} -- These files contain pseudo time-series of surface sediment environmental properties at each of the requested sediment core locations (if any are chosen).
 
-\vspace{1mm}\item \texttt{seddiag\_misc\_DATA\_GLOBAL.res} -- A summary of mean global sedimentation, dissolution, and preservation fluxes, and surface sediment composition.
+\vspace{1mm}\item \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res} -- A summary of mean global sedimentation, dissolution, and preservation fluxes, and surface sediment composition.
 
-\vspace{1mm}\item \texttt{seddiag\_misc\_DATA\_FULL.res} -- Surface sediment and bottom water properties at each and every sediment grid point.
+\vspace{1mm}\item \textsf{\footnotesize seddiag\_misc\_DATA\_FULL.res} -- Surface sediment and bottom water properties at each and every sediment grid point.
 
 \end{enumerate}\vspace{2mm}
 
@@ -5756,9 +5781,9 @@ The second main data format for model output is that of a '\textit{time-series}'
 
 \begin{enumerate}
 
-\vspace{1mm}\item \texttt{fields\_rokgem\_2d.nc} -- 2-D fields of (mostly) land surface, ocean surface, and atmospheric properties related to weathering.
+\vspace{1mm}\item \textsf{\footnotesize fields\_rokgem\_2d.nc} -- 2-D fields of (mostly) land surface, ocean surface, and atmospheric properties related to weathering.
 
-\vspace{1mm}\item \texttt{biogem\_series\_*} -- Time-series results files.
+\vspace{1mm}\item \textsf{\footnotesize biogem\_series\_*} -- Time-series results files.
 
 \end{enumerate}\vspace{2mm}
 
@@ -5774,10 +5799,11 @@ The second main data format for model output is that of a '\textit{time-series}'
 
 \subsection{Frequency and timing of \textit{time-slice} data saving}
 
-Rather than taking an instantaneous snapshot, the time-slice is averaged over a specified integration interval \begin{math}\Delta t\end{math} (in years), defined by the parameter \texttt{bg\_par\_data\_save\_slice\_dt}\footnote{An empty list is valid - time-slices will then be populated for you at an interval set by the time-slice integration interval. But if you really don't want any time-slices, just set the first (or only) time point to occur beyond the end year of the run.}. The model state is thus integrated from time \begin{math}t_{n} - \Delta t/2\end{math} to \begin{math}t_{n} + \Delta t/2\end{math}. For instance, setting a value of \begin{math}\Delta t = 1.0\end{math} year results in all seasonal variability being removed from the saved time-slices, and successive time-slices then only reflect long-term (\textgreater 1 year) trends in system state.
+Rather than taking an instantaneous snapshot, the time-slice is averaged over a specified integration interval \begin{math}\Delta t\end{math} (in years), defined by the parameter: \texttt{bg\_par\_data\_save\_slice\_dt}\footnote{An empty list is valid - time-slices will then be populated for you at an interval set by the time-slice integration interval. But if you really don't want any time-slices, just set the first (or only) time point to occur beyond the end year of the run.}. The model state is thus integrated from time \begin{math}t_{n} - \Delta t/2\end{math} to \begin{math}t_{n} + \Delta t/2\end{math}. For instance, setting a value of \begin{math}\Delta t = 1.0\end{math} year results in all seasonal variability being removed from the saved time-slices, and successive time-slices then only reflect long-term (\textgreater 1 year) trends in system state.
 
-\vspace{1mm}The mid-point years (\begin{math}t_{n}\end{math}) for which time-slices should be saved are specified in a single column pain text (ASCII) file in the \texttt{cgenie.muffin/genie-biogem/data/input} directory, whose name is specified by the parameter \texttt{bg\_par\_infile\_slice\_name}\footnote{The location of this file is specified by the \textbf{BIOGEM} data input directory parameter: \texttt{bg\_par\_indir\_name} which by default is \texttt{\~{}/genie-biogem/data/input}.}.
-For example, the default \textit{time-slice} specification file \texttt{save\_timeslice.dat} contains the specification\footnote{The order in which the time sequence is ordered (i.e., ascending or descending time values) does not actually matter in practice as long as the list of times is ordered sequentially. The list will be internally re-ordered if necessary according to the selection of ‘BP’ (the model running backwards-in-time) or not according to the logical value of the parameter \texttt{bg\_ctrl\_misc\_t\_BP}, which is \texttt{.false.} by default.}:
+\vspace{1mm}The mid-point years (\begin{math}t_{n}\end{math}) for which time-slices should be saved are specified in a single column pain text (ASCII) file in the \textsf{\footnotesize cgenie.muffin/genie-biogem/data/input} directory, whose name is specified by the parameter \textsf{\footnotesize bg\_par\_infile\_slice\_name}\footnote{The location of this file is specified by the \textbf{BIOGEM} data input directory parameter: \textsf{\footnotesize bg\_par\_indir\_name} which by default is \texttt{\~{}/genie-biogem/data/input}.}.
+For example, the default \textit{time-slice} specification file \textsf{\footnotesize save\_timeslice.dat} contains the specification\footnote{The order in which the time sequence is ordered (i.e., ascending or descending time values) does not actually matter in practice as long as the list of times is ordered sequentially. The list will be internally re-ordered if necessary according to the selection of ‘BP’ (the model running backwards-in-time) or not according to the logical value of the parameter \texttt{bg\_ctrl\_misc\_t\_BP}, which is \texttt{.false.} by default.}:
+
 \footnotesize\begin{verbatim}
 -START-OF-DATA-
 0.5
@@ -5804,14 +5830,19 @@ For example, the default \textit{time-slice} specification file \texttt{save\_ti
 where \texttt{-START-OF-DATA-} and \texttt{-END-OF-DATA-} are simply tags delineating the start and end of the time point data.
 Use of this particular specification lends itself to simple experiment run durations to be adopted (e.g., 10, 100, 10000 years). It provides a good generic starting point in that save frequency is faster to begin with (when environmental variables are more likely to be rapidly changing) and less frequently later (when environmental variables are unlikely to be changing rapidly and maybe converging to steady-state).
 
-To change the time points used for \textit{time-slice} data saving, either direct edit this file (less good), or create a new file (e.g. simply copy and rename \texttt{save\_timeslice.dat}) with the required save frequency and timing and saved to the \texttt{cgenie.muffin/genie-biogem/data/input} directory, with the parameter \texttt{bg\_par\_infile\_slice\_name} pointing to the new filename).
+To change the time points used for \textit{time-slice} data saving, either direct edit this file (less good), or create a new file (e.g. simply copy and rename \textsf{\footnotesize save\_timeslice.dat}) with the required save frequency and timing and saved to the \textsf{\footnotesize cgenie.muffin/genie-biogem/data/input} directory, with the parameter \textsf{\footnotesize bg\_par\_infile\_slice\_name} pointing to the new filename).
 
 %------------------------------------------------
 
-\subsection{Experiment end saving}
+\subsection{Saving at the experiment end}
 
+Just in case an experiment run duration is chosen such that there is no corresponding save point anywhere near the end of the run, \uline{a \textit{time-slice} is automatically saved at the very end of an experiment} regardless of whether one has been specified or not and with the same averaging as used for the specified \textit{time-slices}.
 
-Just in case an experiment run duration is chosen such that there is no corresponding save point anywhere near the end of the run, a \textit{time-slice} is automatically saved at the very end of an experiment regardless of whether one has been specified or not and with the same averaging as used for the specified \textit{time-slices}.
+This lend itself to a means of substantially reducing the amount of data saved, because if you specify no \textit{time-slices}, you will still end up with (just) the final year saved. You can make this happen (i.e. forcing only an end-of-run \textit{time-slice} to be saved), by adding to the \textit{user-config}:
+\small\begin{verbatim}
+# force time-slice save at run end only
+bg_par_infile_slice_name='save_timeslice_NONE.dat'
+\end{verbatim}\normalsize
 
 %------------------------------------------------
 %
@@ -5820,9 +5851,9 @@ Just in case an experiment run duration is chosen such that there is no correspo
 \textit{Time-slice} (but not currently \textit{time-series}) data can be saved seasonal or even monthly by selected by setting a single parameter rather than e.g. specifying a monthly or seasonal data save interval and editing the time-slice definition file with a series of min-points for months (or seasons).
 The way it works is that the overall averaging interval (parameter: \texttt{bg\_par\_data\_save\_slice\_dt})\footnote{Default value = 999} is broken down into sub-intervals of averaging. i.e., breaking down a year interval (the default) into 4 will give seasonal averaging. The parameter: \texttt{bg\_par\_data\_save\_slice\_n} where \textit{n} sets the number of time steps in each sub-interval of data saving and hence determines whether the averaging is e.g. seasonal or monthly. The slightly tricky part is to be sure of how many time steps in each year ;)
 
-By default, \textbf{\textit{c}GENIE.muffin} employs 96 time-steps per year for a 16-level ocean circulation model (\textbf{GOLDSTEIN}) and 48 for \textbf{BIOGEM}\footnote{Note that when running using \texttt{runmuffin.t100.sh}, 100 time-steps are taken in the ocean and 50 in BIOGEM for a 16 level ocean model.}. Hence for a 16-level ocean configuration, seasonal data saving would be obtained with:
+By default, \textbf{\textit{c}GENIE.muffin} employs 96 time-steps per year for a 16-level ocean circulation model (\textbf{GOLDSTEIN}) and 48 for \textbf{BIOGEM}\footnote{Note that when running using \texttt{runmuffin.t100.sh}, 100 time-steps are taken in the ocean and 50 in BIOGEM for a 16 level ocean model.}. Hence for a 16-level ocean configuration, \uline{seasonal} data saving would be obtained with:
 \begin{verbatim}bg_par_data_save_slice_n=12\end{verbatim}
-(12 \textbf{BIOGEM} steps per averaging interval out of a total of 48), and monthly averages with:
+(12 \textbf{BIOGEM} steps per averaging interval out of a total of 48), and \uline{monthly averages} with:
 \begin{verbatim}bg_par_data_save_slice_n=4\end{verbatim}
 (i.e. 4 \textbf{BIOGEM} steps for each of the 12 monthly averaging intervals, giving of a total of 48).
 
@@ -5838,38 +5869,43 @@ Note that for every year mid-point specified in the\textit{ time-slice} specific
 %
 \subsection{More frequent data saving}
 
-Explicit frequent saving of fields or properties at specific locations can be done by setting a more higher save frequency of the time-slice data. However, because the 2D and 3D fields may contain a variety of unwanted variables in addition to the target one, save frequency is likely to be limited by the maximum netCDF file size that can sanely be manipulated. The practical maximum is around 100, depending on the number of types of data field selected to be saved. Several alternative options are available:
+Explicit frequent saving of fields or properties at specific locations can be done by setting a more higher save frequency of the time-slice data. However, because the 2D and 3D fields may contain a variety of unwanted variables in addition to the target one, save frequency is likely to be limited by the maximum \textbf{netCDF} file size that can sanely be manipulated, i.e. there is a limit to how large a file size you want to generate.
 
+Several alternative options for cutting down the size of the saved data exist:
+
+\vspace{1mm}
 \begin{itemize}
-\item (trivial) Make do with global or surface (or benthic) means in the time-series output.
+\item (trivial) Make do with global or surface (or benthic) means in the \textit{time-series} output (rather than saving 2 or 3D data).
 \item Cut down the types of data saved to the absolute minimum (see 'Data field selection' below).
-\item Save only 2D data. This can be accomplished by setting the parameter:
+\item Save only 2D data (rather than 2 \uline{and} 3D, which is the default). This can be accomplished by setting the parameters:
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_data_save_2d=.true.
 bg_ctrl_data_save_3d=.false.
 \end{verbatim}\vspace{-1mm}
-(both are \texttt{.true.} by default). This disables the 3D data saving, although an empty netCDF file will still be created.
-\item Save the tracer fields in 3D, but at the save frequency of time-series data saving\footnote{This is in addition to normal 3D saving at the time-slice data saving frequency}. This can be done by setting:
+(both are \texttt{.true.} by default). This disables the 3D data saving, although an empty 3D \textbf{netCDF} file will still be created.
+\end{itemize}
+
+\noindent One option to increase the frequency of 3D \textit{time-slice} data saving is to align it automatically with the frequency of \textit{time-series} data saving\footnote{This is in addition to normal 3D saving at the time-slice data saving frequency}. This can be done by setting:
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_data_save_3d_sig=.true.
 \end{verbatim}\vspace{-1mm}
 (by default, \texttt{.false.}).
-\end{itemize}
+
+\vspace{1mm}
+\uline{The recommended/practical maximum for saved 3D \textit{time-slices} is around 100 (different \textit{time-slices})}, depending on the number of types of data field selected to be saved.
 
 %------------------------------------------------
 %
 \subsection{Less(!) frequent data saving}
 
-You could e.g. edit the default \textit{time-slice} specification file \texttt{save\_timeslice.dat}\footnote{(not recommended} or create your own with just a couple or even one single time-point.
+You could e.g. edit the default \textit{time-slice} specification file \textsf{\footnotesize save\_timeslice.dat}\footnote{(not recommended} or create your own with just a couple or even one single time-point. Or you can specify that no time-slice is saved(!) Actually, you will always get one -- at the very end of the model run.\footnote{A safety feature to ensure that however long the experiment runs, you always get data from the very end.} 
 
-Or you can specify that no time-slice is saved(!) Actually, you will always get one -- at the very end of the model run.\footnote{A safety feature to ensure that however long the experiment runs, you always get data from the very end.} To do this (rather than creating a \textit{time-slice} specification file with a single entry equal to the last year of the intended model experiment), set:
-
-\vspace{-1mm}\begin{verbatim}
+To do this (rather than creating a \textit{time-slice} specification file with a single entry equal to the last year of the intended model experiment), set:
+\small\begin{verbatim}
 # force time-slice save at run end only
 bg_par_infile_slice_name='save_timeslice_NONE.dat'
-\end{verbatim}\vspace{-1mm}
-
-\noindent(which points to an empty file).
+\end{verbatim}\normalsize
+(which points to an empty file).
 
 %------------------------------------------------
 
@@ -5883,11 +5919,16 @@ bg_par_infile_slice_name='save_timeslice_NONE.dat'
 
 \subsection{Frequency and timing of \textit{time-series} data saving}
 
-For results \textit{time-series}, a file containing a series of model times (\begin{math}t_{n}\end{math}) at which data points need be saved is defined in the same way as for \textit{time-slices}, with the filename specified by the parameter \texttt{bg\_par\_infile\_sig\_name}. Again, the data values saved in the time-series file do not represent discrete values in time but an average, calculated from time \begin{math}t_{n} - \Delta t/2\end{math} to \begin{math}t_{n} + \Delta t/2\end{math} as per the construction of time-slices. The averaging interval, \begin{math}\Delta t\end{math}, is set by the value of the parameter \texttt{bg\_par\_data\_save\_sig\_dt}. The format is also identical to before (with tags delineating the start and end of the list of mid-points). If there are less than two elements present in the list, a default frequency of data saving will be invoked, set equal the averaging interval, except in the situation that this results in an unreasonably large amount of data, when an order of magnitude (or more than one order of magnitude where necessary) fewer save points are assumed.\footnote{For historical reasons ... the maximum number of time-series (and time-slice) data points was set to 4096. This is set by the parameter \texttt{n\_data\_max} in \texttt{biogem\_lib.f90} and can be altered if required.} The default setting:
+For results \textit{time-series}, a file containing a series of model times (\begin{math}t_{n}\end{math}) at which data points need be saved is defined in the same way as for \textit{time-slices}, with the filename specified by the parameter \texttt{bg\_par\_infile\_sig\_name}. Again, the data values saved in the time-series file do not represent discrete values in time but an average, calculated from time \begin{math}t_{n} - \Delta t/2\end{math} to \begin{math}t_{n} + \Delta t/2\end{math} as per the construction of time-slices. The averaging interval, \begin{math}\Delta t\end{math}, is set by the value of the parameter \texttt{bg\_par\_data\_save\_sig\_dt}. The format is also identical to before (with tags delineating the start and end of the list of mid-points). If there are less than two elements present in the list, a default frequency of data saving will be invoked, set equal the averaging interval, except in the situation that this results in an unreasonably large amount of data, when an order of magnitude (or more than one order of magnitude where necessary) fewer save points are assumed.\footnote{For historical reasons ... the maximum number of time-series (and time-slice) data points was set to 4096. This is set by the parameter \texttt{n\_data\_max} in \texttt{biogem\_lib.f90} and can be altered if required.} 
+
+\vspace{1mm}
+The default setting:
+\vspace{-1mm}
 \small\begin{verbatim}bg_par_infile_sig_name='save_timeseries.dat'\end{verbatim}\normalsize
+\vspace{-1mm}
 provides for reasonably generic data saving, with the save frequency faster to begin with and becoming progressively less frequently later.
 
-There is a related facility to \texttt{bg\_par\_infile\_sig\_name} for \textbf{SEDGEM} and \textbf{ROKGEM} in the parameter: \texttt{xx\_par\_output\_years\_file\_0d}, where \texttt{xx} is \texttt{sg} for \textbf{SEDGEM} and \texttt{rg} for \textbf{ROKGEM}. These specify files in the \texttt{genie-*gem/data/input} directory and again contain a list of years for 0D (time-series) output to be generated at. However, unlike \textbf{BIOGEM}, the data saved \textit{do} represent discrete values in time and \textit{not} e.g. annual averages.
+There is a related facility to \texttt{bg\_par\_infile\_sig\_name} for \textbf{SEDGEM} and \textbf{ROKGEM} in the parameter: \texttt{xx\_par\_output\_years\_file\_0d}, where \texttt{xx} is \texttt{sg} for \textbf{SEDGEM} and \texttt{rg} for \textbf{ROKGEM}. These specify files in the \textsf{\footnotesize genie-*gem/data/input} directory and again contain a list of years for 0D (time-series) output to be generated at. However, unlike \textbf{BIOGEM}, the data saved \textit{do} represent discrete values in time and \textit{not} e.g. annual averages.
 
 %------------------------------------------------
 
@@ -5905,7 +5946,9 @@ There is a related facility to \texttt{bg\_par\_infile\_sig\_name} for \textbf{S
 
 Model output -- both \textit{time-slice} and \textit{time-series} data are saved in blocks or  by categories of model variables. For instance, all dissolved tracers in the ocean (3D netCDF \textit{time-slice} and/or \textit{time-series}), or all particle flux fields, all carbonate chemistry and associated variables, all surface sediment composition, etc etc. This still requires a multitude of parameters, one for each category and generally also one for each of \textit{time-slice} and \textit{time-series} data. In an attempt to simplify this, a single parameter, \texttt{bg\_par\_data\_save\_level}, specifying the sort and amount of data to save can be set instead.
 
-The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}, and has the following effect:
+The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}. The specific classes (groups) of data that are saved (as a mnemonic code) in response to each different selected save level are given in Table \ref{tab:timeslicelevels} (for \textit{time-slice} saving) and Table xxx (for \textit{time-series} saving), and what the mnemonics  strand for in terms of actual data saved (in real words), are defined in Tables xxx.
+
+An alternative wordy summary is as follows. 
 
 \vspace{2mm}\begin{itemize}
 
@@ -6579,9 +6622,9 @@ The advantage of doing the calculations in \textbf{MATLAB} (despite being provid
 
 \hfill \break
 
-\vspace{24mm}
+\vspace{18mm}
 
-\noindent The \textbf{muffinplot} suite of \textbf{MATLAB} functions provides a means of plotting a variety of output reproducibly (by means of  saved parameter file) and with the potential for automation (i.e. automatically generating the same analysis for a large number of different experiments).
+\noindent The \textbf{muffinplot} suite of \textbf{MATLAB} functions provides a means of plotting a variety of output reproducibly (by means of  a saved parameter file) and with the potential for automation (i.e. automatically generating the same analysis for a large number of different experiments).
 
 The functions comprising this software suite include:
 
@@ -6603,7 +6646,7 @@ The functions comprising this software suite include:
 \vspace{1mm}
 \item \footnotesize\textsf{plot\_timeseries\_biogem}\normalsize -- time-series plots from \textbf{biogem} time-series output.
 \end{itemize}
-Note that at this current time, there is no facility for lon-depth plotting.
+Note that at this current time, there is no facility for lon-depth plotting (unlike in \textbf{Panoply}).
 
 Most of the plots also perform additional functions (which can be generally disabled if not wanted), such as plotting and saving zonal or depth profiles, plotting difference maps, plotting and labelling data on maps and carrying out model-data fit statistics and plotting, extracting model values at data locations.
 
@@ -6613,13 +6656,13 @@ The following sections provide an overview and examples of such plotting and ana
 
 \section{Installation}
 
-\textbf{muffinplot} can be obtained from \href{https://github.com/derpycode/muffinplot\#https://github.com/derpycode/muffinplot}{github}. If you do not have a \textbf{git} client on your computer (and hence can clone the repository locally), then simply download an archive of the code (from \footnotesize\textsf{\textcolor[rgb]{0,0.501961,0}{clone or download }}\normalsize -- pick \textsf{\footnotesize Download ZIP}).
+\textbf{muffinplot} can be obtained from \href{https://github.com/derpycode/muffinplot\#https://github.com/derpycode/muffinplot}{github}. If you do not have a \textbf{git} client on your computer (and hence cannot clone the repository locally), then simply download the archive file of all the code (from \footnotesize\textsf{\textcolor[rgb]{0,0.501961,0}{clone or download }}\normalsize -- pick \textsf{\footnotesize Download ZIP}).
 
-When you unpack (or clone) \textbf{muffinplot}, you should see 3 directories -- \footnotesize\textsf{EXAMPLES}\normalsize, and \footnotesize\textsf{MASKS}\normalsize,\ \footnotesize\textsf{source}\normalsize, a series of \footnotesize\textsf{.m }\normalsize files, and a single lonely \footnotesize\textsf{.ps }\normalsize graphics file (\footnotesize\textsf{colorscales.ps}\normalsize). The \footnotesize\textsf{.m }\normalsize files are split into filenames with or without the label \footnotesize\textsf{SETTINGS }\normalsize -- the ones without are code files (\textit{functions}), and the ones with the word \footnotesize\textsf{SETTINGS }\normalsize in their filename, contain parameter settings for plotting.
+When you unpack (or clone) \textbf{muffinplot} (note that it is likely to unpack by default into its own directory), you should see 3 directories -- \footnotesize\textsf{EXAMPLES}\normalsize, and \footnotesize\textsf{MASKS}\normalsize,\ \footnotesize\textsf{source}\normalsize, a series of \footnotesize\textsf{.m }\normalsize files, and a single lonely \footnotesize\textsf{.ps }\normalsize graphics file (\footnotesize\textsf{colorscales.ps}\normalsize). The \footnotesize\textsf{.m }\normalsize files are split into filenames with or without the label \footnotesize\textsf{SETTINGS }\normalsize -- the ones without are code files (\textit{functions}), and the ones with the word \footnotesize\textsf{SETTINGS }\normalsize in their filename, contain parameter settings for plotting.
 
-By default (the parameters can be changed if you wish), wherever you run the \textbf{muffinplot} plotting function from, requires that you have a subdirectory called \footnotesize\textsf{cgenie\_output}\normalsize, where you will place the (complete) \textbf{muffin} experiment output directories (i.e. the contents of \footnotesize\textsf{cgenie\_output }\normalsize should look like the contents of \footnotesize\textsf{cgenie\_output }\normalsize on your cluster account\footnote{Although you do not need to copy \uline{all} the results over ... just the experiments that you wish to plot up.}). If you do any model-data analysis, by default, a directory \footnotesize\textsf{DATA }\normalsize is also expected. Mask files reside in the \footnotesize\textsf{MASKS}\normalsize\ subdirectory of the \textbf{muffinplot} installation, or in your current directory, or anywhere in the \textbf{MATLAB} path.
+By default (the parameters can be changed if you wish), wherever you run the \textbf{muffinplot} plotting function from, requires that you also have a subdirectory called \footnotesize\textsf{cgenie\_output}\normalsize\ present, and that the (complete) \textbf{muffin} experiment output directories of anything you want to plot should be in subdirectories of that -- i.e. the contents of \footnotesize\textsf{cgenie\_output }\normalsize should look like the contents of \footnotesize\textsf{cgenie\_output }\normalsize on your cluster account\footnote{Although you do not need to copy \uline{all} the results over ... just the experiments that you wish to plot up.}. Mask files reside in the \footnotesize\textsf{MASKS}\normalsize\ subdirectory of the \textbf{muffinplot} installation, or in your current directory, or anywhere in the \textbf{MATLAB} path.
 
-The simplest option might be to unpack/clone \textbf{muffinplot} to a directory containing \footnotesize\textsf{cgenie\_output }\normalsize and hence all your experimental results directories.\footnote{However, the \textbf{muffinplot} functions do not have to be run from the same directory that you are in -- you can install them somewhere convenient, and then with \textbf{MATLAB} set to a directory containing a \textsf{cgenie\_output} experiment results directory, you can:
+The simplest option is to unpack/clone \textbf{muffinplot} to a directory containing \footnotesize\textsf{cgenie\_output }\normalsize and hence all your experimental results directories.\footnote{However, the \textbf{muffinplot} functions do not have to be run from the same directory that you are in -- you can install them somewhere convenient, and then with \textbf{MATLAB} set to a directory containing a \textsf{cgenie\_output} experiment results directory, you can:
 \\\texttt{>> addpath(PATH)}
 \\where \texttt{PATH} is the path to the directory where \textbf{muffinplot} is installed.}
 In other words:
@@ -6629,7 +6672,7 @@ In other words:
 \vspace{1mm}
 \item Create a subdirectory in \footnotesize\textsf{RESULTS }\normalsize called \footnotesize\textsf{cgenie\_output}\normalsize.
 \vspace{1mm}
-\item Drag your experiment results folders across into the subdirectory \footnotesize\textsf{cgenie\_output}\normalsize, as per the directory structure on the cluster. (Or drag the archived files and unpack them.)
+\item Drag your experiment results folders across into the subdirectory \footnotesize\textsf{cgenie\_output}\normalsize, as per the directory structure on the cluster. (Or better -- drag the archived files to  \footnotesize\textsf{cgenie\_output }\normalsize and unpack them.)
 \vspace{1mm}
 \item Install \textbf{muffinplot} in the \footnotesize\textsf{RESULTS }\normalsize directory.
 \vspace{1mm}
@@ -6637,7 +6680,7 @@ In other words:
 \end{enumerate}
 \vspace{2mm}
 
-The plotting functions are run simply by typing their name and passing a list of parameters (comma-separated, with the complete list enclosed in parentheses). By default,   the \footnotesize\textsf{SETTINGS }\normalsize files need to be in the same directory as you are running the \textit{functions} from, or in one of the \textbf{MATLAB} paths. Results are saved to a subdirectory that by default is called \footnotesize\textsf{PLOTS}\normalsize, which will be created for you if it does not already exist.
+The plotting functions are run simply by typing their name and passing a list of parameters (comma-separated, with the complete list enclosed in parentheses). By default,   the \footnotesize\textsf{SETTINGS }\normalsize files need to be in the same directory as you are running the functions from, or in one of the \textbf{MATLAB} paths. Results are saved to a subdirectory that by default is called \footnotesize\textsf{PLOTS}\normalsize, which will be created for you if it does not already exist.
 
 All the plotting functions provide some manner of 'help', that can be obtained by typing at the command line:
 \vspace{-2pt}\begin{verbatim}
@@ -6647,6 +6690,7 @@ where \texttt{FUNCTIONNAME} is the function name (as per listed above).
 
 %------------------------------------------------
 
+\newpage 
 \section{Time-series plotting}
 
 The \textbf{muffinplot} function \textsf{\footnotesize plot\_timeseries\_biogem.m} provides a facility to plot \textbf{BIOGEM} \textit{time-series} (\textsf{\small .res}) output.\footnote{Obviously -- there are lots of different and easy ways of plotting plain text output in the form of a simple column format.} You can use \textbf{MATLAB} \texttt{help} on the function name to detail the parameters that need to be passed (and examples).
@@ -8357,6 +8401,10 @@ the program will terminate with a segmentation fault.}''
 %------------------------------------------------
 %
 
+%------------------------------------------------
+
+\subsection{Sources of initialization error}
+
 If, when using the \textsf{\footnotesize runmuffin.sh} shell script to run a \textbf{cgenie.muffin} experiment, it all goes horribly pear-shaped ...
 \vspace{1mm}
 \begin{enumerate}
@@ -8381,10 +8429,6 @@ before dropping dead. If so, there should be an error message telling you that a
 \vspace{2mm}
 
 \noindent These first two sorts of pain and suffering are due to mis-configuration of the \textsf{\footnotesize runmuffin.sh} shell script. Also refer back to the overall sequence of configuring and running the \textbf{cGENIE.muffin} model shown in Figure \ref{fig:chx-jobcreation}.
-
-%------------------------------------------------
-
-\subsection{Other sources of initialization error}
 
 \noindent Other sources of error are due to the configuration of \textbf{cGENIE.muffin} (or more rarely, due to the model itself):
 
@@ -8550,6 +8594,37 @@ gm_ctrl_carbchem_noH3SiO4=.true.
 \end{enumerate}
 
 %------------------------------------------------
+%
+\newpage
+
+\subsection{Other possible geochemical errors}
+
+It is good practice not to allow complete consumption of any particular reactant by a single reaction. This is because multiple processes may be competing for the same reactant, whilst at the same time, ocean circulation is transporting the reactant away. The result can be (small) negative tracer values (and if you are unlucky, large negative errors). Negative tracer value, in turn, have the potential to cause crashes.
+
+A parameter is hence provided to limit the maximum consumption of any particular reactant by a single reaction via an imposed lifetime (days): 
+\small\vspace{-1mm}\begin{verbatim}
+# maximum time-scale to geochemical reaction completion (days)
+bg_par_bio_geochem_tau=90.0
+\end{verbatim}\vspace{-1mm}\normalsize
+
+\noindent In this example, the value is set to \(90\:d\).\footnote{By default it is set to zero which is interpreted as allowing complete reactant consumption as per previously.}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Negative tracer values can also arrise as a result of the default ocean mixing scheme. In all modern and 'realistic' paleo configurations, isopycnal/diapycnal mixing is used. However, this scheme can lead to unwanted negative tracer values. In extreme biogeochemical configurations, particularly at low atmospheric \(pO_{2}\) and when sharp horizontal transitions in redox state in the ocean occur, the magnitude of negative values can become unacceptable.
+
+An option is provided for toggling between isopycnal/diapycnal (\texttt{.true.}) and horizontal/vertical (\texttt{.false.}) mixing schemes. For instance, adding:
+\small\vspace{-2pt}\begin{verbatim}
+# it is recommended that it is turned OFF (=.false.) for 'fake' worlds
+go_diso=.false.
+\end{verbatim}\vspace{-2pt}\normalsize
+would request the horizontal/vertical mixing scheme and substantially reduce the possibility of negative tracer values arising.
+
+%------------------------------------------------
+%
+\newpage
 
 \subsection{Meaning of specific error and warning messages}
 
@@ -12532,20 +12607,98 @@ sub_box_remin_part
 
 
 
+%----------------------------------------------------------------------------------------
+%
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{muffin_planet.jpg} % Chapter heading image
+
+\chapter{Appendix I -- Tables}
+
+\hfill \break
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Data save levels}
+
+\begin{table}[h]
+\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-slices}}}
+\begin{tabular}{|l||p{0.2cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|}\hline
+\textbf{Data category} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 14 & 15 & 16 & 99 \\\hline
+\hline
+ocn & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+ocnatm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+ocnsed & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+fairsea & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+focnatm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+focnsed & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+fsedocn & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+bio & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+carb & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+carbconst & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+phys\_atm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+phys\_ocn & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+misc & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+diag & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+diag\_bio & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+diag\_geochem & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+diag\_proxy & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+diag\_tracer & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+\end{tabular}
+\label{tab:timeslicelevels}
+\end{table}
+
+\begin{table}[h]
+\textbf{\caption{Description of data categories -- \textit{time-slices}}}
+\begin{tabular}{|l|c|}\hline
+\textbf{Data category} & \textbf{Description of associated data saved} \\\hline
+\hline
+ocn & -- \\\hline
+ocnatm & -- \\\hline
+ocnsed & -- \\\hline
+fairsea & -- \\\hline
+focnatm & -- \\\hline
+focnsed & -- \\\hline
+fsedocn & -- \\\hline
+bio & -- \\\hline
+carb & -- \\\hline
+carbconst & -- \\\hline
+phys\_atm & -- \\\hline
+phys\_ocn & -- \\\hline
+misc & -- \\\hline
+diag & -- \\\hline
+diag\_bio & -- \\\hline
+diag\_geochem & -- \\\hline
+diag\_proxy & -- \\\hline
+diag\_tracer & -- \\\hline
+\end{tabular}
+\label{tab:timeslicedescription}
+\end{table}
+
+
+
+
+
 
 %----------------------------------------------------------------------------------------
 %       BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\chapter*{Bibliography}
-\vspace{30mm}
-\addcontentsline{toc}{chapter}{\textcolor{ocre}{Bibliography}}
-\section*{Books}
-\addcontentsline{toc}{section}{Books}
-\printbibliography[heading=bibempty,type=book]
-\section*{Articles}
-\addcontentsline{toc}{section}{Articles}
-\printbibliography[heading=bibempty,type=article]
+%\chapter*{Bibliography}
+%\vspace{30mm}
+%\addcontentsline{toc}{chapter}{\textcolor{ocre}{Bibliography}}
+%\section*{Books}
+%\addcontentsline{toc}{section}{Books}
+%\printbibliography[heading=bibempty,type=book]
+%\section*{Articles}
+%\addcontentsline{toc}{section}{Articles}
+%\printbibliography[heading=bibempty,type=article]
 
 %----------------------------------------------------------------------------------------
 %       INDEX
