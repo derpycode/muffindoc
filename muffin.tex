@@ -2692,7 +2692,7 @@ You can also easily replace the details of the emissions with other SRES scenari
 
 Try running (e.g. as jobs submitted to the cluster queue), some other actual or made up SRES emissions scenarios.
 
-(Note that the past few IPCC assessment reports have switched to 'using 'RCP's -- Representative Emissions Pathways, rather than the SRES emissions scenarios.)
+(Note that the past few IPCC assessment reports have switched to 'using 'RCP's -- Representative Emissions Pathways, rather than the SRES emissions scenarios -- see later Section.)
 
 %------------------------------------------------
 
@@ -2706,7 +2706,7 @@ Try running (e.g. as jobs submitted to the cluster queue), some other actual or 
 
 \subsection{Assessing the importance of emissions rate}
 
-By editing the flux and/or timing information you can control the \(CO_{2}\) emissions trajectory and total fossil fuel burned. Explore different \(CO_{2}\) release assumptions and note their impact on climate and ocean biogeochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) compared to the conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of  fossil fuel \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years.\footnote{These all represent rather unrealistically small total \(CO_{2}\) releases and you may want ot consider a total more like 1000 \(PgC\) or rather more. You may also want to think about more realistic shapes rather than pulses, such a some sort of ramp up and then down in the emissions rate (but for the same total emissions).} (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!)
+By editing the flux and/or timing information, you can control the \(CO_{2}\) emissions trajectory as well as the total of fossil fuel carbon burned. Explore different \(CO_{2}\) release assumptions and note their differing impact on climate and ocean (carbonate) geochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) as compared to a conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of  fossil fuel \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years.\footnote{These all represent rather unrealistically small total \(CO_{2}\) releases and you may want ot consider a total more like 1000 \(PgC\) or rather more. You may also want to think about more realistic shapes rather than pulses, such a some sort of ramp up and then down in the emissions rate (but for the same total emissions).} (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!)
 
 Note note that you should create 3 new \textit{forcings} based on the original if you are editing the same original  \textit{forcing} and expecting to run different ones at the same time. Really, this is little more than copying and renaming \textit{user-config} files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
 
@@ -2727,6 +2727,11 @@ There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\
 \vspace{1mm}
 \item Also: How much \(CO_{2}\) emission does it take to significantly ‘collapse’ the AMOC and over what time-scale? (Or alternatively: what is the atmospheric p\(CO_{2}\) threshold for collapse?)
 \\ If the AMOC weakens or collapses … why in the absence of a prescribed freshwater perturbation does this happen? What physical process are at play in response to rapid \(CO_{2}\) release too the atmosphere that may act to reduce or shutdown deep-water formation in the ocean model? (Plotting appropriate ocean property anomalies between the \(CO_{2}\) release experiment and a control experiment might help.)
+
+\vspace{1mm}
+\item How much more carbon can be burned to keep global mean surface air temperature from rising more than \(2^{\circ}C\) (as compared to preindustrial).
+\\This is actually difficult to do 'acurately' because there is a significant lag in the system and warming will continue even if atmospheric \(pCO_{2}\) was held constant.
+\\Similarly -- how much (and how quickly) can carbon be burned such that atmospheric \(pCO_{2}\) does not increase any further? 
 
 \end{itemize}
 
@@ -2755,7 +2760,9 @@ A series of RCP scenarios for how atmospheric \(CO_{2}\) concentrations may evol
 \vspace{-2pt}\begin{verbatim}
 bg_par_forcing_name=’pyyyyz.RpCO2_Rp13CO2.RCP8p5'
 \end{verbatim}\vspace{-2pt}
-\noindent which would select the RCP8.5 scenario. Ensure that
+\noindent which would select the RCP8.5 scenario.
+
+\noindent \uline{NOTE}: ensure that
 the scaling parameters are either commented out, e.g.:
 \vspace{-2pt}\begin{verbatim}
 #bg_par_atm_force_scale_val_3=8.3333e+013
