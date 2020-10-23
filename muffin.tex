@@ -2706,9 +2706,9 @@ Try running (e.g. as jobs submitted to the cluster queue), some other actual or 
 
 \subsection{Assessing the importance of emissions rate}
 
-By editing the flux and/or timing information, you can control the \(CO_{2}\) emissions trajectory as well as the total of fossil fuel carbon burned. Explore different \(CO_{2}\) release assumptions and note their differing impact on climate and ocean (carbonate) geochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) as compared to a conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of  fossil fuel \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer. You could conceive of an ensemble (set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years.\footnote{These all represent rather unrealistically small total \(CO_{2}\) releases and you may want ot consider a total more like 1000 \(PgC\) or rather more. You may also want to think about more realistic shapes rather than pulses, such a some sort of ramp up and then down in the emissions rate (but for the same total emissions).} (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (Don’t forget the control experiment!)
+By editing the flux and/or timing information, you can control the \(CO_{2}\) emissions trajectory as well as the total of fossil fuel carbon burned. Explore different \(CO_{2}\) release assumptions and note their differing impact on climate and ocean (carbonate) geochemistry. Much more realistic and appropriate to our \textit{current} global experiment is a lower rate (order of 10 or 20 \(PgCyr^{-1}\)) released over a longer interval (order of 100 years) as compared to a conceptual 1000 \(PgC\) near-instantaneous pulse. Because the experiments are getting longer to run in real time … remember to make appropriate use of the cluster queuing facility – i.e., think about whether you want to sit around starting at the screen for 15 minutes waiting for a new line of numbers appear – if not: submit to the cluster queue. For instance, one might try and address the question: “For a given total release of  fossil fuel \(CO_{2}\), is it safer to burn it slower?” The answer is maybe not completely obvious, as burning carbon resources slower will result in a small global impact, but perhaps one that persists for longer(??). You could conceive of an ensemble (related set) of model experiments, maybe one of 100 \(PgCyr^{-1}\) for 1 yr, one of 10 \(PgCyr^{-1}\) for 10 years, and one of 1 \(PgCyr^{-1}\) for 100 years, and run them all for e.g., 100 years.\footnote{These all represent rather unrealistically small total \(CO_{2}\) releases and you may want ot consider a total more like 1000 \(PgC\) or rather more. You may also want to think about more realistic shapes rather than pulses, such a some sort of ramp up and then down in the emissions rate (but for the same total emissions).} (As jobs submitted to the queue, all can be run simultaneously (with blank spaces between commands!).) (\uline{Don’t forget the control experiment}! (configured the same, except with 0 \(PgCyr^{-1}\) of emissions for 100 years).)
 
-Note note that you should create 3 new \textit{forcings} based on the original if you are editing the same original  \textit{forcing} and expecting to run different ones at the same time. Really, this is little more than copying and renaming \textit{user-config} files, except it involves entire directories in genie-forcings. Remember that the forcing is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}).
+Note note that you should create 3 new \textit{forcings} based on the original if you are editing the same original  \textit{forcing} and expecting to run different ones at the same time. Really, this is little more than you did in copying and renaming \textit{user-config} files in order to create new experiments ... except that now it involves copying and renaming entire directories in \textsf{\footnotesize genie-forcings}. Remember that the \textit{forcing} is specified by the directory name assigned to \texttt{bg\_par\_forcing\_name} (enclosed in \texttt{''}) and you will need to change this to match the name of your new \textit{forcing} directory.
 
 %------------------------------------------------
 
@@ -2719,32 +2719,94 @@ There are various concerns about the impacts of continuing fossil fuel \(CO_{2}\
 \begin{itemize}[noitemsep]
 
 \vspace{1mm}
-\item What is the maximum total \(CO_{2}\) release that can be made without inducing aragonite under-saturation at the ocean surface anywhere (or any season – see Section 5.2.3 in the User Manual for seasonal time-slice data saving)? How important is the time-scale of emissions in determining this? For total emissions above this: where in the ocean does the surface first become under-saturated? How large would the emissions have to be in order to induce under-saturation at the surface in the tropics (home to socio-economically important reef systems). These are questions that can be addressed with simple \(CO_{2}\) release experiments in ocean carbon cycle models and everyone seems to get a GRL paper out of it each and every time!
+\item What is the maximum total \(CO_{2}\) release that can be made without inducing aragonite under-saturation at the ocean surface anywhere (or any season – see Section 5.2.3 in the User Manual for seasonal time-slice data saving)? How important is the time-scale of emissions in determining this? For total emissions above this: where in the ocean does the surface first become under-saturated and what sort of (calcifying) organisms might be impacted there? How large would the emissions have to be in order to start to induce under-saturation with respect to aragonite at the surface in the tropics (home to socio-economically important reef systems)? These are questions that can be addressed with simple \(CO_{2}\) release experiments in ocean carbon cycle models and everyone seems to get a GRL paper out of it each and every time!
 
 \vspace{1mm}
-\item How important are \(CO_{2}\)-climate feedbacks in amplifying or diminishing future climate and ocean carbonate chemistry changes – e.g., is the same atmospheric p\(CO_{2}\) value reached with and without climate feedback (and surface warming) – if not, why? You can investigate this by contrasting an experiment made including \(CO_{2}\)-climate feedback with one made without. The \(CO_{2}\)-climate feedback can be turned off by setting: \texttt{ea\_36=n}.
+\item How important are \(CO_{2}\)-climate feedbacks in amplifying or diminishing future climate and ocean carbonate chemistry changes – e.g., is the same atmospheric p\(CO_{2}\) value reached with and without climate feedback (and surface warming) – if not, why? 
+
+Hint: the solubility of \(CO_{2}\) in sea-water is a function of temperature and at higher temperatures, \(CO_{2}\) is less soluble. This means that with climate warming, \(CO_{2}\) solubility declines, less is taken up by the ocean and more is left in the atmosphere -- driving further heating in a \uline{positive feedback}.
+
+\vspace{1mm}
+All your \(CO_{2}\) emissions experiments to date have had this feedback enabled -- specified at the top of the \textit{user-config} file by:
+\vspace{-2pt}\small\begin{verbatim}
+# set climate feedback
+ea_36=y
+\end{verbatim}\normalsize\vspace{-2pt}
+
+To quantify the role of the carbon-climate feedback, you need to run an identical emissions experiment, but with the feedback disabled:
+\vspace{-2pt}\small\begin{verbatim}
+# set climate feedback
+ea_36=n
+\end{verbatim}\normalsize\vspace{-2pt}
+
+Note that you also to need to run a historical transient experiments with no carbon-climate feedback, if you are starting emissions experiments from the year 2010. i.e. you will have a set of future emissions experiments including the carbon-climate feedback that are run from a historical transient experiments that also includes carbon-climate feedback, vs. a set of future emissions experiments without the carbon-climate feedback that are run from a historical transient experiments that also \uline{does not include} carbon-climate feedback.
+
+The importance of the feedback is simply the difference between the 2 sets of experiments, at the same year.
 
 \vspace{1mm}
 \item Also: How much \(CO_{2}\) emission does it take to significantly ‘collapse’ the AMOC and over what time-scale? (Or alternatively: what is the atmospheric p\(CO_{2}\) threshold for collapse?)
 \\ If the AMOC weakens or collapses … why in the absence of a prescribed freshwater perturbation does this happen? What physical process are at play in response to rapid \(CO_{2}\) release too the atmosphere that may act to reduce or shutdown deep-water formation in the ocean model? (Plotting appropriate ocean property anomalies between the \(CO_{2}\) release experiment and a control experiment might help.)
-
-\vspace{1mm}
-\item How much more carbon can be burned to keep global mean surface air temperature from rising more than \(2^{\circ}C\) (as compared to preindustrial).
-\\This is actually difficult to do 'acurately' because there is a significant lag in the system and warming will continue even if atmospheric \(pCO_{2}\) was held constant.
-\\Similarly -- how much (and how quickly) can carbon be burned such that atmospheric \(pCO_{2}\) does not increase any further? 
+\\Related to a previous possible investigation -- does the rate of \(CO_{2}\) increase (for the same total release) matter? If so, why? What is happening in general to the structure and dynamics of the upper ocean when surface warming is very rapid?
 
 \end{itemize}
 
 \vspace{1mm}
-Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g., starting in year 2010).
+\noindent Experiments could be hypothetical and consisting of \(CO_{2}\) pulses or ramps (or exponentials) and run on directly from a pre-industrial spin-up, or more ‘realistic’ and run on from the end of a historical transient experiment (e.g., starting in year 2010).
+
+\noindent Also:
+
+\begin{itemize}[noitemsep]
+
+\vspace{1mm}
+\item How much carbon can  be burned (and how quickly) such that atmospheric \(pCO_{2}\) does not increase any further and remains at some specific value (you might pick \(\times2\) or \(\times4\) preindustrial \(pCO_{2}\) (ca. 278 ppm))? This is difficult to determine well because to hold atmospheric \(pCO_{2}\)  constant, continuing emissions are required (as \(CO_{2}\) continues to be taken up by the ocean).
+\vspace{1mm} 
+\\One possible approach to tacking this, might be:
+\vspace{1mm} 
+\begin{enumerate}[noitemsep]
+\item Run one or more (SRES) emissions scenarios and find the year at which your \(pCO_{2}\) threshold value is crossed. 
+\item Re-run the same emissions experiment, but only for as many years as the threshold-crossing year you had identified, is reached. This will become your new \textit{re-start} experiment.
+\item Create a new experiment, with zero emissions, and run on from your new re-start. You should see atmospheric \(pCO_{2}\) start close to the value you reached at the end of the last experiment, but then decay away as the ocean continues to absorb carbon from the atmosphere. The decline in atmospheric \(pCO_{2}\) each year tells you something about the yearly emissions needed to keep atmospheric \(pCO_{2}\) constant.
+\\An approximate rule-of-thump, is that \(1ppm\) in atmospheric \(pCO_{2}\) is equivalent to \(2 PgC\) (actually, a more exact conversion is \(1 ppm = 2.123 PgC\)). So you could calculate a yearly time-series of how much (in ppm) atmospheric \(pCO_{2}\) falls by each year ... convert this to PgC, and then create a new \textit{forcing}, with this as the annual emissions.
+\item Create and run a new experiment, from the same \textit{re-start} experiment you created, and apply the new emissions forcing you created. See if atmospheric \(pCO_{2}\) is approximately maintained constant(?)  
+\item If not sufficient constant to your satisfaction, you could also carry out a second iteration -- calculating from your latest experiment, the ppm change in \(pCO_{2}\) each year, converting to an emissions rate, and running a further experiment ...
+\\Note that if you 'overhsoot' and \(pCO_{2}\) rises above the threshold value rather than falls below, you are allowed to have a \uline{negative} carbon emission to the atmosphere in your forcing.
+\item The sum of the carbon emissions up to the threshold being reached, is your answer to how much more carbon can be burned and not cross that threshold ... but you will see that after that, further emissions are allowed without \(pCO_{2}\) exceeding the threshold. So the answer e.g. for year 2100 (or 2200) will be larger.
+\end{enumerate}
+
+\vspace{1mm} 
+There are automated ways provided in the model framework of  achieving this, and you can for instance simply tell \textbf{muffin}  to maintain a specific (or changing) value of atmospheric \(pCO_{2}\), and from this diagnose the emissions rate that was required. For instance, you'll see in the original \textit{re-start} \textit{user-config} for this chapter -- \textsf{\footnotesize LAB\_3.SPIN} -- the \textit{forcing} used is 
+\textsf{\footnotesize worjh2.preindustrial}, and if you go an look in that forcing directory:
+\vspace{1mm}
+\\\textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat} 
+\vspace{1mm}
+\\you will see that this basically requests that atmospheric \(pCO_{2}\) is held at \(278 ppm\) (\(0.278\times10^{-6} atm\)). You could then copy and rename this \textit{forcing}, and change:
+\vspace{-2pt}\small\begin{verbatim}
+0.0      278.0E-6
+999999.0 278.0E-6
+\end{verbatim}\normalsize\vspace{-2pt}
+to:
+\vspace{-2pt}\small\begin{verbatim}
+0.0      556.0E-6
+999999.0 556.0E-6
+\end{verbatim}\normalsize\vspace{-2pt}
+(in the case of a \(\times2\) preindustrial \(pCO_{2}\) threshold). \textbf{muffin} will then attempt to maintain \(pCO_{2}\) at this specified value. The equivalent carbon emissions required to do this, are diagnosed and provided as a \textit{time-series} output (in units of \(mol C yr^{-1}\)) in file: \\\textsf{\footnotesize biogem\_series\_diag\_misc\_specified\_forcing\_pCO2.res}
+
+\vspace{1mm}
+\item Similarly -- how much more carbon can be burned but still keep global mean surface air temperature from rising beyond the 'Paris' limit of \(2^{\circ}C\) (as compared to preindustrial)?
+\\This is also difficult to determine well because there are significant climate lags in the system with warming continuing even if atmospheric \(pCO_{2}\) was held constant.
+\\Trial-and error would be one approach ...
+
+\end{itemize}
 
 %------------------------------------------------
 
 \subsection{Future atmospheric CO$_{2}$ concentration pathways ('RCPs')}
 
-The more recent/current incarnation of IPCC future scenarios revolves around not projected future greenhouse gas emissions rates, but rather future greenhouse gas concentration pathways. (The reasoning is partly to cut out the differences in carbon cycle feedback between models, where for the same unit \(CO_{2}\) release, different climate/Earth system models might project a different atmospheric \(CO_{2}\) concentration and hence climate change (in addition to differences between models in climate sensitivity).) In muffin, these work pretty well much like in the historical forcing scenario, where the observed change in atmospheric \(CO_{2}\) concentration in the atmosphere with time, is prescribed and the model 'forced' to conform to this trajectory.
+The more recent/current incarnation of IPCC future scenarios revolves not around  making projections of future greenhouse gas emissions rates, but rather future greenhouse gas concentration pathways. (The reasoning is partly to cut out the differences in carbon cycle feedback between models, where for the same unit \(CO_{2}\) release, different climate/Earth system models might project a different atmospheric \(CO_{2}\) concentration and hence climate change (in addition to differences between models in climate sensitivity).) In muffin, these work pretty well much like in the historical forcing scenario, where the observed change in atmospheric \(CO_{2}\) concentration in the atmosphere with time, is prescribed and the model 'forced' to conform to this trajectory.
 
-A series of RCP scenarios for how atmospheric \(CO_{2}\) concentrations may evolve with time are provided. Each actually starts at year 1765 and hence incorporates the historical transient. They can hence be used with an experiment starting at 1765 and re-starting from a steady-state preindustrial spin-up. Or they can be jumped into at ay point, and e.g. experiments started at year 2010, when only the year 2010 onwards part of the \(CO_{2}\) restoring \textit{forcing} is utilized. The RCP \textit{forcings} currently available are:
+A series of RCP scenarios for how atmospheric \(CO_{2}\) concentrations may evolve with time are provided. Each actually starts at year 1765 and hence incorporates the historical transient. They can hence be used with an experiment starting at 1765 and \textit{re-starting} from a steady-state preindustrial \textit{spin-up}. Or they can be jumped into at ay point, and e.g. experiments started at year 2010, when only the year 2010 onwards part of the \(CO_{2}\) restoring \textit{forcing} is utilized. The RCP \textit{forcings} currently provided are:
+
+\newpage 
 
 \vspace{2pt}
 \begin{itemize}[noitemsep]
@@ -2762,13 +2824,24 @@ bg_par_forcing_name=’pyyyyz.RpCO2_Rp13CO2.RCP8p5'
 \end{verbatim}\vspace{-2pt}
 \noindent which would select the RCP8.5 scenario.
 
+\vspace{1mm}
 \noindent \uline{NOTE}: ensure that
 the scaling parameters are either commented out, e.g.:
-\vspace{-2pt}\begin{verbatim}
+\vspace{-2pt}\small\begin{verbatim}
 #bg_par_atm_force_scale_val_3=8.3333e+013
 #bg_par_atm_force_scale_val_4=-27.0
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-2pt}
 \noindent or simply deleted in their entirety (because the RCP forcing contains the actual values/correct units and you do not need to modify them any further).
+
+The equivalent carbon emissions required to follow these concentration pathways are diagnosed by \textbf{muffin} and provided as a \textit{time-series} output (in units of \(mol C yr^{-1}\)) in file: 
+\vspace{1mm}
+\\\textsf{\footnotesize biogem\_series\_diag\_misc\_specified\_forcing\_pCO2.res}
+
+%------------------------------------------------
+
+\subsection{Isotopic tracing of fossil fuel CO$_{2}$ uptake}
+
+See: 12.2.1
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -4864,27 +4937,43 @@ $ wget http://www.seao2.info/cgenie_output/muffin.CB.GIteiiva.BASESFeTDTL_rb.SPI
 
 \subsection{Fossil fuel $\delta^{13}$C}
 
-The earlier experiments on fossil fuel \(CO_{2}\) emissions to the atmosphere included an assumed isotopic composition of the emitted carbon (and a complete ocean-atmosphere \(^{13}C\) cycle, even though we did not pay it any attention at the time. So one useful exercise is to go back to those experiments and explore how the  isotopic composition of fossil fuel carbon is propagated form the atmosphere into the ocean and hence through the ocean via its large-scale circulation (and also through organic matter produced at the ocean surface and subsequently exported into the ocean interior). In this, it is helpful to also take a control experiment (you did run one, right ... ?) and create a difference map to better visualize how the \(\delta^{13}C\) patterns in the ocean evolve through time.
+The earlier experiments on fossil fuel \(CO_{2}\) emissions to the atmosphere included an assumed isotopic composition of the emitted carbon (and a complete ocean-atmosphere \(^{13}C\) cycle, even though we did not pay it any attention at the time. So one useful exercise is to go back to those experiments and explore how the  isotopic composition of fossil fuel carbon is propagated from the atmosphere into the ocean and hence through the ocean via its large-scale circulation (and also through organic matter produced at the ocean surface and subsequently exported into the ocean interior). In this, it is helpful to also take a control experiment (you did run one, right ... ?) and create a difference map to better visualize how the \(\delta^{13}C\) patterns in the ocean evolve through time.
 
 By default, fossil fuel carbon is tagged with a mean fossil fuel isotopic signature of \(-27\)\permille. This in set by the parameter:
 \vspace{-1mm}\begin{verbatim}
 bg_par_atm_force_scale_val_4=-27.0
 \end{verbatim}\vspace{-1mm}
-which scales the value of \(1.0\) specified in the file \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_13C\_sig.dat} in the forcing directory, which in the previous fossil fuel release experiments was the \textsf{\footnotesize genie-forcing} sub-directory:
+which scales the value of \(1.0\) specified in the file \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_13C\_sig.dat} in the \textit{forcing} directory, which in the previous fossil fuel release experiments was the \textsf{\footnotesize genie-forcing} sub-directory:
 \vspace{2pt}
 \\\noindent \footnotesize\textsf{pyyyyz.FpCO2\_Fp13CO2}\normalsize
 \vspace{2pt}
-\\To create a more pronounced 'tag' of fossil fuel carbon, you could, for instance, make the assumed value of the \(CO_{2}\) more negative.
+\\To create a more pronounced 'tag' of fossil fuel carbon, you could, for instance, make the assumed value of the \(CO_{2}\) more negative (e.g. \(-60\)\permille would be the signature of methane (natural gas), or you could push the value even more negative if you like (although you run out of natural analogues for what this carbon could 'be')).
 
 Note that for organic carbon, in addition to its isotopic composition depending on that of dissolved inorganic carbon (technically, the \(CO_{2(aq)}\) component of DIC), the carbon isotopic fractionation scheme also depends on the \(CO_{2(aq)}\) concentration, which will tend to increase as fossil fuel carbon is taken up by the ocean surface. This scheme (for \(^{13}C\) fractionation into marine organic matter) is described in \textit{Ridgwell} [2001]\footnote{Ridgwell, A. J., Glacial-interglacial perturbations in the global carbon cycle, PhD thesis, 134 pp., Univ. of East Anglia at Norwich, UK, March 2001 -- http://www.seao2.info/pubs/ridgwell\_thesis.pdf} as well as more briefly in \textit{Kirtland Turner and Ridgwell} [2016]\footnote{Kirtland Turner, S. and A. Ridgwell, Constraints on the rate of carbon injection across the PETM – towards a theoretical framework for hyperthermals, EPSL 435, 1-13 (2016).}. So \(\delta^{13}C\) or organic matter may potentially change in non-intuitive directions or values depending on the relative carbon and climate perturbation vs. the magnitude of the isotopic perturbation of the Earth system. You could explore this further by setting the isotopic composition of the emitted carbo to that of the atmosphere prior to perturbation, or even of the bulk (or surface) ocean (DIC), such that the applied perturbation becomes one only of surface ocean carbonate chemistry and climate and hence revealing more clearly the influence of changing  \(CO_{2(aq)}\) concentrations alone.
 
-You can also view the \textit{re-start} experiment \textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN} which is isotope-enabled and described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}.
+\newpage
+
+You can use the same \textit{re-start} experiment as used in the fossil fuel \(CO_{2}\) emissions chapter, or this one:
+\vspace{1mm}
+\\\textsf{\footnotesize EXAMPLE.worjh2.Caoetal2009.SPIN} 
+\vspace{1mm}
+\\which is also isotope-enabled and the specific configuration that was described and evaluated against other models as well as observations, in \textit{Cao et al.} [2009]\footnote{Cao, L., M. Eby, A. Ridgwell, et al., The role of ocean transport in the uptake of anthropogenic CO2, Biogeosciences 6, 375-390 (2009).}.\footnote{To get this \textit{re-start}:
+\\\texttt{\$ wget http://www.seao2.info/cgenie\_output/EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz}
+\\and extract the contents of this archive by typing:
+\\\texttt{\$ tar xfzv EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz}
+}
 
 Experiments can  be run similar to before (Chapter 6)\footnote{But noting that we are using a different \textit{base-config} now: \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.ANTH}}, assuming that you copy and rename the \textit{user-config} \textsf{\footnotesize LAB\_3.CO2emissions} to e.g. \textsf{\footnotesize LAB\_3.d13CO2emissions}, by:
 \vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worjh2.ANTH LABS
    LAB_3.d13CO2emissions 20 EXAMPLE.worjh2.Caoetal2009.SPIN
 \end{verbatim}\vspace{-2pt}
+
+You might start by viewing the \(\delta^{13}C\) patterns in the ocean in the \textit{re-start} (and try and understand how they arise). 
+
+For specific experiments -- you can employ idealised pulse or ramp etc emissions profiles and start directly from the pre-industrial \textit{re-start}, or take your historical transient experiment (first look at how an  \(\delta^{13}C\) isotopic signature associated with fossil fuel \(CO_{2}\) is already propagating to the modern ocean) and then e.g. run an SRES emission scenario (remembering that you can make the isotopic signature of the carbon more 'distinct', if you wish). 
+
+
 
 %------------------------------------------------
 
@@ -5971,11 +6060,12 @@ There is a related facility to \texttt{bg\_par\_infile\_sig\_name} for \textbf{S
 
 Model output -- both \textit{time-slice} and \textit{time-series} data are saved in blocks or  by categories of model variables. For instance, all dissolved tracers in the ocean (3D netCDF \textit{time-slice} and/or \textit{time-series}), or all particle flux fields, all carbonate chemistry and associated variables, all surface sediment composition, etc etc. This still requires a multitude of parameters, one for each category and generally also one for each of \textit{time-slice} and \textit{time-series} data. In an attempt to simplify this, a single parameter, \texttt{bg\_par\_data\_save\_level}, specifying the sort and amount of data to save can be set instead.
 
-The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}. The specific classes (groups) of data that are saved (as a mnemonic code) in response to each different selected save level are given in Table \ref{tab:timeslicelevels} (for \textit{time-slice} saving) and Table xxx (for \textit{time-series} saving), and what the mnemonics  strand for in terms of actual data saved (in real words), are defined in Tables xxx.
+The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}. The specific classes (groups) of data that are saved (as a mnemonic code) in response to each different selected save level are given in Table \ref{tab:timeslicelevels} (for \textit{time-slice} saving) and  Table \ref{tab:timeserieslevels} (for \textit{time-series} saving), and what the mnemonics  strand for in terms of actual data saved (in real words), are defined in Tables \ref{tab:timeslicekey} and \ref{tab:timeserieskey}.
 
-An alternative wordy summary is as follows. 
+An alternative wordy summary to these tables would be: 
 
-\vspace{2mm}\begin{itemize}
+\vspace{1mm}
+\begin{itemize}
 
 \item[0] -- Save \textbf{nothing}.
 \item[1] -- \textbf{Minimum} -- basic geochemistry only, i.e. ocean and atmosphere tracer fields (omitting e.g. the miscellaneous fields and time-series -- see below).
@@ -5994,7 +6084,9 @@ An alternative wordy summary is as follows.
 \item[99] -- Save everything.
 \item[>99] -- Use explicit user-specified settings for individual save categories. This is the default and is broadly consistent with previous version of the model.
 
-\end{itemize}\vspace{2mm}
+\end{itemize}
+
+\newpage
 
 \noindent All of options \texttt{2-99} save as \textit{time-slices}:
 \begin{itemize}[noitemsep]
@@ -12658,26 +12750,33 @@ sub_box_remin_part
 \textbf{Data category} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 14 & 15 & 16 & 99 \\\hline
 \hline
 ocn & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
-ocnatm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-ocnsed & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-fairsea & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-focnatm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-focnsed & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-fsedocn & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-bio & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-carb & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-carbconst & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-phys\_atm & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-phys\_ocn & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-misc & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-diag & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-diag\_bio & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-diag\_geochem & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-diag\_proxy & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
-diag\_tracer & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a & a \\\hline
+ocnatm & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+ocnsed & -- & -- & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) \\\hline
+misc & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+sur & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+fairsea & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & \(\times\)  \\\hline
+focnatm & -- & -- & -- & -- & -- & \(\times\) & -- & -- & \(\times\) & -- & \(\times\) & -- & -- & -- & \(\times\) & \(\times\) & \(\times\)  \\\hline
+focnsed & -- & -- & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\times\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\times\) \\\hline
+fsedocn & -- & -- & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) \\\hline
+bio & -- & -- & -- & \(\times\) & -- & \(\times\) & -- & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\)  \\\hline
+carb & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+carbconst & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & \(\times\) & -- & -- & -- & -- & -- & \(\times\)  \\\hline
+phys\_atm & -- & \(\times\) & -- & -- & -- & -- & -- & -- & -- & \(\times\) & -- & -- & \(\times\) & -- & -- & -- & \(\times\)  \\\hline
+phys\_ocn & -- & \(\times\) & -- & -- & -- & -- & -- & -- & -- & \(\times\) & -- & -- & \(\times\) & -- & -- & -- & \(\times\)  \\\hline
+diag\_bio & -- & -- & -- & \(\times\) & -- & \(\times\) & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\)  \\\hline
+diag\_geochem & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+diag\_proxy & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & -- & -- & \(\times\) & \(\times\)  \\\hline
+diag\_tracer & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & \(\times\)  \\\hline
+\textit{derived} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) \\\hline
+\textit{redox} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+\textit{GLOBAL} & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
 \end{tabular}
 \label{tab:timeslicelevels}
 \end{table}
+
+\noindent \(-\) == not saved\\
+\(\times\) == always saved  for that saved level\\
+\(\otimes\) == generically saved if \textbf{SEDGEM} is selected
 
 \begin{table}[h]
 \textbf{\caption{Description of data categories -- \textit{time-slices}}}
@@ -12697,7 +12796,6 @@ carbconst & -- \\\hline
 phys\_atm & -- \\\hline
 phys\_ocn & -- \\\hline
 misc & -- \\\hline
-diag & -- \\\hline
 diag\_bio & -- \\\hline
 diag\_geochem & -- \\\hline
 diag\_proxy & -- \\\hline
@@ -12706,10 +12804,29 @@ diag\_tracer & -- \\\hline
 \label{tab:timeslicedescription}
 \end{table}
 
-
-
-
-
+\begin{table}[h]
+\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-series}}}
+\begin{tabular}{|l||p{0.2cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|}\hline
+\textbf{Data category} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 14 & 15 & 16 & 99 \\\hline
+\hline
+ocn & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+ocnatm & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+ocnsed & -- & -- & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) \\\hline
+fairsea & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+focnatm & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+fexport & -- & -- & -- & \(\times\) & -- & \(\times\) & -- & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\)  \\\hline
+focnsed & -- & -- & \(\otimes\) & \(\times\) & \(\otimes\) & \(\times\) & \(\otimes\) & \(\times\) & \(\times\) & \(\otimes\) & \(\times\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\times\) & \(\times\) & \(\otimes\) \\\hline
+fsedocn & -- & -- & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) & \(\otimes\) \\\hline
+ocn\_sur & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+carb\_sur & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+misc & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
+diag & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+diag\_bio & -- & -- & -- & \(\times\) & -- & \(\times\) & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\)  \\\hline
+diag\_geochem & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
+\textit{diag\_redox\_old} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\\hline
+\end{tabular}
+\label{tab:timeserieslevels}
+\end{table}
 
 %----------------------------------------------------------------------------------------
 %       BIBLIOGRAPHY
