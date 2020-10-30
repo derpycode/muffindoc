@@ -36,6 +36,10 @@ Figure \ref{fig:LABEL}
 \item 
 \end{enumerate}
 
+\begin{enumerate}[noitemsep]
+\item 
+\end{enumerate}
+
 \setcounter{enumi}{7}
 
 \begin{itemize}[noitemsep]
@@ -113,6 +117,7 @@ PERMIL
 \footnotesize\textsf{ }\normalsize
 \textsf{\footnotesize }
 \textsf{\small }
+\texttt{\small }
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}

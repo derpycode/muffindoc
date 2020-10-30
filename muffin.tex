@@ -2868,14 +2868,13 @@ See: 12.2.1
 
 \section*{READ.ME}
 
-You will need to download a couple of new \textit{re-start} files prior to embarking on the experiments in the Chapter. One is of a basic single (\(PO_{4}\)) nutrient biological export scheme, and the other includes an iron cycle in the ocean and hence co-limitation of biological productivity by Fe.
+You will need to download a new \textit{re-start} file prior to embarking on the experiments in the Chapter. This is of a basic single (\(PO_{4}\)) nutrient biological export scheme.
 \vspace{-2mm} \small
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie_output/LAB_4.SPIN.tar.gz
 $ wget http://www.seao2.info/cgenie_output/EXAMPLE.worbe2.Ridgwelletal1997.SPIN.tar.gz
 \end{verbatim} \normalsize
 
-Extract the results in the usual way and in the usual place ... and return to \texttt{genie-main} in the usual way ... all ... as usual.
+\noindent Extract the results in the usual way and in the usual place ... and return to \textsf{\footnotesize genie-main} in the usual way ... all ... as usual.
 
 %------------------------------------------------
 
@@ -2899,9 +2898,9 @@ Note that a full description of the various biological and ocean interior remine
 
 %------------------------------------------------
 
-\section{Single nutrient (PO$_{4}$) cycling and controls on biological productivity}
+\section{Single nutrient (PO$_{4}$) cycling and basic controls on biological productivity}
 
-The following exercises  will utilize one of the more basic representations of the biological pump -- one with only a single nutrient (PO$_{4}$) potentially limiting to biological export, considered. The scheme is described in full in \textit{Ridgwell et al.} [2007]\footnote{Ridgwell, A., et al., Marine geochemical data assimilation in an efficient Earth System Model of global biogeochemical cycling, Biogeosci. 4, 87-104 (2007). }. We will consider the following scientific questions as a starting point and then devise some model experiments to address them:
+The following exercises  will utilize one of the more basic representations of the biological pump -- one with only a single nutrient (PO$_{4}$) potentially limiting to biological export, considered. The scheme is described in full in \textit{Ridgwell et al.} [2007]\footnote{Ridgwell, A., et al., Marine geochemical data assimilation in an efficient Earth System Model of global biogeochemical cycling, Biogeosci. 4, 87-104 (2007). }.We will consider the following scientific questions as a starting point and then devise some model experiments to address them:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -2913,7 +2912,9 @@ The following exercises  will utilize one of the more basic representations of t
 \vspace{1mm}
 \item If carbon and nutrients are returned back to solution (remineralized) much closer to the ocean surface, does atmospheric \(pCO_{2}\) increase or decrease?? (The faster return of DIC to the ocean surface will tend to increase \(pCO_{2}\) while the return of nutrients will tend to enhance biological productivity and decrease \(pCO_{2}\) ...)
 \vspace{1mm}
-\item What about if carbon and nutrients are much more efficiently exported into the very deepest parts of the ocean -- does \(pCO_{2}\) increase or decrease (and what happens to e.g. dissolved oxygen availability)?
+\item What about if carbon and nutrients are much more efficiently exported into the very deepest parts of the ocean -- does \(pCO_{2}\) increase or decrease (and what happens to e.g. \([O_{2}]\))?
+\vspace{1mm}
+\item What is the role of the calcium carbonate (\(CaCO_{3}\)) 'counter pump'? How much higher is \(pCO_{2}\) in the presence of calcifying organisms in the ocean compared to just organic matter production and cycling?
 \vspace{1mm}
 \item What about feedback with climate -- how does changing global surface temperature (and hence ocean circulation patterns and sea-ice extent) modulate the impact of changes to the biological pump in the ocean? Is the resulting feedback positive or negative (and why)?
 \end{enumerate}
@@ -2921,79 +2922,175 @@ The following exercises  will utilize one of the more basic representations of t
 
 The associated experiments would ideally be run for several thousand and maybe 5000 years to obtain a new (quasi) steady state of carbon and nutrient cycling in the ocean. But some of the impacts in the ocean and on atmospheric \(pCO_{2}\) will develop relatively rapidly (decades). Hence model experiments could be run for a few 10s of years, or e.g. 100 years, or for a full e.g. 5000 years but periodically downloading and viewing the results as the experiment progresses (and not necessarily waiting until the end of the experiment, or even ever looking at the final state!).
 
-All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and be based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).}:
-
+All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and will be based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).} (and note the use of a different \textit{base-config} to previously):
 \vspace{-2pt}\begin{verbatim}
-./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASES LABS EXP7.2
+./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASES LABS EXP.7.2
  5000 EXAMPLE.worbe2.Ridgwelletal1997.SPIN
 \end{verbatim}\vspace{-2pt}
-(here a 5000 year experiment run-time is given, but it need not be this -- see above).
-
-Note that by default in this \textit{user-config}, climate-\(CO_{2}\) feedback is disabled:
-\vspace{-2pt}\begin{verbatim}
-ea_36=n
-\end{verbatim}\vspace{-2pt}
-i.e. changing atmospheric \(pCO_{2}\) does not influence the climate system (which remains implicitly forced with a preindustrial radiative forcing value).
+(here a 5000 year experiment run-time is given, but it need not be this -- see above). Remember to copy and rename \textsf{\footnotesize EXP.7.2} in order to create new and unique experiments each time.
 
 \pagebreak
 
-The first thing to do is to run an control experiment, for however long you have decided to run all the actual experiment experiments. Then, in terms of the specific 'questions' above, both w.r.t. what parameters and parameter values to change and well as what to 'look for':
+The first thing to do, is to run an control experiment, for however long you have decided to run all the actual experiment experiments for. (You need not wait for this to finish, but can submit it as a \textit{job} to the cluster and get on with running some real experiment experiments.) The control experiment can simply be derived (copied) from \textsf{\footnotesize EXP.7.2}, with no further alterations needed. In this \textit{user-config}, the value of atmospheric  \(pCO_{2}\) is not prescribed (there is no \textit{forcing} defined) and hence \(pCO_{2}\) is free to respond to any change in parameters. In the case of the control -- there are no changes in the biological pump parameters compared to the \textit{spin-up}, so you should see no (or little) drift in \(pCO_{2}\) occurring.
+
+Also think about the output you want to view (and how to view it). You are likely to want to look at anomalies vs. the control, as well as absolute patters in the ocean. In the \textit{user-config} -- check that the results/output select 'level' is going to give you the output you are expecting. This is parameter:
+\vspace{-1pt}\small\begin{verbatim}
+bg_par_data_save_level=5
+\end{verbatim}\normalsize\vspace{-1pt}
+Refer to Section 14.4 and Appendix I, for more details on how different (2D and 3D) \textit{time-slice} variable fields and \textit{time-series} are selected to be included in the model ouptut. 
+
+\vspace{2mm}
+\noindent In terms of the specific 'questions' above (the numbering system is the same), both w.r.t. what parameters and parameter values to change and well as what to 'look for':
 
 \begin{enumerate}[noitemsep]
 
 \vspace{1mm}
-\item The parameter controlling the rate of nutrient uptake (and hence biological export) is:
-\vspace{-2pt}\begin{verbatim}
+\item The parameter scaling the rate of nutrient uptake (and hence biological export) is:
+\vspace{-1pt}\small\begin{verbatim}
+# maximum rate of conversion of dissolved PO4 into 
+# organic matter by phytoplankton (mol kg-1 yr-1)
 bg_par_bio_k0_PO4=1.9582242E-06
-\end{verbatim}\vspace{-2pt}
-Setting this to zero would 'turn off' completely the biological pump.
-\\What to look for? The value of atmospheric \(pCO_{2}\). You might also confirm that biological export really is zero. To obtain both of these values you can refer to the respective time-series results files. Or, in the summary text file, which for the \textit{re-start} is:
-\vspace{-2pt}\begin{verbatim}
+\end{verbatim}\normalsize\vspace{-1pt}
+(in units of \(mol\:PO_{4} \:kg^{-1} \:yr^{-1}\)). Setting this to zero would 'turn off' completely the biological pump, leaving you with a abiotic ocean.
+\\What to look for? The value of atmospheric \(pCO_{2}\). You might also confirm that biological export really is zero.
+
+To obtain these values you can refer to the respective time-series results files. Or, in the summary text file, which for the \textit{re-start} is:
+\vspace{-1pt}\small\begin{verbatim}
 biogem_year_09999_500_diag_GLOBAL_AVERAGE.res
-\end{verbatim}\vspace{-2pt}
-and will differ in your actual experiment only in the value of the year in the filename. This file contains summary information at a specific time-slice tine, including mean atmospheric composition, mean ocean composition, biological export fluxes.
+\end{verbatim}\normalsize\vspace{-1pt}
+and will differ in your actual experiment only in the value of the year in the filename. This file contains summary information at a specific \textit{time-slice} tine, including mean atmospheric composition, mean ocean composition, biological export fluxes.
 
 \vspace{1mm}
-\item Similarly to above -- nutrient uptake and the strength of the biological pump can be enhanced by increasing the value of the parameter:
-\vspace{-2pt}\begin{verbatim}
-bg_par_bio_k0_PO4=1.9582242E-06
-\end{verbatim}\vspace{-2pt}
+\item Similarly to above -- nutrient uptake and the strength of the biological pump can be enhanced by increasing the value of the parameter \texttt{bg\_par\_bio\_k0\_PO4} (maybe 10 times larger?).
+The question is then what does the ocean and atmospheric \(pCO_{2}\) look like if the biological pump is operating at its maximum rate and (almost) all nutrients are consumed at the surface. (If you find that there are regions of nutrients that never get fully consumed ... why?)
 
 \vspace{1mm}
-\item The parameters and experiments are as above, except you are looking for how the mean and distribution of dissolved oxygen in the ocean changes. Mean ocean [\(O_{2}\)] values can be obtained form time-series of the summary file. Spatial distributions are recorded in the netCDF output. You might view horizontal or vertical slices (from 3D), or benthic distributions (2D).
+\item For the question on dissolved oxygen (\([O_{2}]\)) availability in the ocean interior -- the parameters and experiments are as above, except you are looking for how the mean and distribution of dissolved oxygen in the ocean changes. Mean ocean [\(O_{2}\)] values can be obtained form time-series of the summary file. Spatial distributions are recorded in the \textit{netCDF} output. You might view horizontal or vertical slices (from 3D), or benthic distributions (2D). Think about where animals tend to live and where they could potentially be impacted if export from the ocean surface was much higher than 'today' (the \textit{spin-up}).
 
 \vspace{1mm}
 \item The parameter controlling the depth-scale (and vertical distributed) at which particulate organic matter (POM) is remineralizated in the ocean interior is controlled by:
-\vspace{-2pt}\begin{verbatim}
+\vspace{-1pt}\small\begin{verbatim}
 bg_par_bio_remin_POC_eL1=550.5195
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1pt}
 Reducing the value of this parameter forces a greater proportion of sinking POM to be remineralized closer to the surface.
-\\What to look for? Largely as before -- the summary file is useful for atmospheric \(CO_{2}\), mean ocean {\(O_{2}\)}, and global (biological0 export fluxes. You might also consider the spatial patterns of nutrients and dissolved oxygen.
+\\What to look for? Largely as before -- the summary file is useful for atmospheric \(CO_{2}\), mean ocean {\(O_{2}\)}, and global (biological) export fluxes (as you might expect nutrients released closer to the ocean surface to result in greater surface ocean nutrient supply and hence fuel higher export). You might also consider the spatial patterns of nutrients and dissolved oxygen.
 \\See \textit{Meyer et al.} [2016]\footnote{Meyer, K.M., A. Ridgwell, and J.L. Payne, The influence of the biological pump on ocean chemistry: implications for long-term trends in marine redox chemistry, the global carbon cycle, and the evolution of marine animal ecosystems, Geobiology, DOI: 10.1111/gbi.12176 (2016).} for an example of a study testing these sort of model changes and its implications (and hence ideas of what else to look for, and for 'reasonable' parameter values to test).
 
 \vspace{1mm}
-\item Conversely, you can increase the value of the depth scaling parameter. You can also partition more of the total export into a POM form that is assumed to be resistent to degradation and is transported to the ocean floor completely unchanged:
-\vspace{-2pt}\begin{verbatim}
+\item Conversely, you can also increase the value of the depth scaling parameter in order to force a deeper mean depth of POM remineralization. You can also partition more of the total export into a POM form that is assumed to be resistent to degradation and is transported to the ocean floor completely unchanged (see: \textit{Ridgwell et al.} [2007]):
+\vspace{-1pt}\small\begin{verbatim}
 bg_par_bio_remin_POC_frac2=6.4591110E-02
-\end{verbatim}\vspace{-2pt}
-Increasing this value forces more of the POM exported from the surface ocean to reach the ocean floor.\footnote{See Ridgwell et al. 2007] for a description of how this all works.}
+\end{verbatim}\normalsize\vspace{-1pt}
+Increasing this value forces a greater fraction of the POM exported from the surface ocean to reach the ocean floor.\footnote{See Ridgwell et al. 2007] for a description of how this all works.}
 
 \vspace{1mm}
-\item Finally, you might explore how in some of all of the above experiments,  a changing climate in response to changing atmospheric \(pCO_{2}\) in turn modulates the impacts. You can re-enable climate feedback by setting:
-\vspace{-2pt}\begin{verbatim}
+In both (4) and (5), it may not be obvious which way atmospheric \(pCO_{2}\) responds -- e.g. for (4) by returning nutrients more efficiently to the ocean surface, you increase export, and hence increase the fixation and removal of atmospheric \(CO_{2}\) from the ocean surface, drawing down atmospheric \(pCO_{2}\). BUT, at the same time, carbon released from \(POC\) (as \(DIC\)) through bacterial remineralization, also occurs at a shallower depth and is returned to the surface more efficiency ... tending to increase atmospheric \(pCO_{2}\) ... Just this problem -- 2 opposing effects with an uncertain net impact -- is exactly why (to find out the answer) you build and run numerical models of the system!
+
+\vspace{1mm}
+\item The export of \(CaCO_{3}\) from the ocean surface is calculated as a ratio to the export of \(POC\). By default, this ratio varies with the carbonate chemistry (saturation state) of the surface ocean, following \textit{Ridgwell et al.} [2007a] (and see also \textit{Ridgwell et al.} [2007b] and \textit{Ridgwell et al.} [2009]). The scaling parameter controlling the molar ratio of \(\frac{CaCO_{3}}{POC}\) is:
+\vspace{-1pt}\small\begin{verbatim}
+bg_par_bio_red_POC_CaCO3=0.044372
+\end{verbatim}\normalsize\vspace{-1pt}
+Setting this zero will effectively turn back the clock \(200Ma\) to a world prior to the evolution of planktic calcifiers (e.g. see: \textit{Ridgwell} [2005]), or conversely, a future world in which they are all driven extinction from ocean acidification ... 
+
+What is the impact on atmospheric \(pCO_{2}\) of setting this to zero? From your knowledge of carbonate chemistry ... why does this happen? You might try e.g. doubling the value (and hence doubling the export of \(CaCO_{3}\) from the surface ocean). As well as \(pCO_{2}\), you might also look at fields of \(ALK\) (or other carbonate chemsitry parameters) in the ocean to see what other geochemical changes occur.
+
+Because (rightly or wrongly) in the model, \(CaCO_{3}\) depends on surface ocean \(\Omega\) (w.r.t. calcite) you might explore what happens to \(CaCO_{3}\) production and export under a release of (fossil fuel) \(CO_{2}\) -- simplest here is to use the same re-start, and create and add a forcing to the \textit{user-config} to implement a large pulse or continuous \(CO_{2}\) flux to the atmosphere
+
+\vspace{1mm}
+\item Finally, you might explore how in some (or all) of the above experiments,  a changing climate in response to changing atmospheric \(pCO_{2}\), in turn modulates the impacts through carbon-climate feedback. 
+
+By default in the \textit{user-config}, climate-\(CO_{2}\) feedback is disabled:
+\vspace{-1pt}\small\begin{verbatim}
+ea_36=n
+\end{verbatim}\normalsize\vspace{-1pt}
+i.e. changing atmospheric \(pCO_{2}\) does not influence the climate system (which remains implicitly forced with a preindustrial radiative forcing value). This allows us to avoid complications arising due to carbon-climate feedback and hence obtain a the underlying response of the system to changing the biological pump in the ocean.
+
+You can re-enable climate feedback by setting:
+\vspace{-1pt}\small\begin{verbatim}
 ea_36=y
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1pt}
 Impacts may include (but not be limited to): ocean stratification (rapid warming) and/or changes in convection at high latitudes, increased/decreased sea-ice extent that affects the ocean surface area available for biological export, changing solubility of oxygen in sea-water.
 \\Note that in this particular simple biological export scheme, there is no temperature-dependence of biological activity and hence export.
 
 \end{enumerate}
-\vspace{1mm}
 
-You might also consider the effect of the assumption regarding how much organic matter produced is partitioned into particulate form that sinks, vs. dissolved, controlled by:
-\vspace{-2pt}\begin{verbatim}
+\vspace{1mm}
+And that pretty much wraps up all the main knobs that it is possible to play with using the very basic biological pump scheme in \textbf{muffin}. (However, a few further ideas follow ...)
+
+%------------------------------------------------
+
+\subsection{Further ideas}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent You might also play with the 'half saturtaion constant' for nutrient uptake (see \textit{Ridgwell et al.} [2007]):
+\vspace{-1pt}\small\begin{verbatim}
+#[PO4] M-M half-sat value (mol kg-1)
+bg_par_bio_c0_PO4=2.1989611E-07
+\end{verbatim}\normalsize\vspace{-1pt}
+As set, this specifies that at a \(PO^{2-}_{4}\) concentration of about \(0.2 \mu mol \:kg^{-1} \), growth (net export) is restricted to half the maximum (and then declines further at even lower ambient nutrient concentration).
+
+You might, for instance, try setting the value to zero, which assumes maximum growth can continue right up nutrient completely running out. This would be similar to assuming all the primary producers in the ocean had extremely small cell sizes (and hence low half saturation values) and were adapted to oligotrophic conditions.
+
+Or, test an ocean dominated by assumed very large cell sizes and phytoplankton that struggle under anything other than fully eutrophic (high nutrient) conditions. e.g. you might try values of \(1.0 \mu mol \:kg^{-1}\) (\texttt{1.0E-06}) or even \(2.0 \mu mol \:kg^{-1}\) (\texttt{2.0E-06}) and see what happens, particularly to the pattern of surface nutrient concentrations and export.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent By default, the update and export in organic matter, of carbon, occurs in a fixed 'Redfield' ratio, with \(PO^{2-}_{4}\). The classical value is \(106\) (i.e., for every mole of \(PO^{2-}_{4}\) taken up from the ocean, \(106\) moles of \(CO_{2}\) are removed (and fixed into organic matter).
+
+The parameter determining this is:
+\vspace{-2pt}\small\begin{verbatim}
+bg_par_bio_red_POP_POC=106.0
+\end{verbatim}\normalsize\vspace{-2pt}
+To change the default value (106.0), simply add a new line at the end of the \textit{user-config} file specifying the value you want. A larger number means that \(PO_{4}\) is being utilized more efficiently and more organic matter is being produced for the same nutrient consumption.
+
+You should see impacts on atmospheric \(pCO_{2}\) and the oxygenation of the ocean interior form changing this.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent To test the effect of there being more (or less) \(PO^{2-}_{4}\) in the ocean in the first place, it is possible to increase the inventory of the ocean as a whole follwing a re-start\textit{, }by:
+\vspace{-2pt}\small\begin{verbatim}
+bg_ocn_dinit_8=1.0E-6
+\end{verbatim}\normalsize\vspace{-2pt}
+which will add \(1\:\mu mol\:kg^{-1}\) of \(PO^{2-}_{4}\) uniformly to the ocean. (A larger/smaller number will obviously increase the glacial nutrient inventory by more/less. A negative number will remove \(PO^{2-}_{4}\).)
+
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent There is one more knob controlling organic matter export and cycling in the ocean that you could tweak and explore the effect of the assumption regarding how much organic matter produced is partitioned into particulate form that sinks, vs. dissolved, controlled by:
+\vspace{-2pt}\small\begin{verbatim}
 bg_par_bio_red_DOMfrac=0.66
-\end{verbatim}\vspace{-2pt}
-which specifies 66\% of organic matter production is diverted into dissolved form. See \textit{Ridgwell and Arndt} [2014]\footnote{Ridgwell, A., and S. Arndt, Why Dissolved Organics Matter: DOC in Ancient Oceans and Past Climate Change, in: Biogeochemistry of Marine Dissolved Organic Matter Eds. Hansell, D. A., and C. A. Carlson, Elsevier (2014).}.
+\end{verbatim}\normalsize\vspace{-2pt}
+which specifies 66\% of organic matter production is diverted into dissolved form. See \textit{Ridgwell and Arndt} [2014]\footnote{Ridgwell, A., and S. Arndt, Why Dissolved Organics Matter: DOC in Ancient Oceans and Past Climate Change, in: Biogeochemistry of Marine Dissolved Organic Matter Eds. Hansell, D. A., and C. A. Carlson, Elsevier (2014).}. And/or, you might adjust its mean lifetime in the ocean, which by default is  \(0.5 yr\):
+\vspace{-2pt}\small\begin{verbatim}
+bg_par_bio_remin_DOMlifetime=0.5
+\end{verbatim}\normalsize\vspace{-2pt}
+
+\vspace{-1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent In addition to the primary environmental properties of atmospheric \(pCO_{2}\) (and climate if you have the feedback enabled), biological export production (and hence the patterns and magnitude of of food sources for marine ecosystems), and dissolved oxygen, you might also look at how the patterns of carbon isotopes (\(\delta^{13}C\)) (particularly of \(DIC\)) change in the ocean. 
+
+How did the different changes in the biological pump that you tested, alter (if at all) the patterns of \(\delta^{13}C\) in the ocean? Can you distinguish between the different biological pump changes, based on \(\delta^{13}C\)? (Carbonate and organic carbon \(\delta^{13}C\) is a key paleoceanographic proxy and one people would ideally like to use in order to reconstruct changes in the past such as in the biological pump.)
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{The role of temperature in the biological pump}
+
 
 %------------------------------------------------
 
@@ -9328,16 +9425,16 @@ If you select a tracer number in the \textit{forcings} that does not exist in th
 
 \chapterimage{ch-howto.png} % Chapter heading image
 
-\chapter{HOW-TO}
+\chapter{HOW-TO (technical)}
 
 \hfill \break
 \vspace{24mm}
 
 \Large
-What follows are potted HOW-TO instructions for doing things.
+What follows are potted HOW-TO instructions for doing things, split into more technical installing and running the model (this Chapter) vs. configuring experiments (next Chapter).
 \vspace{2mm}
 
-There is some overlap with the FAQ Chapter, so please read both!
+There is some overlap with the FAQ Chapter, so please read all three!
 \normalsize
 
 %------------------------------------------------
@@ -9351,27 +9448,18 @@ There is some overlap with the FAQ Chapter, so please read both!
 
 %------------------------------------------------
 %
-\subsubsection{Install \texttt{cGENIE}}\label{Install cGENIE}
+\subsubsection{Find and Install \textbf{\textit{muffin}}}\label{Install cGENIE}
 
 \vspace{1mm}
-See: \texttt{cGENIE} \textit{Quick-start Guide}. (Also refer to the \texttt{READ-ME} file for e.g., details of changes in configuring and running \texttt{cGENIE} compared to \texttt{GENIE}.)
+See: Chapter 1.
 
 %------------------------------------------------
 %
-\subsubsection{Find configurations for \texttt{cGENIE}}\label{Find configurations for cGENIE}
+\subsubsection{Set up and analyse model experiments}
 
 \vspace{1mm}
-A series of (example) \texttt{cGENIE} configurations are provided, many of which are detailed in full in the \texttt{cGENIE} \textit{Tutorial} document.
-Example configurations comprise \textit{base-config} and \textit{user-config} files, plus any \textit{forcings} needed.
-\begin{itemize}[noitemsep]
-\item\texttt{cGENIE} \textit{base-configs} are stored in:
-\\ \texttt{~/cgenie/genie-main/configs}
-\\and all start with '\texttt{cgenie\_}', for example: \\ \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_hadcm3l\_eocene\_36x36x16\_2i\_080928\_BASE.config}
-\item \texttt{cGENIE} user configs are stored in:
-\\ \texttt{~/cgenie/genie-userconfigs}
-\item \texttt{cGENIE} forcings are stored in:
-\\ \texttt{~/cgenie/genie-forcings}
-\end{itemize}
+See: Chapter 1.
+\noindent Also: subsequent tutorial chapters.
 
 %------------------------------------------------
 %
@@ -9506,7 +9594,7 @@ To exit the editing mode and back to the command mode, press the \textsf{Esc} (e
 
 %------------------------------------------------
 
-\section{HOW-TO ... Ubuntu muffin}\label{how-to-ubuntu}
+\section{HOW-TO ... install Ubuntu muffins}\label{how-to-ubuntu}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -9691,7 +9779,7 @@ make cleanall
 
 %------------------------------------------------
 
-\section{HOW-TO ... RedHat muffin}\label{how-to-redhat}
+\section{HOW-TO ... install RedHat muffins}\label{how-to-redhat}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -9704,7 +9792,7 @@ No specific example is given at this time for \textbf{RedHat} ... refer to the i
 
 %------------------------------------------------
 
-\section{HOW-TO ... macOS muffin}\label{how-to-macos}
+\section{HOW-TO ... install macOS muffins}\label{how-to-macos}
 \vspace{2mm}
 
 This is a brief guide to installing \textbf{muffin} on a \textbf{Mac}.
@@ -9856,7 +9944,7 @@ Errors identified by `\texttt{brew doctor}' are most likely associated with some
 %------------------------------------------------
 
 
-\section{HOW-TO ... Windows(!) muffin}\label{how-to-windows}
+\section{HOW-TO ... install Windows(!) muffins}\label{how-to-windows}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -10223,6 +10311,65 @@ Other useful submission options for \textbf{SGE}:
 \vspace{-2pt}\begin{verbatim}$ qstat -f\end{verbatim}\vspace{-2pt}
 and you can kill a job with the \texttt{qdel} command, the job numbers being given by the \texttt{qstat} command.
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ... re-start muffins}
+
+%------------------------------------------------
+%
+\subsubsection{Modify the ocean inventory of a tracer of a \textit{re-started} experiment}
+\vspace{1mm}
+
+There are three different ways in which for a closed system, the inventory of a tracer can be modified:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Add a flux forcing, to the ocean surface or the ocean as a whole. The tracer change is then the total global flux times the duration of the forcing. Note that the forcing can be positive or negative (to effect a decrease in the tracer inventory)
+
+\vspace{1mm}
+\item There is a parameter that add to or subtract from, the tracer inventory at the very beginning of an experiment (and assuming it is running on from a \textit{re-start}). The parameter name is \texttt{bg\_ocn\_dinit\_nn}, where \texttt{nn} is the tracer \textit{number} (which can be found in the parameter list table PDF, or by inspection of the file \texttt{tracer\_define.ocn} (for ocean, dissolved tracers) in the directory \texttt{cgenie.muffin/genie-main/data/input}. For example:
+\\\texttt{bg\_ocn\_dinit\_8=1.0E-6}
+\\will add 1 \(\mu\)M kg\(^{-1}\) of PO\(_{4}\) (\#8 is the tracer number of dissolved phosphate), uniformly to the ocean.
+Note that a negative value will result in the subtraction of a uniform concentration form every grip cell in the ocean (meaning that care has to be taken to ensure that negative numbers to not appear following subtraction).
+
+\vspace{1mm}
+\item There is a variant to the concentration adjusting parameter that is enabled by setting the parameter
+\\ \texttt{bg\_ctrl\_ocn\_dinit} to \texttt{false} (it is \texttt{true} by default). \texttt{bg\_ocn\_dinit\_nn} now acts as a scaling factor that is applied to the tracer concentration field. The new concentration field is equal to the old concentration field (from the \textit{re-start}), times \texttt{(1.0 + bg\_ocn\_dinit\_nn)}, e.g.:
+\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
+\\\texttt{bg\_ocn\_dinit\_8=0.5}
+\\will result in a 50\% increase in the concentration of dissolved phosphate   everywhere in the ocean (and a value of \texttt{1.0} doubles  concentrations). Conversely, a value less than one will result in a proportional reduction everywhere, e.g.:
+\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
+\\\texttt{bg\_ocn\_dinit\_8=-0.2}
+\\generates a 20\% decrease everywhere.
+
+\end{enumerate}
+
+Obviously, if the experiment is not being run from a re-start, or is being run from a re-start which does not include the particular tracer, then the initial value of the trace can be set. The parameter name is \texttt{bg\_ocn\_init\_nn}, where \texttt{nn} is the tracer \textit{number}.
+
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{ch-howto.png} % Chapter heading image
+
+\chapter{HOW-TO (experiment)}
+
+\hfill \break
+\vspace{24mm}
+
+\Large
+What follows are potted HOW-TO instructions for doing things, split into more technical installing and running the model (previous Chapter) vs. configuring experiments (this Chapter).
+\vspace{2mm}
+
+There is some overlap with the FAQ Chapter, so please read all three!
+\normalsize
 
 %------------------------------------------------
 
@@ -10515,13 +10662,288 @@ There is also option for treating all tracers the same way (including DIC ALK, P
 
 %------------------------------------------------
 
-\section{HOW-TO ...  (bio)geochemical cycles}
+\section{HOW-TO ...  iron (and dust)}
 
-\hfill \break
-
+In this HOW-TO, you'll learn firstly how to configure an iron cycle in the ocean, with the first subsection tackling a modern-like and predominantly oxic ocean, and the second, for an anoxic ocean.
 
 %------------------------------------------------
 %
+\newpage
+\subsection*{Oxic ocean iron cycling in muffins}
+\vspace{2mm}
+
+This section will:
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\item Provide an overview of the different marine iron cycle schemes in \textbf{muffin}.
+\item Describe the different options and for tracers describing the marine iron cycle.
+\item Detail the various calibrated parameter sets.
+\item Describe alternative ways of prescribing the solubility of iron in dust.
+\item Introduce ... fake dust(!) (for paleo configurations).
+\item Describe other sources of dissolved iron to the ocean.
+\end{enumerate}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Overview of  marine iron cycle schemes in muffin}
+\vspace{1mm}
+
+There are 2 different ways of describing the marine iron cycle in terms of which tracers in the ocean are defined (described immediately below). These are associated with one or more alternative tunings of the primary parameters controlling iron cycling -- the solubility of iron in dust and the rate of scavenging of dissolved iron onto particulate organic matter, plus, some parameter scaling the characteristic biological nutrient (\(PO^{2-}_{4}\)) uptake time-scale (described subsequently). In theory, the 2 different tracer configurations interchangeable and either could be used in conjunction with any given tuned parameter set. However, in practice and in publications, specific tuned parameter sets have been associated with a single tracer combination choice (and e.g. not tested equally with both). The various available marine iron cycle configurations are summarized in Table \ref{tab:ironconfigs}.
+
+\vspace{-4mm}
+\begin{table}[h]
+\textbf{\caption{muffin iron cycle configurations}}
+\begin{tabular}{|p{0.5cm}||p{1.75cm}||p{1.0cm}|p{1.0cm}||p{1.0cm}|p{1.0cm}|p{1.75cm}||p{4.25cm}|}\hline
+\# & \textbf{Tracers} & \(DOM_{\tau}\) (\(yr\))  & \(bio_{\tau}\) (\(d\)) & \(Fe_{sol}\) (\%) & \(k_{scav}\) & Dust field & \textbf{References} \\\hline
+\hline
+1 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & Mahowald & \textit{Tagliabue et al.} [2016] \newline \textit{Ödalen et al.} [2020] \newline \textit{Rae et al.} [in press] \\\hline
+2 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & (various) & \textit{Lambert, et al.} [in revision] \\\hline
+3 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & n/a & n/a & n/a & \textit{Meyer et al.} [2016]  \newline \textit{Hülse et al.} [2019] \newline \textit{Hülse et al.} [submitted] \\\hline
+4 & \(TDFe\), \(TL\) & 1.0 & 95.6 & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2008] \\\hline
+5 & \(TDFe\), \(TL\) & 1.0 & n/a & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2008] \\\hline
+6 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & 0.125 \newline 0.244 & 0.225 \newline 0.225 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
+7 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & \textit{0.100} \newline \textit{0.195} & 0.100 \newline 0.100 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
+8 & \(TDFe\), \(TL\) & 0.5 & 60.0 & 0.244 & 0.225 & Albani & \textit{Ödalen et al.} [in prep] \\\hline
+9 & \(TDFe\), \(TL\) & 0.5 & n/a & 0.244 & 0.225 & Albani & \textit{Jones et al.} [in prep] \\\hline
+\end{tabular}
+\label{tab:ironconfigs}
+\end{table}
+
+\noindent \small NOTES: \normalsize
+\vspace{1mm}
+\footnotesize
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{-.15in}
+\item [\#3] -- The tracers are present, but the iron cycle is disabled so the biological scheme operates with no \(Fe\) limitation.
+\item [\#5] -- There is no \(bio_{\tau}\) value because the \textbf{ECOGEM} module is used.
+\item [\#7] -- Uses an assumption of a spatially uniform iron solubility (\(Fe_{sol}\) values in italics).
+\item [\#9] -- There is no single \(bio_{\tau}\) value (the biological scheme is split into diatoms and non-diatoms).
+\end{itemize}
+\normalsize
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Tracer configurations}
+\vspace{2mm}
+
+In the original iron cycle in \textbf{muffin},  3 separate tracers were defined:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item [\(Fe\)] -- free dissolved iron
+\item [\(L\)] -- free ligands
+\item [\(FeL\)] -- iron bound to ligands
+\end{itemize}
+\vspace{2mm}
+The associated tracer selection in the \textit{base-config} looks like:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron III (Fe)'
+gm_ocn_select_23=.true.     #   FeL -- 'ligand-bound Fe'
+gm_ocn_select_24=.true.     #   L -- 'free ligand (iron binding)' 
+\end{verbatim}\vspace{-2pt}\normalsize
+
+However, because the equilibrium between these tracers is re-solved every time-step (and used to determine the free \(Fe\) concentration for scavenging), there is redundancy, and in practice, only 2 tracers are needed. Subsequent iron cycle scheme hence use only 2 tracers:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item [\(TDFe\)] -- total dissolved iron, including iron bound to ligands)
+\item [\(TL\)] -- total dissolved ligand concentration (both free and bound to iron)
+\end{itemize}
+\vspace{2mm}
+ At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
+
+The associated tracer selection in the \textit{base-config} looks like:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_ocn_select_90=.true.     #   TDFe -- 'total dissolved Fe'
+gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
+\end{verbatim}\vspace{-2pt}\normalsize
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Parameter sets}
+\vspace{2mm}
+
+\textit{User-configs} (and associated \textit{base-configs}) can be found for most, if not all, of the published papers, on GitHub. For the more recent marine iron cycle configurations and tunings, the following example configuration files are provided in \textsf{\footnotesize \textbackslash genie-userconfigs\textbackslash  EXAMPLES}. Note that the names of the \textit{user-configs} incorporate the corresponding \textit{base-config} name to avoid any confusion re. which \textit{user-config} should go with which \textit{base-config}. The numbers correspond to those in Table \ref{tab:ironconfigs}.
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item [\#1,2] -- \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.FeMIP.SPIN}
+\vspace{1mm}
+\\The marine iron cycle configuration used in the FeMIP inter-comparison paper of \textit{Tagliabue et al.} [2016] (and other subsequent papers -- see: Table \ref{tab:ironconfigs}).
+\\Note that the same marine iron cycle parameters, but with a variety of different dust fields, was used by \textit{Lambert, et al.} [in revision].
+\vspace{1mm}
+\item [\#3] -- \texttt{cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.NOFe.SPIN}
+\vspace{1mm}
+\\The same biological configuration as \texttt{\small cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.FeMIP.SPIN}, but with iron limitation of biological export 'disabled' by:
+\begin{enumerate}[noitemsep]
+\item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes zero, as the ocean is initialized with \(0.6\:\mu M\:Fe\).
+\item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so virtually no Fe is taken up in orgen matter).
+\item Setting the scavenging rate of \(Fe\) by sinking organic matter to zero.
+\end{enumerate}
+No dust field is then required, because there are no longer any processes that can remove (from the surface) the initial dissolved iron inventory.
+\vspace{1mm}
+\item [\#4] -- (see: \textsf{\footnotesize genie-userconfigs/MS/wardetal.2018/wardetal.2018.BIOGEM.SPIN})
+\vspace{1mm}
+\\This is the iron cycle as used by \textit{Ward et al.} [2018] with the \textbf{ECOGEM} ecosystem model, but configured for the basic (non ecological) \textbf{BIOGEM} export scheme. 
+\vspace{1mm}
+\item [\#5] -- (see: \textsf{\footnotesize genie-userconfigs/MS/wardetal.2018/wardetal.2018.ECOGEM.SPIN})
+\vspace{1mm}
+\\This is the iron cycle as used by \textit{Ward et al.} [2018] with the \textbf{ECOGEM} ecosystem model.
+\vspace{1mm}
+\item [\#6] -- \texttt{muffin.CB.worjh2.BASESFeTDTL.Mahowald.SPIN}
+\vspace{1mm}
+\\This a a new marine iron cycle tuning for the original \textit{Cao et al.} [2009] configuration of the present-day ocean climatology (\textsf{\footnotesize worjh2}).
+\vspace{1mm}
+\item [\#6] -- \texttt{muffin.CB.worjh2.BASESFeTDTL.Albani.SPIN}
+\vspace{1mm}
+\\Similar to \texttt{\small muffin.CB.worjh2.BASESFeTDTL.Mahowald.SPIN}, except the tuning is for the \textit{Albani et al.} [2016] pre-industrial (1850 AD) dust field.
+\vspace{1mm}
+\item [\#7] -- \texttt{muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORMsol.SPIN}
+\vspace{1mm}
+\\Similar to \texttt{\small muffin.CB.worjh2.BASESFeTDTL.Mahowald.SPIN}, except with the iron cycle tuned under the assumption of a spatially uniform solubility of iron in dust.
+\vspace{1mm}
+\item [\#7] -- \texttt{muffin.CB.worjh2.BASESFeTDTL.AlbaniUNIFORMsol.SPIN}
+\vspace{1mm}
+\\Similar to \texttt{\small muffin.CB.worjh2.BASESFeTDTL.Albani.SPIN}, except with the iron cycle tuned under the assumption of a spatially uniform solubility of iron in dust.
+\end{itemize}
+\vspace{2mm}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Alternative implementations for the dissolved iron flux to the ocean surface}
+\vspace{2mm}
+
+By default (and in all the marine iron cycle configurations published to date) -- the solubility of iron in dust, is an inverse function of the dust flux -- i.e. at higher dust loadings, the fractional solubility is assumed to be lower. Following Baker et al. [2006], we adopt a relationship in which iron solubility scales with the square root of the dust flux, enacted by the parameter setting:
+The associated tracer selection in the \textit{base-config} looks like:
+\small\vspace{-2pt}\begin{verbatim}
+#exponent for aeolian Fe solubility [use 1.0 for uniform solubility]
+bg_par_det_Fe_sol_exp=0.500
+\end{verbatim}\vspace{-2pt}\normalsize
+The solubility parameter \texttt{\small bg\_par\_det\_Fe\_sol} determines the value of the overall iron solubility (as a fraction of the total iron in dust), on a \uline{global mean flux-weighted} basis. For example:
+\small\vspace{-2pt}\begin{verbatim}
+# aeolian Fe solubility [Albani tuning]
+bg_par_det_Fe_sol=0.002441
+\end{verbatim}\vspace{-2pt}\normalsize
+specifies that when weighted by dust flux, the global mean solubility of iron is \(0.244\%\).
+This can parameterization can potentially lead to confusing and unintended consequences. For example, if the dust flux anywhere in the model grid is changed, because the global mean flux-weighted solubility must remain constant, the local solubility everywhere will slightly change, even though the dust flux itself only changes at a single grid point location.
+
+\vspace{2mm}
+As an alternative, the solubility of iron in dust can be fixed spatially at a single value. This is done  by setting:
+\small\vspace{-2pt}\begin{verbatim}
+# Exponent for aeolian Fe solubility [use 1.0 for uniform solubility]
+bg_par_det_Fe_sol_exp=1.0
+\end{verbatim}\vspace{-2pt}\normalsize
+(In the solubility equation, the power is actually one minus the exponent parameter, hence a value of one makes the solubility spatially invariant.)
+
+\pagebreak
+ 
+Calibrated marine iron cycle parameter sets a provided for both \textit{Mahowald et al.} [2006] and \textit{Albani et al.} [2016] pre-industrial dust field (see above and Table \ref{tab:ironconfigs}):
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORMsol.SPIN}
+\vspace{1mm}
+\item \texttt{muffin.CB.worjh2.BASESFeTDTL.AlbaniUNIFORMsol.SPIN}
+\end{itemize}
+
+\vspace{2mm}
+\noindent The spatial pattern of iron solubility (whether uniform or not), can also be prescribed. This firstly requires the parameter setting:
+\small\vspace{-2pt}\begin{verbatim}
+# Replace internal dust Fe solubility field?
+bg_ctrl_force_det_Fe_sol=.true.
+\end{verbatim}\vspace{-2pt}\normalsize
+and then the presence of a 2D ASCII file delineating the spatial pattern of \uline{percent} (not fractional solubility) iron solubility, which is specified by:
+\small\vspace{-2pt}\begin{verbatim}
+# Filename for dust Fe solubility field
+bg_par_det_Fe_sol_file='worjh2.det_Fe_sol.NULL.dat'
+\end{verbatim}\vspace{-2pt}\normalsize
+where \textsf{\footnotesize worjh2.det\_Fe\_sol.NULL.dat} is a default filename for a \textsf{\footnotesize worjh2} modern continental configuration \(36\times36\) grid (of zeros), with the file itself residing in the directory: \textsf{\footnotesize genie-biogem/data/input}
+
+The solubility for (in \%) can be recovered from an experiment via the 2D \textit{netCDF} parameter: \textsf{\footnotesize misc\_sur\_Fe\_sol} (\textsf{\footnotesize '\textit{Aeolian iron solubility}'}), and requires that NaNs are converted to zeros (just in case), and if using \textbf{Panoply}, the array may also need to be flipped up-side-down.
+
+\vspace{1mm}
+Two examples are provided for the application of a prescribed 2D field of \% solubility (and which are not listed in Table \ref{tab:ironconfigs}):
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffin.CB.worjh2.BASESFeTDTL.MahowaldFILEsol.SPIN}
+\\Specifies a spatially heterogeneous distribution of solubility that matches the  spatial pattern of calibrated values  from:
+\\\texttt{\small muffin.CB.worjh2.BASESFeTDTL.Mahowald.SPIN}
+\\(and where the 2D solubility input file is: \textsf{\footnotesize worjh2.det\_Fe\_sol.Mahowald.dat})
+\vspace{1mm}
+\item \texttt{muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORMsolFILEsol.SPIN}
+\\Specifies a field of uniform solubility that matches the calibrated value from:
+\\\texttt{\small muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORMsol.SPIN}
+\\(and where the 2D solubility input file is: \textsf{\footnotesize worjh2.det\_Fe\_sol.MahowaldUNIFORMsol.dat})
+\end{itemize}
+\vspace{1mm}
+(The equivalent \textit{user-config} and iron solubility field files are also provided for the Albani dust field.) 
+
+\vspace{2mm}
+\noindent Finally, as a further alternative -- a dust field can be forgone entirely and instead, a (2D) flux of dissolved iron to the ocean surface explicitly specified -- see \textit{HOW-TO ... force the system}.
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Fake dust}
+\vspace{1mm}
+
+For many (most?) deep-time applications, the spatial distribution of dust flux to the ocean surface may not be known (unless simulated in a paleo GCM). One can therefore:
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Chose a biological scheme that \uline{does not} require iron as a co-limiting nutrient.
+\vspace{1mm}
+\item Chose a biological scheme that \uline{does} require iron as a co-limiting nutrient ... but disable the iron cycle. 
+\\Examples of how this is implemented were given earlier.
+\item Make up a dust field!!!
+\\Actually ... yes ... but ... assume a modern (or other value) total flux of dust to the ocean surface, but distributed evenly.
+\\The advantage of having *some* iron limitation of biological export is that is can prevent the occurrence of extreme nutrient-trapping and the possibility of carbonate chemistry calculation errors, through small basins close to the Equator, and/or the implementation of temperature-dependent remineralization or short \textit{e}-folding depths for  remineralization, and/or highly elevated atmospheric \(pCO_{2}\) and hence surface temperatures, and/or low atmospheric \(pO_{2}\). Typically, problems arise if one or more of these factors are extreme, and is a result of the trapping of very high \(PO^{2-}_{4}\) concentrations in the subsurface from where it fuels extreme export fluxes. Adding a iron co-limitation provides a negative feedback because dissolved \(Fe\) in the water column is scavenged by settling organic matter and lost, meaning that the more that export is fueled by \(PO^{2-}_{4}\) trapping, the more bioavailable \(Fe\) is lost and hence the more export is restricted.
+\\Example \textit{forcings} are provided, for both Mahowald and Albani dust fields, as deposited to the  ocean surface of the \textsf{\footnotesize worjh2} grid. These are:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \texttt{\small pyyyyz.RpCO2\_Rp13CO2.Mahowald.0ka.UNIFORMdust}
+\item \texttt{\small pyyyyz.RpCO2\_Rp13CO2.Albani.0ka.UNIFORMdust}
+\end{itemize}
+\vspace{1mm}
+Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the time-series file: \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
+
+Also note that for a different total continental configuration and hence ocean area, the flux per \(m^{-2}\) will change as only the global total flux to the ocean surface is conserved. This can eb corrected e.g. by scaling the total dust flux given in the \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat} file in the forcing, by the relative difference of the paleo ocean surface area vs. modern (\textsf{\footnotesize worjh2} -- \(0.3674774\times10^{15} \:m^{2}\)) and whose value can be found near the top of the global summary output file (\textsf{\footnotesize diag\_GLOBAL\_AVERAGE.res }*\_).
+
+Example \textit{user-configs} in which the total modern dust flux to teh coean surface is distributed evenly (and keeping all the marine iron cycle parameters the same), are also provided:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \texttt{\small muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORM.SPIN}
+\item \texttt{\small muffin.CB.worjh2.BASESFeTDTL.AlbaniUNIFORM.SPIN}
+\end{itemize}
+\vspace{1mm}
+
+Also refer to the chapter on \textbf{muffingen} and the configuration of fake worlds.
+
+\end{enumerate}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Other sources of dissolved iron}
+\vspace{1mm}
+
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{HOW-TO ...  other (bio)geochemical cycle}
+
+\hfill \break
+
+%------------------------------------------------
+%
+\newpage
 \subsection*{Include a R-DOM cycle in the ocean}
 \vspace{1mm}
 
@@ -10584,7 +11006,7 @@ cgenie.eb_go_gs_ac_bg.worbe2.BASESI
 \end{verbatim}\normalsize\vspace{-1mm}
 Of these, recommended is one of the 16-level ocean \texttt{worjh2} configurations\footnote{The difference between the two \texttt{worjh2} configurations is that one (with the '\texttt{S}' in '\texttt{BASESI}' also includes a sulphur cycle.} as the oxygen minimum zones in the 8-level ocean \texttt{worbe2} configuration are much more poorly developed (see \textit{Ridgwell et al.} [2007a]).
 
-The ocean iodine cycle can then be configured in several different ways and  levels of complexity, as described in the following sections.
+The ocean iodine cycle can then be configured in several different ways and levels of complexity, as described in the following sections.
 
 %------------------------------------------------
 %
@@ -10790,7 +11212,7 @@ eg_par_ecogem_force_T_file="20170811.worjh2.8P8Z.pal.3x_SST.dat"
 
 %------------------------------------------------
 
-\section{HOW-TO ... remineralize ... differently}
+\section{HOW-TO ... remineralize ... but differently}
 
 %------------------------------------------------
 %
@@ -11869,7 +12291,7 @@ POC rain is saved in the corresponding \textbf{BIOGEM} summary file \texttt{biog
 
 %------------------------------------------------
 
-\section{HOW-TO ... geoengineering}
+\section{HOW-TO ... geoengineer}
 
 \subsubsection{Set up carbon dioxide removal (CDR) geoengineering experiments}
 
@@ -12086,7 +12508,7 @@ Hacking the solar constant in a time-varying manner is, of course, a (albeit cru
 
 %------------------------------------------------
 
-\section{HOW-TO ... orbits}
+\section{HOW-TO ... orbit}
 \vspace{2mm}
 
 %------------------------------------------------
@@ -12387,46 +12809,6 @@ with the the SW (shortwave) flux (\texttt{swflux}) being equivalent to the incid
 
 By default \texttt{bg\_par\_sig\_j\_N} is assigned a value of \texttt{2} and \texttt{bg\_par\_sig\_j\_S} a value of \texttt{1} (on account of the maximum grid size not being \textit{a priori} known).
 The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the first (BIOGEM) time-step in the annual cycle.
-
-%------------------------------------------------
-
-\newpage
-
-%------------------------------------------------
-
-\section{HOW-TO ... re-start}
-
-%------------------------------------------------
-%
-\subsubsection{Modify the ocean inventory of a tracer of a \textit{re-started} experiment}
-\vspace{1mm}
-
-There are three different ways in which for a closed system, the inventory of a tracer can be modified:
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-\item Add a flux forcing, to the ocean surface or the ocean as a whole. The tracer change is then the total global flux times the duration of the forcing. Note that the forcing can be positive or negative (to effect a decrease in the tracer inventory)
-
-\vspace{1mm}
-\item There is a parameter that add to or subtract from, the tracer inventory at the very beginning of an experiment (and assuming it is running on from a \textit{re-start}). The parameter name is \texttt{bg\_ocn\_dinit\_nn}, where \texttt{nn} is the tracer \textit{number} (which can be found in the parameter list table PDF, or by inspection of the file \texttt{tracer\_define.ocn} (for ocean, dissolved tracers) in the directory \texttt{cgenie.muffin/genie-main/data/input}. For example:
-\\\texttt{bg\_ocn\_dinit\_8=1.0E-6}
-\\will add 1 \(\mu\)M kg\(^{-1}\) of PO\(_{4}\) (\#8 is the tracer number of dissolved phosphate), uniformly to the ocean.
-Note that a negative value will result in the subtraction of a uniform concentration form every grip cell in the ocean (meaning that care has to be taken to ensure that negative numbers to not appear following subtraction).
-
-\vspace{1mm}
-\item There is a variant to the concentration adjusting parameter that is enabled by setting the parameter
-\\ \texttt{bg\_ctrl\_ocn\_dinit} to \texttt{false} (it is \texttt{true} by default). \texttt{bg\_ocn\_dinit\_nn} now acts as a scaling factor that is applied to the tracer concentration field. The new concentration field is equal to the old concentration field (from the \textit{re-start}), times \texttt{(1.0 + bg\_ocn\_dinit\_nn)}, e.g.:
-\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
-\\\texttt{bg\_ocn\_dinit\_8=0.5}
-\\will result in a 50\% increase in the concentration of dissolved phosphate   everywhere in the ocean (and a value of \texttt{1.0} doubles  concentrations). Conversely, a value less than one will result in a proportional reduction everywhere, e.g.:
-\\\texttt{bg\_ctrl\_ocn\_dinit=.false.}
-\\\texttt{bg\_ocn\_dinit\_8=-0.2}
-\\generates a 20\% decrease everywhere.
-
-\end{enumerate}
-
-Obviously, if the experiment is not being run from a re-start, or is being run from a re-start which does not include the particular tracer, then the initial value of the trace can be set. The parameter name is \texttt{bg\_ocn\_init\_nn}, where \texttt{nn} is the tracer \textit{number}.
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER -- CODE
@@ -12780,7 +13162,7 @@ diag\_tracer & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\
 
 \begin{table}[h]
 \textbf{\caption{Description of data categories -- \textit{time-slices}}}
-\begin{tabular}{|l|c|}\hline
+\begin{tabular}{|p{2.5cm}|p{11.75cm}|}\hline
 \textbf{Data category} & \textbf{Description of associated data saved} \\\hline
 \hline
 ocn & -- \\\hline
