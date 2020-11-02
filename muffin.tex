@@ -10796,7 +10796,7 @@ There is also option for treating all tracers the same way (including DIC ALK, P
 
 \section{HOW-TO ...  iron (and dust)}
 
-In this HOW-TO, you'll learn firstly how to configure an iron cycle in the ocean, with the first subsection tackling a modern-like and predominantly oxic ocean, and the second, for an anoxic ocean.
+In this HOW-TO, you'll learn firstly how to configure an iron cycle in the ocean, with the first subsection tackling a modern-like and predominantly oxic ocean, and the second (if it ever gets written!), for a 'deeper-time' and predominantly anoxic ocean.
 
 %------------------------------------------------
 %
@@ -10808,7 +10808,7 @@ This section will:
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
 \item Provide an overview of the different marine iron cycle schemes in \textbf{muffin}.
-\item Describe the different options and for tracers describing the marine iron cycle.
+\item Describe the different options  for tracers describing the main players in marine iron cycle.
 \item Detail the various calibrated parameter sets.
 \item Describe alternative ways of prescribing the solubility of iron in dust.
 \item Introduce ... fake dust(!) (for paleo configurations).
@@ -10821,7 +10821,7 @@ This section will:
 \subsubsection{Overview of  marine iron cycle schemes in muffin}
 \vspace{1mm}
 
-There are 2 different ways of describing the marine iron cycle in terms of which tracers in the ocean are defined (described immediately below). These are associated with one or more alternative tunings of the primary parameters controlling iron cycling -- the solubility of iron in dust and the rate of scavenging of dissolved iron onto particulate organic matter, plus, some parameter scaling the characteristic biological nutrient (\(PO^{2-}_{4}\)) uptake time-scale (described subsequently). In theory, the 2 different tracer configurations interchangeable and either could be used in conjunction with any given tuned parameter set. However, in practice and in publications, specific tuned parameter sets have been associated with a single tracer combination choice (and e.g. not tested equally with both). The various available marine iron cycle configurations are summarized in Table \ref{tab:ironconfigs}.
+There are 2 different ways of describing the marine iron cycle in terms of which tracers in the ocean are defined (described immediately below). These are associated with one or more alternative tunings of the primary parameters controlling iron cycling -- the solubility of iron in dust and the rate of scavenging of dissolved iron onto particulate organic matter, plus, some parameter scaling the characteristic biological nutrient (\(PO^{2-}_{4}\)) uptake time-scale (described subsequently). In theory, the 2 different tracer configurations are interchangeable and either could be used in conjunction with any given tuned parameter set. However, in practice and in publications, specific tuned parameter sets have been associated with a specific tracer combination choice (and e.g. not tested equally with both). The various available marine iron cycle configurations are summarized in Table \ref{tab:ironconfigs}.
 
 \vspace{-4mm}
 \begin{table}[h]
@@ -10847,9 +10847,9 @@ There are 2 different ways of describing the marine iron cycle in terms of which
 \footnotesize
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{-.15in}
-\item [\#3] -- The tracers are present, but the iron cycle is disabled so the biological scheme operates with no \(Fe\) limitation.
+\item [\#3] -- The tracers are present, but the iron cycle is 'disabled' so that the biological scheme operates with no \(Fe\) limitation.
 \item [\#5] -- There is no \(bio_{\tau}\) value because the \textbf{ECOGEM} module is used.
-\item [\#7] -- Uses an assumption of a spatially uniform iron solubility (\(Fe_{sol}\) values in italics).
+\item [\#7] -- Tests an assumption of a spatially uniform iron solubility (\(Fe_{sol}\) values in italics).
 \item [\#9] -- There is no single \(bio_{\tau}\) value (the biological scheme is split into diatoms and non-diatoms).
 \end{itemize}
 \normalsize
@@ -10882,7 +10882,6 @@ However, because the equilibrium between these tracers is re-solved every time-s
 \item [\(TL\)] -- total dissolved ligand concentration (both free and bound to iron)
 \end{itemize}
 \vspace{2mm}
- At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
 
 The associated tracer selection in the \textit{base-config} looks like:
 \footnotesize\vspace{-2pt}\begin{verbatim}
@@ -10890,14 +10889,15 @@ gm_ocn_select_90=.true.     #   TDFe -- 'total dissolved Fe'
 gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \end{verbatim}\vspace{-2pt}\normalsize
 
+At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
+
 %------------------------------------------------
 %
 \noindent\rule{4cm}{0.5pt}
 \subsubsection{Parameter sets}
 \vspace{2mm}
 
-\textit{User-configs} (and associated \textit{base-configs}) can be found for most, if not all, of the published papers, on GitHub. For the more recent marine iron cycle configurations and tunings, the following example configuration files are provided in \textsf{\footnotesize \textbackslash genie-userconfigs\textbackslash  EXAMPLES}. Note that the names of the \textit{user-configs} incorporate the corresponding \textit{base-config} name to avoid any confusion re. which \textit{user-config} should go with which \textit{base-config}. The numbers correspond to those in Table \ref{tab:ironconfigs}.
-
+\textit{User-configs} (and the associated \textit{base-configs}) can be found for most, if not all, of the published papers involving the iron cycle, on GitHub. For the more recent marine iron cycle configurations and tunings, the following example configuration files are provided in \textsf{\footnotesize \textbackslash genie-userconfigs\textbackslash  EXAMPLES} (with the numbers corresponding to those in Table \ref{tab:ironconfigs}.). (Note that the names of the \textit{user-configs} incorporate the corresponding \textit{base-config} name to avoid any confusion re. which \textit{user-config} should go with which \textit{base-config}.)
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \vspace{1mm}
@@ -10910,8 +10910,8 @@ gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \vspace{1mm}
 \\The same biological configuration as \texttt{\small cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.FeMIP.SPIN}, but with iron limitation of biological export 'disabled' by:
 \begin{enumerate}[noitemsep]
-\item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes zero, as the ocean is initialized with \(0.6\:\mu M\:Fe\).
-\item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so virtually no Fe is taken up in orgen matter).
+\item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes, zero (in comparison: the ocean is initialized with \(0.6\:\mu M\:Fe\)).
+\item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so virtually no Fe is taken up in organic matter as compared to carbon).
 \item Setting the scavenging rate of \(Fe\) by sinking organic matter to zero.
 \end{enumerate}
 No dust field is then required, because there are no longer any processes that can remove (from the surface) the initial dissolved iron inventory.
@@ -10948,7 +10948,7 @@ No dust field is then required, because there are no longer any processes that c
 \subsubsection{Alternative implementations for the dissolved iron flux to the ocean surface}
 \vspace{2mm}
 
-By default (and in all the marine iron cycle configurations published to date) -- the solubility of iron in dust, is an inverse function of the dust flux -- i.e. at higher dust loadings, the fractional solubility is assumed to be lower. Following Baker et al. [2006], we adopt a relationship in which iron solubility scales with the square root of the dust flux, enacted by the parameter setting:
+By default (and in all the marine iron cycle configurations published to date) -- the solubility of iron in dust is an inverse function of the dust flux -- i.e. at higher dust loadings, the fractional solubility is assumed to be lower. Following \textit{Baker et al.} [2006], we adopt a relationship in which iron solubility scales with the square root of the dust flux, enacted by the parameter setting:
 The associated tracer selection in the \textit{base-config} looks like:
 \small\vspace{-2pt}\begin{verbatim}
 #exponent for aeolian Fe solubility [use 1.0 for uniform solubility]
@@ -10959,8 +10959,9 @@ The solubility parameter \texttt{\small bg\_par\_det\_Fe\_sol} determines the va
 # aeolian Fe solubility [Albani tuning]
 bg_par_det_Fe_sol=0.002441
 \end{verbatim}\vspace{-2pt}\normalsize
-specifies that when weighted by dust flux, the global mean solubility of iron is \(0.244\%\).
-This can parameterization can potentially lead to confusing and unintended consequences. For example, if the dust flux anywhere in the model grid is changed, because the global mean flux-weighted solubility must remain constant, the local solubility everywhere will slightly change, even though the dust flux itself only changes at a single grid point location.
+specifies that when weighted by dust flux, the global mean solubility of iron in dust is \(0.244\%\).
+
+However, this parameterization can potentially lead to confusing and unintended consequences. For example, if the dust flux anywhere in the model grid is changed, because the global mean flux-weighted solubility must remain constant, the local solubility \uline{everywhere} will slightly change, even though the dust flux itself only changes at a single grid point location.
 
 \vspace{2mm}
 As an alternative, the solubility of iron in dust can be fixed spatially at a single value. This is done  by setting:
@@ -10968,7 +10969,7 @@ As an alternative, the solubility of iron in dust can be fixed spatially at a si
 # Exponent for aeolian Fe solubility [use 1.0 for uniform solubility]
 bg_par_det_Fe_sol_exp=1.0
 \end{verbatim}\vspace{-2pt}\normalsize
-(In the solubility equation, the power is actually one minus the exponent parameter, hence a value of one makes the solubility spatially invariant.)
+(In the solubility equation, the power is actually one minus the exponent parameter, hence a value of \(1.0\) makes the solubility spatially invariant.)
 
 \pagebreak
  
@@ -10986,14 +10987,14 @@ Calibrated marine iron cycle parameter sets a provided for both \textit{Mahowald
 # Replace internal dust Fe solubility field?
 bg_ctrl_force_det_Fe_sol=.true.
 \end{verbatim}\vspace{-2pt}\normalsize
-and then the presence of a 2D ASCII file delineating the spatial pattern of \uline{percent} (not fractional solubility) iron solubility, which is specified by:
+and then the presence of a 2D ASCII file delineating the spatial pattern of \uline{percent} (\uline{not fractional solubility}) iron solubility, which is specified by:
 \small\vspace{-2pt}\begin{verbatim}
 # Filename for dust Fe solubility field
 bg_par_det_Fe_sol_file='worjh2.det_Fe_sol.NULL.dat'
 \end{verbatim}\vspace{-2pt}\normalsize
 where \textsf{\footnotesize worjh2.det\_Fe\_sol.NULL.dat} is a default filename for a \textsf{\footnotesize worjh2} modern continental configuration \(36\times36\) grid (of zeros), with the file itself residing in the directory: \textsf{\footnotesize genie-biogem/data/input}
 
-The solubility for (in \%) can be recovered from an experiment via the 2D \textit{netCDF} parameter: \textsf{\footnotesize misc\_sur\_Fe\_sol} (\textsf{\footnotesize '\textit{Aeolian iron solubility}'}), and requires that NaNs are converted to zeros (just in case), and if using \textbf{Panoply}, the array may also need to be flipped up-side-down.
+The internally calculated solubility field (in \%) can be recovered from an experiment via the 2D \textit{netCDF} parameter: \textsf{\footnotesize misc\_sur\_Fe\_sol} (\textsf{\footnotesize '\textit{Aeolian iron solubility}'}), and requires that NaNs are converted to zeros (just in case), and if using \textbf{Panoply}, the array may also need to be flipped up-side-down.
 
 \vspace{1mm}
 Two examples are provided for the application of a prescribed 2D field of \% solubility (and which are not listed in Table \ref{tab:ironconfigs}):
@@ -11031,19 +11032,31 @@ For many (most?) deep-time applications, the spatial distribution of dust flux t
 \\Examples of how this is implemented were given earlier.
 \item Make up a dust field!!!
 \\Actually ... yes ... but ... assume a modern (or other value) total flux of dust to the ocean surface, but distributed evenly.
-\\The advantage of having *some* iron limitation of biological export is that is can prevent the occurrence of extreme nutrient-trapping and the possibility of carbonate chemistry calculation errors, through small basins close to the Equator, and/or the implementation of temperature-dependent remineralization or short \textit{e}-folding depths for  remineralization, and/or highly elevated atmospheric \(pCO_{2}\) and hence surface temperatures, and/or low atmospheric \(pO_{2}\). Typically, problems arise if one or more of these factors are extreme, and is a result of the trapping of very high \(PO^{2-}_{4}\) concentrations in the subsurface from where it fuels extreme export fluxes. Adding a iron co-limitation provides a negative feedback because dissolved \(Fe\) in the water column is scavenged by settling organic matter and lost, meaning that the more that export is fueled by \(PO^{2-}_{4}\) trapping, the more bioavailable \(Fe\) is lost and hence the more export is restricted.
-\\Example \textit{forcings} are provided, for both Mahowald and Albani dust fields, as deposited to the  ocean surface of the \textsf{\footnotesize worjh2} grid. These are:
+\\The advantage of having *some* iron limitation of biological export is that is can prevent the occurrence of extreme nutrient-trapping and the possibility of carbonate chemistry calculation errors in the model, through small basins close to the Equator, and/or the implementation of temperature-dependent remineralization or short \textit{e}-folding depths for  remineralization, and/or highly elevated atmospheric \(pCO_{2}\) and hence surface temperatures, and/or low atmospheric \(pO_{2}\). Typically, problems arise if one or more of these factors are relatively extreme, and arises as a result of the trapping of very high \(PO^{2-}_{4}\) concentrations in the subsurface, from where it fuels extreme export fluxes. Adding an iron co-limitation provides a negative feedback because dissolved \(Fe\) in the water column is scavenged by settling organic matter and lost, meaning that the more that export is fueled by \(PO^{2-}_{4}\) trapping, the more bioavailable \(Fe\) is lost and hence the more export is restricted.
+
+\vspace{1mm}
+Example \textit{forcings} are provided, for both Mahowald and Albani dust fields, as deposited to the  ocean surface of the \textsf{\footnotesize worjh2} grid. These are:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \item \texttt{\small pyyyyz.RpCO2\_Rp13CO2.Mahowald.0ka.UNIFORMdust}
 \item \texttt{\small pyyyyz.RpCO2\_Rp13CO2.Albani.0ka.UNIFORMdust}
 \end{itemize}
 \vspace{1mm}
-Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the time-series file: \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
+Note that there is no (\textit{user-config}) scaling parameter for sediment flux forcings and hence the total flux forcing appear explicitly in the \textit{forcing} \textit{time-series} file: 
+\\\textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat}.
 
-Also note that for a different total continental configuration and hence ocean area, the flux per \(m^{-2}\) will change as only the global total flux to the ocean surface is conserved. This can eb corrected e.g. by scaling the total dust flux given in the \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat} file in the forcing, by the relative difference of the paleo ocean surface area vs. modern (\textsf{\footnotesize worjh2} -- \(0.3674774\times10^{15} \:m^{2}\)) and whose value can be found near the top of the global summary output file (\textsf{\footnotesize diag\_GLOBAL\_AVERAGE.res }*\_).
+Also note that for a different total continental configuration and hence ocean area, the flux per \(m^{-2}\) will change as only the global total flux to the ocean surface is conserved. This can be corrected e.g. by scaling the total dust flux given in the \textsf{\footnotesize biogem\_force\_flux\_sed\_det\_sig.dat} file in the forcing, by the relative difference of the paleo ocean surface area vs. modern (\textsf{\footnotesize worjh2} -- \(0.3674774\times10^{15} \:m^{2}\)) and whose value can be found near the top of the global summary output file (\textsf{\footnotesize diag\_GLOBAL\_AVERAGE.res }*\_).
 
-Example \textit{user-configs} in which the total modern dust flux to teh coean surface is distributed evenly (and keeping all the marine iron cycle parameters the same), are also provided:
+\vspace{1mm}
+The 2 different dust fields (with the same \textsf{\footnotesize worjh2} ocean grid are characterized by the following global dust fluxes (to the ocean surface):
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item Mahowald -- \(16.252\times 10^{12}\:mol\:yr^{-1}\)
+\item Albani -- \(9.154\times 10^{12}\:mol\:yr^{-1}\)
+\end{itemize}
+\vspace{1mm}
+
+Example \textit{user-configs} in which the total modern dust flux to the ocean surface is distributed evenly (and keeping all the marine iron cycle parameters the same), are also provided:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \item \texttt{\small muffin.CB.worjh2.BASESFeTDTL.MahowaldUNIFORM.SPIN}
