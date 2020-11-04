@@ -3555,7 +3555,7 @@ The pattern of \(CaCO_{3}:POC\) rain ratio is not uniform across the ocean (why?
 
 \section*{Stuff to keep in mind\dots}
 \begin{itemize}
-\item We will be working with highly idealised ecosystems in a highly idealised ocean.
+\item We will be working with highly idealised ecosystems in a relatively idealised (modern) ocean.
 \item The aim is to explore why the model behaves as it does.
 \item The assumption is that this will give us some insight into why the real world behaves as it does. Perhaps. (It is up to you to question the validity of this assumption.)
 \end{itemize}
@@ -3568,23 +3568,13 @@ The pattern of \(CaCO_{3}:POC\) rain ratio is not uniform across the ocean (why?
 
 \section*{Read.me}
 
-Before you start, you need to retrieve some a \textbf{muffin} model experiment \textit{re-start} files. At the terminal, enter the  following commands (hitting `return' after each command):
+\vspace{2mm}
+You will need a \textit{re-start} file to carry out the experiments in the Chapter:
+\small \begin{verbatim}
+$ wget http://www.seao2.info/cgenie_output/wardetal.2018.ECOGEM.SPIN.tar.gz
+\end{verbatim} \normalsize
 
-\vspace{-2mm}
-\footnotesize\begin{verbatim}
-cd ~/cgenie_output
-wget http://www.seao2.info/cgenie_output/_restarttest.worlg4.Wardetal20018.ECOGEM.SPIN.tar.gz
-tar xfvz _restarttest.worlg4.Wardetal20018.ECOGEM.SPIN.tar.gz
-\end{verbatim}\normalsize
-\vspace{-2mm}
-
-\noindent Then as before ... return to the \textbf{muffin} \footnotesize\textsf{genie-main }\normalsize directory:
-
-\vspace{-2mm}
-\small\begin{verbatim}
-cd genie-main
-\end{verbatim}\normalsize
-\vspace{-2mm}
+\noindent Extract the results in the usual way and in the usual place ... and return to \textsf{\footnotesize genie-main} in the usual way ... all ... as usual.
 
 %------------------------------------------------
 
@@ -3615,29 +3605,9 @@ In contrast, in this chapter, we are going get started with the '\textbf{ECOGEM}
 
 We will start with the simplest possible configuration of \textbf{ECOGEM}, with just a single (small) phytoplankton class\footnote{i.e. as if the ocean was populated with a small species of phytoplankton (photo-autotroph) and nothing else.}. You can run this model at the command line, by entering the following command (note that this should be one continuous line) \dots
 \small\begin{verbatim}
-$ ./runmuffin.sh muffin.CBE.worlg4.BASESFeTDTL LABS wardetal.2018.ECOGEM.EXAMPLE 10
-  _restarttest.worlg4.Wardetal20018.ECOGEM.SPIN
+$ ./runmuffin.sh muffin.CBE.worlg4.BASESFeTDTL LABS wardetal.2018.ECOGEM.EXAMPLE 10 
+     wardetal.2018.ECOGEM.SPIN
 \end{verbatim}\normalsize
-
-\noindent As before, we have five input parameters after  the run script (\texttt{./runmuffin.sh}) is invoked:
-
-\begin{enumerate}[noitemsep]
-\vspace{1mm}
-\item \texttt{muffin.CBE.worlg4.BASESFeTDTL} $\rightarrow$ The `\textit{base-config}' file. \\
-$~$\hfill Note the additional~`\texttt{\_eg}' that marks the inclusion of the \textbf{ECOGEM} package.
-\vspace{1mm}
-\item \texttt{LABS} $\rightarrow$ As before -- the \textit{user-config} directory where the \textit{user-config} file resides.
-\vspace{1mm}
-\item \texttt{wardetal.2018.ECOGEM.EXAMPLE} $\rightarrow$ The  specific \textit{user-config} file (experiment name) used in this example.
-\vspace{1mm}
-\item \texttt{10} $\rightarrow$ The run duration (for this particular example experiment) ... in years.
-\vspace{1mm}
-\item \texttt{\_restarttest.worlg4.Wardetal20018.ECOGEM.SPIN} $\rightarrow$ The \textit{restart} filename.
-\\Here we are telling the model to start from the endpoint of a previous experiment (a 10,000 year run of \textbf{BIOGEM} ... although what you actually have, is a 10 year run following on from a 10,000 year run ...).
-\\\uline{Note that the \textit{re-start} here only applies to the biogeochemical part of the model. The ecological community will be initialised from some very low biomass.}
-\end{enumerate}
-\vspace{2mm}
-
 The model will run as before, except that now we have the \textbf{ECOGEM} debug option enabled, and you will get a lot of extra information about how the ecological model is configured.
 \vspace{1mm}
 
@@ -3655,21 +3625,21 @@ Following the same convention as for \textbf{BIOGEM}, \textbf{ECOGEM} \textit{ti
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item Open the \textsf{\small fields\_ecogem\_2D.nc} file by locating it in the correct directory, and double clicking on it in the file transfer window (if you have that software function configured), or transfer locally and then open (e.g. in \textbf{Panoply}).
+\item Open the \textsf{\footnotesize fields\_ecogem\_2D.nc} file by locating it in the correct directory, and double clicking on it in the file transfer window (if you have that software function configured), or transfer locally and then open (e.g. in \textbf{Panoply}).
 \vspace{1mm}
-\item You should now see a list of 2D arrays that were output by \textbf{ECOGEM}. Looking at the \textsf{\small Long Name} description, simply click on a variable of interest. If a menu window pops up, just click on \textsf{\small Create} or hit the \textsf{\small Return} key.
+\item You should now see a list of 2D arrays that were output by \textbf{ECOGEM}. Looking at the \textsf{\footnotesize Long Name} description, simply click on a variable of interest. If a menu window pops up, just click on \textsf{\footnotesize Create} or hit the \textsf{\footnotesize Return} key.
 \vspace{1mm}
 \item Check the \textbf{Panoply} settings to make sure you really know what you are looking at.
-\begin{enumerate}[noitemsep]
+\begin{itemize}[noitemsep]
 \item Which \textit{time-slice} (i.e. simulation year) are you looking at?
 \item What is the data range (i.e. colour scale)
-\end{enumerate}
+\end{itemize}
 \end{enumerate}
 \vspace{2mm}
 
-\noindent Remember: you can change the default settings in \textbf{Panoply} to avoid changing things every time you open a new file. First click on \textsf{\small Panoply} $\rightarrow$ \textsf{\small Preferences...}. Here you can switch off interpolation and the grid overlay under the \textsf{\small General} menu. You can disable the spuriously precise coastline under \textsf{\small Lon-Lat Plots}.
+\noindent Remember: you can change the default settings in \textbf{Panoply} to avoid changing things every time you open a new file. First click on \textsf{\footnotesize Panoply} $\rightarrow$ \textsf{\footnotesize Preferences...}. Here you can switch off interpolation and the grid overlay under the \textsf{\footnotesize General} menu. You can disable the spuriously precise coastline under \textsf{\footnotesize Lon-Lat Plots}.
 
-A guide to some key \textbf{ECOGEM} output variables to peruse can be found at the end of Chapter 15.
+A guide to some key \textbf{ECOGEM} output variables to peruse can be found at the end of Chapter \ref{ch:modeloutput}.
 
 %------------------------------------------------
 
@@ -3679,20 +3649,20 @@ Models are usually intended as an approximation of the real world (whatever that
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item You can download a compilation of key biogeochemical variables (as netCDF files) from the \textsf{\small mymuffin} \href{http://www.seao2.info/cgenie/data/GEnIE_observations.nc}{webpage}.
+\item You can download a compilation of key biogeochemical variables (as netCDF files) from the \textsf{\footnotesize mymuffin} \href{http://www.seao2.info/cgenie/data/GEnIE_observations.nc}{webpage} ('\textit{Observations for ECOGEM}').
 \vspace{1mm}
-\item You can open the \textsf{\small GEnIE\_observations.nc} file in \textbf{Panoply} in the same way as you opened the \textsf{\small fields\_ecogem\_2D.nc} file.
+\item You can open the \textsf{\footnotesize GEnIE\_observations.nc} file in \textbf{Panoply} in the same way as you opened the \textsf{\footnotesize fields\_ecogem\_2D.nc} file.
 \vspace{1mm}
 \item You can now compare the model output to key biogeochemical variables, such as surface chlorophyll or phosphate. (Also, e.g. create difference maps.)
 \vspace{1mm}
-\item When doing this, be asking yourself the question: doe the model perform well or poorly with respect to reproducing these variables? If not, \uline{why not}?
+\item When doing this, be asking yourself the question: does the model perform well or poorly with respect to reproducing these variables? If not, \uline{why not}?
 \end{enumerate}
 \vspace{2mm}
 
 \noindent NOTE: \textbf{ECOGEM} only saves a limited number of surface (2D) data arrays. You can look at other variables (in 2D and 3D) by opening the corresponding \textbf{BIOGEM} files\footnote{They can be found in the directory:
-\\ \texttt{\textasciitilde{}/cgenie\_output/wardetal.2018.ECOGEM.EXAMPLE/BIOGEM/}}, \textsf{\small fields\_biogem\_2D.nc} and \textsf{\small fields\_biogem\_3D.nc} in \textbf{Panoply}.
+\\ \texttt{\textasciitilde{}/cgenie\_output/wardetal.2018.ECOGEM.EXAMPLE/BIOGEM/}}, \textsf{\footnotesize fields\_biogem\_2D.nc} and \textsf{\footnotesize fields\_biogem\_3D.nc} in \textbf{Panoply}.
 
-\noindent Bear in mind that we restarted the model from a previous simulation with \textbf{BIOGEM}. Some of the state variables may take a long time (i.e. $\gg$ 10 years) to adjust to the new model configuration (especially the distribution of nutrients and oxygen at depth).
+\noindent Bare in mind that some of the state variables may take a long time (i.e. $\gg$ 10 years) to adjust to the new ecological (and hence global biogeochemical cycle) model configuration (especially the distribution of nutrients and oxygen at depth).
 %------------------------------------------------
 
 \newpage
@@ -3704,21 +3674,25 @@ Models are usually intended as an approximation of the real world (whatever that
 In the last section you ran a very simple configuration of the \textbf{ECOGEM} ecosystem model, and compared it to observations. In this section we are going to add a bit more ecological realism, with the aim of improving model performance (i.e. as contrasted against observations). We will start by adding a zooplankton population that  should bring a degree of `top-down' control to the phytoplankton population.
 \vspace{2mm}
 
-Details of the original (full) ecosystem are specified in the \textit{user-config} file:\\ \indent \textsf{\footnotesize wardetal.2018.ECOGEM.EXAMPLE}
+Details of the ecosystem are specified in the \textit{user-config} file: \textsf{\footnotesize wardetal.2018.ECOGEM.EXAMPLE}
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item Locate the \textit{user-config} file (in \textsf{\footnotesize \textasciitilde{}/cgenie.muffin/genie-userconfigs/LABS}), and open it in your preferred text editor.
 \vspace{1mm}
-\item The \textit{user-config} file can be used to configure the model to your liking. One of the most important amendments to note straight away can be seen on line 11, \texttt{bg\_par\_bio\_prodopt="NONE"}. This effectively disables the simple biological export scheme in \textbf{BIOGEM}, replacing it with the explicit biology of \textbf{ECOGEM}. This is a necessary step whenever running \textbf{ECOGEM}, because we do not want the implicit and explicit biological schemes to be implemented simultaneously ...
+\item The \textit{user-config} file can be used to configure the ecological model to your liking. 
+
+One of the most important amendments to note straight away can be seen near the very start:
+\\\texttt{bg\_par\_bio\_prodopt="NONE"}. This effectively disables the simple biological export scheme in \textbf{BIOGEM}, replacing it with the explicit biology of \textbf{ECOGEM}. This is a necessary step whenever running \textbf{ECOGEM}, because we do not want the implicit and explicit biological schemes to be implemented simultaneously ...
 \vspace{1mm}
-\item We can also see a load of other model parameters. Any that begin with `\texttt{bg\_}' correspond to \textbf{BIOGEM}, while `\texttt{eg\_}' corresponds to \textbf{ECOGEM}. The \textbf{ECOGEM} parameters begin after line 71.
+\item We can also see a load of other model parameters. Any that begin with `\texttt{bg\_}' correspond to \textbf{BIOGEM}, while `\texttt{eg\_}' corresponds to \textbf{ECOGEM}. The \textbf{ECOGEM} parameters begin further down the file.
 \vspace{1mm}
 \item One of the most important parameters specifies the \textit{ecosystem configuration} file:
+\vspace{-1mm}
 \small\begin{verbatim}
 eg_par_ecogem_plankton_file ='NPD.eco'
 \end{verbatim}\normalsize
-
+\vspace{-0mm}
 This points to a file (located in \textsf{\footnotesize \textasciitilde{}/cgenie.muffin/genie-ecogem/data/input/}) that specifies every plankton population ('species', if you like) that is accounted for in the model experiment. If you open that file in a text editor, you will see something akin to the following:
 \scriptsize\begin{verbatim}
  01                 02    03
@@ -3751,6 +3725,8 @@ Plankton functional type one of: Prochlorococcus
                                  Mixotroph
 \end{verbatim}\normalsize
 
+\newpage
+
 \vspace{1mm}
 \item The first thing to note is that only the lines in between the \texttt{\small -START-OF-DATA-} and \texttt{\small -END-OF-DATA-} tags are read by the computer. The rest is there solely for your guidance.
 
@@ -3774,14 +3750,13 @@ eg_par_ecogem_plankton_file ='NPZD.eco'
 \vspace{1mm}
 \item Save the new \textit{user-config} file under a different name (e.g. \texttt{BSS.NPZD.SPIN}). You can now execute the model at the command line\footnote{Don't forget to change the name of the \textit{user-config} file here as well ...} ...
 \small\begin{verbatim}
-./muffin.CBE.worlg4.BASESFeTDTL / BSS.NPZD.SPIN 10
-   _restarttest.worlg4.Wardetal20018.ECOGEM.SPIN
+./muffin.CBE.worlg4.BASESFeTDTL / BSS.NPZD.SPIN 10 wardetal.2018.ECOGEM.SPIN
 \end{verbatim}\normalsize
 ... or submit it to the cluster queue ...
 \small\begin{verbatim}
 qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
    muffin.CBE.worlg4.BASESFeTDTL / BSS.NPZD.SPIN 10
-   _restarttest.worlg4.Wardetal20018.ECOGEM.SPIN
+   wardetal.2018.ECOGEM.SPIN
 \end{verbatim}\normalsize
 
 \vspace{1mm}
@@ -3809,16 +3784,13 @@ We can perhaps get a better handle on this question by looking at the ratio of p
 \vspace{1mm}
 \item You now need to make sure that you are looking at the right year (you can time-lock the two arrays by clicking on the chain icon). You may also find it helpful to look at the data on a log scale, with a scale range of \textsf{\footnotesize 0.1} to \textsf{\footnotesize 10}. You might also like to change the \textsf{\footnotesize Color Table:} option to \textsf{\footnotesize GMT\_polar.cpt}.
 \end{enumerate}
-\vspace{2mm}
+\vspace{1mm}
 
 Questions:
-
+\vspace{1mm}
 \begin{itemize}
-\vspace{1mm}
 \item What does this plot say about the relationship of zooplankton and phytoplankton in different regions of the ocean?
-\vspace{1mm}
 \item In what regions do zooplankton or phytoplankton dominate?
-\vspace{1mm}
 \item What affect does a high Z:P ratio have on the biomass of the phytoplankton population?\footnote{For example, in terms of the chlorophyll concentration.}
 \end{itemize}
 
@@ -3827,13 +3799,13 @@ Questions:
 \subsection{Iron limitation}
 
 Up to this point, we have only considered phosphate as a limiting nutrient. (Iron was included in the model, but it was not limiting to phytoplankton growth.) You can switch on iron limitation by modifying two lines in the \textit{user-config} file:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-2mm}\begin{verbatim}
 eg_useFe=.true.
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\vspace{-2mm}
 and
-\vspace{-1mm}\begin{verbatim}
+\vspace{-2mm}\begin{verbatim}
 eg_fquota=.true.
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\vspace{-2mm}
 
 Give the \textit{user-config} file a new name (e.g. \texttt{BSS.NPZD\_Fe.SPIN}), then re-run  the model.
 
@@ -3872,13 +3844,15 @@ changes the minimum iron quota by a factor of 2, whilst keeping a record of the 
 \vspace{-1mm}\small\begin{verbatim}
 eg_qminFe_a  = 6.0e-6 # 3.0e-6
 \end{verbatim}\normalsize\vspace{-1mm}
-that reduces the total number of lines you end up with in the user-config file.
+that reduces the total number of lines you end up with in the \textit{user-config} file.
 
 \vspace{1mm}
 \item Nutrient supply ratios are also important in determining the limiting nutrient.
 \\The \texttt{bg\_par\_det\_Fe\_sol\_exp} parameter determines the solubility of atmospheric iron inputs in seawater. Decreasing the value of \texttt{bg\_par\_det\_Fe\_sol\_exp} will therefore decrease the iron-to-phosphorus supply ratio.
+
+\vspace{1mm}
 \begin{itemize}
-\item What happens to the ecosystem if you decrease \texttt{bg\_par\_det\_Fe\_sol\_exp} by 10, 20 or 50\%?
+\item What happens to the ecosystem if you decrease \texttt{bg\_par\_det\_Fe\_sol\_exp} by e.g. 10, 20 or 50\%?
 \end{itemize}
 
 \end{enumerate}
@@ -3949,33 +3923,37 @@ Open up the 2D \textit{time-slice} data for the new experiment, following the sa
 
 \item[\textbf{Size fractions}] \
 \\Variables beginning ``\textsf{\footnotesize eco2D\_Size\_Frac\_...}'' give the chlorophyll biomass in the three size fractions:
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \item picophytoplankton (diameter $\le$ 2 $\mu$m)
 \item nanophytoplankton (2 $<$ diameter $\le$ 20 $\mu$m)
 \item microphytoplankton (diameter $>$ 20 $\mu$m)
 \end{enumerate}
+\vspace{1mm}
 
 \item[\textbf{Size metrics}] \
 \\Any other variables beginning '\textsf{\footnotesize eco2D\_Size\_...}' give metrics describing the {phytoplankton} size distribution.
-
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \item \textsf{\footnotesize eco2D\_Size\_Mean}: Geometric mean\footnote{ We use the geometric mean and standard deviation, because phytoplankton biomass is approximately log-normally distributed across the phytoplankton size range.} phytoplankton diameter, weighted by carbon biomass
 \item \textsf{\footnotesize eco2D\_Size\_Stdev}: Geometric standard deviation\footnote{ The geometric standard deviation describes the \textit{relative} size range of the phytoplankton. For a geometric standard deviation of $\sigma$, $\sim$68.2\% of the phytoplankton carbon biomass will be in cells no more than $\sigma$ orders of magnitude smaller or larger than the geometric mean size.} of phytoplankton diameter, weighted by carbon biomass.
 \item \textsf{\footnotesize eco2D\_Size\_Minimum}: Diameter of smallest phytoplankton contributing $>$0.1\% of the total phytoplankton carbon biomass.
 \item \textsf{\footnotesize eco2D\_Size\_Maximum}: Diameter of largest phytoplankton contributing $>$0.1\% of the total phytoplankton carbon biomass.
 \end{itemize}
+\vspace{1mm}
 
 \item[\textbf{Diversity metrics}] \
 \\Any variables beginning '\textsf{\footnotesize eco2D\_Diversity\_...}' give metrics describing the {phytoplankton} diversity.
-
+\vspace{1mm}
 \begin{itemize}[noitemsep]
-\item \textsf{\footnotesize eco2D\_Diversity\_Threshold}: the threshold diversity index. The number of species contributing $>$0.1\% of the total phytoplankton carbon biomass [\textit{Barton et al.}, 2010]\footnote{A D Barton, S Dutkiewicz, G Flierl, J Bragg, and M Follows. Patterns of diversity in marine phytoplankton. Science, 327(5972):1509–1511, 2010.}.
-\item \textsf{\footnotesize eco2D\_Diversity\_Berger}: the inverse Berger(-Parker) index  [\textit{Berger and Parker}, 1970]\footnote{W H Berger and F L Parker. Diversity of planktonic foraminifera in deep-sea sediments. Science, 168 (3937):1345–1347, 1970.}. The proportion of carbon biomass made up by all but the single most dominant population. For example, if the dominant population accounts for 40\% of the total carbon biomass, inverse Berger (-Parker) index is 0.6.
-\item \textsf{\footnotesize eco2D\_Diversity\_Simpson}: the inverse (Gini-)Simpson index [\textit{Simpson}, 1949]\footnote{E H Simpson. Measurement of diversity. Nature, 163:688, 1949.}. This is effectively the probability that two samples taken at random from the community will be from a different species (note that the probability of selecting a population is dependent on carbon biomass, not cell abundance). If we define the proportional biomass of each species as its relative contribution to the total carbon biomass in the community, the inverse Gini(-Simpson) index is calculated as one minus the sum of the squares of the proportional biomasses of each species.
-\item \textsf{\footnotesize eco2D\_Diversity\_Shannon}: the Shannon(-Wiener or -Weaver) index  [\textit{Shannon}, 1948]\footnote{C E Shannon. A mathematical theory of communication. The Bell System Technical Journal, 27(379-423 and 623-656), 1948.}. With the proportional biomass defined as above, the Shannon index is defined as the sum of [the proportional biomass multiplied by the logarithm of the proportional biomass] for each species.
+\item \textsf{\footnotesize eco2D\_Diversity\_Threshold}: the threshold diversity index. The number of species contributing $>$0.1\% of the total phytoplankton carbon biomass [\textit{Barton et al.}, 2010]\footnote{A D Barton, S Dutkiewicz, G Flierl, J Bragg, and M Follows. Patterns of diversity in marine phytoplankton. \textit{Science}, 327(5972):1509–1511, 2010.}.
+\item \textsf{\footnotesize eco2D\_Diversity\_Berger}: the inverse Berger(-Parker) index  [\textit{Berger and Parker}, 1970]\footnote{W H Berger and F L Parker. Diversity of planktonic foraminifera in deep-sea sediments. \textit{Science}, 168 (3937):1345–1347, 1970.}. The proportion of carbon biomass made up by all but the single most dominant population. For example, if the dominant population accounts for 40\% of the total carbon biomass, inverse Berger (-Parker) index is 0.6.
+\item \textsf{\footnotesize eco2D\_Diversity\_Simpson}: the inverse (Gini-)Simpson index [\textit{Simpson}, 1949]\footnote{E H Simpson. Measurement of diversity. \textit{Nature}, 163:688, 1949.}. This is effectively the probability that two samples taken at random from the community will be from a different species (note that the probability of selecting a population is dependent on carbon biomass, not cell abundance). If we define the proportional biomass of each species as its relative contribution to the total carbon biomass in the community, the inverse Gini(-Simpson) index is calculated as one minus the sum of the squares of the proportional biomasses of each species.
+\item \textsf{\footnotesize eco2D\_Diversity\_Shannon}: the Shannon(-Wiener or -Weaver) index  [\textit{Shannon}, 1948]\footnote{C E Shannon. A mathematical theory of communication. \textit{The Bell System Technical Journal}, 27(379-423 and 623-656), 1948.}. With the proportional biomass defined as above, the Shannon index is defined as the sum of [the proportional biomass multiplied by the logarithm of the proportional biomass] for each species.
 \item[NOTE:]The threshold index is a fairly crude measure of the total number of species in the community, relative to a small and arbitrary threshold of relative biomass. This index is not very sensitive to the relative biomass of individual species (although one very successful species can raise the absolute value of the threshold, thus lowering the diversity).
 \\The other three indices do more to quantify the evenness of the community. The more unequal the proportional abundances, the smaller the value of the index. If almost all the abundance is concentrated into one type and all the other types are very rare, the latter three indices can become very small. A community with fewer species, but with more evenly distributed biomass, may well have higher values for these three diversity indices.
 \end{itemize}
+\vspace{1mm}
 
 \end{itemize}
 \vspace{1mm}
@@ -3984,16 +3962,13 @@ Open up the 2D \textit{time-slice} data for the new experiment, following the sa
 
 Have a look at some of these metrics, but bear in mind that they summarise the diversity of a phytoplankton community that includes just three species. They are probably not that revealing, so we will come back to them later. Instead, have a look some of the other metrics describing the model ecosystem.
 
+\vspace{1mm}
 Questions:
-
+\vspace{1mm}
 \begin{itemize}
-\vspace{1mm}
 \item What are the global distributions of the different size classes?
-\vspace{1mm}
 \item How do the global biomass distributions compare to variables such as temperature\footnote{Ocean temperature is saved in \textsf{\scriptsize fields\_biogem\_3D.nc}}, or primary production (\textsf{\footnotesize Uptake Fluxes C})?
-\vspace{1mm}
 \item How does nutrient, light and temperature limitation vary between the size classes?
-\vspace{1mm}
 \item Can you account for the distribution biomass between the size classes according to the different limiting factors?
 \end{itemize}
 \vspace{2mm}
@@ -4004,14 +3979,13 @@ Questions:
 
 Save the \textit{ecosystem configuration} file under a new name and add some more plankton populations (whatever and as many as you like\footnote{Just bear in mind that the more populations you put in, the slower the model will run!}). Update the \textbf{muffin} parameter \texttt{eg\_par\_ecogem\_plankton\_file} in the \textit{user-config} and save this file under a new name.  Run the new model.
 
+\vspace{1mm}
 Questions:
-
+\vspace{1mm}
 \begin{itemize}
-\vspace{1mm}
 \item How many populations can you get to coexist (i.e. each having a non trivial ($>$0.1\%) biomass)?
-\vspace{1mm}
 \item What effect do the new populations have on the community as a whole?
-\vspace{1mm} \item What effect, if any, do your additions have on the strength of biological export?\\(e.g. look at \textsf{\footnotesize bio\_fpart\_POC} in \textsf{\footnotesize fields\_biogem\_3D.nc}.)
+\item What effect, if any, do your additions have on the strength of biological export?\\(e.g. look at \textsf{\footnotesize bio\_fpart\_POC} in \textsf{\footnotesize fields\_biogem\_3D.nc}.)
 \end{itemize}
 \vspace{2mm}
 
@@ -4094,6 +4068,7 @@ Make sure in each case that you are looking at the last year of model output. Yo
 \end{enumerate}
 \vspace{1mm}
 \item What can we find out about the community structure in these regions? Open up some of the other metrics describing the community (standard deviation of size distribution, size fractionation, diversity, limiting factors). What can you find out about the community structure within each region, in terms of coexistence and exclusion?
+\vspace{1mm}
 \begin{itemize}
 \item Does the community span a broad or narrow size range?
 \item How many size classes are coexisting in each biome?
@@ -4120,12 +4095,14 @@ The fundamental niche is fairly abstract, and not something that can be measured
 \item First of all, you can remove all predation, simply by removing the zooplankton from the \textit{ecosystem configuration} file. Once again, you will need to save a new and appropriately named \textit{user-config} file.
 \vspace{1mm}
 \item Next, you also need to remove all competition for nutrients and light. This involves tweaking the model equations so that the phytoplankton are not nutrient limited, and do not attenuate light. To do this, all you need is to add the following line to the \textit{user-config} file.
+\vspace{-1mm}
 \small\begin{verbatim}
 eg_fundamental = .TRUE.
 \end{verbatim}\normalsize
-\vspace{1mm}
+\vspace{-1mm}
 \item If you now run the model (just 10 years should do it, in this case), you should have a community of eight phytoplankton size classes that are growing solely as a function of the incoming light and the temperature. This growth will be balanced balanced the basal (i.e. non-grazing) mortality. As there is no feedback between the ecosystem and the environment, populations that can survive will grow exponentially and without limit, potentially reaching astronomical abundance in very little time. Populations that cannot survive will rapidly decline to almost nothing.
 \\The regions in which each plankton shows positive growth defines its fundamental niche. This is a function of abiotic conditions only, and is the absolute limit of its geographical range. Look at the carbon biomass distribution in each size class (set the data range in each case from \(0\) to \(1mmolCm^{-3}\)).
+\vspace{1mm}
 \begin{itemize}
 \item How and why does the fundamental niche vary with size?
 \item Could the limits of the fundamental niche explain some of the patterns seen in the full model?
@@ -4145,7 +4122,8 @@ The next step is asses the impact of resource competition. We are first going to
 \item All you need to do at this stage is to re-enable nutrient and light competition. To do this, simply delete `\texttt{eg\_fundamental~=~.TRUE.}' from the \textit{user-config} file (or comment out the line to disable it), and save under a new name. Leave the \textit{ecosystem configuration} file as it is.
 
 \vspace{1mm}
-\item You should have a community of eight phytoplankton size classes that are competing for nutrients and light, again as a function of temperature. This is a much more realistic simulation, as feedbacks between the ecosystem and the environment serve to limit the size of the phytoplankton populations. \\Examine the model to find out:
+\item You should have a community of eight phytoplankton size classes that are competing for nutrients and light, again as a function of temperature. This is a much more realistic simulation, as feedbacks between the ecosystem and the environment serve to limit the size of the phytoplankton populations. Examine the model to find out:
+\vspace{1mm}
 \begin{itemize}
 \item What size classes are able to persist when resource competition is enabled?
 \item Why are different size classes more or less abundant in different areas?
@@ -4175,6 +4153,7 @@ eg_pp_sig_a=1.0e99
 \item[NOTE:] For aficionados, the first parameter disables prey-switching (i.e. predators no longer preferentially attack the most abundant prey). The second parameter increases the width of the grazing kernel (i.e. predators can attack a range of prey across a huge size range with equal preference).
 \vspace{1mm}
 \item The addition of zooplankton to the model community should give a more accurate approximation of the realised niche.
+\vspace{1mm}
 \begin{itemize}
 \item Does the addition of a single zooplankton grazer enable more or less coexistence?
 \item What factors might be responsible for any shifts in biogeography?
@@ -4195,9 +4174,9 @@ Re-enable this 'prey switching' effect by changing the following control paramet
 eg_ns=2
 eg_pp_sig_a=1.0e99
 \end{verbatim}\normalsize\vspace{-1mm}
-
 Compare this simulation to the first experiment (8 phytoplankton and 8 zooplankton) to see how the inclusion of prey switching increases coexistence through the `kill-the-winner' mechanism.
 
+\vspace{1mm}
 \begin{itemize}
 \item How does nutrient limitation change with phytoplankton size, and how might zooplankton be affecting this?
 \item Look at the C:P biomass ratio in the community as a whole, and compare to your estimates from the NPZD model (Lesson~1).
@@ -4245,12 +4224,10 @@ where \texttt{xxx} is the class size of the mixotroph. (And remember to save it.
 
 \noindent Further questions to explore/answer:
 
+\vspace{1mm}
 \begin{itemize}
-\vspace{1mm}
 \item How does this effect the mean and standard deviation of cell size?\\(Size and diversity metrics will be calculated for phytoplankton and mixotrophs together)
-\vspace{1mm}
 \item How does mixotrophy effect the C:P ratio of organic matter?
-\vspace{1mm}
 \item How does the realised niches of mixotrophs compare to the fundamental niches of phytoplankton?
 \end{itemize}
 
@@ -6013,7 +5990,7 @@ fossil fuel CO2 release.)
 
 \chapterimage{nSTnj.jpg} % Chapter heading image
 
-\chapter{muffin model output}
+\chapter{muffin model output}\label{ch:modeloutput}
 
 \hfill \break
 
