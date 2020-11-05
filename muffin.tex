@@ -3639,13 +3639,13 @@ Following the same convention as for \textbf{BIOGEM}, \textbf{ECOGEM} \textit{ti
 
 \noindent Remember: you can change the default settings in \textbf{Panoply} to avoid changing things every time you open a new file. First click on \textsf{\footnotesize Panoply} $\rightarrow$ \textsf{\footnotesize Preferences...}. Here you can switch off interpolation and the grid overlay under the \textsf{\footnotesize General} menu. You can disable the spuriously precise coastline under \textsf{\footnotesize Lon-Lat Plots}.
 
-A guide to some key \textbf{ECOGEM} output variables to peruse can be found at the end of Chapter \ref{ch:modeloutput}.
+A guide to some key \textbf{ECOGEM} output variables  can be found at the end of Chapter \ref{ch:modeloutput}.
 
 %------------------------------------------------
 
 \subsection{Comparing to observations}
 
-Models are usually intended as an approximation of the real world (whatever that is). It might, therefore, be useful to check if our approximation is in anyway realistic. We can do this by comparing the model output to observations.
+Models are usually intended as an approximation of the real world (whatever that is). It might, therefore, be useful to check if our approximation is in anyway realistic. We can do this by comparing the model output\footnote{NOTE: \textbf{ECOGEM} only saves a limited number of surface (2D) data arrays. You can look at other variables (in 2D and 3D) by opening the corresponding \textbf{BIOGEM} netCDF files.} to observations.
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -3653,16 +3653,21 @@ Models are usually intended as an approximation of the real world (whatever that
 \vspace{1mm}
 \item You can open the \textsf{\footnotesize GEnIE\_observations.nc} file in \textbf{Panoply} in the same way as you opened the \textsf{\footnotesize fields\_ecogem\_2D.nc} file.
 \vspace{1mm}
-\item You can now compare the model output to key biogeochemical variables, such as surface chlorophyll or phosphate. (Also, e.g. create difference maps.)
+\item You can now compare the model output to a variety of key biogeochemical variables that have been derived from ocean measurements. The variables in the \textsf{\footnotesize GEnIE\_observations.nc} netCDf file include:
+\begin{itemize}[noitemsep]
+\item T and S (not so interesting, except to e.g. evaluate how well \textbf{muffin} simulates different temperature regimes (and habitats)). 
+\item DIC and ALK (ignore).
+\item Phosphate is of more interest -- how well does \textbf{muffin} simulate surface nutrient availability, and to what degree does ecosystem complexity help explain observations. 
+\item Observed Chlorophyll is remote-sensed, and can be contrasted with the chlorophyll biomass simulated by \textbf{ECOGEM}.
+\end{itemize}
+You might visually compare model with observations, and/or e.g. create difference maps.
 \vspace{1mm}
 \item When doing this, be asking yourself the question: does the model perform well or poorly with respect to reproducing these variables? If not, \uline{why not}?
 \end{enumerate}
 \vspace{2mm}
 
-\noindent NOTE: \textbf{ECOGEM} only saves a limited number of surface (2D) data arrays. You can look at other variables (in 2D and 3D) by opening the corresponding \textbf{BIOGEM} files\footnote{They can be found in the directory:
-\\ \texttt{\textasciitilde{}/cgenie\_output/wardetal.2018.ECOGEM.EXAMPLE/BIOGEM/}}, \textsf{\footnotesize fields\_biogem\_2D.nc} and \textsf{\footnotesize fields\_biogem\_3D.nc} in \textbf{Panoply}.
+\noindent 
 
-\noindent Bare in mind that some of the state variables may take a long time (i.e. $\gg$ 10 years) to adjust to the new ecological (and hence global biogeochemical cycle) model configuration (especially the distribution of nutrients and oxygen at depth).
 %------------------------------------------------
 
 \newpage
@@ -4241,7 +4246,71 @@ For instance -- you might also try having an ecosystem comprising just a single 
 
 %------------------------------------------------
 
-\section{Ecology in past oceans}
+\section{Ecology in ... future oceans}
+
+What might happen to primary production and the biological pump as (future) climate continues to change? What might happen to the distribution of species (here: size classes) in the ocean? Does it 'matter' (e.g. for marine bio geochemical cycling and feedbacks on atmospheric \(pCO_{2}\)?
+
+\vspace{1mm}
+There are all good questions for a model!
+
+\vspace{1mm}
+The best place to start, is with the full complexity ecosystem structure with 8 size classes for both phytoplankton and zooplankton (as described in \textit{Ward et al.} [2018]), and continuing on from a \textit{re-start} of the pre-industrial ocean (and ecology) -- \texttt{wardetal.2018.ECOGEM.SPIN}. For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the re-start -- \texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}). Then:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item First, create a \textit{control}, e.g. based on \texttt{wardetal.2018.ECOGEM.SPIN}, so that you can more easily spot any mis-matched parameter values or other problems -- do to this, turn off the atmospheric \(pCO_{2}\) \textit{forcing} (so that \(pCO_{2}\) can respond to and indicate any significant changes in the marine carbon cycle), but leave on the dust flux \textit{forcing} (because we still need a supply of dissolved iron to the ocean surface):
+\vspace{-1mm}\small\begin{verbatim}
+# specify forcings
+bg_par_forcing_name="worlg4.FeMahowald2006"
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
+\item Second, you will need either:
+\begin{itemize}[noitemsep]
+\item A \textit{user-config} with an conceptual emissions scenario (e.g. anything that you have played with previously). This can be run directly on from the pre-industrial spin-up.
+
+This will allow you to explore questions concerning the impact on marine ecosystems and carbon cycling of the rate of warming (driven by your assumed rate of carbon emissions), and/or the importance of and sensitivity of marine ecosystems and carbon cycling, to the total (maximum) warming.
+
+A template emissions \textit{forcing} (plus dust) is provided as:
+\\\textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
+
+\end{itemize}
+
+Or:
+
+\begin{itemize}[noitemsep]
+\item A historical transient (plus dust) \textit{forcing} and then run from e.g. 1750 through 2010 (as per before), for which the forcing is:
+\\\textsf{\footnotesize worlg4.historical2010.FeMahowald2006}
+
+and ... then use this as a \textit{re-start} for a future emissions scenario,  with a \textit{forcing} adapted from e.g. \textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
+\end{itemize}
+
+\vspace{1mm}
+Whichever route you chose, will also require (another) control experiment run for the same number of years (and with dust but not \(pCO_{2}\) \textit{forcing}).
+\end{enumerate}
+
+\vspace{1mm}
+What to look for? The questions (at the start) should help guide you in this, and might include:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item Patterns of primary productivity and export (where do they increase, decrease), plus time-series of global totals (what is the global impact of warming?).
+\item Patterns of ocean oxygenation (and patterns of dysoxia and anoxia).
+\item Surface ocean nutrient distributions, and nutrient limitation.
+\item Spatial patterns of plankton size -- either simply for mean size, or look at the patterns of biomass of specific size classes. (You might follow a the preferred habitat/location of a particular size class with latitude to see whether it experiences a 'range shift'.)
+\item Diversity etc.
+\end{itemize}
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Ecology in ... past oceans}
 
 Here we consider a series of examples\footnote{Either published or in the works or existing in some publication fantasy ...} of the \textbf{ECOGEM} model of marine ecology, applied to published paleo configuration of \textbf{muffin} and used to ask questions of how different could marine carbon cycling (and atmospheric \(pCO_{2}\)) and oxygenation have been in the (relatively recent) past and how do model projections compare with proxy observations.
 
@@ -4467,7 +4536,7 @@ Note that in the format of \textsf{\footnotesize biogem\_force\_restore\_atm\_pC
 
 %------------------------------------------------
 
-\section{Ecology in fake oceans}
+\section{Ecology in ... fake oceans!}
 
 %------------------------------------------------
 %
@@ -10753,17 +10822,22 @@ To set an annual average insolation forcing with no seasonality, simply set thes
 %
 \subsection*{Implement 'brine-rejection'}
 
-cGENIE.muffin has the capability to include this effect (at least crudely) and similarly to \textit{Bouttes et al.} [2010]. For this, three namelist parameter values need to be set:
+\textbf{muffin} has the capability to include this effect (at least crudely) and similarly to \textit{Bouttes et al.} [2010]. For this, three namelist parameter values need to be set:
 
 \vspace{-2mm}\begin{verbatim}
 bg_ctrl_force_GOLDSTEInTS=.TRUE.
 bg_par_misc_brinerejection_frac=0.1
 bg_par_misc_brinerejection_jmax=9
 \end{verbatim}\vspace{-2mm}
-
 The first, simply allows the \textbf{BIOGEM} biogeochem. module to directly influence ocean circulation. The second is the fraction of salt, rejected during sea-ice formation (e.g., see \textit{Bouttes et al.} [2010]) that is transferred directly to the bottom-most (underlying) ocean cell in the model. The third sets a latitude limit (counted in cells) to the effect -- on a \(18\times18\) grid, a value of 9 will restrict brine rejection to the southern hemisphere (and hence Southern Ocean); a value of 18 will allow it to take  place in the North Atlantic as well. (Note that in e.g., \textit{Bouttes et al.} [2010], the effect of brine-rejection is considered only in the Southern Ocean.)
 
 There is also option for treating all tracers the same way (including DIC ALK, PO4, etc.) and translocate biogeochem. tracers proportionally to salinity.
+
+%------------------------------------------------
+%
+\subsection*{Add/modify geothermal heating'}
+
+(see: \textit{HOW-TO ... force the system})
 
 %------------------------------------------------
 
@@ -11782,6 +11856,38 @@ In the forcing configuration file, if the \texttt{COLUMN \#5} flag ('\texttt{sca
 
 \vspace{1mm}
 [see geoengineering HOWTO]
+
+%------------------------------------------------
+%
+\newpage
+\subsubsection{Prescribe a spatial map of geothermal heat input to the ocean floor}
+\vspace{2mm}
+
+\textbf{muffin} provides a single parameter to set a uniform geothermal heat flux to the ocean floor:
+\vspace{-1mm}\small\begin{verbatim}
+# add a geothermal heat flux (W m-2)
+bg_par_Fgeothermal=100.0E-3
+\end{verbatim}\normalsize\vspace{-1mm}
+(for which a plausible mean modern flux value would be \(100\:mW\:m^{-2}\) (\texttt{100.0E-3}), although it should be noted that \uline{the default parameter setting is zero}). Obviously, this parameter can be changed (e.g. perhaps increased in value to represent higher heat flow on the earlier Earth ... or other planets) and its importance to large-scale ocean circulation patterns and mixing (and further, to cold extensive sea-ice climate states), explored.
+
+\vspace{1mm}
+\noindent However, other questions require spatial patterns of heat flow to be considered, such as from the emplacement of magmatic provinces at the sea-floor, and/or the importance of the location of spreading ridges and associated elevated localized heat fluxes. To address these, more flexibility than a single uniform flux assumption is needed.
+
+A pair of parameters are hence provided to implement an explicit 2D field of geothermal heat input. Firstly:
+\vspace{-1mm}\small\begin{verbatim}
+# Use 2D geothermal heat input field?
+bg_ctrl_force_Fgeothermal2D=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+specifies that a 2D field rather than uniform value is to be applied, and:
+\vspace{-1mm}\small\begin{verbatim}
+# Filename for 2D geothermal heat input field
+bg_par_force_Fgeothermal2D_file='worjh2.Fgeothermal.NULL'
+\end{verbatim}\normalsize\vspace{-1mm}
+specifies the filename itself -- here a files of zeros (\textsf{\footnotesize worjh2.Fgeothermal.NULL}) based on the \(36\times36\) \textsf{\footnotesize worjh2} modern ocean grid. 
+
+Whatever file is used, needs to reside in the directory: \textsf{\footnotesize genie-biogem/data/input}. The units need to be \(W\:m^{-2}\).
+
+What reasonable specific values might be, for a magmatic province or spreading ridge ... (compared to a mean global value of \(100\:mW\:m^{-2}\) (\texttt{100.0E-3}) ... 
 
 %------------------------------------------------
 
