@@ -4248,13 +4248,17 @@ For instance -- you might also try having an ecosystem comprising just a single 
 
 \section{Ecology in ... future oceans}
 
-What might happen to primary production and the biological pump as (future) climate continues to change? What might happen to the distribution of species (here: size classes) in the ocean? Does it 'matter' (e.g. for marine bio geochemical cycling and feedbacks on atmospheric \(pCO_{2}\)?
+What might happen to primary production and the biological pump as (future) climate continues to change? What might happen to the distribution of species (here: size classes) in the ocean? Does it 'matter' (e.g. for marine bio geochemical cycling and feedbacks on atmospheric \(pCO_{2}\)? (And how different is the Earth system response when using a complex ecosystem model rather than the highly simplified representation of biological export you used previously?)
 
 \vspace{1mm}
 There are all good questions for a model!
 
 \vspace{1mm}
-The best place to start, is with the full complexity ecosystem structure with 8 size classes for both phytoplankton and zooplankton (as described in \textit{Ward et al.} [2018]), and continuing on from a \textit{re-start} of the pre-industrial ocean (and ecology) -- \texttt{wardetal.2018.ECOGEM.SPIN}. For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the re-start -- \texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}). Then:
+The best place to start is with the full complexity ecosystem structure with 8 size classes for both phytoplankton and zooplankton (as described in \textit{Ward et al.} [2018]), and continuing on from a \textit{re-start} of the pre-industrial ocean (and ecology) -- \texttt{wardetal.2018.ECOGEM.SPIN}. 
+
+For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the \textit{re-start} -- \\\texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}) but \uline{remembering to rename it} (so you do not overwrite the \textit{re-start} ...).\footnote{The \textit{base-config} is as per you have been using in this Chapter -- \texttt{muffin.CBE.worlg4.BASESFeTDTL}} 
+
+Then:
 
 \begin{enumerate}[noitemsep]
 
@@ -4267,12 +4271,16 @@ bg_par_forcing_name="worlg4.FeMahowald2006"
 
 \vspace{1mm}
 \item Second, you will need either:
+
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \item A \textit{user-config} with an conceptual emissions scenario (e.g. anything that you have played with previously). This can be run directly on from the pre-industrial spin-up.
 
 This will allow you to explore questions concerning the impact on marine ecosystems and carbon cycling of the rate of warming (driven by your assumed rate of carbon emissions), and/or the importance of and sensitivity of marine ecosystems and carbon cycling, to the total (maximum) warming.
 
+\vspace{1mm}
 A template emissions \textit{forcing} (plus dust) is provided as:
+\vspace{1mm}
 \\\textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
 
 \end{itemize}
@@ -4281,10 +4289,28 @@ Or:
 
 \begin{itemize}[noitemsep]
 \item A historical transient (plus dust) \textit{forcing} and then run from e.g. 1750 through 2010 (as per before), for which the forcing is:
+\vspace{1mm}
 \\\textsf{\footnotesize worlg4.historical2010.FeMahowald2006}
 
-and ... then use this as a \textit{re-start} for a future emissions scenario,  with a \textit{forcing} adapted from e.g. \textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
+\vspace{1mm}
+
+\vspace{1mm}
+Note that with the full complexity ecosystem model included, the 245 years of this experiment will take much longer than before when you ran a historical transient experiment. You could 'cheat' a little and start from year 1850 rather than 1765, on the basis that nothing much happens in between (in terms of rising \(pCO_{2}\) and warming). To do this -- simply run the transient experiment only for 160 years (1850 to 2010) and adjust the starting date in the \textit{user-config}:
+\vspace{-1mm}\small\begin{verbatim}
+# change start year
+bg_par_misc_t_start=1850.0
+\end{verbatim}\normalsize\vspace{-1mm}
+You will also need \textit{time-series} and \textit{time-slice} saving that aligns with the historical (and future) period:
+\vspace{-1mm}\small\begin{verbatim}
+# save frequency
+bg_par_infile_slice_name='save_timeslice_historicalfuture.dat'
+bg_par_infile_sig_name='save_timeseries_historicalfuture.dat'
+\end{verbatim}\normalsize\vspace{-1mm}
+(i.e. just as before when you ran a historical transient).
+
+Once you have run this experiment, you can use it as a \textit{re-start} for a future emissions scenario,  with a \textit{forcing} adapted from e.g. \textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
 \end{itemize}
+
 
 \vspace{1mm}
 Whichever route you chose, will also require (another) control experiment run for the same number of years (and with dust but not \(pCO_{2}\) \textit{forcing}).
@@ -4302,7 +4328,9 @@ What to look for? The questions (at the start) should help guide you in this, an
 \item Spatial patterns of plankton size -- either simply for mean size, or look at the patterns of biomass of specific size classes. (You might follow a the preferred habitat/location of a particular size class with latitude to see whether it experiences a 'range shift'.)
 \item Diversity etc.
 \end{itemize}
+\vspace{1mm}
 
+You might also contrast with emissions scenarios that you might have run previously employing the simplified biological export scheme in \textbf{BIOGEM}, rather than the complex ecosystem model of \textbf{ECOGEM}. (Make sure you are comparing between the same emissions scenarios). The question to be answered would be: does representing marine ecology 'matter'?
 
 %------------------------------------------------
 
