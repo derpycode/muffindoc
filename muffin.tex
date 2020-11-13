@@ -4663,6 +4663,62 @@ and ... in the \textit{user-config}, add (anywhere, but e,g, in the \texttt{MISC
 bg_ctrl_force_ocn_age=.true.
 \end{verbatim}\normalsize
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{EcoGEnIE 1.1}
+
+As outlined in the Sections: \textit{Choosing a template user-config} and \textit{Configuring muffin experiments}, a number of recommended changes to the configuration of \textbf{ECOGEM} as published by \textit{Ward et al.} [2018] (EcoGEnIE 1.0).
+
+\vspace{1mm}
+These changes have been incorporated into an example \textit{user-config} (in the \textsf{\footnotesize genie-userconfigs } sub-directory \textsf{\footnotesize EXAMPLES}: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL.ECOGEM\_NEW.SPIN} (and paired with the \textit{base-config}: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL}), and are:
+
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\item Under \texttt{*** REMINERALIZATION ***}:
+\small\vspace{-1mm}\begin{verbatim}
+# set 'instantaneous' water column remineralziation
+bg_par_bio_remin_sinkingrate_physical=9.9E9
+bg_par_bio_remin_sinkingrate_reaction=125.0
+\end{verbatim}\vspace{-1mm}\normalsize
+which instantaneously remineralizes all particulate organic matter throughout the water column according to the remineralization profile and/or reaction rates. This is activated via a 'very large' value for  \texttt{bg\_par\_bio\_remin\_sinkingrate\_physical}. At the same time, reaction rates (including scavenging) are calculated as if the sinking rate was finite and equivalent to the value of: \texttt{bg\_par\_bio\_remin\_sinkingrate\_reaction} (\(m\:d^{-1}\)). 
+
+\vspace{2mm}
+\item Under \texttt{*** MISC ***}:
+\small\vspace{-1mm}\begin{verbatim}
+# set mixed layer to be only diagnosed (for ECOGEM)
+go_ctrl_diagmld=.true.
+# add seaice attenuation of PAR
+eg_ctrl_PARseaicelimit=.true.
+# relative partitioning of C into DOM
+eg_par_beta_POCtoDOC=0.75
+\end{verbatim}\vspace{-1mm}\normalsize
+which firstly substitutes a diagnosed mixed layer depth, rather than actually applying mixed layer physics to ocean circulation, then limits light available under sea-ice in proportion to the fractional sea-ice cover in that grid cell, and lastly, re-partitions carbon from POM to DOM and is tuned to produce an approximately Redfield ratio (\(106\)) of \(104.7:1\) in \(C:P\) of exported POM., and then:
+\small\vspace{-1mm}\begin{verbatim}
+# maximum time-scale to geochemical reaction completion (days)
+bg_par_bio_geochem_tau=90.0
+# extend solubility and geochem constant T range (leave S range as default)
+gm_par_geochem_Tmin  = -2.0
+gm_par_geochem_Tmax  = 45.0
+gm_par_carbchem_Tmin = -2.0
+gm_par_carbchem_Tmax = 45.0
+\end{verbatim}\vspace{-1mm}\normalsize
+which firstly, limits the maximum consumption of any particular reactant by a single reaction, to an imposed lifetime (\(90\:days\)), with the remaining parameters extending the valid temperature range for solubility and geochem constants to \(-2 - 45^{\circ}C\). Note that the valid salinity range is left unchanged.
+
+
+\end{itemize}
+
+
+
+
+
+
+\vspace{1mm}
+\noindent For reference, the original (i.e. as per in \textit{Ward et al.} [2018]) but reformatted, user-config, is provided as: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL.ECOGEM\_NEW.SPIN} (also in the \textsf{\footnotesize genie-userconfigs} sub-directory \textsf{\footnotesize EXAMPLES}).
+
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
 %----------------------------------------------------------------------------------------
@@ -8076,7 +8132,7 @@ The next 2 characters delineate the shape/position of the world:
 \vspace{1mm}
 \item \textsf{\footnotesize 1e} == a single Equatorial-centered super-continent
 \item \textsf{\footnotesize np} == a singleNorth polar-centered super-continent
-\item \textsf{\footnotesize pp} == a super-continent at each pole (each of half the area of the single super-continents)
+\item \textsf{\footnotesize pp} == a pole-to-pole super-continent
 \end{itemize}
 \vspace{2mm}
 
@@ -11206,36 +11262,50 @@ First ... obviously ... you need the appropriate ocean and atmospheric tracers i
 
 \vspace{1mm}
 \noindent For the atmosphere:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_atm_select_10=.true.     #   pCH4
 gm_atm_select_11=.true.     #   pCH4_13C
 \end{verbatim}\vspace{-2pt}\normalsize
 and then also:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_atm_select_12=.true.     #   pCH4_14C
 \end{verbatim}\vspace{-2pt}\normalsize
 if you have a system including radiocarbon.
 
 \vspace{1mm}
 \noindent For the ocean:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_25=.true.     #   CH4
 gm_ocn_select_26=.true.     #   CH4_13C
 \end{verbatim}\vspace{-2pt}\normalsize
 (2 additional ocean tracers total) and then also:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_27=.true.     #   CH4_14C
 \end{verbatim}\vspace{-2pt}\normalsize
 (3 additional ocean tracers total) if you have a system including radiocarbon.
 \\\uline{Don't forget to update the total number of ocean tracers accordingly} ...
 
 \vspace{1mm}
-\noindent All these settings are also provided as part of as part of \textbf{muffingen} -- file: \textsf{\footnotesize TRACERADDITION.methanecycle.txt}
+\noindent All these settings are also provided as part of as part of \textbf{muffingen} -- file: \\\textsf{\footnotesize TRACERADDITION.methanecycle.txt}
 
 \vspace{1mm}
 \noindent For your \textit{user-config} file settings, a set of parameter values is also provided as part of \textbf{muffingen} -- file: \textsf{\footnotesize USERADDITION.methanecycle.txt}. Simply copy-past this block of parameter values into your \textit{user-config}.
 
-Note that these parameters settings are taken from the \textit{'modern' (high-O2)} benchmark experiment: \textsf{\footnotesize 191210\_GMD\_mod\_C06\_20Tmol\_SPIN} of \textit{Reinhart et al.} [2020], which can be obtained from: \textsf{\footnotesize genie-userconfigs/MS/reinhardetal.GMD.2020}
+\vspace{1mm}
+Note that these parameters settings are taken from the \textit{'modern' (high-O2)} benchmark experiment: \textsf{\footnotesize 191210\_GMD\_mod\_C06\_20Tmol\_SPIN} of \textit{Reinhard et al.} [2020], which can be obtained from: \textsf{\footnotesize genie-userconfigs/MS/reinhardetal.GMD.2020}, but that the settings are teh same for simulating methane cycling in 'deep time'.
+
+\vspace{1mm}
+Also note that as per \(CO_{2}\), \(CH_{4}\)-induced radiative forcing is generally 'on' by default. Setting:
+\small\vspace{-2pt}\begin{verbatim}
+ea_36=n
+\end{verbatim}\vspace{-2pt}\normalsize
+turns off radiative forcing as a function of atmospheric composition. You can then scale the radiative impact of \(CH_{4}\) and \(CO_{2}\) directly via:
+\small\vspace{-2pt}\begin{verbatim}
+ea_radfor_scl_ch4=1.0
+ea_radfor_scl_co2=1.0
+\end{verbatim}\vspace{-2pt}\normalsize
+which in this instance scales both \(CH_{4}\) and \(CO_{2}\) induced radiative
+forcing to \(\times1\) the modern value.
 
 %------------------------------------------------
 %
