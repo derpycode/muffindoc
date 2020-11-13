@@ -4256,7 +4256,7 @@ There are all good questions for a model!
 \vspace{1mm}
 The best place to start is with the full complexity ecosystem structure with 8 size classes for both phytoplankton and zooplankton (as described in \textit{Ward et al.} [2018]), and continuing on from a \textit{re-start} of the pre-industrial ocean (and ecology) -- \texttt{wardetal.2018.ECOGEM.SPIN}. 
 
-For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the \textit{re-start} -- \\\texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}) but \uline{remembering to rename it} (so you do not overwrite the \textit{re-start} ...).\footnote{The \textit{base-config} is as per you have been using in this Chapter -- \texttt{muffin.CBE.worlg4.BASESFeTDTL}} 
+For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the \textit{re-start} -- \\\texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}) -- \uline{NOTE the different \textit{user-config} directory}!!! and \uline{remember to rename it}\footnote{The new \textit{user-config} file need not be sabed back into this same directory.} so you do not overwrite the \textit{re-start} ... \footnote{The \textit{base-config} is as per you have been using in this Chapter -- \texttt{muffin.CBE.worlg4.BASESFeTDTL}} 
 
 Then:
 
@@ -4283,6 +4283,13 @@ A template emissions \textit{forcing} (plus dust) is provided as:
 \vspace{1mm}
 \\\textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
 
+\vspace{1mm}
+As per before, you need to re-scale the values in the forcing because the \(CO_{2}\) flux is assumed to be in units of \(PgC\:yr^{-1}\)\footnote{As per notes in the \textit{forcing} \textit{time-series} \textsf{\footnotesize .sig} file itself.} (and \(\delta^{13}C\)is given a default value of \(1.0\)). i.e. add the lines:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_atm_force_scale_val_3=8.3333e+013
+bg_par_atm_force_scale_val_4=-27.0
+\end{verbatim}\normalsize\vspace{-1mm}
+
 \end{itemize}
 
 Or:
@@ -4295,11 +4302,16 @@ Or:
 \vspace{1mm}
 
 \vspace{1mm}
+Remember that here that you do not re-scale the atmospheric \(pCO_{2}\) (or \(\delta^{13}C\)) value as was done with the forcing used to generate the re-start (this historical transient forcing includes the actual values of  \(pCO_{2}\) and in the correct units). 
+
+\vspace{1mm}
 Note that with the full complexity ecosystem model included, the 245 years of this experiment will take much longer than before when you ran a historical transient experiment. You could 'cheat' a little and start from year 1850 rather than 1765, on the basis that nothing much happens in between (in terms of rising \(pCO_{2}\) and warming). To do this -- simply run the transient experiment only for 160 years (1850 to 2010) and adjust the starting date in the \textit{user-config}:
 \vspace{-1mm}\small\begin{verbatim}
 # change start year
 bg_par_misc_t_start=1850.0
 \end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
 You will also need \textit{time-series} and \textit{time-slice} saving that aligns with the historical (and future) period:
 \vspace{-1mm}\small\begin{verbatim}
 # save frequency
@@ -4308,7 +4320,12 @@ bg_par_infile_sig_name='save_timeseries_historicalfuture.dat'
 \end{verbatim}\normalsize\vspace{-1mm}
 (i.e. just as before when you ran a historical transient).
 
-Once you have run this experiment, you can use it as a \textit{re-start} for a future emissions scenario,  with a \textit{forcing} adapted from e.g. \textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
+Once you have run this experiment, you can use it as a \textit{re-start} for a future emissions scenario,  with a \textit{forcing} adapted from e.g. \textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006} and remember to add the emissions units scaling:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_atm_force_scale_val_3=8.3333e+013
+bg_par_atm_force_scale_val_4=-27.0
+\end{verbatim}\normalsize\vspace{-1mm}
+
 \end{itemize}
 
 
@@ -11163,7 +11180,62 @@ Also refer to the chapter on \textbf{muffingen} and the configuration of fake wo
 
 \section{HOW-TO ...  other (bio)geochemical cycle}
 
-\hfill \break
+In this HOW-TO, you'll learn how to include additional ocean tracers and configure various (bio)geochemical cycles in the ocean. Specifically:
+
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Include a \(CH_{4}\) cycle in the ocean (and atmosphere)
+\vspace{1mm}
+\item Include a \(R-DOM\) cycle in the ocean
+\vspace{1mm}
+\item Include a \(Cd\) cycle in the ocean
+\vspace{1mm}
+\item Include an iodine cycle in the ocean
+\end{enumerate}
+
+%------------------------------------------------
+%
+\newpage
+%------------------------------------------------
+%
+\subsection*{Include a CH4 cycle in the ocean (and atmosphere)}
+\vspace{1mm}
+
+First ... obviously ... you need the appropriate ocean and atmospheric tracers in the \textit{base-config}.
+
+\vspace{1mm}
+\noindent For the atmosphere:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_atm_select_10=.true.     #   pCH4
+gm_atm_select_11=.true.     #   pCH4_13C
+\end{verbatim}\vspace{-2pt}\normalsize
+and then also:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_atm_select_12=.true.     #   pCH4_14C
+\end{verbatim}\vspace{-2pt}\normalsize
+if you have a system including radiocarbon.
+
+\vspace{1mm}
+\noindent For the ocean:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_ocn_select_25=.true.     #   CH4
+gm_ocn_select_26=.true.     #   CH4_13C
+\end{verbatim}\vspace{-2pt}\normalsize
+(2 additional ocean tracers total) and then also:
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_ocn_select_27=.true.     #   CH4_14C
+\end{verbatim}\vspace{-2pt}\normalsize
+(3 additional ocean tracers total) if you have a system including radiocarbon.
+\\\uline{Don't forget to update the total number of ocean tracers accordingly} ...
+
+\vspace{1mm}
+\noindent All these settings are also provided as part of as part of \textbf{muffingen} -- file: \textsf{\footnotesize TRACERADDITION.methanecycle.txt}
+
+\vspace{1mm}
+\noindent For your \textit{user-config} file settings, a set of parameter values is also provided as part of \textbf{muffingen} -- file: \textsf{\footnotesize USERADDITION.methanecycle.txt}. Simply copy-past this block of parameter values into your \textit{user-config}.
+
+Note that these parameters settings are taken from the \textit{'modern' (high-O2)} benchmark experiment: \textsf{\footnotesize 191210\_GMD\_mod\_C06\_20Tmol\_SPIN} of \textit{Reinhart et al.} [2020], which can be obtained from: \textsf{\footnotesize genie-userconfigs/MS/reinhardetal.GMD.2020}
 
 %------------------------------------------------
 %
