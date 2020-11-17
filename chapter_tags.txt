@@ -1,0 +1,48 @@
+
+\chapter{Installation, configuration, basic usage}\label{ch:0}
+
+\chapter{Climate dynamics \& experimental design}\label{ch:climate-dynamics}
+
+\chapter{Ocean circulation}\label{ch:ocean-circulation}
+
+\chapter{Climates of Past Worlds}\label{ch:past-worlds}
+
+\chapter{Alternative Worlds}\label{ch:alternative-worlds}
+
+\chapter{Fossil fuel CO$_{2}$ and ‘ocean acidification’}\label{ch:fossil-fuel-co2}
+
+\chapter{Ocean biogeochemical cycles}\label{ch:ocean=biogeochem}
+
+\chapter{Marine ecosystems and dynamics}\label{ch:marine-ecosystems}
+
+\chapter{The land surface}\label{ch:land-surface}
+
+\chapter{Atmospheric dynamics}\label{ch:atmospheric-dynamics}
+
+\chapter{Geological carbon processes}\label{ch:geological-carbon}
+
+\chapter{Proxies and Reconstructing the Past}\label{ch:proxies}
+
+\chapter{Synthesis: Earth system dynamics}\label{ch:earth-system-dynamics}
+
+\chapter{muffin model output}\label{ch:model-output}
+
+\chapter{Introduction to model results analysis}\label{ch:results-analysis}
+
+\chapter{muffinplot}\label{ch:muffinplot}
+
+\chapter{muffindata}\label{ch:muffindata}
+
+\chapter{muffingen}\label{ch:muffingen}
+
+\chapter{FAQ}\label{ch:faq}
+
+\chapter{HOW-TO (technical)}\label{how-to-technical}
+
+\chapter{HOW-TO (experiment)}\label{how-to-experiment}
+
+\chapter{Model Code}\label{ch:model-code}
+
+\chapter{Examples}\label{ch:examples}
+
+\chapter{Appendix I -- Tables}\label{ch:appendix-i}

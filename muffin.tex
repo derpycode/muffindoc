@@ -140,7 +140,7 @@
 
 %%%\chapterimage{muffinplanet.gif} % Chapter heading image
 
-\chapter{Installation, configuration, basic usage}
+\chapter{Installation, configuration, basic usage}\label{ch:0}
 
 \hfill \break
 
@@ -1088,7 +1088,7 @@ The run-time output should now look noticeably different. There should be no (or
 
 \chapterimage{Figure-1-The-image-of-an-ice-encased-Earth-a-Snowball-Earth-with-oases-of-open-water-on.png} % Chapter heading image
 
-\chapter{Climate dynamics \& experimental design}
+\chapter{Climate dynamics \& experimental design}\label{ch:climate-dynamics}
 
 \hfill \break
 
@@ -1437,7 +1437,7 @@ You can also save the data seasonally if you like – see Section 12.2.3 in the 
 
 \chapterimage{amoc.png} % Chapter heading image
 
-\chapter{Ocean circulation}
+\chapter{Ocean circulation}\label{ch:ocean-circulation}
 
 \hfill \break
 
@@ -1838,7 +1838,7 @@ Secondly -- you could additionally combine this experiment configuration with fr
 
 \chapterimage{Jay-Matternes---EOCENE.jpg} % Chapter heading image
 
-\chapter{Climates of Past Worlds}
+\chapter{Climates of Past Worlds}\label{ch:past-worlds}
 
 \hfill \break
 
@@ -2062,7 +2062,7 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 
 \chapterimage{middle_earth.png} % Chapter heading image
 
-\chapter{Alternative Worlds}
+\chapter{Alternative Worlds}\label{ch:alternative-worlds}
 
 \hfill \break
 
@@ -2399,7 +2399,7 @@ Note that an experiment \textit{spin-up} duration of perhaps as much as 10,000 y
 
 \chapterimage{oceanacidification.png} % Chapter heading image
 
-\chapter{Fossil fuel CO$_{2}$ and ‘ocean acidification’}
+\chapter{Fossil fuel CO$_{2}$ and ‘ocean acidification’}\label{ch:fossil-fuel-co2}
 
 \hfill \break
 
@@ -2851,7 +2851,7 @@ See: 12.2.1
 
 \chapterimage{chx-biogeo.png} % Chapter heading image
 
-\chapter{Ocean biogeochemical cycles}
+\chapter{Ocean biogeochemical cycles}\label{ch:ocean=biogeochem}
 
 \hfill \break
 
@@ -3545,7 +3545,7 @@ The pattern of \(CaCO_{3}:POC\) rain ratio is not uniform across the ocean (why?
 
 \chapterimage{spore-920.png} % Chapter heading image
 
-\chapter{Marine ecosystems and dynamics}
+\chapter{Marine ecosystems and dynamics}\label{ch:marine-ecosystems}
 
 \hfill \break
 
@@ -4257,6 +4257,7 @@ There are all good questions for a model!
 The best place to start is with the full complexity ecosystem structure with 8 size classes for both phytoplankton and zooplankton (as described in \textit{Ward et al.} [2018]), and continuing on from a \textit{re-start} of the pre-industrial ocean (and ecology) -- \texttt{wardetal.2018.ECOGEM.SPIN}. 
 
 For the \textit{user-config} -- for which you can either adapt your own based on your earlier ecosystem experimenting, or adapt the published configuration used to create the \textit{re-start} -- \\\texttt{wardetal.2018.ECOGEM.SPIN} (in: \textsf{\footnotesize user-configs/MS/wardetal.2018}) -- \uline{NOTE the different \textit{user-config} directory}!!! and \uline{remember to rename it}\footnote{The new \textit{user-config} file need not be sabed back into this same directory.} so you do not overwrite the \textit{re-start} ... \footnote{The \textit{base-config} is as per you have been using in this Chapter -- \texttt{muffin.CBE.worlg4.BASESFeTDTL}} 
+\vspace{2mm}
 
 Then:
 
@@ -4284,14 +4285,16 @@ A template emissions \textit{forcing} (plus dust) is provided as:
 \\\textsf{\footnotesize worlg4.FpCO2\_Fp13CO2.FeMahowald2006}
 
 \vspace{1mm}
-As per before, you need to re-scale the values in the forcing because the \(CO_{2}\) flux is assumed to be in units of \(PgC\:yr^{-1}\)\footnote{As per notes in the \textit{forcing} \textit{time-series} \textsf{\footnotesize .sig} file itself.} (and \(\delta^{13}C\)is given a default value of \(1.0\)). i.e. add the lines:
+As per before, you need to re-scale the values in the forcing because the \(CO_{2}\) flux is assumed to be in units of \(PgC\:yr^{-1}\) \footnote{As per notes in the \textit{forcing} \textit{time-series} \textsf{\footnotesize .sig} file itself.} (and \(\delta^{13}C\) is given a default value of \(1.0\)). i.e. add the lines:
 \vspace{-1mm}\small\begin{verbatim}
 bg_par_atm_force_scale_val_3=8.3333e+013
 bg_par_atm_force_scale_val_4=-27.0
 \end{verbatim}\normalsize\vspace{-1mm}
+and remember that the forcing is provided as a pulse of \(1\:molyr^{-1}\) (\(1PgC \:yr^{-1}\) when scaled) carbon emissions over just a single year, and hence the \textit{time-series} file for the \textit{forcing}: \textsf{\footnotesize biogem\_force\_flux\_atm\_pCO2\_sig.dat} needs to be edited -- see Chapter \ref{ch:fossil-fuel-co2}.
 
 \end{itemize}
 
+\newpage
 Or:
 
 \begin{itemize}[noitemsep]
@@ -4328,26 +4331,25 @@ bg_par_atm_force_scale_val_4=-27.0
 
 \end{itemize}
 
-
 \vspace{1mm}
-Whichever route you chose, will also require (another) control experiment run for the same number of years (and with dust but not \(pCO_{2}\) \textit{forcing}).
+\noindent Whichever route you chose, will also require (another) control experiment run for the same number of years (and with dust but not \(pCO_{2}\) \textit{forcing}).
+
 \end{enumerate}
 
 \vspace{1mm}
-What to look for? The questions (at the start) should help guide you in this, and might include:
+\noindent What to look for? The questions (at the start) should help guide you in this, and might include:
 
 \vspace{1mm}
 \begin{itemize}[noitemsep]
-\setlength{\itemindent}{.2in}
 \item Patterns of primary productivity and export (where do they increase, decrease), plus time-series of global totals (what is the global impact of warming?).
 \item Patterns of ocean oxygenation (and patterns of dysoxia and anoxia).
 \item Surface ocean nutrient distributions, and nutrient limitation.
 \item Spatial patterns of plankton size -- either simply for mean size, or look at the patterns of biomass of specific size classes. (You might follow a the preferred habitat/location of a particular size class with latitude to see whether it experiences a 'range shift'.)
 \item Diversity etc.
 \end{itemize}
-\vspace{1mm}
 
-You might also contrast with emissions scenarios that you might have run previously employing the simplified biological export scheme in \textbf{BIOGEM}, rather than the complex ecosystem model of \textbf{ECOGEM}. (Make sure you are comparing between the same emissions scenarios). The question to be answered would be: does representing marine ecology 'matter'?
+\vspace{1mm}
+\noindent You might also contrast with emissions scenarios that you might have run previously employing the simplified biological export scheme in \textbf{BIOGEM}, rather than the complex ecosystem model of \textbf{ECOGEM}. (Make sure you are comparing between the same emissions scenarios). The question to be answered would be: does representing marine ecology 'matter'?
 
 %------------------------------------------------
 
@@ -4727,7 +4729,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 %\chapterimage{} % Chapter heading image
 
-\chapter{The land surface}
+\chapter{The land surface}\label{ch:land-surface}
 
 \hfill \break
 
@@ -4762,7 +4764,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \chapterimage{Hurricane-Irma.png} % Chapter heading image
 
-\chapter{Atmospheric dynamics}
+\chapter{Atmospheric dynamics}\label{ch:atmospheric-dynamics}
 
 \hfill \break
 
@@ -4804,7 +4806,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \chapterimage{image2.jpg} % Chapter heading image
 
-\chapter{Geological carbon processes}
+\chapter{Geological carbon processes}\label{ch:geological-carbon}
 
 \hfill \break
 
@@ -5265,7 +5267,7 @@ How  is an event characterized by \(CO_{2}\) removal from the system recorded di
 
 \chapterimage{13750210193_e161c3ede1_b.jpg} % Chapter heading image
 
-\chapter{Proxies and Reconstructing the Past}
+\chapter{Proxies and Reconstructing the Past}\label{ch:proxies}
 
 \hfill \break
 
@@ -5551,7 +5553,7 @@ Having processed the raw data as described above (no NaNs or missing values, and
 
 \chapterimage{13750210193_e161c3ede1_b.jpg} % Chapter heading image
 
-\chapter{Synthesis: Earth system dynamics}
+\chapter{Synthesis: Earth system dynamics}\label{ch:earth-system-dynamics}
 
 \hfill \break
 
@@ -6160,7 +6162,7 @@ fossil fuel CO2 release.)
 
 \chapterimage{nSTnj.jpg} % Chapter heading image
 
-\chapter{muffin model output}\label{ch:modeloutput}
+\chapter{muffin model output}\label{ch:model-output}
 
 \hfill \break
 
@@ -6684,7 +6686,7 @@ Note -- depending on the specific model configuration (which model modules are s
 
 \chapterimage{chx-plotting1.png} % Chapter heading image
 
-\chapter{Introduction to model results analysis}
+\chapter{Introduction to model results analysis}\label{ch:results-analysis}
 
 \hfill \break
 
@@ -7111,7 +7113,7 @@ The advantage of doing the calculations in \textbf{MATLAB} (despite being provid
 
 \chapterimage{chx-plotting.png} % Chapter heading image
 
-\chapter{muffinplot}
+\chapter{muffinplot}\label{ch:muffinplot}
 
 \hfill \break
 
@@ -7746,7 +7748,7 @@ Examples:
 
 \chapterimage{big-data.jpg} % Chapter heading image
 
-\chapter{muffindata}
+\chapter{muffindata}\label{ch:muffindata}
 
 \hfill \break
 \vspace{24mm}
@@ -7799,7 +7801,7 @@ Also in \textbf{muffindata} you can find a BASH script for submitting the entire
 
 %\chapterimage{Map_of_Earth_24.jpg} % Chapter heading image
 
-\chapter{muffingen}
+\chapter{muffingen}\label{ch:muffingen}
 
 \hfill \break
 \vspace{24mm}
@@ -8833,7 +8835,7 @@ When \textbf{muffingen} writes out the parameter settings (file: \textsf{\footno
 
 \chapterimage{chx-cheerilee.png} % Chapter heading image
 
-\chapter{FAQ}
+\chapter{FAQ}\label{ch:faq}
 
 \hfill \break
 \vspace{24mm}
@@ -9704,7 +9706,7 @@ If you select a tracer number in the \textit{forcings} that does not exist in th
 
 \chapterimage{ch-howto.png} % Chapter heading image
 
-\chapter{HOW-TO (technical)}
+\chapter{HOW-TO (technical)}\label{how-to-technical}
 
 \hfill \break
 \vspace{24mm}
@@ -9727,7 +9729,7 @@ There is some overlap with the FAQ Chapter, so please read all three!
 
 %------------------------------------------------
 %
-\subsubsection{Find and Install \textbf{\textit{muffin}}}\label{Install cGENIE}
+\subsubsection{Find and Install \textbf{\textit{muffin}}}\label{install-muffin}
 
 \vspace{1mm}
 See: Chapter 1.
@@ -10638,7 +10640,7 @@ Obviously, if the experiment is not being run from a re-start, or is being run f
 
 \chapterimage{ch-howto.png} % Chapter heading image
 
-\chapter{HOW-TO (experiment)}
+\chapter{HOW-TO (experiment)}\label{how-to-experiment}
 
 \hfill \break
 \vspace{24mm}
@@ -13216,7 +13218,7 @@ The default setting of \texttt{bg\_par\_t\_sig\_count} is \texttt{1} -- i.e. the
 
 \chapterimage{muffin_planet.jpg} % Chapter heading image
 
-\chapter{Model Code}
+\chapter{Model Code}\label{ch:model-code}
 
 \hfill \break
 
@@ -13490,7 +13492,7 @@ sub_box_remin_part
 
 \chapterimage{muffin_planet.jpg} % Chapter heading image
 
-\chapter{Examples}
+\chapter{Examples}\label{ch:examples}
 
 \hfill \break
 
@@ -13512,7 +13514,7 @@ sub_box_remin_part
 
 \chapterimage{muffin_planet.jpg} % Chapter heading image
 
-\chapter{Appendix I -- Tables}
+\chapter{Appendix I -- Tables}\label{ch:appendix-i}
 
 \hfill \break
 
