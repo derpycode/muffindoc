@@ -7794,17 +7794,40 @@ Examples:
 
 \section{Model ensembles}
 
-The \textbf{muffindata} \textbf{MATLAB} file: \textsf{\footnotesize fun\_make\_ensemble\_DOUBLE.m} provides a simple/convenient way of generating ensembles of model experiments. By default, the function is designed for generating 2D ensembels of a first varying parameter vs. a econd varying parameter. However, by specifying only a single value of the 2nd (or first) parameter, you'll obtain a 1D ensemble of just a single varuing parameter.
+The \textbf{muffindata} \textbf{MATLAB} file: \textsf{\footnotesize fun\_make\_ensemble\_2d.m} provides a simple/convenient way of generating ensembles of model experiments. By default, the function is designed for generating 2D ensembels of a first varying parameter vs. a second varying parameter. However, by specifying only a single value of the 2nd (or first) parameter, you'll obtain a 1D ensemble of just a single varuing parameter.
 
 Information about how to configure and generate an ensemble is provided as MATLAB help on this function:
 \vspace{-2mm}
 \begin{verbatim}
->> help fun_make_ensemble_DOUBLE
+>> help fun_make_ensemble_2d
 \end{verbatim}
 \vspace{-2mm}
-(There are currently no additional/external instructions.)
 
-Also in \textbf{muffindata} you can find a BASH script for submitting the entire ensemble\footnote{Having first transferred all the \textit{user-config} files to the cluster ...} at the command line (within \textsf{\footnotesize genie-main}) -- \textsf{\footnotesize sub\_ens.muffin.sh}. NOTE: you should be sure to have compiled the model with the required \textit{base-config} prior to using \textsf{\footnotesize sub\_ens.muffin.sh}.
+The function \textsf{\footnotesize fun\_make\_ensemble\_2d.m} requires 2 parameters (\textit{strings}) to be passed in the argument list, i.e.:
+\begin{verbatim}
+>> plot_timeseries_biogem(PAR1,PAR2)
+\end{verbatim}
+
+These are, in order:
+
+\vspace{1mm}
+\begin{enumerate}
+\item \texttt{STR\_TEMPLATE} -- \textit{string} \(\rightarrow\) is the name of the template user-config file (within the \textbf{muffindata} directory) used to generate the ensemble. An example template-file (\texttt{01\_user\_config\_ensemble\_template}) is included in \textbf{muffindata}.
+\item \texttt{STR\_PARAMS} -- \textit{string} \(\rightarrow\)  is the name of the parameter configuration file (omitting the '.dat' extension). The format of this file is provided in the MATLAB help for this function. An example parameter-file (\texttt{01\_user\_config\_params.dat}) is included in \textbf{muffindata}.
+\end{enumerate}
+\vspace{2mm}
+
+A simple example usage with the files provided would be:
+\begin{verbatim}
+>> plot_timeseries_biogem('01_user_config_ensemble_template','01_user_config_params')
+\end{verbatim}
+which creates a $2\times3$ ensemble (i.e. 6 new user-config files), by modifying the paramater \textit{bg\_ocn\_init\_8} with the vector [0.5 2.0] (i.e. multiplying the default paramater value 2.159E-06 with 0.5 and then with 2.0) and the parameter \textit{bg\_par\_atm\_force\_scale\_val\_3} with the vector [2.0 3.0 10.0]. Other examples are provided in the MATLAB help for this function.
+
+
+Also in \textbf{muffindata} you can find a BASH script for submitting the entire ensemble\footnote{Having first transferred all the \textit{user-config} files to the cluster to an appropriate genie-userconfigs folder} at the command line (within \textsf{\footnotesize genie-main}) -- \textsf{\footnotesize sub\_ens.muffin.sh}. NOTE: you have to specify the experiment parameters of your ensemble (e.g. base-config and user-config filenames, run duration etc.) in the BASH file and you should be sure to have compiled the model with the required \textit{base-config} prior to using \textsf{\footnotesize sub\_ens.muffin.sh}. An example BASH script (\textit{sub\_ens.muffin\_LAB\_4.sh}) for the $2\times3$ ensemble created above is included in \textbf{muffindata}. This ensemble can be submitted by typing:
+\\\texttt{\$ ./sub\_ens.muffin\_LAB\_4.sh}\\
+within \textsf{\footnotesize genie-main}.
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
