@@ -8238,9 +8238,15 @@ The next 2 characters delineate the shape/position of the world:
 The 7th character is the 'series' represents:
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item \textsf{\footnotesize 0} == an earlier generation of worlds, with shelves stepping down in increments of only 1 ocean level
+\item \textsf{\footnotesize 0} == An earlier generation of worlds, with shelves stepping down in increments of only \(1\) ocean level.
+\\Note that in generating the wind-stress in this series, the presence/absence of high latitude gateways is automatically identified (meaning that the zonal wind-stress profiles differ between \textsf{\footnotesize np} and \textsf{\footnotesize pp} in the magnitude of wind-stress in the Southern Hemisphere) -- \texttt{par\_tauopt=0}.
 \vspace{1mm}
-\item \textsf{\footnotesize 1} == a subsequent generation, with shelves stepping down in increments of 2 ocean levels
+\item \textsf{\footnotesize 1} == A subsequent generation, with shelves stepping down in increments of 2 ocean levels.
+\\Note: An intermediate wind-stress magnitude is applied to both hemispheres in all configurations (i.e. no distinction is made between hemisphere with or without high latitude gateways) -- \texttt{par\_tauopt=3} .
+\vspace{1mm}
+\item \textsf{\footnotesize 2} == A modification of \#1,  generated with a newer version of \textbf{muffingen}, and with an imposed limit of \(1000-5000 m\) for the range of \textbf{SEDGEM} open ocean depths (the previous version included   depths extending to the shallow sub-surface).
+\\Note that \texttt{par\_tauopt=0} is used. 
+\\Also note that in \textsf{\footnotesize pp}, shelves are only created on the Eastern margin of the basin so as to retain consistency in total shelf area with  \textsf{\footnotesize np}.
 \end{itemize}
 \vspace{2mm}
 
@@ -8272,9 +8278,9 @@ and for the newer series:
 
 All the oceans are ca. \(3500 m\) deep, i.e. truncated at ocean level \(3\), in order to produce approximately the present-day ocean volume.\footnote{To change this, simply search-and-replace the \texttt{3} in the \textsf{\footnotesize .k1} file with e.g. \texttt{1}.}
 
-Provided \textit{base-configs} follow the same naming convention and have full filenames of the form: \textsf{\footnotesize muffin.CB.\(\ast\ast\ast\ast\ast\ast\ast\ast\).BASES.config}, where \(\ast\ast\ast\ast\ast\ast\ast\ast\) is the 8-character fake world 'k1' configuration name (see above). A basic set of tracers is provided (\textsf{\footnotesize BASES}).
+Example \textit{base-configs} are provide for some, but not all of the idealized worlds, and follow the same naming convention and have full filenames of the form: \textsf{\footnotesize muffin.CB.\(\ast\ast\ast\ast\ast\ast\ast\ast\).BASES.config}, where \(\ast\ast\ast\ast\ast\ast\ast\ast\) is the 8-character fake world 'k1' configuration name (see above). A basic set of tracers is provided (\textsf{\footnotesize BASES}).
 
-Other than the rate at which the shelves step down\footnote{(and that the earlier generation was for a pole-to-pole super-continent only)}, the only other difference between the 2 generations of worlds, is in the applied zonal wind field strength. In the earlier fake world series, the 'zonal wind-stress generation option' (\texttt{par\_tauopt}) was \texttt{0}. This attempts to automatically determine the presence of high latitude ocean gateways and if they exist, apply a stronger zonal wind field in that hemisphere (otherwise, a wind stress appropriate for a modern northern-hemisphere configuration with no zonal gateway is applied). To reduce the number of boundary conditions that change and co-vary between different fake worlds, in the second generation of fake worlds, an intermediate strength zonal wind field is applied to all, regardless of the presence of absence of high latitude circumpolar ocean gateways. This is  'zonal wind-stress generation option' \texttt{3}. Note that for the same resolution, wind-fields can be substituted/replaced, and using the saved \textsf{\footnotesize .m} configuration file, worlds can be re-generated with different wind-stress options if desired.
+Other than the rate at which the shelves step down\footnote{(and that the earlier generation was for a pole-to-pole super-continent only)}, the main difference between the different generations of worlds, is in the applied zonal wind field strength. In the earlier fake world series, the 'zonal wind-stress generation option' (\texttt{par\_tauopt}) was \texttt{0}. This attempts to automatically determine the presence of high latitude ocean gateways and if they exist, apply a stronger zonal wind field in that hemisphere (otherwise, a wind stress appropriate for a modern northern-hemisphere configuration with no zonal gateway is applied). To reduce the number of boundary conditions that change and co-vary between different fake worlds, in the second generation of idealized continent worlds, an intermediate strength zonal wind field is applied to all, regardless of the presence of absence of high latitude circumpolar ocean gateways. This is  'zonal wind-stress generation option' \texttt{3}. Note that for the same resolution, wind-fields can be substituted/replaced, and using the saved \textsf{\footnotesize .m} configuration file, worlds can be re-generated with different wind-stress options if desired. The depth range of the ocean floor in\ \textbf{SEDGEM} (which informs the pressure used in the \(CaCO_{3}\) stability calculation) is slightly restricted in \#3 (the upper limit increased to \(1000 m\)).
 
 %------------------------------------------------
 %
