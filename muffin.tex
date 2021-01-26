@@ -8094,10 +8094,14 @@ The configuration file is divided up into a series of sections of different para
 
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-
 \item [] \texttt{par\_max\_D} [default: \texttt{5000.0}]
 \\Sets the maximum ocean (scale) depth (in m).
 \\ See subsequent sub-sub-section on 'Ocean depth (and maximum levels)' for further details and usage.
+\vspace{1mm}
+\item [] \texttt{par\_sed\_Dmin} [default: \texttt{1000.0}]
+\\\texttt{par\_sed\_Dmax} [default: \texttt{5000.0}]
+\\Together, set the minimum and maximum depths used in generating a random seafloor topography for \textbf{SEDGEM} (when \texttt{par\_sedsopt=2} is selected).
+\\Note that while \(5000m\) corresponds to the default deepest depth of the ocean circulation model, about \(15\%\) of the modern seafloor lies below this (and mostly shallower than \(6000m\)). So selecting \texttt{6000.0} would arguably enable a better simulation of e.g. the CCD. 
 \end{itemize}
 
 \vspace{2mm}
@@ -10798,12 +10802,18 @@ There is some overlap with the FAQ Chapter, so please read all three!
 %------------------------------------------------
 
 \section{HOW-TO ... diagnose how the model works}
-\vspace{2mm}
+
+In this HOW-TO, ...
+
+
+
+
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Add a water mass age tracer}
-\vspace{1mm}
+\vspace{2mm}
 
 To diagnose water mass age, a single diagnostic tracer is required -- \texttt{ocn\_colr} (tracer number \(48\)). Once selected (in the \textit{base-config}), you only then need set\footnote{(\texttt{bg\_ctrl\_force\_ocn\_age1} to distinguish it from the earlier scheme (\texttt{bg\_ctrl\_force\_ocn\_age}) that required 2 tracers.} (\textit{user-config}):
 \vspace{-2pt}\begin{verbatim}
@@ -10818,8 +10828,9 @@ The advantage of this simplified age tracer (other than its simplicity!!!) is th
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Add a dual-tracer water mass age  (original, more complicated schemes)}
-\vspace{1mm}
+\vspace{2mm}
 
 Water masses (and hence something of ocean circulation) can be tagged with a color (dye) tracer. However, on its own, this can tell you nothing about water mass age. A second color tracer can be added, however, and configured in such a way that by analysing the ratio of the two tracers, water mass age (time since a parcel of water last saw the surface ocean on average).
 
@@ -10863,7 +10874,6 @@ bg_par_ocn_force_scale_time_49=10000.0
 
 \noindent (If the experiment duration is longer than 10,000 years, the parameter values need be adjusted accordingly.)
 
-
 Example \textit{user-config} files for both approaches are provided:
 \vspace{-2pt}\begin{verbatim}
 EXAMPLE.worjh2.NONE_age.SPIN
@@ -10874,8 +10884,9 @@ EXAMPLE.worjh2.NONE_colage.SPIN
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Include 'preformed' tracers}
-\vspace{1mm}
+\vspace{2mm}
 
 Preformed tracers are selected via 2 modifications:
 
@@ -10931,8 +10942,9 @@ You can also specify whether the \(C_{soft}\) tracer contains just the carbon re
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Diagnose a Transport Matrix}
-\vspace{1mm}
+\vspace{2mm}
 
 The physical circulation in \textbf{muffin} can be diagnosed as a Transport Matrix: a representation of the steady-state average circulation as a sparse matrix (see \textit{Khatiwala et al.} [2005] Accelerated simulation of passive tracers in ocean circulation models. Ocean Modelling. 9 (1), pp. 51 - 69). There are a number of advantages of using a transport matrix such as finding preformed tracer distributions and using it as a surrogate circulation for a steady-state biogeochemical model (see \textit{Khatiwala} [2007] -- A computational framework for simulation of biogeochemical tracers in the ocean. Global Biogeochemical Cycles. 21 (3), GB3001).
 
@@ -12199,6 +12211,37 @@ specifies the filename itself -- here a files of zeros (\textsf{\footnotesize wo
 Whatever file is used, needs to reside in the directory: \textsf{\footnotesize genie-biogem/data/input}. The units need to be \(W\:m^{-2}\).
 
 What reasonable specific values might be, for a magmatic province or spreading ridge ... (compared to a mean global value of \(100\:mW\:m^{-2}\) (\texttt{100.0E-3}) ... 
+
+%------------------------------------------------
+%
+\newpage
+\subsubsection{Force tracer conservation}
+\vspace{2mm}
+
+Without sediments and an explicit representation of the fractional preservation and burial of settling particulate matter reaching the seafloor, there is the question of what to 'do' with this material. The typical solution is to apply a 'reflective' boundary condition whereby all settling particulate matter reaching the seafloor is remineralized back to its respective dissolved components. This is enacted by the default parameter setting:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_force_sed_closedsystem=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+(Note that the local redox conditions at the seafloor are employed to calculate the consumption and release of dissolved species associated with remineralization, as per is the case in the water column.)
+
+An exception to this is scavenged iron, which by default is removed from the system, controlled by the parameter setting:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_bio_NO_fsedFe=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+which prevents 'reflection' of scavenged \(Fe\). This then requires that a new supply of dissolved iron, e.g. at the surface in the form of a dust flux, is always applied to balance the loss at the seafloor of scavenged \(Fe\).
+
+The major consequence of a reflective boundary condition, in addition to not being able to simulate changing mass balance (between weathering inputs and sedimentation losses) and hence inventories in the ocean, is that the forced return of dissolved species at the seafloor can potentially exacerbate nutrient trapping and/or anoxia.
+
+An alternative, is to re-route the reflective fluxes to the ocean surface (immediately overlying). This can be achieved via:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_force_sed_closedsystem=.true.
+bg_ctrl_force_sed_closedsystem_SUR=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+and in order to retain a dissolved iron inventory in the ocean without having to prescribe a dust flux:
+\vspace{-5mm}\small\begin{verbatim}
+bg_ctrl_bio_NO_fsedFe=.false.
+\end{verbatim}\normalsize\vspace{-1mm}
+\uline{Note that in calculating the remineralization of particulate matter reaching the seafloor, the surface redox conditions are used (rather than those at the seafloor).} (The alternative (application of seafloor redox conditions) would probably give similar results, given the likely rapid re-oxidation of reduced species at the surface.)
 
 %------------------------------------------------
 
