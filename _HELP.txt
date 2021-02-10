@@ -24,6 +24,8 @@ Figure \ref{fig:LABEL}
 \label{fig:LABEL}
 \end{marginfigure}
 
+\includegraphics[width=0.5\linewidth]{FILENAME}
+
 \begin{figure}
 \includegraphics[width=\linewidth]{FILENAME}
 \caption{CAPTION}
@@ -73,6 +75,9 @@ NO BULLET IN LIST ITEM
 \end{verbatim}
 
 \vspace{-1mm}\small\begin{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{-1mm}\footnotesize\begin{verbatim}
 \end{verbatim}\normalsize\vspace{-1mm}
 
 \newthought{}
@@ -153,3 +158,14 @@ PERMIL
 \LARGE
 \huge
 \Huge
+
+\label{subsubsec:foo}
+[...]
+See foo on page \pageref{subsubsec:foo}
+See Chapter ref{ch:foo}
+
+%------------------------------------------------
+%
+\newpage
+\subsection*{xxx}
+\vspace{1mm}

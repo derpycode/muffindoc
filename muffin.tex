@@ -45,6 +45,10 @@
 
 \usepackage[top=3cm,bottom=3cm,left=3.2cm,right=3.2cm,headsep=1mm,letterpaper]{geometry} % Page margins
 
+\usepackage{caption}
+\captionsetup{justification=raggedright,singlelinecheck=false,belowskip=0pt}
+\usepackage{float}
+
 \usepackage{xcolor} % Required for specifying colors by name
 \definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting
 
@@ -9849,7 +9853,7 @@ If you select a tracer number in the \textit{forcings} that does not exist in th
 
 \chapterimage{ch-howto.png} % Chapter heading image
 
-\chapter{HOW-TO (technical)}\label{how-to-technical}
+\chapter{HOW-TO (technical)}\label{ch:how-to-technical}
 
 \hfill \break
 \vspace{24mm}
@@ -10783,7 +10787,7 @@ Obviously, if the experiment is not being run from a re-start, or is being run f
 
 \chapterimage{ch-howto.png} % Chapter heading image
 
-\chapter{HOW-TO (experiment)}\label{how-to-experiment}
+\chapter{HOW-TO (experiment)}\label{ch:how-to-experiment}
 
 \hfill \break
 \vspace{24mm}
@@ -12254,8 +12258,8 @@ bg_ctrl_bio_NO_fsedFe=.false.
 %------------------------------------------------
 %
 \subsubsection{Spin-up the full marine carbon cycle including deep-sea sediments}\label{Spin-up the full marine carbon cycle including sediments}
-
 \vspace{1mm}
+
 By a 2-step process\footnote{This is a revised methodology compared to that described in the GENIE-1 HOW-TO.}:
 
 \begin{enumerate}
@@ -12310,8 +12314,9 @@ at the end of the \textit{user-config}.
 %
 \newpage
 \subsubsection{Run the sediments at higher resolution (as compared to the ocean grid)}\label{Run the sediments at higher resolution}
+\vspace{1mm}
 
-By default (as set in the \textit{base-config} file in \textsf{\footnotesize \~{}/cgenie.muffin/genie-main/configs}) the \textbf{SEDGEM} sediment grid is configured at a resolution of \(36\times 36\) (and on an equal area grid), by:
+By default (as set in the \textit{base-config} file in \textsf{\footnotesize \(\sim\)/cgenie.muffin/genie-main/configs}) the \textbf{SEDGEM} sediment grid is configured at a resolution of \(36\times 36\) (and on an equal area grid), by:
 \small\vspace{-1mm}\begin{verbatim}
 SEDGEMNLONSOPTS='$(DEFINE)SEDGEMNLONS=36'
 SEDGEMNLATSOPTS='$(DEFINE)SEDGEMNLATS=36'
@@ -12332,21 +12337,24 @@ The example provided on SVN contains some illustrative locations set (by a '\tex
 
 \end{itemize}
 
-As described in Ridgwell and Hargreaves [2007], \textbf{SEDGEM} can be sub-gridded to a resolution of \(72\times 72\) (equal area). The \textit{following namelist} parameter additions are necessary to the \textit{user-config} file:
+\vspace{2mm}
+\noindent As described in \textit{Ridgwell and Hargreaves} [2007], \textbf{SEDGEM} can be sub-gridded to a resolution of \(72\times 72\) (equal area). The \textit{following namelist} parameter additions are necessary to the \textit{user-config} file:
+\begin{itemize}
+\vspace{1mm}
+\item 
 \small\vspace{-1mm}\begin{verbatim}
 SEDGEMNLONSOPTS='$(DEFINE)SEDGEMNLONS=72'
 SEDGEMNLATSOPTS='$(DEFINE)SEDGEMNLATS=72'
 sg_par_sed_topo_D="sedgem_topo_D.72x72"
 sg_par_sedcore_save_mask_name="sedgem_save_mask.72x72"
 \end{verbatim}\vspace{-1mm}\normalsize
-
-\textbf{NOTE}: Carbonate chemistry stability problems (= model crash) may occur in the 16-level configuration in conjunction with 72x72 resolution sub-gridded sediments. Who knows why?! :(
+\end{itemize}
 
 %------------------------------------------------
 %
-%
 \newpage
-\subsubsection{Include shallow water depositional systems}\label{configure_reefs}
+\subsubsection{Include shallow water depositional systems}\label{subsub:configure_reefs}
+\vspace{1mm}
 
 By default, the entire seafloor grid is considered as '\textit{deepsea}' and sedimentary diagenesis options are provided accordingly. In practice, because the simple diagenesis options available, such as for CaCO\(_{3}\) (e.g. \textit{Archer} [1991]; \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2003]) tend not to be applicable to shallower water and particularly high organic carbon delivery (especially in the case of CaCO\(_{3}\) diagenesis) environments, the deep-sea grid is restricted. This can be prescribed 'hard', by defining the sediment grid only at deeper depths and classifying shallowed ocean grid points as invalid (a value of \texttt{0.0}) in the SEDGEM depth definition file\footnote{Set by parameter \texttt{sg\_par\_sed\_topo\_D\_name} that must point to a file in \texttt{cgenie.muffin/genie-sedgem/data/input}.} (e.g. \texttt{worbe2.depth.36x36x0}8).
  Or, and more flexibly, the entire ocean grid can be defined as potentially valid (e.g. \texttt{worbe2.depth.36x36x08.ALL}) and SEDGEM directed to treat any grid points lying shallower than a specific depth as shallow water sediments. This depth cut-off is set via the parameter \texttt{sg\_par\_sed\_Dmax\_neritic} (in units of m below the ocean surface). A typical value is \texttt{176.0}\footnote{Note that the simple (esp. CaCO\(_{3}\) diagenesis schemes) arguably only applicable below depths of ca. 1000 m, although even this is complicated by varying patterns of productivity across the ocean.}, which for an 8-level configuration will exclude the shallowest ocean depth level from the deep-sea grid, and for a 16-level ocean will exclude the two shallowest ocean depth levels.
@@ -12371,7 +12379,253 @@ Additional information and tips on setting up shallow water sediment grids can b
 %------------------------------------------------
 %
 \newpage
+\subsubsection{Include organic carbon burial}\label{subsub:corg_burial}
+\vspace{1mm}
+
+There are several different ways of implementing organic carbon burial in \textbf{muffin} (all of which requiring you to have the \textbf{SEDGEM} module included):
+\vspace{1mm}
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item Specify a simple fraction of organic matter as assumed preserved and buried. \\(This also allows for differentiating C vs. P burial, sa well as different fractional burial under oxic vs. anoxic vs. sulphidic conditions).
+\vspace{1mm}
+\item Utilize the empirical flux-dependent scheme of \textit{Dunne et al.} [2007]. \\(This also allows for differentiating C vs. P burial.)
+\vspace{1mm}
+\item Implement the \textbf{OMEN-SED} organic matter preservation/burial scheme -- see Section \ref{HOW-TO_OMEN-SED}
+\end{enumerate}
+
+\vspace{2mm}
+
+All three schemes are applied to both 'deep sea' and 'mud' benthic grid-points, but not to grid-points categorized as 'reef' -- see Page \pageref{subsub:configure_reefs}. Scheme options \#1 and \#2 are summarized below.
+
+\vspace{2mm}
+
+\begin{enumerate}
+
+\vspace{1mm}
+\item \textbf{Fixed fraction}
+\\This is the simplest possible representation of organic matter preservation and burial and simply imposes the burial of a fixed fraction of the organic matter flux reaching the sea-floor. It is selected by specifying:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_Corgopt='simple'
+\end{verbatim}\vspace{-1mm}
+(by default this parameter is set to \texttt{'none'})
+\\However, there are a couple of complications/subtleties:
+\vspace{1mm}
+\begin{enumerate}
+\item The fraction can be different, depending on the redox conditions, which is controlled by 3 parameters -- one fraction parameter for each distinct redox environment:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracCpres_ox=0.0
+\end{verbatim}\vspace{-0mm}
+for oxic conditions (defined as \([H_{2}S]<[O_{2}]\), when the \(H_{2}S\) tracer is selected)
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracCpres_eux=0.0
+\end{verbatim}\vspace{-0mm}
+for euxinic conditions (defined as \([H_{2}S]>[O_{2}]\), when the \(H_{2}S\) tracer is selected)
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracCpres_anox=0.0
+\end{verbatim}\vspace{-0mm}
+for anoxic conditions (defined as \([[O_{2}]<0\), when the \(H_{2}S\) tracer is NOT selected)
+\end{itemize}
+\vspace{1mm}
+\item You can also specify that the entire recalcitrant (fraction \#2) organic matter flux is preserved and buried:
+\vspace{-1mm}\begin{verbatim}
+sg_ctrl_sed_diagen_preserve_frac2=.true.
+\end{verbatim}\vspace{-1mm}
+(by default this parameter is set to \texttt{false})
+\vspace{1mm}
+\item You can decouple the relationship between \(C\) and \(P\) preservation and burial, e.g. simulate burial of organic carbon but impose remineralization of the phosphorous associated with the buried carbon. For example, you might want to have an 'open system' with respect to carbon (and isotopes), but 'closed' with respect to phosphorous.
+\\There are 3 parameters, corresponding to the same redox zonations as defined above: 
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_ox=0.0
+\end{verbatim}\vspace{-0mm}
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_eux=0.0
+\end{verbatim}\vspace{-0mm}
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_anox=0.0
+\end{verbatim}\vspace{-0mm}
+\end{itemize}
+\vspace{1mm}
+Each parameter sets the relative return (as a fraction of the \(P\) associated with buried \(C\). i.e. a value of \(0.0\) will return to the ocean all the \(P\) associated with buried \(C\), while a value of \(1.0\) (the default), will bury all the \(P\) associated with buried \(C\), resulting in an 'open system' for both elements.
+\end{enumerate}
+
+\vspace{1mm}
+\item \textbf{\textit{Dunne et al.} [2005] scheme}
+\\This is the next simplest representation of organic matter preservation and burial and a fractional burial of the organic matter flux reaching the sea-floor based on the empirically-derived equation of \textit{Dunne et al.} [2005]. It is selected by specifying:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_Corgopt='dunne2007'
+\end{verbatim}\vspace{-1mm}
+Only one parameter option is associated with this burial scheme:\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item 
+\vspace{-0mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_ox=0.0
+\end{verbatim}\vspace{-0mm}
+\end{itemize}
+\vspace{1mm}
+which controls the relative burial of \(P\) vs. \(C\) under all redox conditions. Setting this parameter to a value of \(0.0\) (the default is \(1.0\)) ensures a 'closed system' with respect to phosphorous.
+
+\end{enumerate}
+
+\vspace{2mm}
+
+\noindent Example \textit{user-} (in: \textsf{\footnotesize user-configs/EXAMPLES}) and \textit{base-config} files are given for the application of both scheme, and are based on the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997]. These configurations also make use of a simplied grouping of the various module configuration and boundary condition files, as used per used in the 'paleo' configurations and described as part of the \textbf{muffingen} documentation (see: Chapter \ref{ch:muffingen}).
+
+To run the 1st and 2nd stage spin-ups described in \textit{Ridgwell and Hargreaves} [1997]:
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSR.p_worbe2.BASES EXAMPLES
+muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN1 20000
+\end{verbatim}\vspace{-0mm}\normalsize
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSR.p_worbe2.BASES EXAMPLES
+muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN2 50000
+muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN1
+\end{verbatim}\vspace{-0mm}\normalsize
+\end{itemize}
+
+\vspace{2mm}
+
+\noindent Examples (here, for \(20,000\) years) for the two different simple organic carbon burial options, with the marine \(P\) cycle 'closed', but with carbon (and isotopes) 'open' (there is carbon loss through sedimentary burial) ... but effectively 'closed' by the application of restoring boundary conditions for atmospheric \(pCO_{2}\) and \(\delta^{13}C\), are:
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSR.p_worbe2.BASES EXAMPLES
+muffin.CBSR.p_worbe2.BASES.Corg_burial.simple.EXPT 20000
+muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN2
+\end{verbatim}\vspace{-0mm}\normalsize
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSR.p_worbe2.BASES EXAMPLES
+muffin.CBSR.p_worbe2.BASES.Corg_burial.dunne2007.EXPT 20000
+muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN2
+\end{verbatim}\vspace{-0mm}\normalsize
+\end{itemize}
+(and use as \textit{restart}, the 2nd stage spin-up of (\textit{Ridgwell and Hargreaves} [1997]).
+
+The results of the two different organic carbon burial configurations when run in the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997], are shown in Figures \ref{fig:carbon_burial_simple} and \ref{fig:carbon_burial_dunne2007}.
+
+From the figures, it is noticeable that the 'simple' scheme when applying a uniform \(10 \%\) organic matter preservation efficiency, leads to a substantive over-estimation in the fractional preservation in the range of organic matter rain fluxes that are simulated in this configuration. The 'dunne2007' scheme, while faithfully following the fractional preservation vs. flux relationship, lacks the higher rain fluxes observed in the modern ocean in the \textit{Dunne et al.} [2007] (and that are not reproduced in the model). Likely then that the first scheme will over-estimate organic carbon burial in marine sediments, and the 2nd scheme will under-estimate it. (The  carbon burial fluxes as reported in \textsf{\footnotesize sedgem/seddiag\_misc\_DATA\_GLOBAL.res} are: \(0.088\,\ PgC\,\ yr^{-1}\) and \(0.027\,\ PgC\,\ yr^{-1}\), respectively. The latter is equivalent to a mean burial efficiency of \(3.1\%\).)
+
+\begin{figure}[H]
+\includegraphics[width=0.5\linewidth]{210127.Corg.simple.EXPTgl.burial_efficiency.210208.ps}
+\caption{Results of 'simple' scheme with \(10\%\) assumed burial efficiency vs. the empirical curve of \textit{Dunne et al.} [2007] (red line).}
+\label{fig:carbon_burial_simple}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=0.5\linewidth]{210127.Corg.dunne2007.EXPTgl.burial_efficiency.210208.ps}
+\caption{Results of 'dunne2007' scheme vs. the empirical curve of \textit{Dunne et al.} [2007] (red line)}
+\label{fig:carbon_burial_dunne2007}
+\end{figure}
+
+\vspace{2mm}
+
+\noindent Finally, examples are provided as to how to configure a fully 'open system' (excepting that of \(P\)). The command-line usage for these examples is:
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSRG.p_worbe2.BASES EXAMPLES
+muffin.CBSRG.p_worbe2.BASES.Corg_burial.simple.EXPTgl 200000
+muffin.CBSR.p_worbe2.BASES.Corg_burial.simple.EXPT
+\end{verbatim}\vspace{-0mm}\normalsize
+\vspace{1mm}
+\item []
+\small\vspace{-0mm}\begin{verbatim}
+./runmuffin.sh muffin.CBSRG.p_worbe2.BASES EXAMPLES
+muffin.CBSRG.p_worbe2.BASES.Corg_burial.dunne2007.EXPTgl 200000
+muffin.CBSR.p_worbe2.BASES.Corg_burial.dunne2007.EXPT
+\end{verbatim}\vspace{-0mm}\normalsize
+\end{itemize}
+\vspace{1mm}
+(Here -- note that the \textit{base-config} now selected the \textbf{gemlite} module and the experiments make use of the previous experiments as \textit{restarts}.)
+
+The important changes in these \textit{user-configs} concerns how volcanic \(CO_{2}\) out-gassing fluxes, and the carbon isotopic signature of weathered carbonates, are set.
+
+In the basic (open-system) \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997], you would set up with something like this:
+\vspace{-1mm}\footnotesize\begin{verbatim}
+#
+# --- WEATHERING -----------------------------------------------
+#
+# set a 'OPEN' system
+bg_ctrl_force_sed_closedsystem=.false.
+# set CaCO3_weathering-temperature feedback
+rg_opt_weather_T_Ca=.TRUE.
+# set CaSiO3_weathering-temperature feedback
+rg_opt_weather_T_Si=.TRUE.
+# weathering reference mean global land surface temperature (C)
+rg_par_ref_T0=8.48
+#CO2 outgassing rate (mol C yr-1)
+rg_par_outgas_CO2=5.58E+12
+# global silicate weathering rate (mol Ca2+ yr-1)
+rg_par_weather_CaSiO3=5.58E+12
+# global carbonate weathering rate (mol Ca2+ yr-1)
+rg_par_weather_CaCO3=5.58E+12
+# d13C
+rg_par_outgas_CO2_d13C=-6.0
+rg_par_weather_CaCO3_d13C=12.0
+\end{verbatim}\normalsize\vspace{-1mm}
+where there are equal contributions of carbon to the coean-atmosphere frmo volcanic \(CO_{2}\) out-gassing and \(CaCO_{3}\) weathering, and to balance a 2nd stage spin-up \(\delta^{13}C\) of \(CaCO_{3}\) burial of \(3.4\permille\), you need a (unrealistic!) \(\delta^{13}C\) of weathered \(CaCO_{3}\) of approximately \(12\permille\) (whereas ideally, it might be close to \(3.4\permille\) ...).
+
+\vspace{1mm}
+
+We can modify this as follows when including organic carbon burial:
+
+\begin{itemize}[noitemsep]
+
+\vspace{1mm}
+\item '\textbf{simple}'
+\\The\ organic carbon burial flux is \(0.088\,\ PgC\,\ yr^{-1}\) and has a mean carbon isotopic signature (taken from the benthic rain flux) of \(-23.1\permille\).
+\\If we start by balancing the bulk carbon mass budget and simply increase the rate of volcanic \(CO_{2}\) out-gassing to compensate for carbon loss through organic matter burial, then outgassing becomes:
+\vspace{-1mm}\small\begin{verbatim}
+# CO2 outgassing rate (mol C yr-1) 
+# NOTE: add Corg burial flux (0.734717E+13) to 5.58E+12
+rg_par_outgas_CO2=1.2927e+13
+\end{verbatim}\normalsize\vspace{-1mm}
+The flux-weighted \(\delta^{13}C\) of the sinks (in units of \(Tmol\,C \times \permille\)) is:
+\\\(7.35\times -23.1 + 11.59\times 3.4\)
+\\and must balance the input, which is now:  
+\\\(12.93\times -6.0 + 5.58\times x\)
+\\where \(x\) is the isotopic signature of weathered \(CaCO_{3}\) and in this example has a value of \(-9.5\permille\) to achieve isotopic mass balance.
+\\Note that this mass balance is done without any assumed weathering or organic (kerogen) carbon on land. Off-setting some of the enhanced \(CO_{2}\) out-gassing with kerogen weathering creates an more negative net input of reduced carbon and hence requires a more positive carbonate carbon weathering signature. \\Regardless, the organic carbon burial flux having assumed a \(10\%\) preservation fraction is rather excessive. For example, assuming a fixed fractional preservation of \(3.1\%\) (see above), now requires a \(\delta^{13}C\) of weathered \(CaCO_{3}\) of \(6.1\permille\) (and much closed to the signature of buried \(CaCO_{3}\)).
+
+\vspace{1mm}
+\item '\textbf{dunne2007}'
+\\A similar calculation can be made for the mass balance of the 'dunne2007' scheme option, which gives a \(0.027\,\ PgC\,\ yr^{-1}\) burial flux with a mean isotopic composition(taken from the benthic rain flux) of \(-23.1\permille\).
+\\The required \(\delta^{13}C\) of weathered \(CaCO_{3}\) ends up at about \(5.7\permille\).
+
+\end{itemize}
+
+\vspace{1mm}
+
+\noindent Note that under a topography with a higher shallow sediment area and hence a higher organic carbon burial than 'dunne2007' and 'worbe2', you would end up requiring a less positive (or negative) weathered \(CaCO_{3}\) isotopic signature. 
+
+
+
+
+
+%------------------------------------------------
+%
+\newpage
 \subsubsection{Set a specific ocean chemistry or saturation state}\label{set_saturation}
+\vspace{1mm}
 
 \noindent In the absence of a significant pelagic plankton derived deep-sea carbonate sink, the global burial sink of CaCO$_{3}$ is likely to have been dominated by shallow water depositional environments. cGENIE can represent something of these systems and the fundamental dynamical difference between deep-sea pelagic and shallow water CaCO$_{3}$ sinks (the former is predominantly controlled by preservation and input of C$_{org}$, whilst the latter is primarily a function of primary production by benthic calcifiers) by specifying particular shallow water grid cells as 'reefal' (see: \ref{configure_reefs}). Also in contrast to the deep-sea pelagic CaCO$_{3}$ sink, which is mechanistically simulated (both export production and particularly early diagenesis and CaCO$_{3}$ dissolution within the sediments), the shallow water CaCO$_{3}$ sink in cGENIE is heavily parameterized and is treated as little more than a function relating deposition of CaCO$_{3}$ (in units of mol cm$^{-2}$ yr$^{-1}$) at each and every designated reefal grid point. A parameter is provided:
 \vspace{-1mm}\begin{verbatim}
@@ -12480,6 +12734,7 @@ Note that the 3rd phase of spin-up could be carried out with a prescribed \texti
 %
 \newpage
 \subsubsection{Specify a particular carbonate mineralogy}\label{aragonite}
+\vspace{1mm}
 
 \noindent Firstly -- pelagic carbonate production and deep-sea sedimentary diagenesis is inherently assumed to be (all) calcite. Currently there is no alternative option, nor mixed phase (including high-Mg calcite) assemblage option.
 
@@ -12496,10 +12751,10 @@ bg_ctrl_force_ohmega_calcite=.false.
 \end{verbatim}\vspace{-1mm}
 
 %------------------------------------------------
-
 %
 \newpage
 \subsubsection{Set up a (silicate) weathering feedback}\label{weatheringfeedback}
+\vspace{1mm}
 
 \noindent To create a temperature (only) dependency for the weathering of carbonate and silicate rocks, the following two parameter values need to be set (for carbonate and silicate weathering, respectively):
 \vspace{-5mm}\begin{verbatim}
@@ -12569,7 +12824,8 @@ Of course, in reality organic carbon burial is important and including it would 
 %------------------------------------------------
 %
 \newpage
-\subsubsection{Accelerate the weathering-sedimentation mass balance ('GEMlite')}\label{GEMlite}
+\subsubsection{Accelerate the weathering-sedimentation mass balance ('GEMlite')}\label{subsub:GEMlite}
+\vspace{1mm}
 
 \noindent \textbf{Also see}: The FAQ Chapter.
 
@@ -12722,7 +12978,7 @@ ma_flag_rokgem=.TRUE.
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_diagen_Corgopt = 'huelse2016'
 \end{verbatim}\vspace{-1mm}
-Because the nitrogen cycle is not modeled explicitly in the current version of \textbf{BIOGEM} alkalinity (ALK) is directly linked to uptake and remineralization of PO$_4$ using the standard 16:1 N:P ratio (compare Ridgwell et al. [2007]).
+Because the nitrogen cycle is not modeled explicitly in the current version of \textbf{BIOGEM} alkalinity (ALK) is directly linked to uptake and remineralization of PO$_4$ using the standard 16:1 N:P ratio (compare \textit{Ridgwell et al.} [2007]).
 Because ALK in \textbf{OMEN-SED} is tied to the remineralization of OM we now also tie ALK in \textbf{BIOGEM} to POC by setting the following namelist flag:
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_bio_red_ALKwithPOC=.true.
@@ -12876,6 +13132,7 @@ POC rain is saved in the corresponding \textbf{BIOGEM} summary file \texttt{biog
 \section{HOW-TO ... geoengineer}
 
 \subsubsection{Set up carbon dioxide removal (CDR) geoengineering experiments}
+\vspace{1mm}
 
 There are various ways implement different carbon dioxide removal strategies in cGENIE. For instance -- additions of dissolved iron and phosphate can be implemented as simple flux forcings to the ocean surface, as described in the Tutorial exercises. Similarly, ocean 'liming'
  can be implemented as a flux \textit{forcing} of alkalinity to the surface (with or without associated Ca2+ and with or without additional CO2 emissions to the atmosphere due to the creation of lime).
@@ -12884,6 +13141,7 @@ This section describes a framework created for applying additional geoengineerin
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Applying a geoengineering 'liming' flux to the ocean surface}
 \vspace{1mm}
 
@@ -12933,7 +13191,9 @@ must be applied because it will scale both restoring and emissions ...
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Geoengineering with ... 'pipes'}
+\vspace{1mm}
 
 Pipes are parameterized following \textit{Yool et al.} [2009] (Yool, A., J. G. Shepherd, H. L. Bryden, and A. Oschlies (2009), Low efficiency of nutrient translocation for enhancing
 oceanic uptake of carbon dioxide, J. Geophys. Res., 114, C08009, doi:10.1029/2008JC004792.) This is selected by setting:
@@ -13030,7 +13290,9 @@ Combination \#1 is arguably the only realistic setting -- the others being for d
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Adjust solar forcing in a time-dependent manner}
+\vspace{1mm}
 
 \vspace{1mm}
 The value of the solar constant in cGENIE is set by the \textit{namelist parameter}:
@@ -13096,6 +13358,7 @@ Hacking the solar constant in a time-varying manner is, of course, a (albeit cru
 %------------------------------------------------
 %
 \subsection*{Specifying a fixed orbital configuration}
+\vspace{1mm}
 
 The parameters to prescribe a fixed (but different from modern) orbital configuration are:
 
@@ -13163,7 +13426,9 @@ ea_par_orbit_oscgam=0.87
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Specifying time-varying orbits}
+\vspace{1mm}
 
 For model simulations over long timescales you might want to consider the effects of changes with time in the astronomical forcing. In this case, the amount of daily mean insolation at each latitude can vary as a function of eccentricity, obliquity and (climatic) precession, as opposed to under a fixed insolation pattern. Such transient forcing can be applied in \textbf{muffin} by adding the following set of parameter settings to the \textit{user-config} file:
 \vspace{-1mm}\small\begin{verbatim}
@@ -13190,13 +13455,13 @@ The value for parameter \texttt{ea\_41} depends on the resolution of the model t
 
 %------------------------------------------------
 %
-\subsection*{Saving orbitally-relevant data}
+\newpage
+\subsection*{Save orbitally-relevant data}
+\vspace{1mm}
 
 The challenge here is that   changes in seasonal characteristics are critical to understanding orbital modulated insolation forcing and response, so seasonal or even monthly resolved data is needed ... yet the  experiments may be several 100 kyr to Myr in duration ... Saving seasonal or monthly resolved netCDF sufficiently frequently to resolve precession -- every few kyr -- is possible, but the resulting data file size maybe near unmanageable, and in any case, the net CDF files would have to be laboriously processed. The situation can be helped a little by only saving 2D netCDF (see earlier), but it still remains a task to process a large seasonal/monthly netCDF file. In contrast, time-series data is cheap to save, but is currently saved only as global and annual average, masking the details of any orbital response.
 
 The solution provided here is to save data at specific points in the model grid (that are specified prior to an experiment being run), and to be very specific about what data is saved (i.e. rather than large generic sets of variables being saved as in the time-series and time-slice data saving approaches, only certain variables are saved). Furthermore, because orbital variability is slow compared to the seasonal cycle, the data can be aliased. i.e., rather than saving every time-step during the seasonal cycle, and saving every year (of every seasonal cycle), one can devise an interval of data save, that samples a complete seasonal cycle only when \(x\) (where \(x>1\)) complete years have been simulated. For example -- saving data every 13 months would mean that Jan is saved in year 1, Feb in year 2, Mar in year 3, etc, with all months saved over the course of 12 years and then Jan again in year 13. This would not work so well if significant inter-annual variability was present (i.e. as per in a fully coupled model), but in the basic EMBM-based configuration of \textbf{muffin}, there is no inter-annual variability and hence this strategy should work just fine.
-
-\pagebreak
 
 To configure this way of saving data requires that two files are be present in the: \\ \footnotesize\textsf{genie-biogem/data/input }\normalsize sub-\footnote{Regardless of whether or not a paleo configuration is used.}directory, are identified by name via 2 new \textit{user-config} parameters:
 
@@ -13253,9 +13518,6 @@ The frequency of data sampling is given in units of \textbf{GOLDSTEIN} time-step
 ma_conv_kocn_korb=999999999
 \end{verbatim}
 (the default value, effectively disabling saving).
-
-\vspace{8mm}
-\pagebreak
 
 For example\footnote{Likely you'll want a larger  value of \texttt{ma\_conv\_kocn\_korb} than the above examples,  because it is still effectively saving some data each and every year.}:
 
@@ -13368,7 +13630,9 @@ The \textit{time-series} output files is called: \texttt{biogem\_series\_misc\_o
 
 %------------------------------------------------
 %
+\newpage
 \subsubsection{Saving global/annual (insolation) changes}
+\vspace{1mm}
 
 \vspace{1mm}
 Two new \texttt{misc} category time-series files have been provided:

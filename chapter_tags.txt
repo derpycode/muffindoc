@@ -37,9 +37,10 @@
 
 \chapter{FAQ}\label{ch:faq}
 
-\chapter{HOW-TO (technical)}\label{how-to-technical}
+\chapter{HOW-TO (technical)}\label{ch:how-to-technical}
 
-\chapter{HOW-TO (experiment)}\label{how-to-experiment}
+\chapter{HOW-TO (experiment)}\label{ch:how-to-experiment}
+\subsection{... OMEN-SED}\label{HOW-TO_OMEN-SED}
 
 \chapter{Model Code}\label{ch:model-code}
 
