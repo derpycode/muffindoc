@@ -6187,7 +6187,7 @@ fossil fuel CO2 release.)
 \begin{figure}
 \includegraphics[width=1.00\textwidth]{CO2_components_110104.pdf}
 \caption{Baaaa.}
-\label{fig:sediments}
+\label{fig:CO2_components_110104}
 \end{figure}
 
 %----------------------------------------------------------------------------------------
@@ -6474,7 +6474,7 @@ There is a related facility to \texttt{bg\_par\_infile\_sig\_name} for \textbf{S
 
 Model output -- both \textit{time-slice} and \textit{time-series} data are saved in blocks or  by categories of model variables. For instance, all dissolved tracers in the ocean (3D netCDF \textit{time-slice} and/or \textit{time-series}), or all particle flux fields, all carbonate chemistry and associated variables, all surface sediment composition, etc etc. This still requires a multitude of parameters, one for each category and generally also one for each of \textit{time-slice} and \textit{time-series} data. In an attempt to simplify this, a single parameter, \texttt{bg\_par\_data\_save\_level}, specifying the sort and amount of data to save can be set instead.
 
-The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}. The specific classes (groups) of data that are saved (as a mnemonic code) in response to each different selected save level are given in Table \ref{tab:timeslicelevels} (for \textit{time-slice} saving) and  Table \ref{tab:timeserieslevels} (for \textit{time-series} saving), and what the mnemonics  strand for in terms of actual data saved (in real words), are defined in Tables \ref{tab:timeslicekey} and \ref{tab:timeserieskey}.
+The value of the \texttt{bg\_par\_data\_save\_level} save level parameter is given as an integer between \texttt{0} and \texttt{99}. The specific classes (groups) of data that are saved (as a mnemonic code) in response to each different selected save level are given in Table \ref{tab:timeslicelevels} (for \textit{time-slice} saving) and Table \ref{tab:timeserieslevels} (for \textit{time-series} saving), and what the mnemonics  strand for in terms of actual data saved (in real words), are defined in Tables \ref{tab:timeslicekey} and \ref{tab:timeserieskey}.
 
 An alternative wordy summary to these tables would be: 
 
@@ -10927,7 +10927,7 @@ Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ 
 [1pt] % [1ex] adds vertical space
 \hline %inserts single line
 \end{tabular}
-\label{table:nonlin} % is used to refer this table in the text
+\label{tab:nonlin} % is used to refer this table in the text
 \end{table}
 
 \noindent (Obviously, you need to have the respective ocean tracer selected.)
@@ -11105,15 +11105,7 @@ There is also option for treating all tracers the same way (including DIC ALK, P
 
 \section{HOW-TO ...  iron (and dust)}
 
-In this HOW-TO, you'll learn firstly how to configure an iron cycle in the ocean, with the first subsection tackling a modern-like and predominantly oxic ocean, and the second (if it ever gets written!), for a 'deeper-time' and predominantly anoxic ocean.
-
-%------------------------------------------------
-%
-\newpage
-\subsection*{Oxic ocean iron cycling in muffins}
-\vspace{2mm}
-
-This section will:
+This HOW-TO will:
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
 \item Provide an overview of the different marine iron cycle schemes in \textbf{muffin}.
@@ -11130,25 +11122,25 @@ This section will:
 \subsubsection{Overview of  marine iron cycle schemes in muffin}
 \vspace{1mm}
 
-There are 2 different ways of describing the marine iron cycle in terms of which tracers in the ocean are defined (described immediately below). These are associated with one or more alternative tunings of the primary parameters controlling iron cycling -- the solubility of iron in dust and the rate of scavenging of dissolved iron onto particulate organic matter, plus, some parameter scaling the characteristic biological nutrient (\(PO^{2-}_{4}\)) uptake time-scale (described subsequently). In theory, the 2 different tracer configurations are interchangeable and either could be used in conjunction with any given tuned parameter set. However, in practice and in publications, specific tuned parameter sets have been associated with a specific tracer combination choice (and e.g. not tested equally with both). The various available marine iron cycle configurations are summarized in Table \ref{tab:ironconfigs}.
+There are 3 different ways of describing the marine iron cycle in terms of which tracers in the ocean are defined (described immediately below). These are associated with one or more alternative tunings of the primary parameters controlling iron cycling -- the solubility of iron in dust and the rate of scavenging of dissolved iron onto particulate organic matter, plus, some parameter scaling the characteristic biological nutrient (\(PO^{2-}_{4}\)) uptake time-scale (described subsequently). In theory, the different tracer configurations are interchangeable and either could be used in conjunction with any given tuned parameter set. However, in practice and in publications, specific tuned parameter sets have been associated with a specific tracer combination choice (and e.g. not tested equally with both). The various available marine iron cycle configurations are summarized in Table \ref{tab:ironconfigs}.
 
 \vspace{-4mm}
 \begin{table}[h]
-\textbf{\caption{muffin iron cycle configurations}}
-\begin{tabular}{|p{0.5cm}||p{1.75cm}||p{1.0cm}|p{1.0cm}||p{1.0cm}|p{1.0cm}|p{1.75cm}||p{4.25cm}|}\hline
+\textbf{\caption{muffin iron cycle configurations\label{tab:ironconfigs}}}
+\begin{tabular}{|p{0.5cm}||p{2.0cm}||p{1.0cm}|p{1.0cm}||p{1.0cm}|p{1.0cm}|p{1.75cm}||p{4.0cm}|}\hline
 \# & \textbf{Tracers} & \(DOM_{\tau}\) (\(yr\))  & \(bio_{\tau}\) (\(d\)) & \(Fe_{sol}\) (\%) & \(k_{scav}\) & Dust field & \textbf{References} \\\hline
 \hline
-1 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & Mahowald & \textit{Tagliabue et al.} [2016] \newline \textit{Ödalen et al.} [2020] \newline \textit{Rae et al.} [in press] \\\hline
-2 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & (various) & \textit{Lambert, et al.} [in revision] \\\hline
-3 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & n/a & n/a & n/a & \textit{Meyer et al.} [2016]  \newline \textit{Hülse et al.} [2019] \newline \textit{Hülse et al.} [submitted] \\\hline
-4 & \(TDFe\), \(TL\) & 1.0 & 95.6 & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2008] \\\hline
-5 & \(TDFe\), \(TL\) & 1.0 & n/a & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2008] \\\hline
+1 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & Mahowald & \textit{Tagliabue et al.} [2016] \newline \textit{Ödalen et al.} [2020] \newline \textit{Rae et al.} [2020] \\\hline
+2 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & (various) & \textit{Lambert, et al.} [2021] \\\hline
+3 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & n/a & n/a & (none) & \textit{Meyer et al.} [2016]  \newline \textit{Hülse et al.} [2019] \newline \textit{Hülse et al.} [in revision] \\\hline
+4 & \(TDFe\), \(TL\) & 1.0 & 95.6 & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2018] \\\hline
+5 & \(TDFe\), \(TL\) & 1.0 & n/a & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2018] \\\hline
 6 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & 0.125 \newline 0.244 & 0.225 \newline 0.225 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
 7 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & \textit{0.100} \newline \textit{0.195} & 0.100 \newline 0.100 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
 8 & \(TDFe\), \(TL\) & 0.5 & 60.0 & 0.244 & 0.225 & Albani & \textit{Ödalen et al.} [in prep] \\\hline
 9 & \(TDFe\), \(TL\) & 0.5 & n/a & 0.244 & 0.225 & Albani & \textit{Jones et al.} [in prep] \\\hline
+10 & \(Fe\), \(Fe2\), \(TL\) & 0.5 & 63.3 & n/a & 0.344 & (none) & \textit{van de Velde et al.} [2021] \\\hline
 \end{tabular}
-\label{tab:ironconfigs}
 \end{table}
 
 \noindent \small NOTES: \normalsize
@@ -11160,13 +11152,14 @@ There are 2 different ways of describing the marine iron cycle in terms of which
 \item [\#5] -- There is no \(bio_{\tau}\) value because the \textbf{ECOGEM} module is used.
 \item [\#7] -- Tests an assumption of a spatially uniform iron solubility (\(Fe_{sol}\) values in italics).
 \item [\#9] -- There is no single \(bio_{\tau}\) value (the biological scheme is split into diatoms and non-diatoms).
+\item [\#10] -- Dissolved iron is supplied hydrothermally (as reduced, \(Fe^{II}\)) at the seafloor, and additionally, optionally as oxidized \(Fe^{III}\) to the ocean surface (\textit{in lieu} of the solubilized component in dust and/or via rivers from terrestrial weathering).
 \end{itemize}
 \normalsize
 
 %------------------------------------------------
 %
 \noindent\rule{4cm}{0.5pt}
-\subsubsection{Tracer configurations}
+\subsubsection{Iron schemes and tracer configurations}
 \vspace{2mm}
 
 In the original iron cycle in \textbf{muffin},  3 separate tracers were defined:
@@ -11179,7 +11172,7 @@ In the original iron cycle in \textbf{muffin},  3 separate tracers were defined:
 \vspace{2mm}
 The associated tracer selection in the \textit{base-config} looks like:
 \footnotesize\vspace{-2pt}\begin{verbatim}
-gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron III (Fe)'
+gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron (Fe)'
 gm_ocn_select_23=.true.     #   FeL -- 'ligand-bound Fe'
 gm_ocn_select_24=.true.     #   L -- 'free ligand (iron binding)' 
 \end{verbatim}\vspace{-2pt}\normalsize
@@ -11192,13 +11185,66 @@ However, because the equilibrium between these tracers is re-solved every time-s
 \end{itemize}
 \vspace{2mm}
 
-The associated tracer selection in the \textit{base-config} looks like:
+The associated tracer selection in the \textit{base-config} then looks like:
 \footnotesize\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_90=.true.     #   TDFe -- 'total dissolved Fe'
 gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \end{verbatim}\vspace{-2pt}\normalsize
 
 At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
+
+But ... to distinguish between reduced (\(Fe^{II}\)) and oxidized (\(Fe^{III}\)) iron as well as account for the role of ligands ... 3 tracers are needed again (in a sort of combination of the above two permutations): 
+\footnotesize\vspace{-2pt}\begin{verbatim}
+gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron III (Fe)'
+gm_ocn_select_83=.true.     #   Fe -- 'dissolved iron II (Fe)'
+gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand' 
+\end{verbatim}\vspace{-2pt}\normalsize
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Associated with these different sets of tracer and iron cycle configurations, are several different schemes for how the iron cycle is parameterized:
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item [\texttt{ALT}] -- This is based on 3 tracers (free iron, free ligand, ligand-bound iron), solves the equilibrium between them and based on this, scavenges free \(Fe\) from the water column, by any or all of: particulate organic matter, \(CaCO_{3}\), opal, and/or detrital matter.
+\vspace{1mm}
+\item [\texttt{OLD}] -- The very original scheme -- as per \texttt{ALT}, except that scavenging does not occur at in the surface ocean layer\footnote{This (no surface scavenging) was an unintended bug in an ocean layer loop ...}.
+\\This scheme  was used in the 'FeMIP' paper of \textit{Tagliabue et al.} [2016].
+\vspace{1mm}
+\item [\texttt{hybrid}] -- As per \texttt{ALT}, but employing only 2 tracers -- total dissolved iron, and total dissolved ligand (and solving for the equilibrium between (free iron, free ligand, and ligand-bound iron).
+\\This is the recommenced modern modern (oxic ocean) configuration option (e.g. as used by \textit{Ward et al.} [2018]). 
+\\In theory ... it should be identical in behavior to \texttt{ALT} (but with one fewer tracer simulated in the ocean).
+\vspace{1mm}
+\item [\texttt{lookup\_4D}] -- Yet to be fully implemented/published ... this assumes 2 tracers in the ocean (total dissolved iron, total dissolved ligand) and calculates the equilibrium partitioning between dissolved iron and solid FeOOH (assumed to be goethite), based on ambient temperature and pH (in addition to total dissolved iron, total dissolved ligand) and employing a lookup table. Solid FeOOH is the phase that is scavenged.
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] -- A 3-phase tracer scheme, but distinguishing the oxidized form \(Fe^{III}\) (tracer: \texttt{Fe}) from reduced \(Fe^{II}\) (tracer: \texttt{Fe2})\footnote{In the water column, \(Fe^{II}\) oxidizes to \(Fe^{III}\) under oxic conditions, while \(Fe^{III}\) is reduced under anoxic conditions.}. This scheme is primarily intended for predominantly ferruginous/euxinic deeper time esp. Precambrian) oceans, but is perfectly capable of being used in more geologically recent and predominantly oxic ocean times (as well as more 'mixed state' oceans, such as during OAEs or during the Paleozoic).
+\\Only \(Fe^{III}\) (tracer: \texttt{Fe}) is taken into account in the calculation for  partitioning iron into free and ligand-bound iron, and only free (non ligand-bound) \(Fe^{III}\) is then subject to scavenging. Reduced \(Fe^{II}\) (tracer: \texttt{Fe2}) is assumed truly dissolved and does not bind with ligands, nor is subject to scavenging.
+\\
+\\Note that if the solid (sediment) tracer \texttt{is\_POM\_FeOOH} is selected, when ambient dissolved oxygen is low, the scavenged iron (III) can under go further transformations and supply oxygen (and be reduced) in remineralizing organic matter. In this, 
+\(Fe^{II}\) is released, in contrast with the default parameter settings under which scavenged iron is always 'lost' to the system. If however \texttt{is\_POM\_FeOOH} is not selected (but the standard scavenged iron \texttt{is\_POM\_Fe} is), then the fate of scavenged iron proceeds as 'normal' (e.g. under under schemes \texttt{OLD}, \texttt{ALT} or \texttt{hybrid}).
+\\In principal, in the absence of \texttt{is\_POM\_FeOOH}, the marine iron cycle should function identically to the original 'oxic-only schemes, with the exception that any dissolved iron that is present in the water column as \(Fe^{II}\), will both reduce the rate of scavenging and of biological uptake (both processes only accounting for the availability of \(Fe^{III}\)). 
+\end{itemize}
+
+\vspace{1mm}
+\noindent Also note:
+\vspace{2mm}
+\begin{itemize}[noitemsep]
+\item Typically, scavenging only occurs (or is only configured to occur) by particulate organic matter.
+\\Scavenged iron, by default, is not 'remineralized' along with the (organic matter) particulate host and hence not returned to solution, and represents a loss (sink) of bio-available iron from the ocean. This behavior is controlled by parameters:
+\\\small\vspace{-1pt}\begin{verbatim}
+# no scavenged regeneration
+bg_par_scav_fremin=0.0
+\end{verbatim}\vspace{-1pt}\normalsize
+which prevents return of iron scavenged by (e.g. particulate organic) matter when it is remineralized (dissolved) in the water column, and
+\\\small\vspace{-1pt}\begin{verbatim}
+# return POFe
+bg_ctrl_bio_NO_fsedFe=.false.
+\end{verbatim}\vspace{-1pt}\normalsize
+which prevents scavenged iron being 'reflected' at the ocean floor (along with all the constituents of its particulate matter carrier).
+\item All schemes, with the current exception of \texttt{hybrid}, are isotope-enabled (\(^{56}Fe\)).
+\end{itemize}
 
 %------------------------------------------------
 %
@@ -11220,10 +11266,10 @@ At each time-step, the concentration of 'free' iron (and iron bound to ligands) 
 \\The same biological configuration as \texttt{\small cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.FeMIP.SPIN}, but with iron limitation of biological export 'disabled' by:
 \begin{enumerate}[noitemsep]
 \item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes, zero (in comparison: the ocean is initialized with \(0.6\:\mu M\:Fe\)).
-\item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so virtually no Fe is taken up in organic matter as compared to carbon).
+\item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so that virtually no Fe is taken up in organic matter as compared to carbon).
 \item Setting the scavenging rate of \(Fe\) by sinking organic matter to zero.
 \end{enumerate}
-No dust field is then required, because there are no longer any processes that can remove (from the surface) the initial dissolved iron inventory.
+No dust field is  required in this configuration, because there are no longer any processes that can remove (from the surface) the initial dissolved iron inventory.
 \vspace{1mm}
 \item [\#4] -- (see: \textsf{\footnotesize genie-userconfigs/MS/wardetal.2018/wardetal.2018.BIOGEM.SPIN})
 \vspace{1mm}
@@ -11279,8 +11325,6 @@ As an alternative, the solubility of iron in dust can be fixed spatially at a si
 bg_par_det_Fe_sol_exp=1.0
 \end{verbatim}\vspace{-2pt}\normalsize
 (In the solubility equation, the power is actually one minus the exponent parameter, hence a value of \(1.0\) makes the solubility spatially invariant.)
-
-\pagebreak
  
 Calibrated marine iron cycle parameter sets a provided for both \textit{Mahowald et al.} [2006] and \textit{Albani et al.} [2016] pre-industrial dust field (see above and Table \ref{tab:ironconfigs}):
 \begin{itemize}[noitemsep]
@@ -12247,6 +12291,8 @@ bg_ctrl_bio_NO_fsedFe=.false.
 \end{verbatim}\normalsize\vspace{-1mm}
 \uline{Note that in calculating the remineralization of particulate matter reaching the seafloor, the surface redox conditions are used (rather than those at the seafloor).} (The alternative (application of seafloor redox conditions) would probably give similar results, given the likely rapid re-oxidation of reduced species at the surface.)
 
+\noindent \uline{Also note that these new parameter settings only apply to a muffin configuration without the \textbf{SEDGEM} model enabled.}
+
 %------------------------------------------------
 
 \newpage
@@ -12756,69 +12802,71 @@ bg_ctrl_force_ohmega_calcite=.false.
 \subsubsection{Set up a (silicate) weathering feedback}\label{weatheringfeedback}
 \vspace{1mm}
 
-\noindent To create a temperature (only) dependency for the weathering of carbonate and silicate rocks, the following two parameter values need to be set (for carbonate and silicate weathering, respectively):
-\vspace{-5mm}\begin{verbatim}
+\noindent To create a temperature (only) dependency for the weathering of carbonate and silicate rocks on land, the following two parameter values need to be set for carbonate and silicate weathering, respectively (they are \texttt{.false.} by default):
+\vspace{-1mm}\small\begin{verbatim}
 rg_opt_weather_T_Ca=.true.
 rg_opt_weather_T_Si=.true.
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 
-A reference temperature governs the dependency of weathering on climate change and modifies the solute fluxes from weathering scaled (non-lineary) to the deviation of mean global land surface temperature from the reference temperature. The mean global land surface temperature is given in the \textbf{BIOGEM} \textit{time-series} file \texttt{biogem\_series\_misc\_SLT.res} and is set equal to the reference temperature parameter:
-\\\texttt{rg\_par\_ref\_T0}.
+A reference temperature governs the dependency of weathering on climate change and modifies the solute fluxes from weathering scaled (non-lineary) to the deviation of mean global land surface temperature from the reference temperature. The mean global land surface temperature is given in the \textbf{BIOGEM} \textit{time-series} file \texttt{biogem\_series\_misc\_SLT.res} and is set equal to the reference temperature parameter: \texttt{rg\_par\_ref\_T0}.
 
+\vspace{1mm}
 The baseline (unmodified) solutes fluxes from terrestrial weathering are set by the parameters:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 rg_par_weather_CaCO3
 rg_par_weather_CaSiO3
-\end{verbatim}\vspace{-1mm}
-for carbonate and silicate weathering, respectively. At steady-state (no climate perturbation), these must sum up to the total weathering flux which is given by the total global CaCO$_{3}$ burial flux found in the file \texttt{seddiag\_misc\_DATA\_GLOBAL.res} (in the \texttt{genie-sedgem} results sub-directory).
-To balance the silicate weathering, volcanic CO$_{2}$ out-gassing is then assigned a value equal to silicate weathering flux by setting the parameter \texttt{rg\_par\_outgas\_CO2}.
+\end{verbatim}\normalsize\vspace{-1mm}
+for carbonate and silicate weathering, respectively. At steady-state (no climate perturbation) and assuming no other sources of dissolved calcium to the ocean, these must sum up to the total weathering flux which is given by the total global CaCO$_{3}$ burial flux found in the file:\\\texttt{seddiag\_misc\_DATA\_GLOBAL.res} (in the \texttt{genie-sedgem} results sub-directory).
 
-There are different ways in which the total weathering flux (equal to total CaCO$_{3}$ burial at steady state) can be split between carbonate and silicate weathering and hence a value for volcanic CO$_{2}$ out-gassing assigned:
+\vspace{1mm}
+To balance the silicate weathering, volcanic CO$_{2}$ out-gassing is then assigned a value equal to silicate weathering flux by setting the parameter \texttt{rg\_par\_outgas\_CO2}. However, there are different ways in which the total weathering flux (equal to total CaCO$_{3}$ burial at steady state) can be split between carbonate and silicate weathering and hence a value for volcanic CO$_{2}$ out-gassing assigned:
 
 \begin{enumerate}
 
-\item All solutes could simply be assumed to be derived from carbonate weathering (which is the default assumption in open system experiments without a weathering feedback), e.g.::
-\vspace{-1mm}\begin{verbatim}
+\item All solutes could simply be assumed to be derived from carbonate weathering (which is the default assumption in open system experiments without a weathering feedback), e.g.:
+\vspace{-1mm}\small\begin{verbatim}
 rg_par_weather_CaCO3=10.0E+12
 rg_par_weather_CaSiO3=0.0
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 for a hypothetical example with 10 Tmol yr$^{-1}$ total global CaCO$_{3}$ burial. No volcanic CO$_{2}$ out-gassing should then be prescribed.
 \item Secondly, silicate and carbonate weathering could be assumed to be split evenly, e.g.:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 rg_par_weather_CaCO3=5.0E+12
 rg_par_weather_CaSiO3=5.0E+12
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 Volcanic CO$_{2}$ out-gassing needs to be set equal to the baseline silicate weathering flux:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 rg_par_outgas_CO2=5.0E+12
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 \item Thirdly, volcanic CO$_{2}$ out-gassing could be assumed, which then constrains the silicate flux, with the carbonate flux being whatever is required to make the total Ca$^{2+}$ weathering flux equal to global CaCO$_{3}$ burial.
 
 \end{enumerate}
 
+\vspace{1mm}
 A difficulty arises because setting the reference temperature \texttt{rg\_par\_ref\_T0} equal to the mean global land surface temperature only gives rise to weathering fluxes exactly equal to the reference parameter values (\texttt{rg\_par\_weather\_CaCO3} and \texttt{rg\_par\_weather\_CaSiO3}) for a non-seasonally forced climate. Because weathering is non-linear in climate (here just temperature), a seasonally forced configuration of the model with give rise to slightly modified weathering fluxes. The result is a slight drift in atmospheric \textit{p}CO${_2}$) and climate, even after a fairly long (100s of kyr), or alternatively, a slightly different steady state \textit{p}CO${_2}$) value (for a ca. 1 Myr \textit{spin-up}).
 
 The reason is that long-term climate and hence \textit{p}CO${_2}$) is controlled by the silicate weathering component of total weathering, not total weathering. Under a seasonally forced rather than annual average climate, the non-linearity in the weathering response to temperature deviations means that silicate weathering will generally slightly exceed volcanic CO$_{2}$ out-gassing. Atmospheric \textit{p}CO${_2}$) and with it  global temperatures will hence be gradually drawn-down until net (carbonate) carbon removal exactly matches the rate of new (volcanic) carbon input
 
-The imbalance between silicate weathering and volcanic CO$_{2}$ out-gassing is given in the BIOGEM output:
-\\\texttt{biogem\_series\_misc\_exweather\_Ca.res}
-\\which records the absolute excess of weathering compared to out-gassing, in mol Ca$^{2+}$ yr$^{-1}$ as well as a percentage. In an \textit{open system} (not a closed one!), this excess needs to be adjusted 'close' (how close? sub 1 percent or 0.1 Tmol Ca$^{2+}$ yr$^{-1}$, certainly) to zero. This adjustment is done by running a short (a few or 10s of years) experiment, reading off the excess weathering value, and doing one of the following:
+The imbalance between silicate weathering and volcanic CO$_{2}$ out-gassing is given in the \textbf{BIOGEM} output file: \texttt{biogem\_series\_misc\_exweather\_Ca.res}, which records the absolute excess of weathering compared to out-gassing, in units of mol Ca$^{2+}$ yr$^{-1}$ as well as a percentage. In an \textit{open system} (not a closed one!), this excess needs to be adjusted 'close' (how close? sub 1 percent or 0.1 Tmol Ca$^{2+}$ yr$^{-1}$, certainly) to zero. This adjustment is done by running a short (a few or 10s of years) experiment, reading off the excess weathering value, and doing one of the following:
 
 \begin{enumerate}
+\vspace{1mm}
 \item Adjust the reference temperature parameter \texttt{rg\_par\_ref\_T0} -- to a lower value if there is an excess of silicate weathering over out-gassing, or
+\vspace{1mm}
 \item Adjust the reference silicate weathering parameter \texttt{rg\_par\_weather\_CaSiO3}, or
+\vspace{1mm}
 \item Adjust the volcanic CO$_{2}$ out-gassing flux parameter \texttt{rg\_par\_outgas\_CO2}.
 \end{enumerate}
+\vspace{1mm}
 An exact adjustment can be made for the second and third possibilities, with the easiest being to reduce the out-gassing flux value by the amount of excess weathering. For the first option, a couple of iterations will typically be required in order to determine the new reference temperature value that gives rise to a silicate weathering balance. The second option is the recommended one, with the third being the least recommended.
 Regardless of which of the 3 options, the total weathering flux, given in the BIOGEM time-series file \texttt{biogem\_series\_diag\_weather\_Ca.res}, will now be slightly different from the required burial flux. This either requires that the value of the reference carbonate weathering parameter (\texttt{rg\_par\_weather\_CaCO3}) is now slightly adjusted, or that a slightly different global carbonate burial flux is allowed.
 
-If the carbon isotopic signature of volcanic CO$_{2}$ out-gassing is assigned a value of e.g. -6.0\textperthousand. The $\delta$$^{13}$C of weathered CaCO$_{3}$ is then simply set in order that inputs equal the mean $\delta$$^{13}$C of carbonate burial, which as given in the \textbf{BIOGEM} \textit{time-series} file:
-\\\texttt{biogem\_series\_sed\_CaCO3\_13C.res}
-For example, assuming equal fluxes of 5 Tmol yr$^{-1}$ for both weathering components and for volcanic CO$_{2}$ out-gassing (at -6.0\textperthousand) and assuming a mean carbonate burial $\delta$$^{13}$C of 3\textperthousand, requires:
-\vspace{-1mm}\begin{verbatim}
+\vspace{1mm}
+If the carbon isotopic signature of volcanic CO$_{2}$ out-gassing is assigned a value of e.g. -6.0\permille. The $\delta$$^{13}$C of weathered CaCO$_{3}$ is then simply set in order that inputs equal the mean $\delta$$^{13}$C of carbonate burial, which as given in the \textbf{BIOGEM} \textit{time-series} file: \texttt{biogem\_series\_sed\_CaCO3\_13C.res}. For example, assuming equal fluxes of 5 Tmol yr$^{-1}$ for both weathering components and for volcanic CO$_{2}$ out-gassing (at -6.0\permille) and assuming a mean carbonate burial $\delta$$^{13}$C of 3\permille, requires:
+\vspace{-1mm}\small\begin{verbatim}
 rg_par_outgas_CO2_d13C=-6.0
 rg_par_weather_CaCO3_d13C=12.0
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 Of course, in reality organic carbon burial is important and including it would enable a much more realistic value of weathered carbonate $\delta$$^{13}$C to be set ...
 
 %------------------------------------------------
@@ -12862,7 +12910,8 @@ The key to employing \texttt{GEMlite}, in addition to knowing when it is appropr
         \item Adaptive sequencing.
         \\Here, \texttt{GEMlite} attempts to be clever and optimizes the ratio between the duration of each phase of the cycle.
         \\The motivation for this is that often in model experiments, environmental parameters will  tend to change faster at the beginning of an experiment compared to towards the end. Fossil fuel CO2 release and its long tail of declining pCo2 is a good example of this. Obviously this complicates the choice of a (fixed) ratio of cycle phases -- 100:100 (or more likely: 1000:1000) might not lead to too much degradation of the simulation, but you would only gain a speed advantage of x2 for the experiment as a whole, which if ~100-1000 kyr in total duration, is still going to be l o n g. On the other hand: 10:90 would give you a factor almost x10 increase in overall speed, but would seriously degrade the simulation during the initial, rapidly changing environment following CO2 release.
-        \\Adaptive sequencing adjust the time-stepping via 2 criteria:
+
+In adaptive sequencing, time-stepping is adjusted via 2 criteria:
 \begin{itemize}
 \vspace{1mm}
         \item In the normal time-stepping phase, if the rate of change of pCO2 is *more than* a specified threshold over any one year, then the total duration of this phase is extended by one year.
@@ -12870,26 +12919,33 @@ The key to employing \texttt{GEMlite}, in addition to knowing when it is appropr
         \item In the accelerated time-stepping phase, if the total change in pCO2 since the last normal phase is *less than* a specified threshold, then the total duration of this phase is extended by one year.
 \end{itemize}
 The result is that the phase durations are always a minimum of the values set by \texttt{ma\_gem\_notyr} and \texttt{ma\_gem\_yr}. If it is 'unsafe' to switch to accelerated mode, because pCO2 is changing rapidly, then the model stays in normal mode. If it is safe to stay in the accelerated mode, because pCO2 has not changed much in total during the phase, then the model stays in the accelerated phase.
-        \\The parameter names are default values for the two thresholds are:
+
+The parameter names are default values for the two thresholds are:
 \begin{itemize}
 \vspace{1mm}
         \item \texttt{ma\_gem\_adapt\_dpCO2dt=0.1} (ppm yr-1)
 \vspace{1mm}
         \item \texttt{ma\_gem\_adapt\_DpCO2=1.0} (ppm)
 \end{itemize}
-but these will not necessarily be the ideal of any particular experiment (and some trial-and-error ma be called for).
-\\Adaptive time-stepping is enabled by setting:
-\\\texttt{ma\_gem\_adapt\_auto=.true.}
-\\(by default it is \texttt{.false.}).
-\\The switching between normal (non accelerated) and accelerated phases is saved in a time-series file:
-\vspace{-1mm}\begin{verbatim}biogem_series_misc_gemlite.res\end{verbatim}\vspace{-1mm}
+but these will not necessarily be the ideal of any particular experiment (and some trial-and-error ma be called for). Adaptive time-stepping is enabled by setting:
+\vspace{-1mm}\small\begin{verbatim}
+ma_gem_adapt_auto=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+(by default it is \texttt{.false.}).
+
+The switching between normal (non accelerated) and accelerated phases is saved in a time-series file: \texttt{biogem\_series\_misc\_gemlite.res}
+
+\newpage
 
 As a further refinement, the accelerated phase can be set to be relatively short to begin with, but gradually increasing in length. The parameters controlling this are:
+\vspace{1mm}
 \\\texttt{ma\_gem\_yr} -- the initial accelerated phase duration
 \\\texttt{ma\_gem\_yr\_max} -- the maximum accelerated phase duration
 \\\texttt{ma\_gem\_adapt\_dgemyr} -- the (minimum) fractional increase in duration each cycle (or 1.0 yr, whichever is greater)
-\\ A reasonable set of parameters:
-\vspace{-1mm}\begin{verbatim}
+\vspace{1mm}
+
+A reasonable set of parameters would be:
+\vspace{-1mm}\small\begin{verbatim}
 ma_gem_notyr=10
 ma_gem_yr=10
 ma_gem_yr_max=990
@@ -12898,12 +12954,12 @@ ma_gem_adapt_dpCO2dt=0.10
 ma_gem_adapt_DpCO2=0.01
 ma_gem_adapt_auto=.true.
 ma_gem_adapt_auto_unlimitedGEM=.false.
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 
 \end{enumerate}
 \vspace{2mm}
 
-Finally ... you will need a \textit{base-config} that has \texttt{GEMlite} enabled.
+\noindent Finally ... you will need a \textit{base-config} that has \texttt{GEMlite} enabled.
 This actually requires nothing more than the addition of a couple of lines (to a \textit{base-config} file):
 \vspace{-1mm}\begin{verbatim}
 ma_flag_gemlite=.TRUE.
@@ -12923,19 +12979,126 @@ The \textbf{most important} thing is to ensure you are not seriously degrading m
 \\\textbf{Test} different assumptions of how the time-stepping phases are scheduled and compare (of possible) against a full experiment in which \texttt{GEMlite} is not used.
 
 It is important to recognize that when the model switches into the GEM phase, it assumes all ocean tracer gradients are fixed, and updates only ocean composition as a whole according to weathering vs sedimentation imbalance (and also tries to re-equilibrium ocean and atm). As part of this, the flux to the sediments is taken from the average of the last year of the preceding normal phase, and fixed. This also means that the d13C of the CaCO3 deposited to the sediments is fixed ... even if the ocean d13C is being updated and changing ... So, basically you lose the feedback that leads to d13C converging as sinks balance (weathering and volcanic) inputs\footnote{Adjusting the fluxes themselves during the GEM intervals would break the underlying assumption inherent in the acceleration approximation.}.
-\\The solution is to not run in the GEM phase for such long intervals -- instead giving the normal phase a chance to make a brief update of ocean gradients and also d13C of export flux. BUT, if pCO2 hardly changes, \textit{c}GENIE runs the risk of staying in the GEM phase for ever (ish)!
-\\ A further option:
-\vspace{-1mm}\begin{verbatim}
-gem_adapt_auto_unlimitedGEM
-\end{verbatim}\vspace{-1mm}
-sets whether GEM is allowed an unlimited phase duration or not. By default it is \texttt{.false.}. This means that the maximum GEM duration is limited to the normal \texttt{gem\_yr} parameter. Also, if excessive (pCO2) drift occurs, the model will immediately switch to the normal phase.
 
+The solution is to not run in the GEM phase for such long intervals -- instead giving the normal phase a chance to make a brief update of ocean gradients and also d13C of export flux. BUT, if pCO2 hardly changes, \textit{c}GENIE runs the risk of staying in the GEM phase for ever (ish)!
+
+\pagebreak 
+
+A further option: \texttt{gem\_adapt\_auto\_unlimitedGEM} sets whether GEM is allowed an unlimited phase duration or not. By default it is \texttt{.false.}. This means that the maximum GEM duration is limited to the normal \texttt{gem\_yr} parameter. Also, if excessive (\(pCO_{2}\)) drift occurs, the model will immediately switch to the normal phase.
+
+\vspace{1mm}
 By default then:
 \begin{itemize}
         \item \texttt{gem\_notyr} specifies a MINIMUM duration for a normal phase..
         \item \texttt{gem\_yr} specifies a MAXIMUM duration for a GEM phase.
 \end{itemize}
+\vspace{1mm}
 Values of \texttt{gem\_yr} much less than 100 are not advisable as you will not reestablish a new equilibrium gradient of tracers in the ocean in that time.
+
+%------------------------------------------------
+%
+\newpage
+\subsubsection{2D(!) weathering}\label{2Dweathering}
+\vspace{1mm}
+
+\textbf{ROKGEM} contains one 0D and two 2D weathering schemes. In the 0D scheme, prescribed, global baseline weathering fluxes from terrestrial carbonates and silicates (scaled according to climate conditions if chosen) are distributed across coastal grid cells according to calculated run-off. In 2D weathering schemes, weathering fluxes are a function of local run-off and are calculated for specific lithologies. For each lithology its abundance in each land grid cell as well as the scaling factor with run-off need to be prescribed. Furthermore, the relative contributions of the weathering of each lithology to the terrestrial fluxes of Ca and Si have to be specified. The resulting weathering fluxes can then be scaled to achieve desired total terrestrial inputs of \(Ca^{2+}\) and alkalinity, and altered according to temperature and plant productivity.
+
+Two 2D weathering schemes exist, \texttt{GEM\_CO2} based on the Global Erosion Model for CO2 fluxes (\textit{Amiotte Suchet and Probst} [1995]\footnote{Amiotte-Suchet, P., Probst, J. L. (1995). A global model for present-day atmospheric/soil CO2 consumption by chemical erosion of continental rocks (GEM-CO2). Tellus B, 47(1-2), 273-280.}) and \texttt{GKWM}, based on the Gibbs and Kump Weathering Model (\textit{Bluth and Kump} [1994]\footnote{Bluth, G. J., Kump, L. R. (1994). Lithologic and climatologic controls of river chemistry. Geochimica et Cosmochimica Acta, 58(10), 2341-2359.}; \textit{Gibbs and Kump} [1994]\footnote{Gibbs, M. T., Kump, L. R. (1994). Global chemical erosion during the last glacial maximum and the present: sensitivity to changes in lithology and hydrology. Paleoceanography, 9(4), 529-543.}; \textit{Gibbs et al.} [1999]\footnote{Gibbs, M. T., Bluth, G. J., Fawcett, P. J., Kump, L. R. (1999). Global chemical erosion over the last 250 my; variations due to changes in paleogeography, paleoclimate, and paleogeology. American journal of Science, 299(7-9), 611-651.}). These two weathering models primarily differ in the assumed functionality between runoff and weathering flux, the underlying distribution of lithologies and whether all granites are treated equally or are divided into felsic and acidic granites.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Each weathering scheme requires consistent sets of lihtological abundance maps (one map for each lithology) and weathering parameters specific to the assumed functionality between weathering fluxes and run-off and lithology abundances. These input files (for the pre-industrial Earth system) are provided in: \textsf{\footnotesize genie\_rokgem/data/input/}
+
+\vspace{1mm}
+In order to activate either of the the 2D weathering schemes, ‘\texttt{GEM\_CO2}’ or \texttt{‘GKWM’},  the respective input folders have to be set in the \textit{user-config}:
+\vspace{-1mm}\small\begin{verbatim}
+rg_par_weathopt='GEM_CO2'  #or 'GKWM' 
+rg_par_lith_data='GEM_CO2' #or 'GKWM' 
+\end{verbatim}\normalsize\vspace{-1mm}
+(as an example for ‘\texttt{GEM\_CO2}’).
+
+\begin{itemize}[noitemsep]
+\item \texttt{rg\_par\_weathopt} -- prescribes which \textbf{ROKGEM} subroutine is used to calculate the weathering flux, as well as the name of the file which contains the names of all relevant lithology abundance maps and the file with the corresponding weathering parameters. 
+\item \texttt{rg\_par\_lith\_data} -- provides the name of the folder which contains the lithology abundance map. (And optionally, also: \texttt{rg\_par\_lith\_data\_2} and \texttt{rg\_par\_lith\_data\_3}, all strings will be concatenated by \textbf{ROKGEM}.)
+\end{itemize}
+
+\vspace{1mm}
+The provided lithology maps might not exactly match the \textbf{muffin} land-sea-mask. With the following to parameters, the lithology maps can be trimmed to the \textbf{muffin} land area and the remaining lithology abundances can be re-scaled to preserve the total amount of each weathered lithology:
+\vspace{-1mm}\small\begin{verbatim}
+rg_truncate_to_land=.true. #or .false.
+rg_scale_to_landarea=.true. #or .false.
+\end{verbatim}\normalsize\vspace{-1mm}
+It can then be chosen whether the weathering fluxes calculated based on run-off and weathering parameters should be scaled:
+\vspace{-1mm}\small\begin{verbatim}
+rg_calibrate_weath=.true. #or .false.
+\end{verbatim}\normalsize\vspace{-1mm}
+and how this scaling should be done:
+\vspace{-1mm}\small\begin{verbatim}
+rg_calibrate_weather_GEM_CO2_CaCO3=1.122913136 #example value
+rg_calibrate_weather_GEM_CO2_CaSiO3=0.484189947 #example value
+\end{verbatim}\normalsize\vspace{-1mm}
+or:
+\vspace{-1mm}\small\begin{verbatim}
+rg_calibrate_weather_GKWM_CaCO3=1.122913136 #example value
+rg_calibrate_weather_GKWM_CaSiO3=0.484189947 #example value
+\end{verbatim}\normalsize\vspace{-1mm}
+
+Furthermore, additional dynamic scaling according to environmental conditions can be applied, either as a global average using the same parameters as in the 0D weathering scheme, or spatially explicit using the following parameters:
+\vspace{-1mm}\small\begin{verbatim}
+rg_opt_calibrate_T_2D=.true. #or .false., temperature
+rg_opt_calibrate_R_2D=.true. #or .false., run-off
+rg_opt_calibrate_P_2D=.true. #or .false., productivity
+\end{verbatim}\normalsize\vspace{-1mm}
+
+If any of these environmental scalings are used, the folders containing the reference maps and base patterns for the calibration need to be provided, e.g.:
+\vspace{-1mm}\small\begin{verbatim}
+rg_par_ref_T0_2D=’’
+rg_par_data_T0_2D=’’
+\end{verbatim}\normalsize\vspace{-1mm}
+
+Finally, the calculated weathering fluxes can be altered by specifying local weathering regimes (i.e. whether local weathering is energy or transport limited). This requires the respective option to be set ‘true’ and the name of the weathering regime mask:
+\vspace{-1mm}\small\begin{verbatim}
+rg_opt_weath_regimes=.true. #or .false.
+rg_weath_regimes=’’
+\end{verbatim}\normalsize\vspace{-1mm}
+
+2D maps of the weathering fluxes are generated as \textbf{ascii} or \textbf{netCDF} files if the following options are set to \texttt{.true.}:
+\vspace{-1mm}\small\begin{verbatim}
+rg_opt_2d_ascii_output=.true.
+rg_opt_2d_netcdf_output=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent There are several ways in which the 2D weathering schemes can be adapted to Earth system configurations other than the pre-industrial.
+
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \textbf{Scaling the total Ca and Si input from weathering.}
+\\The 2D weathering schemes extrapolate weathering fluxes from local run-off and lithology abundance and characteristics. The resulting global fluxes of \(Ca^{2+}\), DIC and alkalinity can be scaled by constants which are then applied to the local inputs transferred to \textbf{BIOGEM}.
+\vspace{1mm}
+\item \textbf{Changing weathering parameters.}
+\\The constants which individualize the parameterized relationship between run-off and weathering flux for each lithology, as well as the relative abundance of carbonates and silicates in each lithology, are specified in an \textbf{ASCII} file named: \textsf{\footnotesize rg\_par\_weathopt} + \textsf{\footnotesize \_consts.dat} in \textsf{\footnotesize cgenie.muffin/genie-rockgem/data/input}, and with \textsf{\footnotesize rg\_weathop} being the identifier of the chosen 2D weathering scheme.
+\\The content of the default files provided for pre-industrial Earth system configurations is taken from Table 2 in \textit{Colbourn et al.} [2013]\footnote{Colbourn, G., Ridgwell, A., Lenton, T. M. (2013). The rock geochemical model (RokGeM) v0. 9. Geoscientific Model Development, 6(5), 1543-1573.}.
+\vspace{1mm}
+\item \textbf{Providing different lithology abundance maps.}
+\\New lithology abundance maps require the creation of a new folder in: \textsf{\footnotesize cgenie.muffin/genie-rockgem/data/input/} named according to the format: \textsf{\footnotesize lithologies\_} + \textsf{\footnotesize rg\_par\_lith\_data}\footnote{And similarly for \textsf{\footnotesize rg\_par\_lith\_data\_2}, \textsf{\footnotesize rg\_par\_lith\_data\_3}, ...} + \textsf{\footnotesize resolution}, with the \textsf{\footnotesize lith\_data} parts of the name matching those prescribed in the \textit{user-config} file and \textsf{\footnotesize resolution} being the horizontal resolution of the maps, written e.g. as \textsf{\footnotesize 36x36}\footnote{The horizontal resolutions of the maps and the \textbf{muffin} configuration have to match!}.
+\\This folder should then contain one map for each lithology covered by the chosen 2D weathering scheme as an ASCII (\textsf{\footnotesize .dat}) file.
+\end{enumerate}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent By default, the 2D weathering schemes only calculate weathering fluxes of \(Ca^{2+}\), alkalinity and DIC (and including \(^{13}C\) and \(^{14}C\) ). Any other tracer needs to be added to the 2D weathering schemes before their marine inputs can be calculated based on the specified lithology maps.
+
+For example, \(Os\), \(^{187}Os\) and \(^{188}Os\) were added to the 2D weathering schemes with the simplifying assumption that \(Os\) supply from weathering scales to run-off via the same functionality that is parameterized for the weathering DIC fluxes. The local weathering fluxes of \(Os\) and its isotopes can then be calculated by scaling the local rates of carbonate and silicate weathering with the prescribed abundances of \(Os\), \(^{187}Os\) and \(^{188}Os\) in the respective lithology.
+
+These abundances are prescribed in the \textsf{\footnotesize cgenie.muffin/genie-rokgem/data/input/rg\_par\_weathopt} + \textsf{\footnotesize \_consts.dat} input files, which have been extended to include the abundance of \(Os\) (column 5), the \(^{187}Os/^{188}Os\) of \(Os\) in this lithology (column 6), and its \(^{188}Os/^{192}Os\) (column 7). For the simulation of Os weathering fluxes with a 2D weathering scheme shown in \textit{Adloff et al.} (2021), it was assumed that \(Os\) is predominantly derived from basalt and organic shale weathering. The \(^{187}Os/^{188}Os\) signatures of these lithologies were derived from \textit{Lu et al.} (2017)\footnote{Lu, X., Kendall, B., Stein, H. J., Hannah, J. L. (2017). Temporal record of osmium concentrations and 187Os/188Os in organic-rich mudrocks: Implications for the osmium geochemical cycle and the use of osmium as a paleoceanographic tracer. Geochimica et Cosmochimica Acta, 216, 221-241.} and \textit{Dubin and Ehrenbrink} (2015)\footnote{Dubin, A., Peucker-Ehrenbrink, B. (2015). The importance of organic-rich shales to the geochemical cycles of rhenium and osmium. Chemical Geology, 403, 111-120.}, respectively, and the \(Os\) abundances were set in such a  way that the total Os flux and its \(^{187}Os/^{188}Os\) are equal to those prescribed in the 0D weathering simulations of \textit{Adloff et al.} (2021).
 
 %------------------------------------------------
 
@@ -14034,7 +14197,7 @@ least 2-3 new parameter definitions for each PFT.
 \section{Data save levels}
 
 \begin{table}[h]
-\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-slices}}}
+\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-slices}}\label{tab:timeslicelevels}}
 \begin{tabular}{|l||p{0.2cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|}\hline
 \textbf{Data category} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 14 & 15 & 16 & 99 \\\hline
 \hline
@@ -14060,7 +14223,6 @@ diag\_tracer & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\
 \textit{redox} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
 \textit{GLOBAL} & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\\hline
 \end{tabular}
-\label{tab:timeslicelevels}
 \end{table}
 
 \noindent \(-\) == not saved\\
@@ -14068,7 +14230,7 @@ diag\_tracer & -- & -- & -- & -- & -- & -- & \(\times\) & \(\times\) & \(\times\
 \(\otimes\) == generically saved if \textbf{SEDGEM} is selected
 
 \begin{table}[h]
-\textbf{\caption{Description of data categories -- \textit{time-slices}}}
+\textbf{\caption{Description of data categories -- \textit{time-slices}}\label{tab:timeslicekey}}
 \begin{tabular}{|p{2.5cm}|p{11.75cm}|}\hline
 \textbf{Data category} & \textbf{Description of associated data saved} \\\hline
 \hline
@@ -14090,11 +14252,10 @@ diag\_geochem & -- \\\hline
 diag\_proxy & -- \\\hline
 diag\_tracer & -- \\\hline
 \end{tabular}
-\label{tab:timeslicedescription}
 \end{table}
 
 \begin{table}[h]
-\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-series}}}
+\textbf{\caption{Categories of saved data by save level (\#) -- \textit{time-series}}\label{tab:timeserieslevels}}
 \begin{tabular}{|l||p{0.2cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|p{0.25cm}|}\hline
 \textbf{Data category} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 14 & 15 & 16 & 99 \\\hline
 \hline
@@ -14114,7 +14275,6 @@ diag\_bio & -- & -- & -- & \(\times\) & -- & \(\times\) & -- & \(\times\) & \(\t
 diag\_geochem & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times\) & -- & \(\times\) & -- & -- & \(\times\) & \(\times\) & \(\times\) & \(\times\)  \\\hline
 \textit{diag\_redox\_old} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\\hline
 \end{tabular}
-\label{tab:timeserieslevels}
 \end{table}
 
 %----------------------------------------------------------------------------------------
