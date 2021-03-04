@@ -10820,9 +10820,9 @@ In this HOW-TO, ...
 \vspace{2mm}
 
 To diagnose water mass age, a single diagnostic tracer is required -- \texttt{ocn\_colr} (tracer number \(48\)). Once selected (in the \textit{base-config}), you only then need set\footnote{(\texttt{bg\_ctrl\_force\_ocn\_age1} to distinguish it from the earlier scheme (\texttt{bg\_ctrl\_force\_ocn\_age}) that required 2 tracers.} (\textit{user-config}):
-\vspace{-2pt}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_ctrl_force_ocn_age1=.true.
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 
 The time-series output appears as file \textsf{\footnotesize biogem\_series\_misc\_col\_age.res}. 3D netCDF output is provided via the variable \texttt{misc\_col\_Dage} ('color tracer; ventilation age') with units of \(yr\).
 
@@ -10836,14 +10836,18 @@ The advantage of this simplified age tracer (other than its simplicity!!!) is th
 \subsection*{Add a dual-tracer water mass age  (original, more complicated schemes)}
 \vspace{2mm}
 
-Water masses (and hence something of ocean circulation) can be tagged with a color (dye) tracer. However, on its own, this can tell you nothing about water mass age. A second color tracer can be added, however, and configured in such a way that by analysing the ratio of the two tracers, water mass age (time since a parcel of water last saw the surface ocean on average).
+[Note that this is pretty much entirely superseded by the previously-described, single-tracer alternative.]
+
+\vspace{1mm}
+\noindent Water masses (and hence something of ocean circulation) can be tagged with a color (dye) tracer. However, on its own, this can tell you nothing about water mass age. A second color tracer can be added, however, and configured in such a way that by analysing the ratio of the two tracers, water mass age (time since a parcel of water last saw the surface ocean on average).
 
 First off, you are going to need a \textit{base-config} that defines both color tracers. An example of this (but with no biology or carbon cycle and a modern configuration) is:
-\vspace{-2pt}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 cgenie.eb_go_gs_ac_bg.worjh2.rb
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 Obviously, this can be adapted or the 2 lines selecting the 'red' and 'blue' color tracers, copied over into a different \textit{base-config} (but remembering that the total number of ocean tracers selected then increases by 2).
 
+\vspace{1mm}
 The way this is going to work is:
 
 \begin{enumerate}
@@ -10863,26 +10867,27 @@ The way this is going to work is:
 \vspace{2mm}
 
 Water mass age tracing can be configured quite simply, and with the tracer concentration manipulations carried out automatically, as follows. As \textit{base-config} file with both red and blue color tracers defined is still required, but  rather than have to define and use a set of \textit{forcings} (and associated forcing configuration), a single parameter is added in the \textit{user-config} file:
-\vspace{-2pt}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_ctrl_force_ocn_age=.true.
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 This will automatically create the age tracer and additional explicitly output (in netCDF) both the total age of a water parcel, as well as the age relative to the surface (ventilation age).
 
 In this methodology, in the netCDF output, the concentration ratio of blue/red, should be 'age' -- the mean time that a parcel of water was last at the surface.
 
-In comparison, in the original (and still valid way of implementing water mass age tracing), 2 surface ocean \textit{forcings} need be specified in order to create the combined age tracer. An example forcing is provided: \textit{forcing}: \texttt{pyyyyz.Rcolr\_Rcolb}, which is yhen configured, for a 10,000 year run in this example, by adding the following 2 parameter settings in the \textit{user-config}:
-\vspace{-2pt}\begin{verbatim}
+In comparison, in the original (and still valid way of implementing water mass age tracing), 2 surface ocean \textit{forcings} need be specified in order to create the combined age tracer. An example forcing is provided: \textit{forcing}: \texttt{pyyyyz.Rcolr\_Rcolb}, which is then configured, for a 10,000 year run in this example, by adding the following 2 parameter settings in the \textit{user-config}:
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_ocn_force_scale_val_49=10000.0
 bg_par_ocn_force_scale_time_49=10000.0
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 
 \noindent (If the experiment duration is longer than 10,000 years, the parameter values need be adjusted accordingly.)
 
+\vspace{1mm}
 Example \textit{user-config} files for both approaches are provided:
-\vspace{-2pt}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 EXAMPLE.worjh2.NONE_age.SPIN
 EXAMPLE.worjh2.NONE_colage.SPIN
-\end{verbatim}\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 
 \noindent Note that the automatic approach (\texttt{EXAMPLE.worjh2.NONE\_colage.SPIN}) will handle experiments started from a \textit{re-start} (but not for the manual approach). The only advantage to the manual approach (\texttt{EXAMPLE.worjh2.NONE\_age.SPIN}), which is provided for backwards code/experiment compatibility, is that it is possible to specify a surface age for a specific region, e.g. North Atlantic, meaning that the ventilation age is the time since a parcel of water last saw the North Atlantic rather than anywhere at the surface (as in the automatic approach).
 
@@ -10894,17 +10899,18 @@ EXAMPLE.worjh2.NONE_colage.SPIN
 
 Preformed tracers are selected via 2 modifications:
 
-\vspace{2mm}
 \begin{enumerate}
 \vspace{1mm}
 \item By setting the parameter:
-\\\texttt{bg\_ctrl\_bio\_preformed=.true.}
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_bio_preformed=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
 \vspace{1mm}
 \item By including sufficient/appropriate color tracers in the \textit{base-config}.
 \end{enumerate}
 \vspace{2mm}
 
-A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
+\noindent A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
 
 \begin{table}[ht]
 %\caption{Preformed tracers} % title of Table
@@ -10932,17 +10938,25 @@ Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ 
 
 \noindent (Obviously, you need to have the respective ocean tracer selected.)
 
-One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem tracer.
+One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem. tracer.
 
-For the \(C_{soft}\) tracer, you also need to select the option:
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
-\texttt{bg\_ctrl\_bio\_preformed=.true.}
+\noindent For the \(C_{soft}\) tracer, in addition to the option:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_bio_preformed=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+you also need to ensure that the redox diagnostics are saved\footnote{Unless you select a data save option that already includes this. But safest is to explicitly set this \texttt{true}.}:
+\vspace{-1mm}\small\begin{verbatim}
+ctrl_bio_remin_redox_save=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
 
-\noindent (even if you do not select a data save option that includes the redox diagnostics; \linebreak \texttt{ctrl\_bio\_remin\_redox\_save=.true.}).
-
-You can also specify whether the \(C_{soft}\) tracer contains just the carbon remineralizated from \(POC\), or from both \(POC\) and \(DOC\). By default,  \(DOC\) is included in the \(C_{soft}\) tracer field. To exclude it:
-
-\texttt{ctrl\_bio\_preformed\_CsoftPOConly=.true.}
+You can also specify whether the \(C_{soft}\) tracer contains just the carbon remineralizated from \(POC\), or from both \(POC\) and \(DOC\). By default,  \(DOC\) is included in the \(C_{soft}\) tracer field. To exclude \(DOC\) from the regenerated \(DIC\) field, set:
+\vspace{-1mm}\small\begin{verbatim}
+ctrl_bio_preformed_CsoftPOConly=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
 
 %------------------------------------------------
 %
@@ -10960,35 +10974,39 @@ At its most simplest, the method sets a passive tracer (i.e., affected by ocean 
 \vspace{1mm}
 
 A full matrix can be diagnosed within a single run. To do so, first add the following six "colour" tracers selected to the \textit{base-config} file:
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 gm_ocn_select_57=.true.
 gm_ocn_select_58=.true.
 gm_ocn_select_59=.true.
 gm_ocn_select_60=.true.
 gm_ocn_select_61=.true.
 gm_ocn_select_62=.true.
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+\noindent (and remembering to increase the total number of selected ocean tracers). 
 
-\noindent (and remembering to increase the total number of selected ocean tracers). Then in the \textit{user-config} file, set the following parameters values in order to diagnose a transport matrix:
+Then in the \textit{user-config} file, set the following parameters values in order to diagnose a transport matrix:
 
-\vspace{2mm}
 \begin{enumerate}
 \vspace{1mm}
 \item By ensuring preformed tracers are not implemented:
-\\\texttt{bg\_ctrl\_bio\_preformed=.false.}
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_bio_preformed=.false.
+\end{verbatim}\normalsize\vspace{-1mm}
 \vspace{1mm}
-\item Select the transport matrix flag.
-\begin{verbatim}
+\item Select the transport matrix flag:
+\vspace{-1mm}\small\begin{verbatim}
 bg_ctrl_data_diagnose_TM=.true.
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
 \item Select the year to start diagnosing the matrix. The matrix requires the same number of years to diagnose as there are depth levels in the configuration, e.g., 16 years with a 16-level configuration.
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_data_TM_start=9980
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
 \item Select the averaging interval. Setting to 1 will give one annual average matrix, 4 will give four seasonally averaged matrices and 12 will give monthly averaged matrices.
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_data_TM_avg_n=1
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
 \end{enumerate}
 \vspace{2mm}
 
@@ -10997,19 +11015,19 @@ bg_par_data_TM_avg_n=1
 \begin{itemize}
 \vspace{1mm}
 \item The "colour" tracers are used for other purposes such as preformed tracers. Diagnosing preformed tracers at the same time probably isn't a good idea.
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_ctrl_bio_preformed=.false.
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
 \item If you want to diagnose seasonal or monthly matrices, ensure you have seasonal variability otherwise you get will get a number of identical matrices:
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 ea_dosc=.true.
 go_dosc=.true.
 gs_dosc=.true.
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
 \item If you want to diagnose seasonal or monthly matrices, you may want to save other output at the same intervals by setting the following (this is not the same as the matrix averaging parameter! Set to 24 for seasonal or 8 for monthly):
-\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_data_save_slice_n=24
-\end{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
 \end{itemize}
 
 \noindent Lastly, \textbf{biogem} needs to run with a 1:1 time-step ratio with \textbf{goldstein}. You can either edit the \texttt{runmuffin.sh} script yourself or better, use the \texttt{runmuffin.TM.sh} script which sets this ratio to 1 automatically.
@@ -11020,12 +11038,10 @@ The transport matrix data will be written to a netCDF file named \texttt{transpo
 
 \subsubsection{Loading the Transport Matrix in MATLAB}
 
-To load the Transport Matrix into MATLAB, copy \texttt{transport\_matrix\_COO.nc} to a directory MATLAB can see. Use the  \texttt{load\_genie\_matrix.m}  script from \url{www.github.com/derpycode/muffindata/Transport_Matrix} to read the file and create the matrix in MATLAB and save it the matrices to a file naed whatever you specified. A matrix is conventionally called \texttt{A}. If there are multiple matrices, they are saved under one file as \texttt{A1}, \texttt{A2} etc...
-
-\begin{verbatim}
+To load the Transport Matrix into MATLAB, copy \texttt{transport\_matrix\_COO.nc} to a directory MATLAB can see. Use the  \texttt{load\_genie\_matrix.m}  script from \url{www.github.com/derpycode/muffindata/Transport_Matrix} to read the file and create the matrix in \textbf{MATLAB} and save the matrices to a file  whatever you specified. A matrix is conventionally called \texttt{A}. If there are multiple matrices, they are saved under one file as \texttt{A1}, \texttt{A2} etc... e.g.
+\vspace{-1mm}\small\begin{verbatim}
 load_genie_matrix ( 'transport_matrix_COO.nc' , 'output_filename')
-\end{verbatim}
-
+\end{verbatim}\normalsize\vspace{-1mm}
 \noindent The script also saves a file called \texttt{matrix\_vars.mat} containing metadata:
 
 \vspace{2mm}
@@ -11581,7 +11597,7 @@ The ocean iodine cycle can then be configured in several different ways and leve
 \subsubsection{Basic ('abiotic') iodine cycle}
 \vspace{1mm}
 
-This section outlines the most trivial possible configurtaion of the marine iodine cycle, in which the only processes are:
+This section outlines the most trivial possible configuration of the marine iodine cycle, in which the only processes are:
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item Reduction if IO3- to I- under dysoxic conditions
@@ -11638,6 +11654,7 @@ This section outlines the next component of the marine iodine cycle, involving p
 \item  remineralization/release of I\(^{-}\)
 \end{enumerate}
 
+\vspace{1mm}
 \noindent The way this cycling in the model works is as follows: First, as plankton biomass is created, alongside C and P (and if selected N, Fe and other trace elements), IO\(^{-}_{3}\) is taken up by the cell, in a specified proportion to carbon (see below). Of this biomass, a proportion is assumed to be exported in particulate organic matter (POM) form beneath the euphotic zone, with the remainder converted to labile dissolved organic matter (DOM) (see: \textit{Ridgwell et al.} [2007a] for details). When either POM or DOM is remineralized and elemental constituents released, rather than returning IO\(^{-}_{3}\) back to solution, it is assumed that the dissolved iodine is in the form of I\(^{-}\). (This also requires an accounting of release of O2, as IO\(^{-}_{3}\) is taken up by the cell and assume to be instantaneously internally reduced.) The result is: (i) a progressive transformation IO\(^{-}_{3}\) \(\rightarrow\) I\(^{-}\) in the surface ocean as DOM is continually created and destroyed, and (ii) a 'nutrient-like' enrichment of I\(^{-}\) in the sub-surface as a consequence of the remineralization of POM.
 
 An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worjh2.PO4Ibio.SPIN} -- is given. In this, the available parameters (listed under the heading '\texttt{\# --- MISC ---}' and '\texttt{\#\#\# IODINE CYCLE CONTROLS \#\#\#}') controlling the iodine cycle are:
@@ -11660,6 +11677,19 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Published configurations}
+\vspace{1mm}
+
+\noindent 
+
+
+
+
+
 
 %------------------------------------------------
 
@@ -11891,6 +11921,33 @@ bg_par_detballastcoeff_file
 (again, akin to the methodology for setting the CaCO3:POC export rain ratio (\ref{CaCO3:POCrainratio})).
 
 Note that ballasting is combined with an e-folding (or other) fixed profile remineralization schemes\footnote{Although in a sense, the remineralization of POC is not 'fixed' in that it does not have a predetermined profile but instead is set by the changing flux of CaCO3, opal and lithogenic fluxes with depth, \texttt{bg\_ctrl\_bio\_remin\_POC\_fixed} should still be set to \texttt{.true.} (the default).}. Ballasting is calculated with respect to the 2nd (recalcitrant) fraction of POC only. The remaining POC export is be degraded by an alternative algorithm, which by default, is an e-folding decay (see previously for more and alternatives). The fraction of initial export assigned to ballasting vs. 'free' POC is calculated according to the available exported ballast flux.
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Impose a fake 'sea floor' to remineralization}
+\vspace{1mm}
+
+Why ... ?
+
+\noindent There may be reasons ... but I am not going to explain.
+
+By default, \textbf{BIOGEM} takes the physical ocean grid ('k1 file') and uses it to determine the maximum the depth that particles can sink (and be remineralized) and hence the depth of the sea-floor. At that bottom ocean layer, particles that have not been remineralized/dissolved in the water column can be passed to \textbf{SEDGEM} if selected, remineralized and returned to the overlying ocean, or even remineralized and returned directly to the surface.
+
+As an alternative, there is an option to tell \textbf{BIOGEM} that the sea-floor is 'shallower' than the actual physical ocean at any particular grid point. This would result in less total remineralized/dissolved occurring in the water column and a larger flux passed to the sediments (\textbf{SEDGEM}) (if selected). The option is set by\footnote{'Vgrid' for Virtual grid.}:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_force_Vgrid=.true.
+\end{verbatim}\normalsize\vspace{-1mm}
+This requires that a file is present in \footnotesize\textsf{BIOGEM/data/input }\normalsize or  \footnotesize\textsf{genie-paleo/[CONFIG]}\normalsize, depending no how you have configured the boundary conditions. This file must be named according the parameter setting:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_force_Vgrid_file='FILE'
+\end{verbatim}\normalsize\vspace{-1mm}
+(or \textit{vice versa}) where \footnotesize\textsf{FILE }\normalsize is the filename. 
+
+This file contains the replacement grid of 'k' levels (as integer values). Note that this file differs slightly from the format of the 'k1' file loaded into \textbf{GOLDSTEIN} etc. as it has no boundary/padding rows and columns, and has the same dimension (\(lon\times lat\)) as the physical grid. It does not matter what land grid points are marked by (a zero will do). If a deeper 'k' level is given in the alternative file as compared to the true physical grid, the depth of the true physical grid is used (so the fake ocean floor can only be shallower (or the same), not deeper, than the true ocean grid).  
+
+As to 'why' you might want to use this ...
+
 
 %------------------------------------------------
 
