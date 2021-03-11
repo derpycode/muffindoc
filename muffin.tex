@@ -2810,8 +2810,6 @@ The more recent/current incarnation of IPCC future scenarios revolves not around
 
 A series of RCP scenarios for how atmospheric \(CO_{2}\) concentrations may evolve with time are provided. Each actually starts at year 1765 and hence incorporates the historical transient. They can hence be used with an experiment starting at 1765 and \textit{re-starting} from a steady-state preindustrial \textit{spin-up}. Or they can be jumped into at ay point, and e.g. experiments started at year 2010, when only the year 2010 onwards part of the \(CO_{2}\) restoring \textit{forcing} is utilized. The RCP \textit{forcings} currently provided are:
 
-\newpage 
-
 \vspace{2pt}
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
@@ -10805,13 +10803,18 @@ There is some overlap with the FAQ Chapter, so please read all three!
 
 %------------------------------------------------
 
-\section{HOW-TO ... diagnose how the model works}
+\section{HOW-TO ... diagnose how the system works}
 
-In this HOW-TO, ...
+This HOW-TO will:
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\item Implement a (single-tracer) water mass age tracer.
+\item Implement a (dual-tracer) water mass age tracer. (Old scheme.)
+\item Implement 'preformed' and other diagnostic biogeochemical cycling tracers.
+\end{enumerate}
 
-
-
-
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
 
 %------------------------------------------------
 %
@@ -10829,6 +10832,9 @@ The time-series output appears as file \textsf{\footnotesize biogem\_series\_mis
 The way it works is that initially the ocean everywhere has zero age\footnote{Hence, the total spin-up time needs to exceed the maximum age, for an ocean circulation at steady-state, or a run duration a factor several times this for a \textit{spin-up} from cold.}. Then each time-step, the water in every interior (excepting those at the surface) ocean grid cell is aged by the time-step duration. The ocean surface is continually restored to zero (age). A \textit{re-start} age distribution can be directly re-started from.
 
 The advantage of this simplified age tracer (other than its simplicity!!!) is that it frees up the numerical 'blue' tracer for other purposes.
+
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
 
 %------------------------------------------------
 %
@@ -10891,13 +10897,16 @@ EXAMPLE.worjh2.NONE_colage.SPIN
 
 \noindent Note that the automatic approach (\texttt{EXAMPLE.worjh2.NONE\_colage.SPIN}) will handle experiments started from a \textit{re-start} (but not for the manual approach). The only advantage to the manual approach (\texttt{EXAMPLE.worjh2.NONE\_age.SPIN}), which is provided for backwards code/experiment compatibility, is that it is possible to specify a surface age for a specific region, e.g. North Atlantic, meaning that the ventilation age is the time since a parcel of water last saw the North Atlantic rather than anywhere at the surface (as in the automatic approach).
 
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+
 %------------------------------------------------
 %
 \newpage
 \subsection*{Include 'preformed' tracers}
-\vspace{2mm}
+\vspace{1mm}
 
-Preformed tracers are selected via 2 modifications:
+Preformed tracers are selected via 2 \textit{user-config} modifications:
 
 \begin{enumerate}
 \vspace{1mm}
@@ -10906,18 +10915,18 @@ Preformed tracers are selected via 2 modifications:
 bg_ctrl_bio_preformed=.true.
 \end{verbatim}\normalsize\vspace{-1mm}
 \vspace{1mm}
-\item By including sufficient/appropriate color tracers in the \textit{base-config}.
+\item By including sufficient/appropriate 'color' (numerical) tracers in the \textit{base-config}.
 \end{enumerate}
 \vspace{2mm}
 
-\noindent A total of 10 generic color tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set, represent:
+\noindent A total of 10 generic 'color' tracers are defined and can be selected (in the \textit{base-config}), from \texttt{io\_col0} (tracer number \#57) through \texttt{io\_col9} (tracer number \#66), and with the preformed tracer parameter set \texttt{true}, represent:
 
 \begin{table}[ht]
 %\caption{Preformed tracers} % title of Table
 %\centering % used for centering table
 \begin{tabular}{l l l} % left-hand alligned columns (3 columns)
 \hline\hline %inserts double horizontal lines
-Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ [0.5ex] % inserts table
+Ocean tracer number & Mnemonic & Represents the preformed version of the tracer \\ [0.5ex] % inserts table
 %heading
 \hline % inserts single horizontal line
 57 & \texttt{io\_col0} & \(DIC\) \\
@@ -10925,10 +10934,10 @@ Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ 
 59 & \texttt{io\_col2} & \(O_{2}\) \\
 60 & \texttt{io\_col3} & \(PO_{4}\) \\
 61 & \texttt{io\_col4} & \(NO_{3}\) \\
-62 & \texttt{io\_col5} & \(Fe\) (i.e. \(Fe^{3+}\)) or \(TDFe\) \\
+62 & \texttt{io\_col5} & \(Fe\) (i.e. \(Fe^{3+}\)) \uline{or} \(TDFe\) \\
 63 & \texttt{io\_col6} & \(SiO_{2}\) \\
 64 & \texttt{io\_col7} & \(\delta^{13}C\) of \(DIC\) \\
-65 & \texttt{io\_col8} & \(\Delta^{14}C\) (of \(DIC\)) \\
+65 & \texttt{io\_col8} & \(\Delta^{14}C\) (of \(DIC\)) \uline{or} \(\delta^{13}C\) of \(C_{soft}\) \\
 66 & \texttt{io\_col9} & \(C_{soft}\) \\
 [1pt] % [1ex] adds vertical space
 \hline %inserts single line
@@ -10939,10 +10948,6 @@ Ocean tracer number & Mnemonic & Represents the preformed version of tracer: \\ 
 \noindent (Obviously, you need to have the respective ocean tracer selected.)
 
 One can have a generic \textit{base-config}, with all 10 possible color tracers selected, and then only for the selected corresponding tracers will a preformed tracer be simulated and output generated. Or one can just select the specific color tracer corresponding to a selected biogeochem. tracer.
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
 
 \noindent For the \(C_{soft}\) tracer, in addition to the option:
 \vspace{-1mm}\small\begin{verbatim}
@@ -10957,12 +10962,107 @@ You can also specify whether the \(C_{soft}\) tracer contains just the carbon re
 \vspace{-1mm}\small\begin{verbatim}
 ctrl_bio_preformed_CsoftPOConly=.true.
 \end{verbatim}\normalsize\vspace{-1mm}
+(by default the parameter is \texttt{false} and \(DOC\) is also included in accounting for remineralization).
+
+Additionally, if \texttt{io\_col8}) is selected and radiocarbon (e.g. \texttt{io\_DIC\_14C}) \uline{is not}, then the \(\delta^{13}C\) of \(C_{soft}\) is accounted for.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Preformed tracer output is saved in both time-series and time-slice form.
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item In addition to the standard tracer output -- \textsf{\footnotesize biogem\_series\_ocn\_colx.res} (where \textsf{\footnotesize x} is one of \(0\) through \(9\)) -- time-series output is also saved under the files: \textsf{\footnotesize biogem\_series\_diag\_pre\_yy.res}, where \textsf{\footnotesize yy} is the preformed tracer short name. 
+\\For isotopes, the latter output provides values in units of per mill (\permille) as well as \(mol\). (The former, only as \(mol\) and concentrations.)
+\vspace{1mm}
+\item \textbf{netCDF} output also includes the basic tracer values (as both 2D and 3D) -- \textsf{\footnotesize ocn\_colx.res} (where \textsf{\footnotesize x} is one of \(0\) through \(9\)), and additionally, a series of (3D only) outputs: \textsf{\footnotesize diag\_pre\_yy}, where \textsf{\footnotesize yy} is the preformed tracer short name. For isotopes, \textsf{\footnotesize diag\_pre\_yy} variables are in units of per mill (\permille).\footnote{Note that the \(\delta^{13}C\) of \(C_{soft}\) is the isotopic value of the remineralized carbon, \uline{not} the contribution to \(\delta^{13}C\) of \(DIC\). See following section.}
+\end{itemize}
+\vspace{1mm}
+i.e. for both time-series and time-slice output, the \textsf{\footnotesize diag\_pre} forms of output are the recommended ones.
+
+\vspace{1mm}
+\noindent Note that technically, \(C_{soft}\) is not a 'preformed' tracer but rather a 'remineralized' tracer. However, for easy of grouping the primary color tracer output together, ti takes the same prefix as the other tracers in the saved variable notation.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent A variety of 'derived' output are also included (depending on tracer selection) in both \textit{time-series} and \textit{time-slice} formats. Most (if not all) of the \textit{time-series} variables are provided as a  sort of check of tracer integrity (and to save on further processing.)
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+
+\vspace{1mm}
+\item [\textbf{time-series}]:
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_13Csoft} -- \(\delta^{13}C\) of \(C_{soft}\)
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_13CsoftPLUSpre13C} -- \(\delta^{13}C\) of \(C_{soft}\) plus \(\delta^{13}C\) of preformed \(DIC\). 
+\\In the absence of \(CaCO_{3}\), this should be equal to (mean ocean) \(DIC\) \(\delta^{13}C\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_CsoftPLUSpreDIC} -- \(C_{soft}\) \uline{plus} preformed \(DIC\).
+\\In the absence of \(CaCO_{3}\), this should be equal to (mean ocean) \(DIC\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_O2PCsoftPLUSpreO2} -- \(C_{soft}\) converted to respired \(O_{2}\) via the \(C:O_{2}\) Redfield ratio, \uline{plus} preformed \(O_{2}\).
+\\This should be equal to (mean ocean) \(O_{2}\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_PCsoftPLUSprePO4} -- \(C_{soft}\) converted to regenerated \(PO_{4}\) via the \(C:PO_{4}\) Redfield ratio, \uline{plus} preformed \(PO_{4}\).
+\\This should be equal to (mean ocean) \(PO_{4}\).
+\end{enumerate}
+
+\vspace{1mm}
+\item [\textbf{time-slices}]:
+\begin{enumerate}[noitemsep]
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_O2sat} -- \(O_{2(sat)}\) -- \(O_{2}\) solubility calculated at every grid point using ambient (\(T,S\)).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_AOU} -- \(AOU\) -- estimated from  \(O_{2(sat)}\) minus  'real' \(O_{2}\) (\texttt{io\_O2}).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_AOU\_P} -- regenerated \(P\) -- estimated from \(AOU\) multiplied by the \(P:O_{2}\) Redfield ratio.
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_AOU\_P\_C} -- regenerated \(C\) -- estimated from \(AOU\) multiplied by the \(P:O_{2}\) Redfield ratio and then the \(C:P\) ratio.
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_AOU\_P\_C\_d13C} -- regenerated \(\delta^{13}C\) -- estimated from \(AOU\) multiplied by the \(P:O_{2}\) Redfield ratio and then the \(C:P\) ratio and then multiplied by \(\delta^{13}C\) of (overlying ocean) export \(POC\) ... to the moon!
+\\The isotopic value is 'diluted' in the proportion of regenerated \(C\) over \(DIC\). i.e. it is an estimate (from \(AOU)\) of the \(DIC\) \(\delta^{13}C\) contribution from respired carbon.
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_OU} -- 'real' oxygen utilization (\(OU\)) -- calculated as preformed \(O_{2}\) minus 'real' \(O_{2}\) (\texttt{io\_O2}).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_P} -- 'real' regenerated \(P\) -- calculated as actual \(PO_{4}\) (\texttt{io\_PO4}) minus preformed \(P\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_P\_C} -- regenerated \(C\) -- estimated as regenerated \(P\) multiplied by the \(C:P\) Redfield ratio.
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_P\_C\_d13C} -- regenerated \(\delta^{13}C\) -- estimated from regenerated \(P\) multiplied by the \(C:P\) Redfield ratio and then multiplied by \(\delta^{13}C\) of (overlying ocean) export \(POC\). 
+\\The isotopic value is 'diluted' in the proportion of regenerated \(C\) over \(DIC\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_C} -- regenerated \(C\) -- this is a simple copy of the \(C_{soft}\) tracer for completeness and is 'real' regenerated \(C\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_C\_d13C} -- regenerated \(\delta^{13}C\) -- perhaps a little pointlessly ... estimated from regenerated \(P\) multiplied by \(\delta^{13}C\) of (overlying ocean) export \(POC\).
+\\The isotopic value is 'diluted' in the proportion of regenerated \(C\) over \(DIC\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_d13C} -- regenerated \(\delta^{13}C\) -- this is simply the \(C_{soft}\) \(\delta^{13}C\) tracer, \uline{but}, 'diluted' in the proportion of regenerated \(C\) over \(DIC\). i.e. it is an explicit (and 'real') measure of the \(\delta^{13}C\) contribution of respired carbon to \(DIC\).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_DIC} -- \(DIC\) (not really 'regenerated' \textit{per se}) -- calculated as the sum of preformed \(C\) plus regenerated \(C\).
+\\This is provided as a simple 'check' on the tracers, and in the absence of \(CaCO_{3}\), should be equal to 'real' \(DIC\) (\texttt{io\_DIC}).
+\vspace{1mm}
+\item \textsf{\footnotesize diag\_reg\_DIC\_d13C} -- \(\delta^{13}C\) of \(DIC\) (not really 'regenerated' \textit{per se}) -- calculated as the weighted sum of preformed \(C\) plus regenerated \(C\) \(\delta^{13}C\).
+\\This is provided as a simple 'check' on the tracers, and in the absence of \(CaCO_{3}\), should be equal to 'real' \(DIC\) \(\delta^{13}C\) (\texttt{io\_DIC\_13C}).
+\end{enumerate}
+
+\end{itemize}
+
+
+
+
+
 
 %------------------------------------------------
 %
 \newpage
 \subsection*{Diagnose a Transport Matrix}
-\vspace{2mm}
+\vspace{1mm}
 
 The physical circulation in \textbf{muffin} can be diagnosed as a Transport Matrix: a representation of the steady-state average circulation as a sparse matrix (see \textit{Khatiwala et al.} [2005] Accelerated simulation of passive tracers in ocean circulation models. Ocean Modelling. 9 (1), pp. 51 - 69). There are a number of advantages of using a transport matrix such as finding preformed tracer distributions and using it as a surrogate circulation for a steady-state biogeochemical model (see \textit{Khatiwala} [2007] -- A computational framework for simulation of biogeochemical tracers in the ocean. Global Biogeochemical Cycles. 21 (3), GB3001).
 
@@ -11078,23 +11178,30 @@ Additional MATLAB functions to help process and use transport matrices can be fo
 \section{HOW-TO ... screw with the climate system}
 \vspace{2mm}
 
+\noindent\rule{4cm}{0.5pt}
+
 %------------------------------------------------
 %
+\newpage
 \subsection*{Set/un-set seasonal insolation forcing}
-
 \vspace{1mm}
+
 Seasonal insolation forcing of the \textbf{EMBM}, \textbf{GOLDSTEIN} ocean, and sea-ice model, are set by the following parameters\footnote{These are typically set in the \textit{base-config} if needed (i.e. different from default).}:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 ea_dosc=.true.
 go_dosc=.true.
 gs_dosc=.true.
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 and are \texttt{.true.} by default.
-To set an annual average insolation forcing with no seasonality, simply set these to \texttt{.false.}.
+To set an annual average insolation forcing with no seasonality, simply set these to \texttt{.false.}
+
+\noindent\rule{4cm}{0.5pt}
 
 %------------------------------------------------
 %
+\newpage
 \subsection*{Implement 'brine-rejection'}
+\vspace{1mm}
 
 \textbf{muffin} has the capability to include this effect (at least crudely) and similarly to \textit{Bouttes et al.} [2010]. For this, three namelist parameter values need to be set:
 
@@ -11107,11 +11214,17 @@ The first, simply allows the \textbf{BIOGEM} biogeochem. module to directly infl
 
 There is also option for treating all tracers the same way (including DIC ALK, PO4, etc.) and translocate biogeochem. tracers proportionally to salinity.
 
+\noindent\rule{4cm}{0.5pt}
+
 %------------------------------------------------
 %
+\newpage
 \subsection*{Add/modify geothermal heating'}
+\vspace{1mm}
 
 (see: \textit{HOW-TO ... force the system})
+
+\noindent\rule{4cm}{0.5pt}
 
 %------------------------------------------------
 
@@ -11143,19 +11256,19 @@ There are 3 different ways of describing the marine iron cycle in terms of which
 \vspace{-4mm}
 \begin{table}[h]
 \textbf{\caption{muffin iron cycle configurations\label{tab:ironconfigs}}}
-\begin{tabular}{|p{0.5cm}||p{2.0cm}||p{1.0cm}|p{1.0cm}||p{1.0cm}|p{1.0cm}|p{1.75cm}||p{4.0cm}|}\hline
-\# & \textbf{Tracers} & \(DOM_{\tau}\) (\(yr\))  & \(bio_{\tau}\) (\(d\)) & \(Fe_{sol}\) (\%) & \(k_{scav}\) & Dust field & \textbf{References} \\\hline
+\begin{tabular}{|p{0.375cm}||p{1.875cm}|p{1.25cm}||p{1.0cm}|p{1.0cm}||p{1.0cm}|p{1.0cm}|p{1.75cm}||p{3.25cm}|}\hline
+\# & \textbf{Tracers} & Scheme & \(DOM_{\tau}\) (\(yr\))  & \(bio_{\tau}\) (\(d\)) & \(Fe_{sol}\) (\%) & \(k_{scav}\) & Dust field & \textbf{References} \\\hline
 \hline
-1 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & Mahowald & \textit{Tagliabue et al.} [2016] \newline \textit{Ödalen et al.} [2020] \newline \textit{Rae et al.} [2020] \\\hline
-2 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & 0.291 & 1.34 & (various) & \textit{Lambert, et al.} [2021] \\\hline
-3 & \(Fe\), \(L\), \(FeL\) & 1.0 & 63.3 & n/a & n/a & (none) & \textit{Meyer et al.} [2016]  \newline \textit{Hülse et al.} [2019] \newline \textit{Hülse et al.} [in revision] \\\hline
-4 & \(TDFe\), \(TL\) & 1.0 & 95.6 & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2018] \\\hline
-5 & \(TDFe\), \(TL\) & 1.0 & n/a & 0.201 & 0.344 & Mahowald & \textit{Ward et al.} [2018] \\\hline
-6 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & 0.125 \newline 0.244 & 0.225 \newline 0.225 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
-7 & \(TDFe\), \(TL\) & 0.5 & 60.0 \newline 60.0 & \textit{0.100} \newline \textit{0.195} & 0.100 \newline 0.100 & Mahowald \newline Albani & \textit{De'Ath et al.} [in prep] \\\hline
-8 & \(TDFe\), \(TL\) & 0.5 & 60.0 & 0.244 & 0.225 & Albani & \textit{Ödalen et al.} [in prep] \\\hline
-9 & \(TDFe\), \(TL\) & 0.5 & n/a & 0.244 & 0.225 & Albani & \textit{Jones et al.} [in prep] \\\hline
-10 & \(Fe\), \(Fe2\), \(TL\) & 0.5 & 63.3 & n/a & 0.344 & (none) & \textit{van de Velde et al.} [2021] \\\hline
+1 & \(Fe\), \(L\), \(FeL\) & \texttt{OLD} & 1.0 & 63.3 & 0.291 & 1.34 & Mahowald & \textit{\small Tagliabue et al.} \small{[2016]} \newline \textit{\smallÖdalen et al.} \small{[2020]} \newline \textit{\small Rae et al.} \small{[2020]} \\\hline
+2 & \(Fe\), \(L\), \(FeL\) & \texttt{OLD} & 1.0 & 63.3 & 0.291 & 1.34 & (various) & \textit{\small Lambert, et al.} \small{[2021]} \\\hline
+3 & \(Fe\), \(L\), \(FeL\) & (\texttt{OLD}) & 1.0 & 63.3 & n/a & n/a & (none) & \textit{\small Meyer et al.} \small{[2016]}  \newline \textit{Hülse et al.} \small{[2019]} \\\hline
+4 & \(TDFe\), \(TL\) & \texttt{hybrid} & 1.0 & 95.6 & 0.201 & 0.344 & Mahowald & \textit{\small Ward et al.} \small{[2018]} \\\hline
+5 & \(TDFe\), \(TL\) & \texttt{hybrid} & 1.0 & n/a & 0.201 & 0.344 & Mahowald & \textit{\small Ward et al.} \small{[2018]} \\\hline
+6 & \(TDFe\), \(TL\) & \texttt{hybrid} & 0.5 & 60.0 \newline 60.0 & 0.125 \newline 0.244 & 0.225 \newline 0.225 & Mahowald \newline Albani & \textit{\small De'Ath et al.} \small{[in prep]} \\\hline
+7 & \(TDFe\), \(TL\) & \texttt{hybrid} & 0.5 & 60.0 \newline 60.0 & \textit{0.100} \newline \textit{0.195} & 0.100 \newline 0.100 & Mahowald \newline Albani & \textit{\small De'Ath et al.} \small{[in prep]} \\\hline
+8 & \(TDFe\), \(TL\) & \texttt{hybrid} & 0.5 & 60.0 & 0.244 & 0.225 & Albani & \textit{\small Ödalen et al.} \small{[in prep]} \\\hline
+9 & \(TDFe\), \(TL\) & \texttt{hybrid} & 0.5 & n/a & 0.244 & 0.225 & Albani & \textit{\small Jones et al.} \small{[in prep]} \\\hline
+10 & \(Fe\), \(Fe2\), \(TL\) & \texttt{FeFe2TL} & 0.5 & 63.3 & n/a & 0.344 & (none) & \textit{\small van de Velde et al.} \small{[2021]} \\\hline
 \end{tabular}
 \end{table}
 
@@ -11168,7 +11281,7 @@ There are 3 different ways of describing the marine iron cycle in terms of which
 \item [\#5] -- There is no \(bio_{\tau}\) value because the \textbf{ECOGEM} module is used.
 \item [\#7] -- Tests an assumption of a spatially uniform iron solubility (\(Fe_{sol}\) values in italics).
 \item [\#9] -- There is no single \(bio_{\tau}\) value (the biological scheme is split into diatoms and non-diatoms).
-\item [\#10] -- Dissolved iron is supplied hydrothermally (as reduced, \(Fe^{II}\)) at the seafloor, and additionally, optionally as oxidized \(Fe^{III}\) to the ocean surface (\textit{in lieu} of the solubilized component in dust and/or via rivers from terrestrial weathering).
+\item [\#10] -- In this study/configuration, dissolved iron is supplied hydrothermally (as reduced, \(Fe^{II}\)) at the seafloor, and additionally, optionally as oxidized \(Fe^{III}\) to the ocean surface (\textit{in lieu} of the solubilized component in dust and/or via rivers from terrestrial weathering).
 \end{itemize}
 \normalsize
 
@@ -11187,7 +11300,7 @@ In the original iron cycle in \textbf{muffin},  3 separate tracers were defined:
 \end{itemize}
 \vspace{2mm}
 The associated tracer selection in the \textit{base-config} looks like:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron (Fe)'
 gm_ocn_select_23=.true.     #   FeL -- 'ligand-bound Fe'
 gm_ocn_select_24=.true.     #   L -- 'free ligand (iron binding)' 
@@ -11196,21 +11309,29 @@ gm_ocn_select_24=.true.     #   L -- 'free ligand (iron binding)'
 However, because the equilibrium between these tracers is re-solved every time-step (and used to determine the free \(Fe\) concentration for scavenging), there is redundancy, and in practice, only 2 tracers are needed. Subsequent iron cycle scheme hence use only 2 tracers:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
-\item [\(TDFe\)] -- total dissolved iron, including iron bound to ligands)
+\item [\(TDFe\)] -- total dissolved iron, including iron bound to ligands
 \item [\(TL\)] -- total dissolved ligand concentration (both free and bound to iron)
 \end{itemize}
 \vspace{2mm}
 
 The associated tracer selection in the \textit{base-config} then looks like:
-\footnotesize\vspace{-2pt}\begin{verbatim}
+\small\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_90=.true.     #   TDFe -- 'total dissolved Fe'
 gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \end{verbatim}\vspace{-2pt}\normalsize
 
 At each time-step, the concentration of 'free' iron (and iron bound to ligands) is solved for and used to calculate iron removal though scavenging.
 
-But ... to distinguish between reduced (\(Fe^{II}\)) and oxidized (\(Fe^{III}\)) iron as well as account for the role of ligands ... 3 tracers are needed again (in a sort of combination of the above two permutations): 
-\footnotesize\vspace{-2pt}\begin{verbatim}
+But ... to distinguish between reduced (\(Fe^{II}\)) and oxidized (\(Fe^{III}\)) iron as well as account for the role of ligands ... 3 tracers are needed again (a sort of combination of the above two permutations):
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item [\(Fe\)] -- total dissolved iron III, including iron bound to ligands
+\item [\(Fe2\)] -- total dissolved iron II (does not bind to ligands)
+\item [\(TL\)] --  total dissolved ligand concentration (both free and bound to iron III)
+\end{itemize} 
+\vspace{2mm}
+or as tracers:
+\small\vspace{-2pt}\begin{verbatim}
 gm_ocn_select_9=.true.      #   Fe -- 'dissolved iron III (Fe)'
 gm_ocn_select_83=.true.     #   Fe -- 'dissolved iron II (Fe)'
 gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand' 
@@ -11224,10 +11345,12 @@ gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item [\texttt{ALT}] -- This is based on 3 tracers (free iron, free ligand, ligand-bound iron), solves the equilibrium between them and based on this, scavenges free \(Fe\) from the water column, by any or all of: particulate organic matter, \(CaCO_{3}\), opal, and/or detrital matter.
+\item [\texttt{OLD}] -- The very original scheme -- based on 3 tracers (free iron, free ligand, ligand-bound iron), solves the equilibrium between them and based on this, scavenges free \(Fe\) from the water column, by any or all of: particulate organic matter, \(CaCO_{3}\), opal, and/or detrital matter.
+\\Note that scavenging does not occur in the surface ocean layer\footnote{This (no surface scavenging) was an unintended bug in an ocean layer loop ...}.
+\\This scheme  was used e.g. in the 'FeMIP' paper of \textit{Tagliabue et al.} [2016].
 \vspace{1mm}
-\item [\texttt{OLD}] -- The very original scheme -- as per \texttt{ALT}, except that scavenging does not occur at in the surface ocean layer\footnote{This (no surface scavenging) was an unintended bug in an ocean layer loop ...}.
-\\This scheme  was used in the 'FeMIP' paper of \textit{Tagliabue et al.} [2016].
+\item [\texttt{ALT}] -- As per \texttt{OLD}, but now including the surface ocean layer in where iron scavenging can occur.
+\\This scheme has not yet been published with(!)
 \vspace{1mm}
 \item [\texttt{hybrid}] -- As per \texttt{ALT}, but employing only 2 tracers -- total dissolved iron, and total dissolved ligand (and solving for the equilibrium between (free iron, free ligand, and ligand-bound iron).
 \\This is the recommenced modern modern (oxic ocean) configuration option (e.g. as used by \textit{Ward et al.} [2018]). 
@@ -11237,29 +11360,141 @@ gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \vspace{1mm}
 \item [\texttt{FeFe2TL}] -- A 3-phase tracer scheme, but distinguishing the oxidized form \(Fe^{III}\) (tracer: \texttt{Fe}) from reduced \(Fe^{II}\) (tracer: \texttt{Fe2})\footnote{In the water column, \(Fe^{II}\) oxidizes to \(Fe^{III}\) under oxic conditions, while \(Fe^{III}\) is reduced under anoxic conditions.}. This scheme is primarily intended for predominantly ferruginous/euxinic deeper time esp. Precambrian) oceans, but is perfectly capable of being used in more geologically recent and predominantly oxic ocean times (as well as more 'mixed state' oceans, such as during OAEs or during the Paleozoic).
 \\Only \(Fe^{III}\) (tracer: \texttt{Fe}) is taken into account in the calculation for  partitioning iron into free and ligand-bound iron, and only free (non ligand-bound) \(Fe^{III}\) is then subject to scavenging. Reduced \(Fe^{II}\) (tracer: \texttt{Fe2}) is assumed truly dissolved and does not bind with ligands, nor is subject to scavenging.
-\\
-\\Note that if the solid (sediment) tracer \texttt{is\_POM\_FeOOH} is selected, when ambient dissolved oxygen is low, the scavenged iron (III) can under go further transformations and supply oxygen (and be reduced) in remineralizing organic matter. In this, 
-\(Fe^{II}\) is released, in contrast with the default parameter settings under which scavenged iron is always 'lost' to the system. If however \texttt{is\_POM\_FeOOH} is not selected (but the standard scavenged iron \texttt{is\_POM\_Fe} is), then the fate of scavenged iron proceeds as 'normal' (e.g. under under schemes \texttt{OLD}, \texttt{ALT} or \texttt{hybrid}).
 \\In principal, in the absence of \texttt{is\_POM\_FeOOH}, the marine iron cycle should function identically to the original 'oxic-only schemes, with the exception that any dissolved iron that is present in the water column as \(Fe^{II}\), will both reduce the rate of scavenging and of biological uptake (both processes only accounting for the availability of \(Fe^{III}\)). 
 \end{itemize}
 
 \vspace{1mm}
-\noindent Also note:
+\noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
+
+\noindent A list of the different Fe-related processes, and which processes operate under which schemes, follows. See \textit{van de Velde et al.} [2021] for further details.
+\vspace{1mm}
+
 \begin{itemize}[noitemsep]
-\item Typically, scavenging only occurs (or is only configured to occur) by particulate organic matter.
+
+\vspace{1mm}
+\item [(ALL)] \textbf{Biological uptake (cellular incorporation)}
+\\Iron is assumed to be co-limiting to biological uptake in a number of biological schemes in muffin\footnote{Set by parameter: \texttt{bg\_par\_bio\_prodopt}.}, e.g. \texttt{bio\_PFe}, as well as being a co-limiting nutrient in \textbf{ECOGEM}.
+\\Bioavailable iron is assumed to be the sum of both 'free' and ligand-bound iron, which in the case of  \texttt{OLD} and \texttt{ALT} is \(Fe+FeL\), in \texttt{hybrid} and \texttt{lookup\_4D} this is \(TDFe\) (which implicitly includes both free and ligand-bound phases), and in \texttt{FeFe2TL}, is \(Fe\) (which is equivalent to \(TDFe\))\footnote{Note that for reasons of simplifying the accounting for oxygen mass balance and not mixing different oxidation states during biological uptake, \(Fe^{2+}\) is not currently included in being 'bioavailable')}.
+\\In the case of \texttt{FeFe2TL}, iron is assumed to be incorporated  intracellularly and remineralized in its oxidized form. In reality, intercellular iron is reduced, and ideally, remineralized iron released back to the water column would be in the form
+
+\vspace{1mm}
+\item [(ALL)] \textbf{Ligand-binding (protection (stabilization) from scavenging)}
+\\All schemes assume the presence of a single iron-binding ligand (although the ligand concentration could be set to zero). The equilibrium distribution between free iron (which in the case of \texttt{FeFe2TL} is \(Fe^{3+}\), and all other schemes total dissolved iron (tracer \(TDFe\) or just \(Fe\)), free ligand, and iron-bound ligand, is solved each time-step for the purpose of calculating iron scavenging (see below).
+\\The ligand stability constant is set via parameter: \texttt{bg\_par\_K\_FeL}.
+\\Future developments could consider multiple ligand classes, or a ligand cycle with sources and sinks.
+
+\vspace{1mm}
+\item [(ALL)] \textbf{Scavenging}
+\\Typically, scavenging only occurs (or is only configured to occur) by particulate organic matter.
+\\Scavenging occurs on any 'free' iron -- iron not bound to ligands. In the case of scheme \texttt{FeFe2TL}, only \(Fe^{3+}\)
 \\Scavenged iron, by default, is not 'remineralized' along with the (organic matter) particulate host and hence not returned to solution, and represents a loss (sink) of bio-available iron from the ocean. This behavior is controlled by parameters:
-\\\small\vspace{-1pt}\begin{verbatim}
+\small\vspace{-1pt}\begin{verbatim}
 # no scavenged regeneration
 bg_par_scav_fremin=0.0
 \end{verbatim}\vspace{-1pt}\normalsize
 which prevents return of iron scavenged by (e.g. particulate organic) matter when it is remineralized (dissolved) in the water column, and
-\\\small\vspace{-1pt}\begin{verbatim}
+\small\vspace{-1pt}\begin{verbatim}
 # return POFe
 bg_ctrl_bio_NO_fsedFe=.false.
 \end{verbatim}\vspace{-1pt}\normalsize
 which prevents scavenged iron being 'reflected' at the ocean floor (along with all the constituents of its particulate matter carrier).
-\item All schemes, with the current exception of \texttt{hybrid}, are isotope-enabled (\(^{56}Fe\)).
+\\The modifier (scaling) of scavenging rate (\(k_{scav}\)) for each particle type is set by the following parameters:
+\small\vspace{-1pt}\begin{verbatim}
+bg_par_scav_Fe_sf_POC
+bg_par_scav_Fe_sf_CaCO3
+bg_par_scav_Fe_sf_opal
+bg_par_scav_Fe_sf_det
+\end{verbatim}\vspace{-1pt}\normalsize
+Calibrated values for \(k_{scav}\) for POM are given in Table \ref{tab:ironconfigs}.
+\\Note that the simplest way to 'turn off' scavenging is  to set these parameters to zero\footnote{They are all zero by default anyway.}. 
+
+\vspace{1mm}
+\item [(ALL)] \textbf{Isotopic fractionation}
+\\With the current exception of \texttt{hybrid}, are isotope-enabled (\(^{56}Fe\)).
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Dissimilatory iron reduction}
+\\If the solid (sediment) tracer \texttt{is\_POM\_FeOOH} is selected \uline{and} the paired ocean tracer \texttt{io\_FeOOH} is selected (so technically the scheme should be: '\texttt{FeFe2TLFeOOH}'), when ambient dissolved oxygen is low, the scavenged iron (III) can under go further transformations and supply oxygen (and be reduced) associated with the remineralization of organic matter. In this, 
+\(Fe^{II}\) is released, in contrast with the default parameter settings under which scavenged iron is always 'lost' to the system.
+\\A\ pair of half-saturation and inhibition constant primarily control the behaviour of this reaction (and are not listed here) -- see: \textit{van de Velde et al.} [2021] for details. 
+\\If \texttt{is\_POM\_FeOOH} is not selected (but the standard scavenged iron tracer, \texttt{is\_POM\_Fe} is), then the 'fate' of scavenged iron (now as a solid) proceeds as 'normal' (e.g. under under schemes \texttt{OLD}, \texttt{ALT} or \texttt{hybrid}).
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Ferrous iron oxidation}
+\\Under 'oxidizing' conditions -- defined as the (non-zero) presence of free \(O_{2}\) in the water column -- \(Fe^{2+}\) is oxidized to \(Fe^{3+}\).
+\\The relevant subroutine (\texttt{sub\_box\_oxidize\_Fe}) is called automatically if the required tracers are selected. The kinetic rate constant controlling the reaction, and \textit{van de Velde et al.} [2021] default value, is:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_bio_remin_kFe2toFe=1.0e+09
+\end{verbatim}\normalsize\vspace{-1mm}
+(so setting this to zero will disable iron oxidation).
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Sulphide-mediated iron reduction (1)}
+\\Under 'reducing' conditions -- defined as the (non-zero) presence of free \(H_{2}S\) in the water column -- sulphide-mediated iron reduction occurs, and \(Fe^{3+}\) is reduced to \(Fe^{2+}\).
+\\The relevant subroutine (\texttt{sub\_box\_reduce\_Fe}) is called automatically if the required tracers are selected. The kinetic rate constant controlling the reaction, and \textit{van de Velde et al.} [2021] default value, is:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_bio_remin_kFetoFe2=2.3e+06
+\end{verbatim}\normalsize\vspace{-1mm}
+(so setting this to zero will disable \(Fe^{3+}\) reduction).
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Sulphide-mediated iron reduction (2)}
+\\Under 'reducing' conditions -- defined as the (non-zero) presence of free \(H_{2}S\) in the water column -- sulphide-mediated iron reduction occurs, and (solid) \(FeOOH\) is reduced to \(Fe^{2+}\).
+\\The relevant subroutine (\texttt{sub\_box\_react\_FeOOH\_H2S} or \texttt{sub\_box\_react\_POMFeOOH\_H2S}) is called automatically if the required tracers are selected. The kinetic rate constant controlling the reaction, and \textit{van de Velde et al.} [2021] default value, is:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_bio_remin_kFeOOHtoFe2=1.7e+04
+\end{verbatim}\normalsize\vspace{-1mm}
+(so setting this to zero will disable \(FeOOH\) reduction).
+\\This reaction is applied to both 'free' solid \(FeOOH\) and \(POM\)-bound \(FeOOH\) (depending on which solid tracers have been selected).
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Iron oxide precipitation (1)}
+\\This is the solid (sediment) tracer: \texttt{is\_FeOOH}
+\\In the water column, if the concentration of \(Fe^{3+}\) (total, including ligand-bound) exceeds some threshold (e.g. \(1nM\)), as specified by the parameter (and \textit{van de Velde et al.} [2021] default value):
+\vspace{-1mm}\small\begin{verbatim}
+par_FeOOH_Fethresh=1.0E-9,
+\end{verbatim}\normalsize\vspace{-1mm}
+solid \(FeOOH\) forms. This then sinks down through the water column along (but distinct from)  other particles. \uline{All} dissolved \(Fe^{3+}\) above the threshold concentration is assumed precipitated (i.e. there are no kinetics involved in the reaction).
+\\The relevant subroutine (\texttt{sub\_calc\_precip\_FeOOH}) is called automatically if the required tracers are selected.
+\\The occurrence of \(FeOOH\) precipitation is also governed by the parameter:
+\vspace{-1mm}\small\begin{verbatim}
+bg_ctrl_bio_FeOOHprecip_explicit
+\end{verbatim}\normalsize\vspace{-1mm}
+which is \texttt{.true.} by default and precipitation can be disabled by changing this (or setting the precipitation threshold to some impossibly large concentration of dissolved iron).
+\\Note that both forms ('free' and \(POM\)-associated) of \(FeOOH\) can precipitate simultaneously if both solid tracers are selected.
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Iron oxide precipitation (2)}
+\\If the solid (sediment) tracer \texttt{is\_POM\_FeOOH} is selected,  \(FeOOH\) precipitation occurs associated with (or scavenged by) sinking \(POM\). The amount/rate of precipitation is  now controlled by the scavenging calculation rather than the explicit \(FeOOH\) precipitation subroutine\footnote{i.e. in the scavenging process, rather than scavenge iron as \(Fe\), the same amount of  scavenged iron is instead assumed to be in the form of \(FeOOH\).}.
+\\The \(POM\)-associated \(FeOOH\) then sinks along with (and assumed bound to) \(POM\). Note that by default, as per 'normal' scavenged \(Fe\), dissolved iron is not released to the water column as the carrier \(POM\) is degraded (and is assumed lost to the sediments).
+\\The same (\(POM\)) scavenging rate scalar (\(k_{scav}\)) as detailed earlier, controls this process. 
+\\Note that both forms ('free' and \(POM\)-associated) of \(FeOOH\) can precipitate simultaneously if both solid tracers are selected.
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Pyrite precipitation}
+\\If the solid pyrite tracer (\(FeS_{2}\)) is selected, then pyrite can form in the water column (from where it will settle down, unaltered, to the sediment surface).
+\\The relevant subroutine (\texttt{sub\_calc\_precip\_FeS2}) is called automatically if the required tracers are selected. The controlling parameters are ... complicated\footnote{Please, for the love of god, leave this alone.}. (See: \textit{van de Velde et al.} [2021] for details ...) The overall precipitation rate is governed by:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_bio_FeS2precip_k=3.25e+03
+\end{verbatim}\normalsize\vspace{-1mm}
+Note that \(FeS\) can also be selected as an explicit precursor solid tracer (calculated via subroutine \texttt{sub\_calc\_form\_FeS} if this tracer is selected). This scheme is not published and will not described any further here.
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Siderite precipitation}
+\\Whatever. Probably doesn't occur to any degree enough to worry about ever (mostly).
+\\Occurs if you select it (solid/sedimentary tracer  for \(FeCO_{3}\) (\texttt{is\_FeCO3})).
+\\(Gonna sink to the bottom and do nothing in between.)
+\\See: \textit{van de Velde et al.} [2021] for details ...
+
+\vspace{1mm}
+\item [\texttt{FeFe2TL}] \textbf{Greenalite precipitation}
+\\I don't even know what this is.
+\\It happens if you select it (solid/sedimentary tracer  for \(Fe_{3}Si_{2}O_{4}\) (\texttt{is\_Fe3Si2O4})).
+\\You have got to have dissolved silica ... lots and lots of it. So much so in fact that it will crash updating of carbonate chemistry and you will have to remove silicic acid from the definition of 'alkalinity' (\texttt{gm\_ctrl\_carbchem\_noH3SiO4=.true.}).
+\\(Gonna sink to the bottom and do nothing in between.)
+\\See: \textit{van de Velde et al.} [2021] for details ...
+
 \end{itemize}
 
 %------------------------------------------------
@@ -11281,7 +11516,7 @@ which prevents scavenged iron being 'reflected' at the ocean floor (along with a
 \vspace{1mm}
 \\The same biological configuration as \texttt{\small cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASESFe.FeMIP.SPIN}, but with iron limitation of biological export 'disabled' by:
 \begin{enumerate}[noitemsep]
-\item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes, zero (in comparison: the ocean is initialized with \(0.6\:\mu M\:Fe\)).
+\item Setting a \(Fe\) half-saturation value of \(0.1\:pM\:Fe\), which is to all practical purposes, zero (in comparison: the ocean is initialized with \(0.6\ nM\:Fe\)).
 \item Setting a fixed Fe:C ratio and specifying the C/Fe organic matter ratio as effectively infinite (so that virtually no Fe is taken up in organic matter as compared to carbon).
 \item Setting the scavenging rate of \(Fe\) by sinking organic matter to zero.
 \end{enumerate}
