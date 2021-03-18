@@ -11039,7 +11039,7 @@ i.e. for both time-series and time-slice output, the \textsf{\footnotesize diag\
 \vspace{1mm}
 \item \textsf{\footnotesize diag\_reg\_C} -- regenerated \(C\) -- this is a simple copy of the \(C_{soft}\) tracer for completeness and is 'real' regenerated \(C\).
 \vspace{1mm}
-\item \textsf{\footnotesize diag\_reg\_C\_d13C} -- regenerated \(\delta^{13}C\) -- perhaps a little pointlessly ... estimated from regenerated \(P\) multiplied by \(\delta^{13}C\) of (overlying ocean) export \(POC\).
+\item \textsf{\footnotesize diag\_reg\_C\_d13C} -- regenerated \(\delta^{13}C\) -- perhaps a little pointlessly ... estimated from ('real') regenerated \(C\) (aka \(C_{soft}\)) multiplied by \(\delta^{13}C\) of (overlying ocean) export \(POC\).
 \\The isotopic value is 'diluted' in the proportion of regenerated \(C\) over \(DIC\).
 \vspace{1mm}
 \item \textsf{\footnotesize diag\_reg\_d13C} -- regenerated \(\delta^{13}C\) -- this is simply the \(C_{soft}\) \(\delta^{13}C\) tracer, \uline{but}, 'diluted' in the proportion of regenerated \(C\) over \(DIC\). i.e. it is an explicit (and 'real') measure of the \(\delta^{13}C\) contribution of respired carbon to \(DIC\).
@@ -11346,11 +11346,13 @@ gm_ocn_select_42=.true.     #   TL -- 'total dissolved ligand'
 \begin{itemize}[noitemsep]
 \vspace{1mm}
 \item [\texttt{OLD}] -- The very original scheme -- based on 3 tracers (free iron, free ligand, ligand-bound iron), solves the equilibrium between them and based on this, scavenges free \(Fe\) from the water column, by any or all of: particulate organic matter, \(CaCO_{3}\), opal, and/or detrital matter.
-\\Note that scavenging does not occur in the surface ocean layer\footnote{This (no surface scavenging) was an unintended bug in an ocean layer loop ...}.
+\\Note that surface layer scavenging is calculated within \texttt{sub\_calc\_bio\_uptake} rather than as part of particulate remineralization subroutine (\texttt{sub\_calc\_bio\_uptake}).
+\\Iron speciation (\(Fe\), \(FeL\), and \(L\)) is updated within the main \textbf{BIOGEM} loop.
 \\This scheme  was used e.g. in the 'FeMIP' paper of \textit{Tagliabue et al.} [2016].
 \vspace{1mm}
-\item [\texttt{ALT}] -- As per \texttt{OLD}, but now including the surface ocean layer in where iron scavenging can occur.
-\\This scheme has not yet been published with(!)
+\item [\texttt{ALT}] -- As per \texttt{OLD}, but with surface layer scavenging  calculated within the particulate remineralization subroutine (\texttt{sub\_calc\_bio\_uptake}).
+\\Iron speciation (\(Fe\), \(FeL\), and \(L\)) is updated within  particulate remineralization subroutine (sub\_calc\_bio\_uptake).
+\\This scheme has not yet been published with(!) although it should be very little different (if at all) from \texttt{OLD}. (Numerically, it is preferable to \texttt{OLD}.) 
 \vspace{1mm}
 \item [\texttt{hybrid}] -- As per \texttt{ALT}, but employing only 2 tracers -- total dissolved iron, and total dissolved ligand (and solving for the equilibrium between (free iron, free ligand, and ligand-bound iron).
 \\This is the recommenced modern modern (oxic ocean) configuration option (e.g. as used by \textit{Ward et al.} [2018]). 
@@ -11496,6 +11498,25 @@ Note that \(FeS\) can also be selected as an explicit precursor solid tracer (ca
 \\See: \textit{van de Velde et al.} [2021] for details ...
 
 \end{itemize}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Iron diagnostic output}
+\vspace{2mm}
+
+In addition to the actual ocean tracers, a set output variables are provided to break down (in some cases) and coalesce (in others), iron (and ligand) speciation.
+
+For \textbf{netCDF} (and \textit{time-slice} output), provided is:
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item
+\end{itemize}
+
+
+
+
 
 %------------------------------------------------
 %
