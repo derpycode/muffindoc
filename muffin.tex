@@ -7822,12 +7822,10 @@ Information about how to configure and generate an ensemble is provided as \text
 \vspace{-2mm}
 
 The function \textsf{\footnotesize fun\_make\_ensemble\_2d.m} requires 2 parameters (\textit{strings}) to be passed in the argument list, i.e.:
-\begin{verbatim}
+\vspace{-1mm}\begin{verbatim}
 >> fun_make_ensemble_2d.m(PAR1,PAR2)
-\end{verbatim}
-
+\end{verbatim}\vspace{-1mm}
 These are, in order:
-
 \begin{enumerate}
 \vspace{1mm}
 \item \texttt{STR\_TEMPLATE} -- \textit{string} \(\rightarrow\) is the name of the template \textit{user-config} file (within the \textbf{muffindata} directory) used to generate the ensemble. 
@@ -7837,10 +7835,10 @@ These are, in order:
 \end{enumerate}
 \vspace{2mm}
 
-An example example usage  would be:
-\begin{verbatim}
+\noindent An example example usage  would be:
+\vspace{-1mm}\begin{verbatim}
 >> fun_make_ensemble_2d.m('user_config_template','ensemble_params')
-\end{verbatim}
+\end{verbatim}\vspace{-1mm}
 which creates an ensemble based on the \textit{user-config} file: \textsf{\footnotesize user\_config\_template} (example file name) and with varying parameter values specified in the file: \textsf{\footnotesize ensemble\_params.dat} (example file name).
 
 The \textit{user-config} (and hence experiment names) that are automatically generated end in \textsf{\footnotesize .xy}, where \textsf{\footnotesize x} represents the \(x+1th\) parameter value on the first axis, and \textsf{\footnotesize y} represents the \(y+1th\) parameter value on the second axis (the \textsf{\footnotesize .xy} notation starts counting at \textsf{\footnotesize .00}). For instance, \textsf{\footnotesize .00} would be an experiment taking the first parameter values specified in \textsf{\footnotesize ensemble\_params.dat} for both axes. \textsf{\footnotesize .10} would have the 2nd lister parameter value on the 1st axis, and the 1st lister on the 2nd axis. \textsf{\footnotesize .27} would have the 3rd parameter value on the 1st axis, and 8th listed parameter value on the 2nd axis. etc etc etc
@@ -7852,34 +7850,30 @@ The lines requiring editing in \textsf{\footnotesize sub\_ens.muffin.sh} are cle
 \newpage 
 
 Note that you may need to re-assigned an 'executable' permission after editing and saving \textsf{\footnotesize sub\_ens.muffin.sh}. To do this, from \textsf{\footnotesize genie-main}:
-\begin{verbatim}
+\vspace{-1mm}\begin{verbatim}
 >> chmod a+x sub_ens.muffin.sh
-\end{verbatim}
+\end{verbatim}\vspace{-1mm}
 
 \vspace{-2mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent What do you then 'do' with a whole bunch of experiments with names ending in \textsf{\footnotesize .xy} ... ???
+\noindent What do you then 'do' with a whole bunch of experiments with names ending in \textsf{\footnotesize .xy} ... ??? (Note that you can take any series of experiments, and rename such that they all have exactly the same filename with the exception of an \textsf{\footnotesize .xy} format extension. i.e. a series of 5 experiments with whatever varying filenames could become: \textsf{\footnotesize FILENAME.00}, \textsf{\footnotesize FILENAME.01}, \textsf{\footnotesize FILENAME.02}, \textsf{\footnotesize FILENAME.03}, \textsf{\footnotesize FILENAME.04}, which would create a 1-D (\(1\times 5\)) ensemble.)
 
 You could of course, pick out individual ensemble member to plot and analyse, referring to the \textsf{\footnotesize ensemble\_params.dat} file where you specified the sequence of parameter values on both axes in order to identify the ensemble member you want. And/or ...
 
 The \textbf{muffindata} \textbf{MATLAB} file: \textsf{\footnotesize fun\_process\_ensemble\_2d.m} provides a simple/convenient way of processing and visualizing ensembles of model experiments.
 
 Information about how to configure and generate an ensemble is provided as \textbf{MATLAB} help on this function:
-\vspace{-2mm}
-\begin{verbatim}
+\vspace{-2mm}\begin{verbatim}
 >> help fun_process_ensemble_2d
-\end{verbatim}
-\vspace{-2mm}
+\end{verbatim}\vspace{-2mm}
 
 The function \textsf{\footnotesize fun\_make\_ensemble\_2d.m} requires 3 parameters to be passed in the argument list, i.e.:
-\begin{verbatim}
+\vspace{-2mm}\begin{verbatim}
 >> fun_process_ensemble_2d.m(PAR1,PAR2,PAR3)
-\end{verbatim}
-
+\end{verbatim}\vspace{-2mm}
 These are, in order:
-
 \begin{enumerate}
 \vspace{1mm}
 \item \texttt{PAR1} -- \textit{string} \(\rightarrow\) is simply the ensemble name, but omitting the \textsf{\footnotesize .xy} numerical code of individual ensemble members). 
@@ -7888,9 +7882,128 @@ These are, in order:
 \vspace{1mm}
 \item \texttt{PAR3} -- \textit{string} \(\rightarrow\) is a name to assign to the output files (e.g. giving you a potentially more meaningful set of filenames than simply re-using \texttt{PAR1}.
 \end{enumerate}
+\vspace{1mm}
+
+Ensure that you either run \textsf{\footnotesize fun\_make\_ensemble\_2d.m} (or rather, the renamed copy of it) from the \textbf{muffindata} directory, or add a path in \textbf{MATLAB} to it. \uline{Also} add a path to \textbf{muffinplot} if you are going to process \textbf{netCDF} variables.
+
 \vspace{2mm}
 
 \noindent Within the code of \textsf{\footnotesize fun\_process\_ensemble\_2d.m} are instructions/directions as to how to extract specific variables. More advanced usage can statistically compare to data and calculate the goodness of fit of al the ensembles members, and even automatically identify and further process the 'best' (depending on the specific criteria for 'best').
+
+\vspace{1mm}
+Unlike creating ensembles, \textsf{\footnotesize fun\_process\_ensemble\_2d.m} needs to be directly edited (or rather: create a copy, rename the file \uline{and} the function name at the top of the file, and edit that). The basic set-up is as follows and requires 4 steps (which are clearly marked in the code):
+
+\begin{enumerate}
+
+\vspace{2mm}
+\item Define the x-axis of the ensemble, under:
+\vspace{-1mm}\small\begin{verbatim}
+% --- STEP #1 ----------------------------------------------------------- %
+% define ensemble x axis
+\end{verbatim}\normalsize\vspace{-1mm}
+Here, the number of strings defined in the array (structure) defines how many different parameter values are represented in the x-axis of the ensemble. This may be just one (for a 1-D parameter ensemble).
+\\The strings are categorical and need not be numbers and are used to label the axis ticks (with one label corresponding to each different parameter in the 1st dimension of the ensemble).
+\\This is also an x-axis label to set.
+
+\vspace{2mm}
+\item Define the y-axis of the ensemble, under:
+\vspace{-1mm}\small\begin{verbatim}
+% --- STEP #2 ----------------------------------------------------------- %
+% define ensemble y axis
+\end{verbatim}\normalsize\vspace{-1mm}
+As per above.
+\\Note that both x-axis and y-axis structures can contain a single string, in which case the ensemble is 0-D (\(1\times1\)) and consists of a single experiment.
+
+\vspace{2mm}
+\item Define any time-series variables to be extracted and plotted, under:
+\vspace{-1mm}\small\begin{verbatim}
+% --- STEP #3 ----------------------------------------------------------- %
+% define time-series variables to extract and plot
+\end{verbatim}\normalsize\vspace{-1mm}
+Here, any time-series variables to be extracted are defined.
+\\The format is:
+\vspace{-1mm}\small\begin{verbatim}
+  m = m+1;
+  data(m).dataname = 'VARIABLE';
+  data(m).datacol  = COLUMN;
+  data(m).scale    = SCALE;
+  data(m).dataunit = 'LABEL';
+  data(m).minmax   = [MINIMUM MAXIMUM];
+\end{verbatim}\normalsize\vspace{-1mm}
+(The \texttt{m = m+1;} bit it important should should not be left out.)
+\\These settings are:
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{VARIABLE} -- Is the name of the time-series variable following the \textsf{\small biogem\_series\_} part of the filename and excluding the \textsf{\small .res} bit at the end. 
+\\For example, atmospheric \(pCO_{2}\) would be specified by:
+\vspace{-1mm}\small\begin{verbatim}
+data(m).dataname = 'atm_pO2';
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+\item \texttt{COLUMN} -- Is the column number in the time-series file to be analysed. 
+\\For atmospheric \(pCO_{2}\), a value of \(2\) would analyse the total inventory in units of \(mol\), while column \(3\) would give the concentration in units of \(atm\).
+\vspace{1mm}
+\item \texttt{SCALE} -- Scale the variable (by this factor)?
+\\For example:
+\vspace{-1mm}\small\begin{verbatim}
+data(m).scale = 1.0E6;
+\end{verbatim}\normalsize\vspace{-1mm}
+would multiply the time-series value by \(10^{6}\) and in the example of atmospheric \(pCO_{2}\), produce the data in units of \(\mu atm\) (or \(ppm\)).
+\\The scaling need not be a simple multiple of orders-of-magnitude, and e.g.
+\vspace{-1mm}\small\begin{verbatim}
+data(m).scale = 12.0E-15;
+\end{verbatim}\normalsize\vspace{-1mm}
+will convert \(molC\) into \(PgC\).
+\vspace{1mm}
+\item \texttt{LABEL} -- What you could like to appear alongside the scale bar ... traditionally the variable name (property displayed) and units.
+\vspace{1mm}
+\item \texttt{[MINIMUM MAXIMUM]} -- The scale for the data range.
+\\For example, having scaled atmospheric \(pCO_{2}\) to units of \(ppm\), this might be (depending upon the experiment):
+\vspace{-1mm}\small\begin{verbatim}
+data(m).minmax = [200 1000];
+\end{verbatim}\normalsize\vspace{-1mm}
+\end{itemize}
+
+\vspace{1mm}
+
+A grid plot, along with a plain text file of the values, will be created for each defined variable. Missing experiments, variables, or time-points, will appear as a white square in the grid plot for that particular ensemble member.\footnote{So the ensembles need not be complete, or all the runs finished successfully.}
+\\The format of the output filename is: \textsf{\footnotesize OUTPUTNAME.VARIABLENAME.COLUMN.ps}, where \textsf{\footnotesize OUTPUTNAME} is the string (3rd parameter) passed to the function (and whcih need not be the full expleriment name), \textsf{\footnotesize VARIABLENAME} is the name of the analysed variable as defined by \texttt{data(m).dataname} (see above), and \textsf{\footnotesize COLUMN} is the column of the time-series file analysed, as defined by \texttt{data(m).datacol} (also see above).
+\\\uline{Be careful} -- the plain text file (\textsf{\footnotesize OUTPUTNAME.VARIABLENAME.COLUMN.dat}) of values is \uline{up-side-down} as compared to the orientation of the plot.
+
+\vspace{2mm}
+\item Define any \textit{time-slice} (\textbf{netCDF}) variables to be extracted and plotted.
+\vspace{1mm}
+\\This requires 2 parts:
+\vspace{1mm}
+\vspace{-1mm}\small\begin{verbatim}
+% --- STEP #4a ---------------------------------------------------------- %
+% define netCDF variables to extract and plot/analyse
+\end{verbatim}\normalsize\vspace{-1mm}
+Here, the format is identical to step \#3 (don't forget the \texttt{m = m+1;} bit!), with the exception of the variable name definition:
+\vspace{-1mm}\small\begin{verbatim}
+data(m).dataname = 'mean_Pacific_oxygen';
+\end{verbatim}\normalsize\vspace{-1mm}
+which is not used except in defining the output filename, and the column:
+\vspace{-1mm}\small\begin{verbatim}
+data(m).datacol = 0;
+\end{verbatim}\normalsize\vspace{-1mm}
+which is also irrelevant and can be assigned a value of e.g. zero.
+\vspace{1mm}
+\\The second part:
+\vspace{-1mm}\small\begin{verbatim}
+% --- STEP #4b ------------------------------------------ %
+% extract and plot/analyse netCDF variables 
+\end{verbatim}\normalsize\vspace{-1mm}
+is a little more complicated, and very much depends on exactly what you 'want' from the 2- or 3-D netCDF that can be represented as a single value.
+\vspace{1mm}
+\\Common is to conduct some sort of statistical goodness-of-fit analysis of a model variable against observations, or perhaps the same variable in a different model experiment. One might also be interested in statistical or otherwise calculated summary properties of a 3-D field (or fields), such as mean, minimum or maximum values, or even over-turning circulation strength -- anything passed back as a single value from the \textbf{muffinplot} plotting functions can be visualized acorns the ensemble. Code can also be added as and when required, for further analysis of combinations of outputs.
+\\Some examples are given in \texttt{help} for this function.
+\\Missing experiments will be represented a white square in the output plot. However, the \textbf{muffinplot} functions are less forgiving when it comes to missing or incorrect variable names and time-slice times, and everything will stop until you provide a value input at the command-line.
+
+\end{enumerate}
+
+
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
