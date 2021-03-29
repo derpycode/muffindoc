@@ -12993,7 +12993,7 @@ muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN2
 
 The results of the two different organic carbon burial configurations when run in the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997], are shown in Figures \ref{fig:carbon_burial_simple} and \ref{fig:carbon_burial_dunne2007}.
 
-From the figures, it is noticeable that the 'simple' scheme when applying a uniform \(10 \%\) organic matter preservation efficiency, leads to a substantive over-estimation in the fractional preservation in the range of organic matter rain fluxes that are simulated in this configuration. The 'dunne2007' scheme, while faithfully following the fractional preservation vs. flux relationship, lacks the higher rain fluxes observed in the modern ocean in the \textit{Dunne et al.} [2007] (and that are not reproduced in the model). Likely then that the first scheme will over-estimate organic carbon burial in marine sediments, and the 2nd scheme will under-estimate it. (The  carbon burial fluxes as reported in \textsf{\footnotesize sedgem/seddiag\_misc\_DATA\_GLOBAL.res} are: \(0.088\,\ PgC\,\ yr^{-1}\) and \(0.027\,\ PgC\,\ yr^{-1}\), respectively. The latter is equivalent to a mean burial efficiency of \(3.1\%\).)
+From the figures, it is noticeable that the 'simple' scheme, in applying a uniform \(10 \%\) organic matter preservation efficiency, leads to a substantive over-estimation in the fractional preservation in the range of organic matter rain fluxes that are simulated in this configuration )although it should be noted that these are rain fluxes to the \uline{deep sea} only). The 'dunne2007' scheme, while faithfully following the fractional preservation vs. flux relationship, also lacks the higher rain fluxes observed in the modern ocean in the \textit{Dunne et al.} [2007] and that are not reproduced in the model. Because in these simple examples there are no shallow sedimentary locations, it is likely that both schemes will underestimate global burial. (The  carbon burial fluxes as reported in \textsf{\footnotesize sedgem/seddiag\_misc\_DATA\_GLOBAL.res} are: \(0.088\,\ PgC\,\ yr^{-1}\) and \(0.027\,\ PgC\,\ yr^{-1}\), respectively. The latter is equivalent to a mean burial efficiency of \(3.1\%\).)
 
 \begin{figure}[H]
 \includegraphics[width=0.5\linewidth]{210127.Corg.simple.EXPTgl.burial_efficiency.210208.ps}
@@ -13007,6 +13007,8 @@ From the figures, it is noticeable that the 'simple' scheme when applying a unif
 \label{fig:carbon_burial_dunne2007}
 \end{figure}
 
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
 \noindent Finally, examples are provided as to how to configure a fully 'open system' (excepting that of \(P\)). The command-line usage for these examples is:
@@ -13054,11 +13056,16 @@ rg_par_weather_CaCO3=5.58E+12
 rg_par_outgas_CO2_d13C=-6.0
 rg_par_weather_CaCO3_d13C=12.0
 \end{verbatim}\normalsize\vspace{-1mm}
-where there are equal contributions of carbon to the coean-atmosphere frmo volcanic \(CO_{2}\) out-gassing and \(CaCO_{3}\) weathering, and to balance a 2nd stage spin-up \(\delta^{13}C\) of \(CaCO_{3}\) burial of \(3.4\permille\), you need a (unrealistic!) \(\delta^{13}C\) of weathered \(CaCO_{3}\) of approximately \(12\permille\) (whereas ideally, it might be close to \(3.4\permille\) ...).
+where there are equal contributions of carbon to the ocean-atmosphere from volcanic \(CO_{2}\) out-gassing and \(CaCO_{3}\) weathering, and to balance a 2nd stage spin-up \(\delta^{13}C\) of \(CaCO_{3}\) burial of \(3.4\permille\), you need a (unrealistic!) \(\delta^{13}C\) of weathered \(CaCO_{3}\) of approximately \(12\permille\) (whereas ideally, it might be close to \(3.4\permille\) ...).
 
 \vspace{1mm}
 
-We can modify this as follows when including organic carbon burial:
+There are two ways of isotopically balancing the addition of organic carbon burial in the system -- either all via enhanced \(CO_{2}\) outgassing, or a combination of kerogen weathering and enhanced \(CO_{2}\) outgassing. The calculation is presented for enhanced \(CO_{2}\) outgassing only first, and then combining kerogen weathering and enhanced \(CO_{2}\) outgassing. \uline{The second scheme is arguably more realistic/better.}
+
+\begin{enumerate}[noitemsep]
+
+\vspace{2mm}
+\item \textbf{Enhanced \(CO_{2}\) outgassing only.}
 
 \begin{itemize}[noitemsep]
 
@@ -13076,7 +13083,7 @@ The flux-weighted \(\delta^{13}C\) of the sinks (in units of \(Tmol\,C \times \p
 \\and must balance the input, which is now:  
 \\\(12.93\times -6.0 + 5.58\times x\)
 \\where \(x\) is the isotopic signature of weathered \(CaCO_{3}\) and in this example has a value of \(-9.5\permille\) to achieve isotopic mass balance.
-\\Note that this mass balance is done without any assumed weathering or organic (kerogen) carbon on land. Off-setting some of the enhanced \(CO_{2}\) out-gassing with kerogen weathering creates an more negative net input of reduced carbon and hence requires a more positive carbonate carbon weathering signature. \\Regardless, the organic carbon burial flux having assumed a \(10\%\) preservation fraction is rather excessive. For example, assuming a fixed fractional preservation of \(3.1\%\) (see above), now requires a \(\delta^{13}C\) of weathered \(CaCO_{3}\) of \(6.1\permille\) (and much closed to the signature of buried \(CaCO_{3}\)).
+\\Note that this mass balance is done without any assumed weathering or organic (kerogen) carbon on land. Off-setting some of the enhanced \(CO_{2}\) out-gassing with kerogen weathering creates an more negative net input of reduced carbon and hence requires a more positive carbonate carbon weathering signature.
 
 \vspace{1mm}
 \item '\textbf{dunne2007}'
@@ -13086,12 +13093,69 @@ The flux-weighted \(\delta^{13}C\) of the sinks (in units of \(Tmol\,C \times \p
 \end{itemize}
 
 \vspace{1mm}
-
 \noindent Note that under a topography with a higher shallow sediment area and hence a higher organic carbon burial than 'dunne2007' and 'worbe2', you would end up requiring a less positive (or negative) weathered \(CaCO_{3}\) isotopic signature. 
 
+\vspace{2mm}
+\item \textbf{Kerogen weathering plus enhanced \(CO_{2}\) outgassing.}
+\vspace{1mm}
+\\The bulk carbon mass balance is:
+\\\(F_{out(Corg)}+F_{out(CaCO3)}=F_{in(CO2)}+F_{in(Corg)}+F_{in(CaCO3)}\)
+\vspace{1mm}
+\\and isotopically:
+\vspace{1mm}
+\\\(\delta^{13}C_{out(Corg)}\times F_{out(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{out(CaCO3)}=\\ \delta^{13}C_{in(CO2)}\times F_{in(CO2)}+\delta^{13}C_{in(Corg)}\times F_{in(Corg)}+\delta^{13}C_{in(CaCO3)}\times F_{in(CaCO3)}\)
+\vspace{2mm}
+\\We can simplify things if we assume that: (1) the isotopic composition of weathered kerogen is the same as newly buried organic matter (\(\delta^{13}C_{out(Corg)}\)) and (2), the isotopic composition of weathered carbonate is the same as newly buried \(CaCO_{3}\) (\(\delta^{13}C_{out(CaCO3)}\))\footnote{As a point of reference, the long-term Phanerozoic average value of ca. \(2-4 \permille\). }:
+\vspace{1mm}
+\\\(\delta^{13}C_{out(Corg)}\times F_{out(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{out(CaCO3)}=\\ \delta^{13}C_{in(CO2)}\times F_{in(CO2)}+\delta^{13}C_{out(Corg)}\times F_{in(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{in(CaCO3)}\)
+\vspace{1mm}
+\\Further, the isotopic composition of buried inorganic (carbonate) vs. organic carbon in the model can be related by a fixed offset, \(\alpha\). Eliminating \(\delta^{13}C_{out(Corg)}\) gives:
+\vspace{1mm}
+\\\((\delta^{13}C_{out(CaCO3)}+\alpha)\times F_{out(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{out(CaCO3)}=\\ \delta^{13}C_{in(CO2)}\times F_{in(CO2)}+(\delta^{13}C_{out(CaCO3)}+\alpha)\times F_{in(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{in(CaCO3)}\)
+\vspace{1mm}
 
+Now, assuming that a fraction, \(\gamma\), of \(CO_{2}\) outgassing helps balance organic carbon burial, we can balance the reduced and carbonate carbon fluxes as follows:
+\vspace{1mm}
+\\\(F_{out(Corg)}=\gamma \times F_{in(CO2)}+F_{in(Corg)}\)
+\\\(F_{out(CaCO3)}=(1-\gamma) \times F_{in(CO2)}+F_{in(CaCO3)}\)
+\vspace{1mm}
+\\and substituting, gives:
+\vspace{1mm}
+\\\((\delta^{13}C_{out(CaCO3)}+\alpha)\times (\gamma \times F_{in(CO2)}+F_{in(Corg)})+\delta^{13}C_{out(CaCO3)}\times ((1-\gamma) \times F_{in(CO2)}+F_{in(CaCO3)})\\=\\ \delta^{13}C_{in(CO2)}\times F_{in(CO2)}+(\delta^{13}C_{out(CaCO3)}+\alpha)\times F_{in(Corg)}+\delta^{13}C_{out(CaCO3)}\times F_{in(CaCO3)}\)
+\vspace{1mm}
+\\from which we can eliminate form both sides the terms \((\delta^{13}C_{out(CaCO3)}+\alpha)\times F_{in(Corg)}\) and \(\delta^{13}C_{out(CaCO3)}\times F_{in(CaCO3)}\) to give:
+\vspace{1mm}
+\\\((\delta^{13}C_{out(CaCO3)}+\alpha)\times (\gamma \times F_{in(CO2)})+\delta^{13}C_{out(CaCO3)}\times ((1-\gamma) \times F_{in(CO2)})=\delta^{13}C_{in(CO2)}\times F_{in(CO2)}\)
+\vspace{1mm}
+\\and then divide by \(F_{in(CO2)}\):
+\vspace{1mm}
+\\\((\delta^{13}C_{out(CaCO3)}+\alpha)\times \gamma+\delta^{13}C_{out(CaCO3)}\times (1-\gamma)=\delta^{13}C_{in(CO2)}\)
+\vspace{1mm}
+\\and hence
+\vspace{1mm}
+\\\(\alpha\times \gamma+\delta^{13}C_{out(CaCO3)}=\delta^{13}C_{in(CO2)}\)
+\vspace{1mm}
+\\and finally:
+\vspace{1mm}
+\\\(\gamma=\frac{\delta^{13}C_{in(CO2)}-\delta^{13}C_{out(CaCO3)}}{\alpha}\)
+\vspace{2mm}
+\\The value of \(\delta^{13}C_{in(CO2)}\) is prescribed in the model and is typically \(-6 \permille\). \(\delta^{13}C_{out(CaCO3)}\) is principally dependent on the assumed atmospheric \(\delta^{13}C\) and is typically ca. \(3 \permille\). The value of \(\alpha\) (\(\delta^{13}C\) or organic matter minus the \(\delta^{13}C\) of carbonate carbon) in the model also depends on atmospheric \(\delta^{13}C\) as well as ocean surface temperature and atmospheric \(pCO_{2}\) and is typically something like \(-27 \permille\). 
+\vspace{1mm}
+\\\noindent Taking the 'simple' configuration as an example and \(\gamma=0.333\), together with equal carbonate and silicate weathering fluxes of \(5.58Tmolyr^{-1}\) (as before),  volcanic \(CO_{2}\) outgassing is now adjusted higher by a value equal to  \(\times0.333\) the organic carbon burial flux of \(7.33Tmolyr^{-1}\) (\(0.088 PgCyr^{-1}\)), to \(5.58 + 2.44 = 8.02Tmolyr^{-1}\). Kerogen weathering, with a value equal to \(\times0.667\) the organic carbon burial flux -- \(4.89Tmolyr^{-1}\)\ -- is now prescribed in the \textit{user-config} as \uline{a ratio to the silicate weathering flux}:
+\vspace{-1mm}\small\begin{verbatim}
+rg_par_weather_CaSiO3_fracC=0.87
+\end{verbatim}\normalsize\vspace{-1mm}
+(\(4.89/5.58\)) and with an isotopic composition equal to organic carbon burial (\(-24\permille\)):
+\vspace{-1mm}\small\begin{verbatim}
+rg_par_weather_CaSiO3_fracC_d13C=-24.0
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+In other words -- in this example, we balance the \(0.088 PgCyr^{-1}\) of projected organic carbon burial with an additional \(0.029 PgCyr^{-1}\) of volcanic \(CO_{2}\) outgassing at \(-6\permille\), with the remainder -- \(0.059 PgCyr^{-1}\) -- balanced by kerogen weathering with the same (as organic carbon burial) isotopic composition (\(-24\permille\)). \\ To put it yet another way -- with the weathering and burial of \(CaCO_{3}\) isotopically balancing, we need to isotopically balance \(5.58Tmolyr^{-1}\) of additional \(CaCO_{3}\) burial sourced (in terms of alkalinity supplied to the ocean) from silicate weathering, with \(8.02Tmolyr^{-1}\) of volcanic \(CO_{2}\) outgassing at \(-6\permille\). We do this by now removing \(2.44Tmolyr^{-1}\) of organic carbon at \(-24\permille\), i.e. \(-6\times8.02=3\times5.58+-24\times2.44\). This  implies that for any model-projected organic carbon burial flux less than \(2.44Tmolyr^{-1}\), the above assumptions are no longer possible and e.g. the isotopic composition of weathered \(CaCO_{3}\) must become increasingly positive and larger than \(3\permille\). For any projected organic carbon burial flux greater than \(2.44Tmolyr^{-1}\), you simply balance the 'excess' burial with kerogen weathering of any identical (to burial) isotopic composition. 
 
+\vspace{2mm}
+The end.
 
+\end{enumerate}
 
 %------------------------------------------------
 %
