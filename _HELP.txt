@@ -163,7 +163,7 @@ PERMIL
 \label{subsubsec:foo}
 [...]
 See foo on page \pageref{subsubsec:foo}
-See Chapter ref{ch:foo}
+See Chapter \ref{ch:foo}
 
 %------------------------------------------------
 %

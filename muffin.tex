@@ -12382,6 +12382,50 @@ bg\_par\_force\_point\_k
 %------------------------------------------------
 %
 \newpage
+\subsection*{Add a salinity (freshwater adjustment) forcing}
+\vspace{1mm}
+
+For a limited number of 'modern' configurations (principally \texttt{worbe2} and \texttt{worjh2}), a (e.g. Atlantic -> Pacific) freshwater\footnote{In practice implemented by a (negative) salinity flux.} flux balance adjustment can be made by changing a single scaling parameter (and/or adjusting 3 parameter controlling individual freshwater transfers). Refer to the tutorial chapter on the modern AMOC for further details.
+
+For non-standard modern continental configurations, or paleo configurations, to re-balance surface freshwater fluxes requires that a 2D surface \textit{forcing} is created. Refer to Chapter \ref{ch:proxies} on Proxies and Reconstructing the Past for a description of a pair of late Holocene and LGM configurations which employ a 2D salinity forcing field in order to control the strength of the AMOC.\footnote{Also see: \textsf{\footnotesize user-configs/MS/crichtonetal.CP.2021} for further examples.}
+
+To re-balance surface freshwater fluxes you need to create a new, or modify an existing, \textit{forcing}. You need a 2D spatial field and (scaling) time-series file:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_SUR.dat}
+\item \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_sig.dat}
+\end{itemize}
+\vspace{1mm}
+and in \textsf{\footnotesize configure\_forcings\_ocn.dat}, you set:
+\vspace{-1mm}\small\begin{verbatim}
+  2  f  f  0.1  t  f  -1  01  01  01  '[salinity (PSU)]'
+\end{verbatim}\normalsize\vspace{-1mm}
+which requests a flux forcing for salinity\ (tracer \texttt{2}), with the \texttt{-1} specifying that a 2D field for the surface layer (only) will be used (\texttt{-1 == SURFACE}).
+
+Easiest is to set \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_sig.dat} constant and scaled so as to convert units from \(mol\:per\:grid\:point\:yr^{-1}\) to \(Sv\), e.g.
+\vspace{-1mm}\small\begin{verbatim}
+        0.0  1.10e+18
+999999999.0  1.10e+18
+\end{verbatim}\normalsize\vspace{-1mm}
+
+In the \textit{user-config}, the additional scaling parameter:
+\vspace{-1mm}\small\begin{verbatim}
+bg_par_ocn_force_scale_val_2=0.4
+\end{verbatim}\normalsize\vspace{-1mm}
+can then be used to set the flux transfer in units of \(Sv\).
+
+It then remains to devise the spatial pattern in \textsf{\footnotesize biogem\_force\_flux\_ocn\_sal\_SUR.dat}. The key here is that the \uline{sum of all the grid point values, should be zero} (unless you intend to have a net input or loss of freshwater from the ocean and hence a globally decreasing or increasing mean salinity).
+
+Where you want to remove freshwater from should have positive salinity flux values, and where you wish to add the freshwater to, should have negative salinity values.
+
+Finally, for the scaling (to \(Sv\)) to work out, \uline{the values in the two regions must sum to one (losing freshwater) and minus one (gaining freshwater)}.
+
+To create this 2D map -- refer to the examples mentioned above.
+For the Holocene/LGM pair, salinity is added to the entire North Atlantic (north of the Equator), and balanced by a salinity loss in the North Pacific. (Note that the salinity forcing conforms to a mask that is common to both Holocene and LGM land-sea masks.) For the Miocene-through-Holocene series, salinity input is restricted to more extreme northern latitudes in the Atlantic (north of the isthmus of Panama), while the balancing salinity removal is spread evenly over the entire remaining surface ocean. (Again, a mask common to all continental configurations is used and so a salinity flux is only applied to grid points that are 'wet' in all continental configurations.)
+
+%------------------------------------------------
+%
+\newpage
 \subsection*{Add a \textit{second} salinity forcing}
 \vspace{1mm}
 
