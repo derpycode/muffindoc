@@ -7795,6 +7795,27 @@ Examples:
 
 \section{Data re-gridding}
 
+A number of \textbf{MATLAB} functions are available in \textbf{muffindata} for transforming data:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \textbf{make\_regrid\_data2ASCII\_GENIE.m}
+\\Re-grids plain text (ASCII) point location data to a 2D \textbf{muffin} grid and saves as a 2D ASCII format file. 
+\vspace{1mm}
+\item \textbf{make\_regrid\_ASCII2netcdf\_GENIE.m}
+\\Converts 2D \textbf{muffin} grid ASCII format data to \textbf{netCDF} format. 
+\vspace{1mm}
+\item \textbf{make\_regrid\_data2netcdf\_GENIE.m}
+\\Re-grids plain text (ASCII) point location data to a 3D \textbf{muffin} grid and saves as \textbf{netCDF} format.
+\vspace{1mm}
+\item \textbf{make\_regrid\_data2netcdf\_WOA.m}
+\\Re-grids plain text (ASCII) point location data to the standard 3D World Ocean Atlas grid and saves as \textbf{netCDF} format.
+\vspace{1mm}
+\item \textbf{make\_regrid\_WOA2GENIE.m}
+\\Converts a 3D World Ocean Atlas grid netCDF variable to the \textbf{muffin} grid and saves as \textbf{netCDF} format (as well as ASCII).
+\end{itemize}
+
 %------------------------------------------------
 
 \newpage
@@ -7802,7 +7823,6 @@ Examples:
 %------------------------------------------------
 
 \section{Miscellaneous data processing}
-
 
 %------------------------------------------------
 
@@ -12872,7 +12892,7 @@ sg_par_sedcore_save_mask_name="sedgem_save_mask.72x72"
 \subsubsection{Include shallow water depositional systems}\label{subsub:configure_reefs}
 \vspace{1mm}
 
-By default, the entire seafloor grid is considered as '\textit{deepsea}' and sedimentary diagenesis options are provided accordingly. In practice, because the simple diagenesis options available, such as for CaCO\(_{3}\) (e.g. \textit{Archer} [1991]; \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2003]) tend not to be applicable to shallower water and particularly high organic carbon delivery (especially in the case of CaCO\(_{3}\) diagenesis) environments, the deep-sea grid is restricted. This can be prescribed 'hard', by defining the sediment grid only at deeper depths and classifying shallowed ocean grid points as invalid (a value of \texttt{0.0}) in the SEDGEM depth definition file\footnote{Set by parameter \texttt{sg\_par\_sed\_topo\_D\_name} that must point to a file in \texttt{cgenie.muffin/genie-sedgem/data/input}.} (e.g. \texttt{worbe2.depth.36x36x0}8).
+By default, the entire seafloor grid is considered as '\textit{deepsea}' and sedimentary diagenesis options are provided accordingly. In practice, because the simple diagenesis options available, such as for CaCO\(_{3}\) (e.g. \textit{Archer} [1991]; \textit{Ridgwell} [2001]; \textit{Ridgwell et al.} [2003]) tend not to be applicable to shallower water and particularly high organic carbon delivery (especially in the case of CaCO\(_{3}\) diagenesis) environments, the deep-sea grid is restricted. This can be prescribed 'hard', by defining the sediment grid only at deeper depths and classifying shallowed ocean grid points as invalid (a value of \texttt{0.0}) in the SEDGEM depth definition file\footnote{Set by parameter \texttt{sg\_par\_sed\_topo\_D\_name} that must point to a file in: \\\texttt{cgenie.muffin/genie-sedgem/data/input}.} (e.g. \texttt{worbe2.depth.36x36x0}8).
  Or, and more flexibly, the entire ocean grid can be defined as potentially valid (e.g. \texttt{worbe2.depth.36x36x08.ALL}) and SEDGEM directed to treat any grid points lying shallower than a specific depth as shallow water sediments. This depth cut-off is set via the parameter \texttt{sg\_par\_sed\_Dmax\_neritic} (in units of m below the ocean surface). A typical value is \texttt{176.0}\footnote{Note that the simple (esp. CaCO\(_{3}\) diagenesis schemes) arguably only applicable below depths of ca. 1000 m, although even this is complicated by varying patterns of productivity across the ocean.}, which for an 8-level configuration will exclude the shallowest ocean depth level from the deep-sea grid, and for a 16-level ocean will exclude the two shallowest ocean depth levels.
 
 Sediments that are not classed as 'deepsea', are automatically classed as 'mud', i.e. potentially detrital and organic carbon rich. Such sediment locations  currently have no option for carbonate burial associated with them. Instead, a limited range of extremely simple and crude assumptions regarding organic carbon preservation (and P regeneration) are provided.
@@ -13333,7 +13353,7 @@ bg_ctrl_force_ohmega_calcite=.false.
 %------------------------------------------------
 %
 \newpage
-\subsubsection{Set up a (silicate) weathering feedback}\label{weatheringfeedback}
+\subsubsection{Set up a (silicate) weathering feedback}\label{howto:weatheringfeedback1}
 \vspace{1mm}
 
 \noindent To create a temperature (only) dependency for the weathering of carbonate and silicate rocks on land, the following two parameter values need to be set for carbonate and silicate weathering, respectively (they are \texttt{.false.} by default):
@@ -13357,12 +13377,14 @@ To balance the silicate weathering, volcanic CO$_{2}$ out-gassing is then assign
 
 \begin{enumerate}
 
+\vspace{1mm}
 \item All solutes could simply be assumed to be derived from carbonate weathering (which is the default assumption in open system experiments without a weathering feedback), e.g.:
 \vspace{-1mm}\small\begin{verbatim}
 rg_par_weather_CaCO3=10.0E+12
 rg_par_weather_CaSiO3=0.0
 \end{verbatim}\normalsize\vspace{-1mm}
 for a hypothetical example with 10 Tmol yr$^{-1}$ total global CaCO$_{3}$ burial. No volcanic CO$_{2}$ out-gassing should then be prescribed.
+\vspace{1mm}
 \item Secondly, silicate and carbonate weathering could be assumed to be split evenly, e.g.:
 \vspace{-1mm}\small\begin{verbatim}
 rg_par_weather_CaCO3=5.0E+12
@@ -13372,11 +13394,13 @@ Volcanic CO$_{2}$ out-gassing needs to be set equal to the baseline silicate wea
 \vspace{-1mm}\small\begin{verbatim}
 rg_par_outgas_CO2=5.0E+12
 \end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
 \item Thirdly, volcanic CO$_{2}$ out-gassing could be assumed, which then constrains the silicate flux, with the carbonate flux being whatever is required to make the total Ca$^{2+}$ weathering flux equal to global CaCO$_{3}$ burial.
 
 \end{enumerate}
 
 \vspace{1mm}
+
 A difficulty arises because setting the reference temperature \texttt{rg\_par\_ref\_T0} equal to the mean global land surface temperature only gives rise to weathering fluxes exactly equal to the reference parameter values (\texttt{rg\_par\_weather\_CaCO3} and \texttt{rg\_par\_weather\_CaSiO3}) for a non-seasonally forced climate. Because weathering is non-linear in climate (here just temperature), a seasonally forced configuration of the model with give rise to slightly modified weathering fluxes. The result is a slight drift in atmospheric \textit{p}CO${_2}$) and climate, even after a fairly long (100s of kyr), or alternatively, a slightly different steady state \textit{p}CO${_2}$) value (for a ca. 1 Myr \textit{spin-up}).
 
 The reason is that long-term climate and hence \textit{p}CO${_2}$) is controlled by the silicate weathering component of total weathering, not total weathering. Under a seasonally forced rather than annual average climate, the non-linearity in the weathering response to temperature deviations means that silicate weathering will generally slightly exceed volcanic CO$_{2}$ out-gassing. Atmospheric \textit{p}CO${_2}$) and with it  global temperatures will hence be gradually drawn-down until net (carbonate) carbon removal exactly matches the rate of new (volcanic) carbon input
@@ -13397,11 +13421,74 @@ Regardless of which of the 3 options, the total weathering flux, given in the BI
 
 \vspace{1mm}
 If the carbon isotopic signature of volcanic CO$_{2}$ out-gassing is assigned a value of e.g. -6.0\permille. The $\delta$$^{13}$C of weathered CaCO$_{3}$ is then simply set in order that inputs equal the mean $\delta$$^{13}$C of carbonate burial, which as given in the \textbf{BIOGEM} \textit{time-series} file: \texttt{biogem\_series\_sed\_CaCO3\_13C.res}. For example, assuming equal fluxes of 5 Tmol yr$^{-1}$ for both weathering components and for volcanic CO$_{2}$ out-gassing (at -6.0\permille) and assuming a mean carbonate burial $\delta$$^{13}$C of 3\permille, requires:
-\vspace{-1mm}\small\begin{verbatim}
+\vspace{-4mm}\small\begin{verbatim}
 rg_par_outgas_CO2_d13C=-6.0
 rg_par_weather_CaCO3_d13C=12.0
-\end{verbatim}\normalsize\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-2mm}
 Of course, in reality organic carbon burial is important and including it would enable a much more realistic value of weathered carbonate $\delta$$^{13}$C to be set ...
+
+%------------------------------------------------
+%
+\newpage
+\subsubsection{Have some weathering components fixed and others climate-dependent}\label{howto:weatheringfeedback2}
+
+\vspace{2mm}
+
+By default, when carbonate and/or silicate weathering feedbacks are selected (see Section \ref{howto:weatheringfeedback1} on page \pageref{howto:weatheringfeedback1}):
+\vspace{-2mm}\small\begin{verbatim}
+rg_opt_weather_T_Ca=.true.
+rg_opt_weather_T_Si=.true.
+\end{verbatim}\normalsize\vspace{-2mm}
+then the fluxes of all (selected) tracers (e.g. nutrients, trace elements) that are associated with carbonate/silicate rocks. also vary with climate. For example, is pyrite is selected(as a solid tracer), then the weathering fluxes of sulphur (as \(H_{2}S\) or oxidized as \(SO^{2-}_{4}\)) and iron to the ocean will co-vary with silicate weathering.
+
+Options are provided to decouple bulk carbonate and silicate weathering from their 'daughter' tracers such that e.g. one could have varying silicate weathering (and hence \(CO_{2}\)) consumption) but a fixed rate of pyrite weathering, or, fixed silicate weathering by varying pyrite weathering. 
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item \textbf{Invariant bulk carbonate/silicate weathering}
+\\Although the carbonate/silicate weathering feedbacks themselves can be turned off, this means that the weathering fluxes derived from all the 'daughter' tracers will also be climate invariant. Instead, 2 parameters are provided that will keep carbonate/silicate weathering invariant, but allow the weathering of 'daughter' tracers to vary in response to climate change. These are:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \texttt{rg\_opt\_weather\_fixed\_CaCO3=.true.}
+\\which will keep the fluxes of \(DIC\), \(ALK\), and \(Ca^{2+}\) associated with the weathering of carbonate rocks, invariant.
+\item \texttt{rg\_opt\_weather\_fixed\_CaSiO3=.true.}
+\\which will keep the fluxes of \(Ca^{2+}\) and \(Si\) and the consumption of \(CO_{2}\) associated with the weathering of silicate rocks, invariant.
+\end{itemize}
+\vspace{1mm}
+Note that climate-responsive rates of carbonate/silicate weathering are still calculated, just not applied to the weathering of the parent rock.
+
+\vspace{1mm}
+\item \textbf{Invariant daughter tracer weathering}
+\\The options for retaining climate-responsive changes in carbonate/silicate parent rock weathering but keeping daughter tracer weathering invariant, are:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \texttt{rg\_opt\_weather\_fixed\_Li=.true.}
+\\Fixes (maintains invariant) \(Li\) assumed associated with both \uline{carbonate} \\(\texttt{rg\_par\_weather\_CaCO3\_fracLi}) and \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracLi}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_Sr=.true.}
+\\Fixes (maintains invariant) \(Sr\) assumed associated with both \uline{carbonate} \\(\texttt{rg\_par\_weather\_CaCO3\_fracSr}) and \uline{silicate}\footnote{Including subdivision into granite and basalt.}  (\texttt{rg\_par\_weather\_CaSiO3\_fracSr}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_Os=.true.}
+\\Fixes (maintains invariant) \(Os\) assumed associated with both \uline{carbonate} \\(\texttt{rg\_par\_weather\_CaCO3\_fracOs}) and \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracOs}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_kerogenC=.true.}
+\\Fixes (maintains invariant) kerogen carbon (\(DIC\)) weathering fluxes assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracC}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_kerogenP=.true.}
+\\Fixes (maintains invariant) kerogen phosphorous (\(PO^{3-}_{4}\))\footnote{And for backward compatibility, also non-kerogen phosphorous associated with \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracP}) parent rock weathering.} weathering fluxes assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_kerogen\_fracP*rg\_par\_weather\_CaSiO3\_fracC}) parent rock weathering.\footnote{Note that these weathering flux components are independent of any apatite weathering.}
+\item \texttt{rg\_opt\_weather\_fixed\_kerogenS=.true.}
+\\Fixes (maintains invariant) kerogen sulphur (\(H_{2}S\)) weathering fluxes assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_kerogen\_fracS*rg\_par\_weather\_CaSiO3\_fracC}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_FeS2=.true.}
+\\Fixes (maintains invariant) pyrite weathering (and derived fluxes of \(H_{2}S\) (or \(SO^{2-}_{4}\)) and \(ALK\)) assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracFeS2}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_CaSO4=.true.}
+\\Fixes gypsum) weathering (and derived fluxes of \(SO^{2-}_{4}\) and \(Ca^{2+}\))\footnote{Note that gypsum weathering is neutral w.r.t. alkalinty.} assumed associated with \uline{carbonate} (\texttt{rg\_par\_weather\_CaCO3\_fracCaSO4} parent rock weathering.  
+\item \texttt{rg\_opt\_weather\_fixed\_FeCO3=.true.}
+\\Fixes (maintains invariant) siderite weathering (and derived fluxes of \(Fe^{2+}\) and \(DIC\)) assumed associated  with \uline{carbonate} (\texttt{rg\_par\_weather\_CaCO3\_fracFeCO3}) parent rock weathering.
+\item \texttt{rg\_opt\_weather\_fixed\_Ca5PO43=.true.}
+\\Fixes (maintains invariant)  apatite weathering (and derived fluxes of \(P\), \(Ca^{2+}\), and \(ALK\)) assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracCa5PO43}) parent rock weathering. \item \texttt{rg\_opt\_weather\_fixed\_SiO2=.true.}
+\\Fixes (maintains invariant) silica (\(H_{4}SiO_{4}\)) weathering fluxes assumed associated with \uline{silicate} (\texttt{rg\_par\_weather\_CaSiO3\_fracSi}) parent rock weathering.\footnote{Note that by default, bulk silicate rock (\(CaSiO_{3}\)) weathering does not release dissolved \(Si\) unless a ratio (\texttt{rg\_par\_weather\_CaSiO3\_fracSi}) is explicitly set.}
+\end{itemize}
+\vspace{1mm}
+
+
+\end{enumerate}
 
 %------------------------------------------------
 %
