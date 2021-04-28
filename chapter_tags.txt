@@ -36,6 +36,7 @@
 \chapter{muffingen}\label{ch:muffingen}
 
 \chapter{FAQ}\label{ch:faq}
+\label{faq:installation}
 
 \chapter{HOW-TO (technical)}\label{ch:how-to-technical}
 

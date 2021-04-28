@@ -9126,7 +9126,7 @@ When \textbf{muffingen} writes out the parameter settings (file: \textsf{\footno
 
 %------------------------------------------------
 
-\section{Installation related questions}
+\section{Installation related questions}\label{faq:installation}
 
 %------------------------------------------------
 %
@@ -9143,6 +9143,23 @@ the program will terminate with a segmentation fault.}''
 \vspace{2mm}
 \noindent The (a?) solution is to increase the CPU stack space, Try:
 \vspace{-2pt}\begin{verbatim}$ ulimit -s unlimited\end{verbatim}\vspace{-2pt}
+
+%------------------------------------------------
+%
+
+\subsubsection{Compiler errors}
+
+Recent versions (ca. 10) of \texttt{gcc} (GNU C Compiler) may through up errors when compiling the \textbf{muffin} \textbf{netCDF} library routines -- '\texttt{Error: Rank mismatch ...}'.
+
+\vspace{1mm}
+This can be resolved by adding to \texttt{makefile.arc} (in \texttt{genie-main}), just before:
+\vspace{-1mm}\small\begin{verbatim}
+# === NetCDF paths ===
+\end{verbatim}\normalsize\vspace{-1mm}
+the line:
+\vspace{-1mm}\small\begin{verbatim}
+FFLAGS += -fallow-argument-mismatch
+\end{verbatim}\normalsize\vspace{-1mm}
 
 %------------------------------------------------
 
@@ -10355,6 +10372,7 @@ No specific example is given at this time for \textbf{RedHat} ... refer to the i
 \vspace{2mm}
 
 This is a brief guide to installing \textbf{muffin} on a \textbf{Mac}.
+\\(Also see the Section \ref{faq:installation} FAQ (page \pageref{faq:installation}).)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -13001,18 +13019,23 @@ Each parameter sets the relative return (as a fraction of the \(P\) associated w
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_diagen_Corgopt='dunne2007'
 \end{verbatim}\vspace{-1mm}
-Only one parameter option is associated with this burial scheme:\vspace{1mm}
-\begin{itemize}[noitemsep]
-\item 
-\vspace{-0mm}\begin{verbatim}
-sg_par_sed_diagen_fracC2Ppres_ox=0.0
-\end{verbatim}\vspace{-0mm}
-\end{itemize}
+The 'simple' scheme \(P\) vs. \(C\) parameters are not used in conjunction with the 'dunne2007' scheme. Instead, an option to apply an empirical (observational-based) parameterization, taken from \textit{Wallmann} [2010]. This option is specified by:
+\vspace{-1mm}\begin{verbatim}
+sg_ctrl_sed_diagen_fracC2Ppres_wallmann2010=.true.
+\end{verbatim}\vspace{-1mm}
+which varies the \(C:P\) ratio of the remineralized fluxes (and hence the \(C:P\) ratio of buried organic matter) as a function of ambient \([O_{2}]\).
+\\If not set, the \(C:P\) ratio of the remineralized fluxes follows the \(C:P\) ratio of organic matter deposited to the sediment surface.
 \vspace{1mm}
-which controls the relative burial of \(P\) vs. \(C\) under all redox conditions. Setting this parameter to a value of \(0.0\) (the default is \(1.0\)) ensures a 'closed system' with respect to phosphorous.
+\\When using the 'dunne2007' scheme, in order to bury no organic phorphorous and hence obtain a 'closed system' just for \(P\), one must set:
+\vspace{-1mm}\begin{verbatim}
+bg_ctrl_force_sed_closed_P=.true.
+\end{verbatim}\vspace{-1mm}
+(assuming that \texttt{bg\_ctrl\_force\_sed\_closedsystem} is not set, when all tracers are closed).
 
 \end{enumerate}
 
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
 \noindent Example \textit{user-} (in: \textsf{\footnotesize user-configs/EXAMPLES}) and \textit{base-config} files are given for the application of both scheme, and are based on the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997]. These configurations also make use of a simplied grouping of the various module configuration and boundary condition files, as used per used in the 'paleo' configurations and described as part of the \textbf{muffingen} documentation (see: Chapter \ref{ch:muffingen}).
