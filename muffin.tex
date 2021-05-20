@@ -13521,6 +13521,11 @@ Note that climate-responsive rates of carbonate/silicate weathering are still ca
 
 \noindent \textbf{Also see}: The FAQ Chapter.
 
+\vspace{1mm}
+\noindent \textbf{NOTE:} The principal assumption underlying accelerated time-stepping is that the gradients in the ocean, including nutrients and hence also the biological pump, \uline{do not change}. Weathering products are added (and sedimentary burial removed) uniformly to the ocean, which is treated as a single box. Acceleration is hence for when you have a 100\% spun-up circulation and biological pump, and just want to accelerate the bass balance of long-lived trace element and isotopic tracers (such as \(Ca\), \(Sr\), \(li\) etc.). And ... with care ... in accelerating the long tail of \(CO_{2}\) weathering draw-down.
+
+\vspace{2mm}
+
 \noindent A (pseudo) module is provided: '\texttt{GEMlite}' which provides a means of much more rapidly solving the weathering-sedimentation mass balance -- i.e. the long-term (>10 kyr) carbon cycle processes and feedbacks. The motivation behind \texttt{GEMlite} is the stark disparity between the time-scales of ocean circulation and biological pump (ca. 0.1-1000 years) and those of sedimentation and weathering (~2-20 kyr) and particularly the silicate weathering feedback (>100 kyr). This makes running \texttt{cGENIE} to an open system steady state (with or without the silicate weathering feedback) challenging. Is there any way of 'accelerating' the calculation of the 'long tail' [Archer et al., 2009] of the CO2 curve (e.g. in response to fossil fuel CO2 emissions)?
 
 The philosophy is as follows: the long-term weathering-sedimentation processes are effectively just an imbalance between the supply of solutes via weathering and preservation and burial of esp. carbonates in deep-sea (and shallow) marine sediments. For a small imbalance between weathering and sedimentation, atmospheric pCO2 and climate (and hence the solute flux when including weathering feedbacks) will only change very slightly. For long intervals characterized by only a small imbalance in weathering-sedimentation the key assumption is made:
