@@ -12376,6 +12376,8 @@ bg_ctrl_force_oldformat=.false.
 \end{verbatim}\vspace{-2pt}\normalsize
 This is set automatically as part of the \texttt{runmuffin.sh} shell script\footnote{(but it not the actual default \textit{namelist parameter} setting)}.
 
+\vspace{1mm}
+
 Taking the example of the ocean (dissolved tracers): flux and restoring \textit{forcings} are defined in the \textit{forcings} specification file: \texttt{configure\_forcings\_ocn.dat}. As detailed in the notes to this file, there is a flag (\texttt{COLUMN \#6}) which sets the spatial attributes of the \textit{forcing} as follows:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
@@ -12391,6 +12393,8 @@ Taking the example of the ocean (dissolved tracers): flux and restoring \textit{
 \vspace{1mm}
 The default (\texttt{3}) is that the forcing is applied uniformly to the entire (3D) ocean volume.
 
+\vspace{1mm}
+
 Options \texttt{3}, \texttt{2}, and \texttt{0}, as: uniform 3D\footnote{Note that here: '3D' does not mean a spatially explicit 3D pattern and hence the original ('old') way of specifying \textit{forcings}, but instead: that the forcing is applied uniformly in 3D space (i.e., is in effect a volume \textit{forcing}).} (volume), uniform 2D (surface), and point forcing, respectively, require no additional (spatial) information and only an additional file specifying the time-dependent information for each forcing need be provided:
 \vspace{-2pt}\small\begin{verbatim}
 biogem_force_flux_ocn_xxx_sig.dat
@@ -12400,6 +12404,8 @@ for flux forcings, and
 biogem_force_restore_ocn_xxx_sig.dat
 \end{verbatim}\normalsize\vspace{-2pt}
 where: \texttt{xxx} represents the mnemonic of the tracer (e.g., \texttt{DIC} is dissolved inorganic carbon. \texttt{CH4} is methane, etc.).
+
+\vspace{1mm}
 
 Options \texttt{-1} (\texttt{SURFACE}), \texttt{-2} (\texttt{BENTHIC}) \texttt{-3} and  \texttt{-4}, require a 2D field to be provided, in addition to the time-dependent information for each forcing. The grids for both are the same -- i.e., all 'wet' grid points (non dry land) in the model. The filename for these 2D files is of the form:
 \vspace{-2pt}\small\begin{verbatim}
@@ -12411,11 +12417,27 @@ biogem_force_restore_ocn_xxx_SUR.dat
 \end{verbatim}\normalsize\vspace{-2pt}
 with \textsf{\footnotesize BEN} for the equivalent BENTHIC, and \textsf{\footnotesize LEV} for LEVEL \textit{forcing} selections.
 
+\newpage 
+
 For option \texttt{-3}, the grid level is set via the parameter:
 \vspace{-2pt}\small\begin{verbatim}
-bg\_par\_force\_point\_k
+bg_par_force_point_k
 \end{verbatim}\normalsize\vspace{-2pt}
 (e.g. bg\_par\_force\_point\_k=7) which by default is \texttt{0}.
+
+\vspace{1mm}
+
+For sediment (particulate) \textit{forcings}, there is no \textit{restoring forcing}. In addition, the \textit{flux forcings} are limited, with the choices being:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item [2] -- '2D' -- force the entire ocean surface \uline{uniformly}
+\item [0] -- '0D' -- force a specified point in the ocean
+\item [-1] -- 'SURFACE' -- force with/to specified surface ocean pattern
+\item [-2] -- 'BENTHIC' -- force with/to specified benthic pattern
+\end{itemize}
+\vspace{1mm}
+
+For option \texttt{-2}, particles are injected into the layer overlying the sediment surface, at each grid point. Typically, this allows for a single time-step of reactions (e.g. scavenging) to occur between dissolved tracers in the benthic layer and the injected particles, before they settle out of the water column and are incorporated into underlying surface sediments.
 
 %------------------------------------------------
 %
@@ -12958,6 +12980,7 @@ All three schemes are applied to both 'deep sea' and 'mud' benthic grid-points, 
 
 \vspace{1mm}
 \item \textbf{Fixed fraction}
+\vspace{1mm}
 \\This is the simplest possible representation of organic matter preservation and burial and simply imposes the burial of a fixed fraction of the organic matter flux reaching the sea-floor. It is selected by specifying:
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_diagen_Corgopt='simple'
@@ -13015,18 +13038,43 @@ Each parameter sets the relative return (as a fraction of the \(P\) associated w
 
 \vspace{1mm}
 \item \textbf{\textit{Dunne et al.} [2005] scheme}
-\\This is the next simplest representation of organic matter preservation and burial and a fractional burial of the organic matter flux reaching the sea-floor based on the empirically-derived equation of \textit{Dunne et al.} [2005]. It is selected by specifying:
+\vspace{1mm}
+\\This is the next simplest representation of organic matter preservation  and fractional burial of the organic matter flux reaching the sea-floor, and is based on the empirically-derived equation of \textit{Dunne et al.} [2005]. It is selected by specifying:
 \vspace{-1mm}\begin{verbatim}
 sg_par_sed_diagen_Corgopt='dunne2007'
 \end{verbatim}\vspace{-1mm}
-The 'simple' scheme \(P\) vs. \(C\) parameters are not used in conjunction with the 'dunne2007' scheme. Instead, an option to apply an empirical (observational-based) parameterization, taken from \textit{Wallmann} [2010]. This option is specified by:
+
+The fractional preservation and burial of Corg under the \textit{Dunne et al.} scheme can be modified via a simple scaling factor:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_fracCpres_scale
+\end{verbatim}\vspace{-1mm}
+which is assigned a default value of \texttt{1.0}. The maximum calculated preservation of organic matter is capped at 100\%. Otherwise, the fraction of organic matter that is preserved under this scheme is solely a function of the organic matter flux to the seafloor.  
+
+\vspace{1mm}
+
+With this option, the 'simple' scheme \(P\) vs. \(C\) parameters are not used in conjunction with the 'dunne2007' scheme. Instead, an option to apply an empirical (observational-based) parameterization, taken from \textit{Wallmann} [2010]. This option is specified by:
 \vspace{-1mm}\begin{verbatim}
 sg_ctrl_sed_diagen_fracC2Ppres_wallmann2010=.true.
 \end{verbatim}\vspace{-1mm}
 which varies the \(C:P\) ratio of the remineralized fluxes (and hence the \(C:P\) ratio of buried organic matter) as a function of ambient \([O_{2}]\).
-\\If not set, the \(C:P\) ratio of the remineralized fluxes follows the \(C:P\) ratio of organic matter deposited to the sediment surface.
+\\If not set, the \(C:P\) ratio of the remineralized fluxes follows the \(C:P\) ratio of organic matter deposited to the sediment surface and hence there is no preferential regeneration of dissolved phosphate under low \([O_{2}]\) conditions.
+
+As implemented here, there is a maximum relative return of dissolved \(P\) relative and the \(C/P\) ratio is never lower than \(11\) (i.e. an approximately 10-fold enhancement of regenerated \(P\) vs. \(C\) when compared to a standard Redfield value of \(106\)). This limit is set by:
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_off
+\end{verbatim}\vspace{-1mm}
+in 'units' of \(C/P\)
+\\(Note that the dissolved phosphate return flux is ultimately capped to be no greater than the organic matter phosphorous rain flux to the sediment surface.)
+
+The sensitivity of preferential phosphate regeneration to ambient oxygenation can also be adjusted. This is set by parameter: 
+\vspace{-1mm}\begin{verbatim}
+sg_par_sed_diagen_fracC2Ppres_c0_O2
+\end{verbatim}\vspace{-1mm}
+and by default has a value corresponding of \(32\mu M O_{2}\). Increasing this value enhances the preferential regeneration of dissolved \(P\) (but does not affect carbon preservation and burial). (It is similar to, but not quite the same in the formulation, as a half-saturation constant.)
+
 \vspace{1mm}
-\\When using the 'dunne2007' scheme, in order to bury no organic phorphorous and hence obtain a 'closed system' just for \(P\), one must set:
+
+Note that when using the 'dunne2007' scheme, in order to bury no organic phosphorous and hence obtain a 'closed system' just for \(P\), one must set:
 \vspace{-1mm}\begin{verbatim}
 bg_ctrl_force_sed_closed_P=.true.
 \end{verbatim}\vspace{-1mm}
@@ -13037,6 +13085,8 @@ bg_ctrl_force_sed_closed_P=.true.
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
+
+\newpage 
 
 \noindent Example \textit{user-} (in: \textsf{\footnotesize user-configs/EXAMPLES}) and \textit{base-config} files are given for the application of both scheme, and are based on the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997]. These configurations also make use of a simplied grouping of the various module configuration and boundary condition files, as used per used in the 'paleo' configurations and described as part of the \textbf{muffingen} documentation (see: Chapter \ref{ch:muffingen}).
 
@@ -13078,21 +13128,23 @@ muffin.CBSR.p_worbe2.BASES.RidgwellHargreaves1997_S36x36.SPIN2
 \end{itemize}
 (and use as \textit{restart}, the 2nd stage spin-up of (\textit{Ridgwell and Hargreaves} [1997]).
 
-The results of the two different organic carbon burial configurations when run in the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997], are shown in Figures \ref{fig:carbon_burial_simple} and \ref{fig:carbon_burial_dunne2007}.
-
-From the figures, it is noticeable that the 'simple' scheme, in applying a uniform \(10 \%\) organic matter preservation efficiency, leads to a substantive over-estimation in the fractional preservation in the range of organic matter rain fluxes that are simulated in this configuration )although it should be noted that these are rain fluxes to the \uline{deep sea} only). The 'dunne2007' scheme, while faithfully following the fractional preservation vs. flux relationship, also lacks the higher rain fluxes observed in the modern ocean in the \textit{Dunne et al.} [2007] and that are not reproduced in the model. Because in these simple examples there are no shallow sedimentary locations, it is likely that both schemes will underestimate global burial. (The  carbon burial fluxes as reported in \textsf{\footnotesize sedgem/seddiag\_misc\_DATA\_GLOBAL.res} are: \(0.088\,\ PgC\,\ yr^{-1}\) and \(0.027\,\ PgC\,\ yr^{-1}\), respectively. The latter is equivalent to a mean burial efficiency of \(3.1\%\).)
-
 \begin{figure}[H]
 \includegraphics[width=0.5\linewidth]{210127.Corg.simple.EXPTgl.burial_efficiency.210208.ps}
 \caption{Results of 'simple' scheme with \(10\%\) assumed burial efficiency vs. the empirical curve of \textit{Dunne et al.} [2007] (red line).}
 \label{fig:carbon_burial_simple}
 \end{figure}
 
+The results of the two different organic carbon burial configurations when run in the \(36\times 36\) sediment resolution 'worbe2' world configuration of \textit{Ridgwell and Hargreaves} [1997], are shown in Figures \ref{fig:carbon_burial_simple} and \ref{fig:carbon_burial_dunne2007}.
+
+From the figures, it is noticeable that the 'simple' scheme, in applying a uniform \(10 \%\) organic matter preservation efficiency, leads to a substantive over-estimation in the fractional preservation in the range of organic matter rain fluxes that are simulated in this configuration )although it should be noted that these are rain fluxes to the \uline{deep sea} only). The 'dunne2007' scheme, while faithfully following the fractional preservation vs. flux relationship, also lacks the higher rain fluxes observed in the modern ocean in the \textit{Dunne et al.} [2007] and that are not reproduced in the model. Because in these simple examples there are no shallow sedimentary locations, it is likely that both schemes will underestimate global burial. (The  carbon burial fluxes as reported in \textsf{\footnotesize sedgem/seddiag\_misc\_DATA\_GLOBAL.res} are: \(0.088\,\ PgC\,\ yr^{-1}\) and \(0.027\,\ PgC\,\ yr^{-1}\), respectively. The latter is equivalent to a mean burial efficiency of \(3.1\%\).)
+
 \begin{figure}[H]
 \includegraphics[width=0.5\linewidth]{210127.Corg.dunne2007.EXPTgl.burial_efficiency.210208.ps}
 \caption{Results of 'dunne2007' scheme vs. the empirical curve of \textit{Dunne et al.} [2007] (red line)}
 \label{fig:carbon_burial_dunne2007}
 \end{figure}
+
+\vspace{-4mm}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
@@ -13158,6 +13210,7 @@ There are two ways of isotopically balancing the addition of organic carbon buri
 
 \vspace{1mm}
 \item '\textbf{simple}'
+\vspace{1mm}
 \\The\ organic carbon burial flux is \(0.088\,\ PgC\,\ yr^{-1}\) and has a mean carbon isotopic signature (taken from the benthic rain flux) of \(-23.1\permille\).
 \\If we start by balancing the bulk carbon mass budget and simply increase the rate of volcanic \(CO_{2}\) out-gassing to compensate for carbon loss through organic matter burial, then outgassing becomes:
 \vspace{-1mm}\small\begin{verbatim}
@@ -13174,6 +13227,7 @@ The flux-weighted \(\delta^{13}C\) of the sinks (in units of \(Tmol\,C \times \p
 
 \vspace{1mm}
 \item '\textbf{dunne2007}'
+\vspace{1mm}
 \\A similar calculation can be made for the mass balance of the 'dunne2007' scheme option, which gives a \(0.027\,\ PgC\,\ yr^{-1}\) burial flux with a mean isotopic composition(taken from the benthic rain flux) of \(-23.1\permille\).
 \\The required \(\delta^{13}C\) of weathered \(CaCO_{3}\) ends up at about \(5.7\permille\).
 
