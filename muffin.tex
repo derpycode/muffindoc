@@ -12434,10 +12434,15 @@ For sediment (particulate) \textit{forcings}, there is no \textit{restoring forc
 \item [0] -- '0D' -- force a specified point in the ocean
 \item [-1] -- 'SURFACE' -- force with/to specified surface ocean pattern
 \item [-2] -- 'BENTHIC' -- force with/to specified benthic pattern
+\item [-5] -- 'SUB-BENTHIC' -- force with/to specified (sub-) benthic pattern
 \end{itemize}
 \vspace{1mm}
 
-For option \texttt{-2}, particles are injected into the layer overlying the sediment surface, at each grid point. Typically, this allows for a single time-step of reactions (e.g. scavenging) to occur between dissolved tracers in the benthic layer and the injected particles, before they settle out of the water column and are incorporated into underlying surface sediments.
+For option \texttt{-2}, particles are injected into the layer overlying the sediment surface, at each grid point. However, the bottom-most layer is used in the numerical water column remineralization scheme to 'park' particles before they are added to the sediment surface, and particles present in the benthic layer are assumed to have already interacted (reacted/scavenged) with and dissolved and other particulate tracers in that layer. In other words, particles injected (flux forced) into the benthic layer will not scavenge or react and will simply be added to the sediment surface (or reflected and remineralized, for a closed system) at the next time-step.
+
+Option \texttt{-5} (chosen to avoid and hence not overlap and be confused with ocean flux options \texttt{-3} and \texttt{-4}), requests that particles are injected into the sub-benthic layer, i.e. the layer immediately above the bottom most layer\footnote{Or the surface layer, for the occasional situation of the benthic layer also being the surface layer (and the ocean only being 1 layer deep).}. Particles to not react in the sub-benthic layer, but at the next time step, settle through the benthic layer and allowing  for a single time-step of reactions (e.g. scavenging) to occur between dissolved tracers in the benthic layer and the injected particles (and prior to settling out of the water column and being incorporated into underlying surface sediments on the time-step after that).
+
+Note that although there is no separate \textit{user-config} scaling factor as exists for ocean and atmosphere flux and restoring forcings, a 2D flux forcing pattern for particulate tracers (options: \texttt{-1}, \texttt{-2}, \texttt{-5}) can still be scaled via the time-series (\textsf{\footnotesize *\_sig.dat}) file, e.g. swapping the value of \texttt{1.0} for \texttt{-1.0} to make the flux negative.
 
 %------------------------------------------------
 %
