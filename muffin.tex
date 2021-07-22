@@ -11872,6 +11872,8 @@ In this HOW-TO, you'll learn how to include additional ocean tracers and configu
 \item Include a \(Cd\) cycle in the ocean
 \vspace{1mm}
 \item Include an iodine cycle in the ocean
+\vspace{1mm}
+\item Include a neodymium cycle in the ocean
 \end{enumerate}
 
 %------------------------------------------------
@@ -12095,8 +12097,36 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 
 
+%------------------------------------------------
+%
+\newpage
+\subsection*{Include a neodymium cycle in the ocean}
+\vspace{1mm}
 
+The tracers needed for a \(Nd\) cycle are listed in 
+\textsf{\footnotesize TRACERADDITION.neodymiumcycle.txt} in \textbf{muffingen}. For a restoring boundary-condition based implementation of \(Nd\) cycling in the ocean (currently the only option), only a restoring forcing of \(Nd\) concentration and isotopic composition is required (and no water column scavenging). The additional lines needed in a \textit{user-config} are given in 
+\textsf{\footnotesize USERADDITION.neodymiumcycle.txt}.
 
+\vspace{1mm}
+A complete EXAMPLE is provided and can be run:
+
+\vspace{-2mm}\begin{verbatim}./runmuffin.sh muffin.C.p_worjh2.Ndr EXAMPLES muffin.C.p_worjh2.Ndr.SPIN 10000\end{verbatim}\vspace{-2mm}
+
+In this particular EXAMPLE, the restoring forcing is applied to all the ocean surface data points were observations exists. Other combinations and regional forcings are also available:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_BENALL} -- all benthic grid points
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_BENPAC} -- benthic grid points in the Pacific
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_SURALL} -- all surface grid points
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_SURALL\_BENALL} -- all surface and all benthic grid points
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_SURALL\_BENPAC} -- all surface, but only Pacific benthic grid points
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_SURATL} -- surface Atlantic grid points
+\item \textsf{\footnotesize worjh2.RNd\_R144Nd\_SURATL\_BENPAC} -- surface Atlantic plus benthic Pacific grid points
+\end{itemize}
+\vspace{1mm}
+
+All forcings are for an abiotic ocean and hence no \(pCO_{2}\) forcing is included, but it can of course be added. Forcings are also for the \texttt{worjh2} modern continental configuration, but other modern or paleo forcings could be created.
 
 %------------------------------------------------
 
