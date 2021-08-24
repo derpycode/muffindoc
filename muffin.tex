@@ -13024,7 +13024,8 @@ Also see the \textbf{muffingen} chapter --  Section \ref{sec:configuring_muffin_
 \item \texttt{EXAMPLE.worjh2.Archeretal2009.SPIN1}
 \\-- is the initial (1st stage) spin-up used in \textit{Archer et al.} [2009].\footnote{Using the \textit{base-config}: \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_sg\_rg\_itfclsd\_16l\_JH\_BASE}}
 \item \texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POC\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POCPOP\_burial.SPIN1}
-\\-- conceptual worlds with increasing complexity of burial: \(CaCO_{3}\)-only, \(CaCO_{3}\) + \(POC\), and \(CaCO_{3}\) + \(POC\) + \(POP\), respectively.\footnote{All using the \textit{base-config}: \texttt{muffin.CBSRG.fkl\_pp20.BASES}}
+\\-- conceptual worlds with increasing complexity of burial: \(CaCO_{3}\)-only, \(CaCO_{3}\) + \(POC\), and \(CaCO_{3}\) + \(POC\) + \(POP\), respectively.\footnote{All using the \textit{base-config}: \texttt{muffin.CBSRG.fkl\_pp20.BASES}} 
+\\\uline{These are arguably the cleanest and best annotated examples to work from.}
 \item \texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.simple.EXPT}, \\\texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.dunne2007.EXPT}
 \\-- illustrating two different simply organic carbon preservation/burial schemes.\footnote{Using the \textit{base-config}: \texttt{muffin.CBSR.p\_worbe2.BASES}}
 \end{itemize}
@@ -13199,7 +13200,7 @@ As an example -- see:
 \vspace{-1mm}\small\begin{verbatim}
 muffin.CBSRG.fkl_pp20.BASES.CaCO3_burial.SPIN1
 \end{verbatim}\normalsize\vspace{-1mm}
-(Or \texttt{muffin.CBSR.p\_worbe2.BASES.SPIN1} or \texttt{muffin.CBSR.p\_worjh2.BASES.SPIN1}, which are the paleo file structure equivalents to \textit{Ridgwell and Hargreaves} [2007] and \textit{Archer et al.} [2009], respectively.
+(Or \texttt{muffin.CBSR.p\_worbe2.BASES.SPIN1} or \texttt{muffin.CBSR.p\_worjh2.BASES.SPIN1}, which are the paleo file structure equivalents to \textit{Ridgwell and Hargreaves} [2007] and \textit{Archer et al.} [2009], respectively.)
 
 \vspace{1mm}
 20,000 years is probably about the minimum practical \textit{spin-up} time. Primarily -- you are looking for convergence in the mean wt\% \(CaCO_{3}\) value (averaged sediment composition), which is recorded in the \textbf{BIOGEM} \textit{time-series} file: \textsf{\footnotesize biogem\_series\_sed\_CaCO3.res}. This relatively short time to equilibrium is also aided by turning off bioturbation and mixing of the sediments.
@@ -13209,7 +13210,7 @@ There are a few complexities if you want the burial of phosphorous in organic ma
 \vspace{2mm}
 \item \textbf{2nd stage, open system spin-up}
 \vspace{1mm}
-\\I n the simplest possible configuration of weathering, the  prescribed weathering flux (\texttt{rg\_par\_weather\_CaCO3}) is now revised and set equal to the diagnosed global \(CaCO_{3}\) burial rate ('\texttt{Total CaCO3 pres (sediment grid)}') as reported in the \textbf{SEDGEM} module results file: \texttt{seddiag\_misc\_DATA\_GLOBAL.res}.
+\\In the simplest possible configuration of weathering, the  prescribed weathering flux (\texttt{rg\_par\_weather\_CaCO3}) is now revised and set equal to the diagnosed global \(CaCO_{3}\) burial rate ('\texttt{Total CaCO3 pres (sediment grid)}') as reported in the \textbf{SEDGEM} module results file: \texttt{seddiag\_misc\_DATA\_GLOBAL.res}.
 \vspace{1mm}
 \\In addition, an \textit{open system} must now be specified in the \textit{user config}:
 \vspace{-1mm}\small\begin{verbatim}
@@ -13231,6 +13232,12 @@ For a full description of how to set up the weathering parameters, see:
 
 \newpage
 
+As an example of a more complex partitioning of weathering fluxes into silicate vs. carbonate, also see:
+\vspace{-1mm}\small\begin{verbatim}
+muffin.CBSRG.fkl_pp20.BASES.CaCO3_burial.SPIN2
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
 \noindent You can also accelerate the 2nd stage spin-up -- see the sub-section '\textit{Accelerate the weathering-sedimentation mass balance ('GEMlite')}' on page \pageref{subsec:accelerate_the_weathering-sedimentation_mass_balance}. An example \textit{user-config} is given:
 \vspace{-1mm}\small\begin{verbatim}
 muffin.CBSRG.fkl_pp20.BASES.CaCO3_burial.SPIN2gl
@@ -13816,7 +13823,6 @@ Of course, in reality organic carbon burial is important and including it would 
 \subsubsection{Have some weathering components fixed and others climate-dependent}\label{howto:weatheringfeedback2}
 
 \vspace{2mm}
-}\label{subsec:set_up_a_weathering_feedback}
 By default, when carbonate and/or silicate weathering feedbacks are selected (see page \pageref{subsec:set_up_a_weathering_feedback}):
 \vspace{-2mm}\small\begin{verbatim}
 rg_opt_weather_T_Ca=.true.
