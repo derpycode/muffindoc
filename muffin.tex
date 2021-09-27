@@ -325,7 +325,7 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 
 \vspace{1mm}
 \item On a \textbf{Windoz} machine – first start the \textbf{WinSCP} program (an sftp file transfer client). Under \textsf{\footnotesize Host Name}, enter the remote server or cluster name (e.g. \texttt{catname.ucr.edu}):
-\\The \textsf{\footnotesize Port number} should be set to \textsf{\footnotesize 22}. Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
+\\The \textsf{\footnotesize Port number} should be set to \textsf{\footnotesize 22} (except for \texttt{sterling.ucr.edu}). Enter your computing cluster user-name on the line below this (‘User Name’) and then the Password. Click on Login. This is your file transfer client.
 \\You will also need a terminal window. This can be opened by clicking on the ‘\textsf{\footnotesize Open session in PuTTY}’ icon on the top icon row, or pressing \textsf{\footnotesize Ctrl+P}. \\You should now have TWO windows open – a ‘shell’ window (lines of text on an otherwise blank screen) and a file manager (transfer) window. Ensure that you have both these before moving on. It is recommended that you maximize both these windows to full screen. (But no-one will die horribly for not doing so. Probably ...).
 \\ You can also log in directly from the shell/terminal window e.g. \textbf{PuTTY} first (rather than first opening an sftp connection first).
  You will sill have to open an sftp connection for file transfer.
@@ -337,13 +337,13 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 
 The next step is to download a copy of the source code for \textbf{muffin}.
 
-As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to GitHub (and hence the versioning system changed form \textbf{svn} to \textbf{git} -- a “distributed” version control systems (DVCS)\footnote{\textbf{ALSO IMPORTANT}: if you had previously installed a version of \textbf{muffin} under \textbf{svn}, note that the default name of the installation (\texttt{cgenie.muffin}) is the same. If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename, or simply delete (\texttt{rm -f -r cgenie.muffin}) the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
+As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin}, was migrated from a server hosted by the University of Bristol, to \textbf{GitHub} (and hence the versioning system changed form \textbf{svn} to \textbf{git} -- a “distributed” version control systems (DVCS)\footnote{\textbf{ALSO IMPORTANT}: if you had previously installed a version of \textbf{muffin} under \textbf{svn}, note that the default name of the installation (\texttt{cgenie.muffin}) is the same. If you already have a previous (\textbf{svn} version) installation of \textbf{muffin}, i.e. in a directory \texttt{cgenie.muffin}, you should rename, or simply delete (\texttt{rm -f -r cgenie.muffin}) the original installation so as not to lose files or risk ending up with a mixed-up corrupted installation. For example:
 
 \texttt{\$ mv cgenie.muffin cgenie.muffin.svn}
 
 \noindent will rename the installation directory, adding the extension \texttt{.svn} on the end. You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
 
-The address of the new (centralized) home for muffin is:
+The address of the new (centralized) home for \textbf{muffin} is:
 
 \vspace{1mm}
 \href{https://github.com/derpycode/cgenie.muffin}{\texttt{https://github.com/derpycode/cgenie.muffin}}
@@ -365,7 +365,7 @@ $ git clone https://github.com/derpycode/cgenie.muffin.git
 By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. \footnote{Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.}
 
 \vspace{1mm}
-\item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button on GitHub, and select \textsf{\footnotesize Download ZIP}.
+\item (less good) By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button on GitHub, and select \textsf{\footnotesize Download ZIP}.
 \\You then unpack/unzip the files and directory structure where you want it.
 \\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
@@ -397,7 +397,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \\ This is the default assumed platform. No changes are necessary assuming that the netCDF libraries are installed in their default locations and a relatively recent version of netCDF is used.\footnote{By 'relatively recent' -- the default settings assume that the FORTRAN and C netCDF libraries are separate.} And you have also jumped the shark with a successful install of other libraries and softwares ... see Section \ref{how-to-ubuntu}.
 
 \vspace{1mm}
-\item \textbf{domino} (UCR cluster).
+\item \textbf{sterling} (UCR cluster).
 \vspace{1mm} 
 \\ For running \textbf{muffin} on this cluster, there is a single file to edit (which lives in the \texttt{genie-main} directory):
 \vspace{1mm}
@@ -407,7 +407,7 @@ By doing this, you have created your own code repository (and an identical copy 
 \footnotesize\begin{verbatim}
 ### DEFAULT ###
 #NETCDF_DIR=/usr/local
-### domino ###
+### sterling ###
 NETCDF_DIR=/share/apps
 ### eevee ###
 #NETCDF_DIR=/share/apps/netcdf-c-4.4.1.1-fortran-4.4.4
@@ -525,8 +525,6 @@ when you try this, you are probably in the wrong directory (it should be \textsf
 \noindent This is quite ‘normal’ – the model is thinking! Also -- ignore the compiler warnings … (reflecting my lack of adequate software engineering skills).
 
 That completes the basic code installation.
-
-\newpage
 
 If the test  doesn't 'work'\footnote{Note that if you have disabled the compilation of the C program that compares netCDf files, the test will run but never complete and you'll not get a \texttt{**TEST OK**} reported, even if the test experiment ran correctly.} -- try issuing the command:
 \vspace{-2mm}
@@ -716,7 +714,7 @@ Interleaved between these lines are lines reporting the saving of time-slice dat
 \end{verbatim}
 \vspace{-2mm}
 
-You can stop the model at any point (all data up to that time will have been saved) by hitting: \textsf{<Ctrl-C>} (\textsf{CONTROL} key + ‘\textsf{C}’ key).
+You can stop the model at any point (all data up to that time will have been saved) by hitting: \textsf{\footnotesize <Ctrl-C>} (\textsf{\footnotesize CONTROL} key + ‘\textsf{\footnotesize C}’ key).
 
 Just from examining the screen output: how close to steady state does the system appear to have come after just 10 years? i.e., do SST and/or sea-ice extents appear to be converging towards stable (constant) values? This will be an important question to think about later on: ‘has the model reached steady-state (and does it matter)?’
 
