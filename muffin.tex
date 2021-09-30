@@ -9273,6 +9273,7 @@ The first error -- instability -- is triggered by a negative value of \(pH\) bei
 
 The default behavior in response to either situations occurring is for muffin to forego updating \(pH\) in the troublesome ocean grid call and continue to the end of the current time-step, save data snapshot, and then exit the run.
 
+\vspace{1mm}
 Why does the error arise, and what can be done about it?
 
 \begin{enumerate}[noitemsep]
@@ -9380,6 +9381,43 @@ gm_ctrl_carbchem_noH3SiO4=.true.
 \end{itemize}
 
 \end{enumerate}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent You may also be trying to spin up the model with fabulously high \(pCO_{2}\) (i.e. many \(10s\) or even \(100s\) of thousands of \(ppm\)). What typically happens here, is that mean ocean \(DIC\) and \(ALK\) are initialized to modern (or shallow time) values, in equilibrium with modern (or up to \(1000 ppm\)) \(pCO_{2}\). Restoring the atmosphere to an excessively high \(pCO_{2}\) will lead to extreme imbalances between \(DIC\) and \(ALK\) at the ocean surface as \(CO_{2}\) invades the ocean from the atmosphere.
+
+If you do not need to simulate \(pH\) or carbonate saturation state, or are not using processes that depend on these (e.g. variable saturation-dependent \(CaCO_{3}:POC\) rain ratios, or the preservation of \(CaCO_{3}\) in deep-sea sediments, then you might consider setting a radiative forcing in the atmosphere equivalent to the required \(pCO_{2}\) value, and just let \(pCO_{2}\) naturally equilibrate with ocean \(DIC\) and \(ALK\) (and the climate and biological pump state).  
+
+\vspace{1mm}
+If you really *must* have an explicitly high value of \(pCO_{2}\), then you can try one of the following, with the aim to set ocean \(ALK\) to a more appropriate value:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Firstly you can estimate the initial mean ocean \(ALK\) value you need from an off-line carbonate chemistry code. 
+\\Typical would be to assume a modern ocean surface saturation state with an \(\Omega\) of calcite of around \(5.0\) (mean ocean saturation is \(5.06\) in the modern configuration of \textbf{muffin}). Take a reasonable mean ocean surface temperature and salinity ... and an atmospheric partial pressure equal to the value you want to restore to, and then solve for the complete (mean surface) system. Initialize your experiment with the resulting \(DIC\) and \(ALK\) values.
+
+\vspace{1mm}
+\item Read off of Figure \ref{fig:fan1}.
+\\This is far from a particularly great figure and is poorly resolved in terms of \(pCO_{2}\) (black) and saturation \(\Omega\)) (yellow) contours. You are looking to follow the \(pCO_{2}\) contour you want (or close to), to higher ocean \(ALK\), until the ocean surface is reasonably over-saturated (i.e. \(1.0<\Omega<10.0\)). e.g. for \(\times10\:pCO_{2}\) this would occur for an \(ALK\) value of ca. \(5\:mmolkg^{-1}\). You also want to read off a corresponding \(DIC\) value, which you could simply take to be the x-axis value (but noting that this is really \(DIC\) \uline{plus} \(pCO_{2}\)).
+
+\vspace{1mm}
+\item Restore ocean carbonate chemistry (e.g. surface ocean saturation) at the same time as you restore atmospheric \(pCO_{2}\).
+\\Refer to the \textbf{Forcing HOW-TO}, and specifically: '\textit{Set a specific ocean chemistry or saturation state}'. The 3rd listed method is the one you want.
+\\In this method, you might have to ramp up \(pCO_{2}\) to its eventual, required value, rather than implementing an instantaneously high \(pCO_{2}\) value.
+
+\end{enumerate}
+
+
+\begin{figure}
+\includegraphics[width=0.7\textwidth]{fan1.png}\centering
+\vspace{-0mm}
+\caption{Carbonate chemistry fan diagram (at \(15^{\circ}C\)).\\Note that the total carbon inventory is the sum of both \(DIC\) and \(pCO_{2}\). The circle represents mean modern ocean chemistry.}
+\label{fig:fan1}
+\end{figure}
+
 
 %------------------------------------------------
 %
