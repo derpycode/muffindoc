@@ -215,7 +215,7 @@ NOTE-the-third: In places, instructions may be given for specific programs and c
 
 \subsection*{Required computer hardware}
 
-It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model either on a linux box (e.g. \textbf{Ubuntu}) or on a \textbf{Mac} \footnote{Sets of detailed installation instructions are available in the HOW-TO section of this manual.}\footnote{Note that it is not possible at this time to run \textbf{muffin} under \textbf{Windows} (at least, not without near infinite pain).} Otherwise, you will need an account on a linux-based server or cluster. In this case, you can use any platform (\textbf{linux}, \textbf{macOS}, \textbf{Windoz}, as well as \textbf{ioS} and \textbf{Android} (which is based on \textbf{linux} in any case)) to connect to the cluster (but see software requirements, below).
+It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model either on a linux box (e.g. \textbf{Ubuntu}) or on a \textbf{Mac} \footnote{Sets of detailed installation instructions are available in the HOW-TO section of this manual.}\footnote{Note that it is not possible at this time to run \textbf{muffin} under \textbf{Windows} ... at least, not without near infinite pain.} Otherwise, you will need an account on a linux-based server or cluster. In this case, you can use any platform (\textbf{linux}, \textbf{macOS}, \textbf{Windoz}, as well as \textbf{ioS} and \textbf{Android} (which is based on \textbf{linux} in any case)) to connect to the cluster (but see software requirements, below).
 
 %------------------------------------------------
 
@@ -223,6 +223,7 @@ It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth syst
 
 To install and run \textbf{muffin}, at a minimum are needed\footnote{Only if \textbf{muffin} is being run locally and a cluster account is not provided (but assuming that your cluster account is correctly configured ...).}:
 
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A FORTRAN (f90 and f77 combatable) compiler of some sort.
@@ -231,9 +232,11 @@ To install and run \textbf{muffin}, at a minimum are needed\footnote{Only if \te
 \\If not standard, this is relatively easy to add and install.
 \item Compiled \textbf{netCDF} libraries (not so much fun ...).
 \end{enumerate}
+\vspace{1mm}
 
 To edit files and visualize results, you will need some specific software. The exact software will depend on your operating system, but essential are:
 
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A viewer for netCDF format spatial data. A \textbf{Java} viewer called \textbf{Panoply} is provided by NCAR for all platforms – http://www.giss.nasa.gov/tools/panoply/
@@ -244,9 +247,11 @@ To edit files and visualize results, you will need some specific software. The e
 \textbf{SciTE} (https://www.scintilla.org/SciTE.html)
 (\textbf{linux} and \textbf{Mac} users need no special/different editor compared with your standard editor – everything will display just fine). You can also use \textbf{linux} command line based editors such as \textbf{vi}.
 \end{enumerate}
+\vspace{1mm}
 
 \noindent If instead operating \textbf{muffin} remotely (e.g. on a computing cluster), the you  will need:
 
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item A terminal (‘shell’) window. This is no problem for \textbf{linux} and \textbf{Mac} users (you already have one built in). For \textbf{Windows}, either download a simple (and old) \textbf{SSH} client (ssh-client) from my website\footnote{http://www.seao2.info//cgenie/software/ssh-client.exe} or you can get hold of e.g. \textbf{PuTTY} (http://www.putty.org/).
@@ -270,12 +275,13 @@ If you fiddle about with the settings under Options/Preferences in the \textbf{W
 
 This (the \textbf{muffin} manual), and additional documentation (of varying degrees of up-to-date-ness) can be found:
 
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item On \href{https://github.com/derpycode/muffindoc}{GitHub}.
 \\Here, the \textbf{latex} source for the documentation lives, allowing you to compile the most up-to-date PDF document. And ... make changes yourself and have them incorporated into the official documentation\footnote{First clone the \textbf{git} repository. Make changes. Commit them locally. Make a 'pull request' ...}.
 \item On my \href{http://www.seao2.info/mymuffin.html}{website}.
-\\Here, are only compiled, PDF versions of the documentation are provided, and may be somewhat out-of-date (the current versions of everything live on GitHub).
+\\Here, are only compiled, PDF versions of the documentation are provided, and \uline{may be somewhat out-of-date} (the current versions of everything live on \textbf{GitHub}).
 \end{enumerate}
 
 %------------------------------------------------
@@ -320,8 +326,9 @@ $ ssh username@clustername
 \vspace{-1mm}
 
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
-\\  \texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).\footnote{\textbf{IMPORTANT!}
- When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs. As you type (the password), characters are being entered ... you just cannot see them. Don't panic -- type in the password and hit \textsf{\scriptsize Enter}.}
+\\  \texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\vspace{1mm}
+\\\textbf{IMPORTANT!} -- When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs. As you type (the password), characters are being entered ... you just cannot see them. Don't panic -- just type in the password (even if you cannot see characters appearing) and hit \textsf{\scriptsize Enter}.
 
 \vspace{1mm}
 \item On a \textbf{Windoz} machine – first start the \textbf{WinSCP} program (an sftp file transfer client). Under \textsf{\footnotesize Host Name}, enter the remote server or cluster name (e.g. \texttt{catname.ucr.edu}):
@@ -330,6 +337,16 @@ where \texttt{clustername}, the cluster (or remote server) name(!) might, for ex
 \\ You can also log in directly from the shell/terminal window e.g. \textbf{PuTTY} first (rather than first opening an sftp connection first).
  You will sill have to open an sftp connection for file transfer.
 \end{itemize}
+
+\vspace{1mm}
+Note that the cluster you access may not use the standard 'port' number of \textsf{\footnotesize 22}. For a different port number -- in a GUI interface (e.g. \textbf{WinSCP}) simply change the number in the port box, or at the command line, you will need to type:
+\vspace{-1mm}
+\begin{verbatim}
+$ ssh -p xxxxx username@clustername
+\end{verbatim}
+\vspace{-1mm}
+where \textsf{\footnotesize xxxxx} is the port number.
+
 
 %------------------------------------------------
 
@@ -343,6 +360,7 @@ As of 2018, the branch of the (c)GENIE source code that is \textbf{cGENIE.muffin
 
 \noindent will rename the installation directory, adding the extension \texttt{.svn} on the end. You will not longer be able to run the original installation now, but you can fix this by editing some of the directory \textit{paths} -- see FAQ.}
 
+\vspace{1mm}
 The address of the new (centralized) home for \textbf{muffin} is:
 
 \vspace{1mm}
@@ -355,7 +373,7 @@ From here, there are 2 ways to get your mitts on the model code:
 \begin{enumerate}
 
 \vspace{1mm}
-\item The preferred/advised way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME directory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
+\item The \uline{preferred/advised} way is to \textit{clone} the repository to where you intend to run \textbf{muffin}\footnote{But see later for other/better ways of working.}. While you can also use a GUI based git client, easiest is at the command line (e.g. from your HOME directory), using the command \texttt{git clone}\footnote{This: "... clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch."}:
 \vspace{-1mm}
 \begin{verbatim}
 $ git clone https://github.com/derpycode/cgenie.muffin.git
@@ -365,8 +383,7 @@ $ git clone https://github.com/derpycode/cgenie.muffin.git
 By doing this, you have created your own code repository (and an identical copy of the one hosted on GitHub). As part of the \texttt{git clone} command, you also automatically \textit{check out} (from your very own personal repository) a copy of the code. \footnote{Note that the major difference then with the \textbf{svn} system, is that previously, the GENIE code repository existed only on the University of Bristol server, and you \textit{checked out} the code remotely from there.}
 
 \vspace{1mm}
-\item (less good) By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button on GitHub, and select \textsf{\footnotesize Download ZIP}.
-\\You then unpack/unzip the files and directory structure where you want it.
+\item (\uline{Less good}, but OK if you simply want a copy of the code to run an experiment just once, or simply only want to see the code.) By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\footnotesize Clone or Download} button on GitHub, and select \textsf{\footnotesize Download ZIP}. You then unpack/unzip the files and directory structure where you want it.
 \\This [archive download] is a perfectly workable way to proceed ... as long as you neither want to update the code with whatever new developments or bug fixes occur in the future, nor want to have any code changes you might make, become part of the official \textbf{muffin} code  (i.e. it becomes a one-off installation that has no connection to the GitHub repository).
 
 \end{enumerate}
@@ -437,7 +454,7 @@ where the line:
 \begin{enumerate}[noitemsep]
 \item In \texttt{user.mak} -- as per for \texttt{domino} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# eevee \#\#\#}).
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
-\\On line 18 -- comment out (with a \texttt{\#}); the \texttt{nccompare} part of that line.
+\\On line  21 -- comment out (with a \texttt{\#}); the word \texttt{nccompare} (not the whole line).
 \end{enumerate}
 
 \vspace{1mm}
@@ -535,7 +552,10 @@ $ make cleanall
 
 \noindent and then re-try the test. 
 
-Refer to the FAQ section at the end of this book for further clues as why the model installation appears not to be working.
+Refer to the FAQ section at the end of this book for further clues as why the model installation appears not to be working.\
+
+\textbf{NOTE}: Currently, the netCDXF C library is not installed on the \texttt{eevee}
+ cluster, meaning that the test experiment will run, but the comparison against a set fo standard results will not. Hence it will appear to 'fail'.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
@@ -674,29 +694,31 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 10
 \vspace{2mm}
 REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C E S are vital. Take care not to confuse an el (‘\texttt{l}’) with a one (‘\texttt{1}’) when typing this in ... (it is a ‘one’ here).
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-\vspace{2mm}
+\newpage
 
 \noindent What should happen is: First, you will end up twiddling your thumbs a while, as all the components of \textbf{muffin} are compiled from the raw source code (\textbf{FORTRAN}). When it has finished doing this, the model will initialize and carry out some brief self-checking. Only then will it start actually ‘running’ and doing something, starting with a header describing the columns of numbers that follow:
 
+\vspace{1mm}
 \begin{itemize}
 \item[] \texttt{model year}  -- ... guess!
 \item[] \texttt{ice(\%)} -- global sea-ice fraction (\%)
 \item[] \texttt{<SST>} -- global sea surface temperature ('SST') $^{\circ}$C
 \item[] \texttt{<SSS>} -- global sea surface salinity ‘SSS’ (\%\textit{o})
 \end{itemize}
+\vspace{1mm}
 
 The choice of what information to display on screen as the model is running is rather arbitrary, but the chosen metrics do tend to summarize some of the main properties of the climate system and carbon cycle – for my own personal convenience rather than reflecting any fundamental scientific truth ... you may also see columns of information for:
 
+\vspace{1mm}
 \begin{itemize}
 \item[] p\(CO_{2}\)(uatm) -– mean atmospheric CO\(_{2}\) concentration (in units of \(\mu\)atm)
 \item[] \(\delta^{13}CO_{2}\)  – mean \(\delta^{13}C\) value of atmospheric CO\(_{2}\) (\%\textit{o}) (NOTE: only if \(^{13}C\) tracer is selected)
 \item[] \texttt{<DIC>} -- global mean ocean dissolved inorganic carbon (DIC) concentration (\(\mu\)mol kg-1)
 \item[] \texttt{<ALK>}   – global mean ocean alkalinity (ALK) concentration (\(\mu\)eq kg-1) and in experiments with a modern continental configuration, also:
-\item \texttt{AMO(Sv)} -- Atlantic meridional overturning circulation (Sv)
-\\(and assuming that you have a modern continental configuration to even have an Atlantic ocean!)
+\item[] \texttt{AMO(Sv)} -- Atlantic meridional overturning circulation (Sv)
+\\(assuming that you have a modern continental configuration to even have an Atlantic ocean!)
 \end{itemize}
+\vspace{1mm}
 
 This information is reported at the same intervals as time-series data (see later and/or refer to the User Manual) is saved and is indicated by:
 
@@ -718,9 +740,9 @@ You can stop the model at any point (all data up to that time will have been sav
 
 Just from examining the screen output: how close to steady state does the system appear to have come after just 10 years? i.e., do SST and/or sea-ice extents appear to be converging towards stable (constant) values? This will be an important question to think about later on: ‘has the model reached steady-state (and does it matter)?’
 
-In this particular example, the output should look something like the following:
-
 \newpage
+
+\noindent In this particular example, the output should look something like the following:
 
 \footnotesize
 \begin{verbatim}
@@ -779,7 +801,7 @@ In this particular example, the output should look something like the following:
 
 \section{Creating new experiments!}
 
-The key to creating new experiments is to remember that the name of the user-configuration file, that contains the parameter settings that define that specific experiment, becomes the name of the experiment and hence name of the model results sub-directory in \textsf{\footnotesize cgenie\_output}. Changing the name of the \textit{user-config} file, hence leads to a new experiment name and a new model results sub-directory. (Conversely, not changing the name of the  \textit{user-config} file and re-running it results in the results of any previous experiment run using that \textit{user-config} file, being over-written.)
+The key to creating new experiments is to \textbf{remember that the name of the \textit{user-config} file, that contains the parameter settings that define that specific experiment, becomes the name of the experiment and hence name of the model results sub-directory in \textsf{\footnotesize cgenie\_output}}. Changing the name of the \textit{user-config} file, hence leads to a new experiment name and a new model results sub-directory. (Conversely, not changing the name of the  \textit{user-config} file and re-running it results in the results of any previous experiment run using that \textit{user-config} file, being over-written.)
 
 There are two obvious ways to create a new \textit{user-config} file and hence new experiment (although the simplest and recommended way, is the 2nd one):
 
@@ -824,13 +846,13 @@ and will be assigned a directory name something like:
 LAB_0.EXAMPLE
 \end{verbatim}
 (this being the results directory name for an experiment called \texttt{LAB\_0.EXAMPLE}). Within this directory are each module’s results sub-directories.
-We will primarily consider only results saved by the ocean biogeochemical module \textbf{‘BIOGEM’} (subdirectory: \small\texttt{biogem}\normalsize). The results files in this example will thus be found in:
+We will primarily consider only results saved by the ocean biogeochemical module \textbf{‘BIOGEM’} (subdirectory: \small\textsf{biogem}\normalsize). The results files in this example will thus be found in:
 \begin{verbatim}
 ~/cgenie_output/LAB_0.EXAMPLE/biogem
 \end{verbatim}
 \textbf{BIOGEM} has a flexible and powerful facility of saving results by means of spatially explicit ‘time-slices’, and as a semi-continuous ‘time-series’ of a single global (or otherwise representative mean) variable. In contrast, the atmospheric chemistry module '\textbf{ATCHEM}' does not save its own results (\textbf{BIOGEM} can save information about atmospheric composition and air-sea gas exchange) while the marine sediment module \textbf{SEDGEM} does save its own results, but only at the very end of a model experiment (\textbf{BIOGEM} can also save the spatial distribution of sediment composition as time-slices as well as mean composition as a time-series). Furthermore, to attain a common format for both ocean physical properties and biogeochemistry, \textbf{BIOGEM} can save a range of ocean results in addition to temperature and salinity, such as: velocities, sea-ice extent, mixed layer depth, convective frequency, etc.
 
-\noindent NOTE: If in an sftp client window, you cannot 'see' the \textsf{\footnotesize cgenie\_output} directory, or cannot find any of the results sub-directories you are expecting, \uline{you will need to refresh the directory listing} (e.g. for \textbf{WinSCP}, there is a double green-arrow \textsf{\footnotesize Refresh} icon button near the top right of the window that you can click on). sftp client programs generally do not automatically refresh directory listing on the remote computer.
+\noindent NOTE: If in an sftp client window you find that you cannot 'see' the \textsf{\footnotesize cgenie\_output} directory ... or cannot find any of the results sub-directories you are expecting, \uline{you will need to refresh the directory listing} (e.g. for \textbf{WinSCP}, there is a double green-arrow \textsf{\footnotesize Refresh} icon button near the top right of the window that you can click on). sftp client programs generally do not automatically refresh directory listing on the remote computer.
 
 %------------------------------------------------
 
@@ -838,13 +860,13 @@ We will primarily consider only results saved by the ocean biogeochemical module
 
 One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g., a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
 Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed \textit{time-slices}. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM}  assumes that the specified time point represents the mid-point of the (annual) average with the results that output years end up being reported as e.g.,
-\begin{verbatim}
+\small\begin{verbatim}
 0.5
 1.5
 2.5
 4.5
 …
-\end{verbatim}
+\end{verbatim}\normalsize
 (the mid-points of averages made over the intervals: 0-1, 1-2, 2-3, 4-5 years, etc.).
 
 %------------------------------------------------
@@ -859,14 +881,16 @@ The second data format for model output is much more closely spaced in time. Mod
 
 The \textsf{\footnotesize biogem} results directory will contain files with names of the form:
 
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item  \textsf{\footnotesize \_restart.nc} (is the re-start file created form the run you have just complete, and can be ignored).
 \item \textsf{\footnotesize biogem\_series\_*.res} – these are the time-series files (in ASCII / plain text format).
 \item \textsf{\footnotesize biogem\_year\_*\_diag\_GLOBAL.res} – these contain (global diagnostics) summary information and are saved at the same frequency as the time-slices (also as ASCII / plain text).
-\item \textsf{\footnotesize fields\_biogem\_2d.nc} – 2-D fields of ocean and atmosphere properties, as NetCDF.
-\item \textsf{\footnotesize fields\_biogem\_3d.nc} – 3-D fields of ocean properties, as NetCDF.
+\item \textsf{\footnotesize fields\_biogem\_2d.nc} – 2-D fields of ocean and atmosphere properties, as \textbf{NetCDF}.
+\item \textsf{\footnotesize fields\_biogem\_3d.nc} – 3-D fields of ocean properties, as \textbf{NetCDF}.
 \end{itemize}
+\vspace{1mm}
 
 %------------------------------------------------
 
@@ -882,6 +906,7 @@ The \textsf{\footnotesize biogem} results directory will contain files with name
 
 A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) data files is given in the \textbf{muffin} User Manual if you are really that bored. The files of most immediate use/relevance are:
 
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \setlength{\itemindent}{.2in}
 \item \texttt{biogem\_series\_atm\_humidity.res}  - mean atmospheric (surface) humidity
@@ -896,11 +921,15 @@ A descriptive summary of all the time-series (\texttt{biogem\_series\_*.res}) da
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent One way of viewing the contents of files is to change directory to the experiment results directory and opening the file in the file editor. But that is not so much fun.
+\noindent One way of viewing the contents of files (in a shell window/terminal) is to change directory to the experiment results directory and opening the file in a file editor at the command line. But that is not so much fun.
 
-Instead – change to the experiment results directory and then to the \textsf{\footnotesize biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the \textbf{WinSCP} preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 2 columns – time and mean (whole) ocean temperature ($^{\circ}$C). (However, in subsequent exercises a fuller output will be created with additional columns, with one for mean surface ocean temperature ‘SST’ ($^{\circ}$C) as well as mean benthic (bottom water) temperature ($^{\circ}$C)). Other results files may differ in the numbers of columns but all should be identifiable from the header information.
+Instead – change to the experiment results directory and then to the \textsf{\footnotesize biogem} sub-directory in the Secure File Transfer Client, and try double-clicking (if you have set up the \textbf{WinSCP} preferences correctly) or right-mouse-button-clicking (the then Edit with) on one of the .res files (listed above). For \texttt{biogem\_series\_ocn\_temp.res}, you should see 5 columns:
+\small\begin{verbatim}
+ % time (yr) / temperature (C) / _surT (ice-free) (C) / _benT (C) / _surT (C)
+\end{verbatim}\normalsize
+for: model time (years) (actually, the mid-point in time of an annual average), annual mean ocean temperature (averaging over the entire ocean volume), annual mean ocean surface temperature (excluding ice-cover areas), annual mean benthic (sea-floor) temperature, annual mean ocean surface temperature (now including ice-cover areas). Other results files may differ in the numbers of columns but all should be identifiable from the header (first line) information.
 
-Note: \textbf{WinSCP} does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run, 99 times out of 100, it is because the display of the \textbf{WinSCP} needs to be refreshed -- there is an icon at the top of the program window or hit the ‘\textsf{F5}’ key.
+Remember: \textbf{WinSCP} does not automatically refresh the directory listing. If you cannot see the results sub-directory with the experiment name you have just run, 99 times out of 100, it is because the display of the \textbf{WinSCP} needs to be refreshed -- there is an icon at the top of the program window or hit the ‘\textsf{\footnotesize F5}’ key.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -916,9 +945,9 @@ In \textbf{Excel}: Choose \textsf{\footnotesize File} then \textsf{\footnotesize
 
 \subsection{2- and 3-D time-slice output}
 
-For the time-slice NetCDF (*.nc) files you will be using a program called \textbf{Panoply}. If you want your own (FREE!) copy of this utility, you can get it here (and is available for: \textbf{Windoz}, \textbf{Mac}, and linux operating systems): http://www.giss.nasa.gov/tools/panoply/.
+For the time-slice \textbf{NetCDF} (*.nc) files you will be using a program called \textbf{Panoply}. If you want your own (FREE!) copy of this utility, you can get it here (and is available for: \textbf{Windoz}, \textbf{Mac}, and linux operating systems): http://www.giss.nasa.gov/tools/panoply/.
 
-\noindent When you open the NetCDF file, you will be presented with a ‘\textsf{\footnotesize Datasets and Variables}’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘\textsf{\footnotesize Long Name}’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. 
+\noindent When you open the \textbf{NetCDF} file, you will be presented with a ‘\textsf{\footnotesize Datasets and Variables}’ window (on the left hand side of the application window). This contains a list of all the parameters available that you can display. You will find that the ‘\textsf{\footnotesize Long Name}’ description of the variable will be the most helpful to identify the one you want. Simply double-click on a variable to display. 
 
 For the 3-D fields you will be asked first whether you want a ‘\textsf{\footnotesize \footnotesize Longitude-Latitude}’ or ‘\textsf{\footnotesize Latitude-Vertical}’ plot (for the 2-D fields, the plot display will immediately open).
 For the ‘\textsf{\footnotesize Longitude-Latitude}’ plots – there are multiple levels (depth layers) in the ocean - these data that can be plotted from the surface to the abyssal ocean. For the ‘\textsf{\footnotesize Latitude-Vertical}' plots – there are multiple possible longitudes at which to plot slices. The default is the global mean meridional distribution. There is also an option for ‘\textsf{\footnotesize Longitude-Vertical}' plots (which we will not use).
@@ -989,7 +1018,7 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 
 \noindent The alternative is to submit your experiment as a ‘job’ to a queuing system which then manages what compute resources are used to run the model. Once you have submitted the experiment, that is it – you can go straight to the pub :)
 
-For example -- to run the same experiment as before (\textsf{\footnotesize LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type:
+For example -- to run the same experiment as before (\textsf{\footnotesize LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type (again: SINGLE, CONTINUOUS LINE):
 \vspace{-1mm}
 \small\begin{verbatim}
 $ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
@@ -997,7 +1026,7 @@ $ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
 \end{verbatim}\normalsize
 \vspace{-1mm}
 
-\noindent(Again: SINGLE, CONTINUOUS LINE.) Here, the particular queue name is \textsf{\footnotesize dog.q}.
+Here, the  queue name for this\ particular cluster is \textsf{\footnotesize dog.q}. \uline{The cluster you are actually using will have a different queue name} (e.g. refer to any cluster-specific information that you might have).
 
 \vspace{1mm}
 Note that now you should omit the ‘\texttt{./}’ bit before \texttt{runmuffin.sh}.
@@ -1011,15 +1040,11 @@ $ qstat -f
 (\texttt{qstat -f -u "*"} will show all jobs on the cluster.)
 
 \vspace{1mm}
-After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of 6 compute nodes, numbered 0-0 to 0-5), although it might briefly reside as a ‘\textsf{\footnotesize PENDING JOB}’. For each node, there are multiple processing cores (depending on the specific cluster and queue), meaning that multiple instances of \textbf{muffin} can run simultaneously on each node. For an 8-level ocean based configuration of \textbf{muffin}, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a \texttt{qstat –f} command you can follow your job’s progress.
-
-\newpage 
+After submitting an experiment, you receive a job number. This number appears in the first column in the queue status information when you issue a qstat –f command. You should see your job appear on one of a number of compute nodes, perhaps numbered 0-0 through 0-5), although it might briefly reside as a ‘\textsf{\footnotesize PENDING JOB}’. For each node, there are multiple processing cores (depending on the specific cluster and queue), meaning that multiple instances of \textbf{muffin} can run simultaneously on each node. For an 8-level ocean based configuration of \textbf{muffin}, being run for 100 years, the job should remain there in the queue for a few minutes before ‘disappearing’ (your clue that it has finished, or died\footnote{If your experiment appears on the queue but vanishes after a few seconds, it has most likely died :(} …). If you periodically re-issue a \texttt{qstat –f} command you can follow your job’s progress.
 
 A rough rule of thumb is that 8-level ocean \textbf{muffin} @ a horizontal grid resolution of 36x36 will simulate about 1000 years per CPU hour. The 16-level version (which you will use later), runs at about 300-400 years per CPU hour.
 
-\noindent \textbf{NOTE}: It may be that the \textbf{FORTRAN} compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}.
-
-\noindent In other words; if you have just changed the model resolution or continental configuration, or number of tracers (i.e. changed the \textit{base-config}) or issued a \texttt{make cleanall} command you MUST briefly run your desired experiment (or equivalent) interactively (i.e., in the shell window) to ensure that everything is correctly compiled. For instance, either run the experiment for a couple of years or start the experiment for the desired full duration, but 'kill it' (\textsf{\small Ctrl-C}) once the experiment is running successfully.
+\noindent \textbf{NOTE}: It may be that the \textbf{FORTRAN} compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}. In other words; if you have just changed the model resolution or continental configuration, or number of tracers (i.e. changed the \textit{base-config}) or issued a \texttt{make cleanall} command you MUST briefly run your desired experiment (or equivalent) interactively (i.e., in the shell window) to ensure that everything is correctly compiled. For instance, either run the experiment for a couple of years or start the experiment for the desired full duration, but 'kill it' (\textsf{\small Ctrl-C}) once the experiment is running successfully.
 
 %------------------------------------------------
 
@@ -1029,7 +1054,7 @@ A rough rule of thumb is that 8-level ocean \textbf{muffin} @ a horizontal grid 
 
 \section{‘Restarts’}
 
-Not much fun here either … but again – an important and time-saving (== increased drinking time!) modelling technique to learn to use.
+Not much fun here either … but again... an important and time-saving (== increased drinking time!) modelling technique to learn to use.
 
 By default, model experiments start from ‘cold’, i.e., the ocean is at rest and uniform in temperature and salinity while the atmosphere is uniform in temperature and humidity. All biogeochemical tracers in the ocean have uniform concentrations and/or are zero and there are no biogenic materials in deep-sea sediments. From this state it will take several thousand years (kyr) for the climate system to reach steady-state, and closer to 5 kyr (or more) for ocean biogeochemical cycles and atmosphere \(CO_{2}\) to reach steady-state, and exceeding 100 kyr for sediment composition to re-balance weathering ... Reaching this the equilibrium state is called the ‘\textit{spin-up}’ phase of the model.
 There is evidently little point in repeating the \textit{spin-up} for each and every model experiment that are similar except in a single detail (e.g., testing a variety of different \(CO_{2}\) emissions scenarios all starting from current year 2012 conditions). A facility is thus provided for requesting that a ‘\textit{re-start}’ is used – starting a new experiment from the end of a previous one, usually a \textit{spin-up} that has been run explicitly for the purpose of generating a starting point (\textit{re-start}) of the system at steady-state (equilibrium) for subsequent experiments to continue on from.
@@ -9331,7 +9356,7 @@ and is \texttt{false} by default.
 \\In a situation by which \(pH\) never ever converges, it may be that the initial value is too far from the (true) solution value. Setting the parameter \texttt{true} and re-seeding with randomly varying values then help find a sufficiently close initial guess that convergence occurs.
 
 \vspace{1mm}
-\item Whilst the carbonate chemistry and \(pH\) at the ocean surface is solved at every time-step (in order to calculate air-sea gas exchange of \(CO_{2}\), carbonate chemistry is not needed for any reaction, with the exception of when one or more fo the following \textit{tracers} are selected:
+\item Whilst the carbonate chemistry and \(pH\) at the ocean surface is solved at every time-step (in order to calculate air-sea gas exchange of \(CO_{2}\), carbonate chemistry is not needed for any reaction, with the exception of when one or more of the following \textit{tracers} are selected:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \item \texttt{is\_FeCO3}
@@ -9386,7 +9411,7 @@ gm_ctrl_carbchem_noH3SiO4=.true.
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent You may also be trying to spin up the model with fabulously high \(pCO_{2}\) (i.e. many \(10s\) or even \(100s\) of thousands of \(ppm\)). What typically happens here, is that mean ocean \(DIC\) and \(ALK\) are initialized to modern (or shallow time) values, in equilibrium with modern (or up to \(1000 ppm\)) \(pCO_{2}\). Restoring the atmosphere to an excessively high \(pCO_{2}\) will lead to extreme imbalances between \(DIC\) and \(ALK\) at the ocean surface as \(CO_{2}\) invades the ocean from the atmosphere.
+\noindent You may also be trying to spin up the model with fabulously high \(pCO_{2}\) (i.e. many \(10s\) or even \(100s\) of thousands of \(ppm\)). What typically happens here, is that mean ocean \(DIC\) and \(ALK\) are invariably initialized to modern (or shallow time) values, in equilibrium with modern (or up to \(1000 ppm\)) \(pCO_{2}\). Restoring the atmosphere to an excessively high \(pCO_{2}\) will lead to extreme imbalances between \(DIC\) and \(ALK\) at the ocean surface as \(CO_{2}\) invades the ocean from the atmosphere.
 
 If you do not need to simulate \(pH\) or carbonate saturation state, or are not using processes that depend on these (e.g. variable saturation-dependent \(CaCO_{3}:POC\) rain ratios, or the preservation of \(CaCO_{3}\) in deep-sea sediments, then you might consider setting a radiative forcing in the atmosphere equivalent to the required \(pCO_{2}\) value, and just let \(pCO_{2}\) naturally equilibrate with ocean \(DIC\) and \(ALK\) (and the climate and biological pump state).  
 
@@ -9400,8 +9425,8 @@ If you really *must* have an explicitly high value of \(pCO_{2}\), then you can 
 \\Typical would be to assume a modern ocean surface saturation state with an \(\Omega\) of calcite of around \(5.0\) (mean ocean saturation is \(5.06\) in the modern configuration of \textbf{muffin}). Take a reasonable mean ocean surface temperature and salinity ... and an atmospheric partial pressure equal to the value you want to restore to, and then solve for the complete (mean surface) system. Initialize your experiment with the resulting \(DIC\) and \(ALK\) values.
 
 \vspace{1mm}
-\item Read off of Figure \ref{fig:fan1}.
-\\This is far from a particularly great figure and is poorly resolved in terms of \(pCO_{2}\) (black) and saturation \(\Omega\)) (yellow) contours. You are looking to follow the \(pCO_{2}\) contour you want (or close to), to higher ocean \(ALK\), until the ocean surface is reasonably over-saturated (i.e. \(1.0<\Omega<10.0\)). e.g. for \(\times10\:pCO_{2}\) this would occur for an \(ALK\) value of ca. \(5\:mmolkg^{-1}\). You also want to read off a corresponding \(DIC\) value, which you could simply take to be the x-axis value (but noting that this is really \(DIC\) \uline{plus} \(pCO_{2}\)).
+\item Read suitable \(DIC\) and \(ALK\) values off of Figure \ref{fig:fan1}.
+\\This is far from a particularly great figure and is poorly resolved in terms of \(pCO_{2}\) (black) and saturation (\(\Omega\)) (yellow) contours. You are looking to follow the \(pCO_{2}\) contour you want (or close to), to higher ocean \(ALK\), until the ocean surface is reasonably over-saturated (i.e. \(1.0<\Omega<10.0\)). e.g. for \(\times10\:pCO_{2}\), this would occur for an \(ALK\) value of ca. \(5\:mmolkg^{-1}\). You also want to read off a corresponding \(DIC\) value, which you could simply take to be the x-axis value (but noting that this is really \(DIC\) \uline{plus} \(pCO_{2}\)).
 
 \vspace{1mm}
 \item Restore ocean carbonate chemistry (e.g. surface ocean saturation) at the same time as you restore atmospheric \(pCO_{2}\).
@@ -10157,10 +10182,22 @@ You do not have to re-enter lines of commands and options in their entirety each
 
 %------------------------------------------------
 %
+\subsubsection{Changing passwords!}
+
+The command \texttt{passwd} Linux is used to change the user account passwords.
+
+The usage can be as simple as: 
+\begin{verbatim}
+$ passwd
+\end{verbatim}
+You will then be asked your current password. And then the new one. (And then asked to confirm the new one.)
+\\Use impossible to guess passwords ... never shorter than \(8\) characters. Ideally, use a mix of both UPPERCASE and lower case letters, numbers, and one or more 'special' characters, such as: \textsf{\footnotesize \#, \%, \&, *}. But equally, make sure that you can remember the new password ...\footnote{The password can always be reset by the system administrator.}
+
+%------------------------------------------------
+%
 \subsubsection{vi}
 
 The \textbf{vi} editor is a text-based editor that you use at the command line (i.e. it does not open in its own window, nor have fancy menu items or icons to click). You use \textbf{vi =} to create/edit files, by typing:
-
 \begin{verbatim}
 $ vi FILENAME
 \end{verbatim}
