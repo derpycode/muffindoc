@@ -1139,9 +1139,10 @@ The run-time output should now look noticeably different. There should be no (or
 You will need to download a new \textit{restart} file prior to embarking on the snowball Earth experiments.
 To fetch this: change directory to the \textsf{\footnotesize cgenie\_output} directory, and type (or copy and paste carefully from this PDF ...):
 \vspace{-2mm}
-\begin{verbatim}
-$ wget http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
-\end{verbatim}
+\small\begin{verbatim}
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/LAB_1.SPIN.tar.gz
+\end{verbatim}\small
+\normalsize
 \vspace{-2mm}
 
 This downloads an archived/compressed copy of the experiment \textsf{\footnotesize LAB\_1.SPIN} – effectively, just an experiment (spin-up) that has already been run for 5,000 years for you. Extract the contents of this archive by typing (also from the \textsf{\footnotesize cgenie\_output} directory):
@@ -1151,7 +1152,7 @@ $ tar xfzv LAB_1.SPIN.tar.gz
 \end{verbatim}
 \vspace{-2mm}
 
-A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself (and you could in fact have done so). Reremember to refresh the \textbf{WinSCP} directory view window if you are using this particular software, or it might appear that nothing has been extracted.
+A new experiment results directly will then appear as if you had just run the entire 5,000 year experiment yourself (and you could in fact have done so). Remember to refresh the \textbf{WinSCP} directory view window if you are using this particular software, or it might appear that nothing has been extracted.
 
 You’ll then need to change directory back to \textsf{\footnotesize genie-main} to run the model.
 
@@ -1514,9 +1515,9 @@ You will need to download a new \textit{re-start} file prior to embarking on the
 To fetch this: change to the \texttt{cgenie\_output} directory, and type (or copy and paste carefully from the PDF ...):
 
 \vspace{-2mm}
-\begin{verbatim}
-$ wget http://www.seao2.info/cgenie_output/LAB_2.SPIN.tar.gz
-\end{verbatim}
+\small\begin{verbatim}
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/LAB_2.SPIN.tar.gz
+\end{verbatim}\normalsize
 \vspace{-2mm}
 
 This downloads an archived/compressed copy of the 10,000 year \textit{spin-up} experiment \texttt{LAB\_2.SPIN}. Extract the contents of this archive by typing:
@@ -9277,8 +9278,7 @@ Data; dum_DIC,dum_ALK,dum_Ca,dum_SO4tot,dum_H2Stot,dum_NH4tot
 pH(SWS), pH (OLD), pH (guess #1), pH (guess #2)
 CARBONATE CHEMISTRY COULD NOT BE UPDATED :(
 \end{verbatim}\normalsize
-followed by a series of values (corresponding to the listed tracers),
-\\and then a block of text summerizing possible meanings of the error (and tracer values).
+followed by a series of values (corresponding to the listed tracers), and then a block of text summarizing possible meanings of the error (and tracer values).
 
 \vspace{2mm}
 \item 
@@ -9294,7 +9294,7 @@ also followed by tracer values and possible explanations.
 \vspace{1mm}
 \noindent Both errors relate to the implicit solution for the \(pH\) (technically: \([H^{+}]\)) value at the current time-step. The scheme takes an assumed value at model initialization or from a re-start, or during an experiment -- the last calculated value at that location in the ocean, and uses this to make an updated estimate of \(pH\). The calculation is carried out iteratively, with the new assumed value of \(pH\) being taken from the previous iteration, until the solution converges, or not.
 
-The first error -- instability -- is triggered by a negative value of \(pH\) being calculated. The second error (much more common) occurs if the maximum number of iterations has been reached -- i.e. if the solution of the carbonate chemistry system is not converging within a reasonable number of iterations. \footnote{The default number of iterations is set as \(100\) and is specified by the parameter: \texttt{gm\_par\_carbchem\_pH\_iterationmax=100}}
+The first error -- instability -- is triggered by a negative value of \(pH\) being calculated. The second  (much more common) error occurs if the maximum number of iterations has been reached -- i.e. if the carbonate chemistry system is not converging within a reasonable number of iterations. \footnote{The default number of iterations is set as \(100\) and is specified by the parameter: \texttt{gm\_par\_carbchem\_pH\_iterationmax=100}}
 
 The default behavior in response to either situations occurring is for muffin to forego updating \(pH\) in the troublesome ocean grid call and continue to the end of the current time-step, save data snapshot, and then exit the run.
 
@@ -9305,7 +9305,7 @@ Why does the error arise, and what can be done about it?
 
 \vspace{2mm}
 \item 
-Running \textbf{muffin} with array dimensions which do not match the number of tracers selected is a common cause of failures to solve the aqueous carbonate system, as often calcium ion or other tracer concentrations become corrupted and get assigned nutty and all but impossible values. 
+Running \textbf{muffin} with array dimensions which do not match the number of tracers selected is a common cause of failures to solve the aqueous carbonate system, as often calcium ion or other tracer concentrations become corrupted and get assigned nutty values.  
 \\As per the error message text:
 \small\begin{verbatim}
 (1) Check the FIRST TWO lines of the ERROR DATA (ocean DIC and ALK):
@@ -9322,8 +9322,49 @@ Running \textbf{muffin} with array dimensions which do not match the number of t
 (3) Extreme values of Ca and SO4 (#3, #4) are only vanishingly possible except
     due to incorrect compiled array dimension or extreme salinity.
 \end{verbatim}\normalsize
-so try forcing a re-compile (\texttt{\$ make cleanall}).
+Try forcing a re-compile (\texttt{\$ make cleanall}) to make this go away.
+\vspace{1mm}
 \\Also, if a \textit{re-start} is used which was generated with a different land-sea mask (and \textit{base-config}) to the current experiment and associated \textit{base-config}, spurious tracer values can occur and crash the carbonate chemistry scheme. Try running without the \textit{re-start} and see if that solves it (identifies the source of the problem).
+
+\vspace{1mm}
+\noindent The appearance of all (or almost all) \texttt{NaNs} also hints at a ocean circulation/climate model component problem and only causes an immediate crash in the ocean carbonate chemistry. One not infrequent cause is due to the sea-ice model that is not unconditionally stable and when it fails, can lead to \texttt{NaN} tracer concentrations. In particular, the sea-ice model can fail when there is very little sea-ice cover -- either retreating or increasing -- and in topographically restricted regions (e.g. small embayments or semi-enclosed seas at high latitudes). If the sea-ice model fails, this should be recorded in a series of error messages notifying a failure to solve. Check the experiment log file if running submitted jobs.\footnote{Interactive jobs should echo the error messages to the screen as the failure occurs.}
+
+\vspace{1mm}
+If the root of the issues is indeed the sea-ice model, one or more of the following can be tried:
+
+\begin{itemize}[noitemsep]
+
+\vspace{1mm}
+\item Simply run the model 'warmer' (higher \(pCO_{2}\) or radiative forcing) so that there is no sea-ice cover anywhere, or 'colder' so that there is plenty. (It seems to be the appearance or disappearance of an ephemeral sea-ice cover that is the main issues.)
+\noindent If not running from a \textit{restart}, you can also try specifying a 'warmer' or 'colder' ocean start than the default. The initial ocean temperature of a spin-up is determined by the parameters (set in the \textit{base-config} although you can add new values in the \textit{user-config}):
+\vspace{-1mm}
+\vspace{-0pt}\small\begin{verbatim}
+# temp0 -- ocean temperature start
+go_10=5.0
+# temp1 -- start temperature start
+go_11=5.0
+\end{verbatim}\normalsize\vspace{-0pt}
+\vspace{-1mm}
+(Aim to set both parameters to the same value because I have forgotten what the difference between them is ... (vertical zones of temperature perhaps).)
+\vspace{1mm}
+\item Check that you have the revised sea-ice diffusivity value and limits imposed on sea-ice advection, set by (this also appears in the \textit{base-config} but you can adjust the values in the \textit{user-config}):
+\vspace{-1mm}
+\vspace{-0pt}\small\begin{verbatim}
+# reduced sea-ice eddy diffusivity
+gs_11=1000.000
+# set a fractional sea-ce coverage threshold for preventing advection
+gs_par_sica_thresh=0.99
+\end{verbatim}\normalsize\vspace{-0pt}
+\vspace{1mm}
+\item The nuclear option(!) is to disable the formation of sea-ice entirely, which can be done via:
+\vspace{-1mm}
+\vspace{-0pt}\small\begin{verbatim}
+eb_opt_freeze=.false.
+\end{verbatim}\normalsize\vspace{-0pt}
+\vspace{-1mm}
+(This simply sets the freezing point of seawater to -999C and hence preserves the water and energy balance of the system.)
+
+\end{itemize}
 
 \vspace{2mm}
 \item Failure to converge (the second error) is unlikely to be due to mis-compiled tracer selections or incomparable restart ocean grids, but rather as a consequence of extreme geochemical conditions occurring somewhere in the ocean. This can be due to excessively intense export production and remineralization, as well as at excessively high dissolved silica concentrations -- all may be plausible early Earth states, but ones that require an adjustment of how aqueous carbonate chemistry is solved:
