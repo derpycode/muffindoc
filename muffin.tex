@@ -12058,7 +12058,7 @@ forcing to \(\times1\) the modern value.
 %------------------------------------------------
 %
 \newpage
-\subsection*{Include a R-DOM cycle in the ocean}
+\subsection*{Include an R-DOM cycle in the ocean}
 \vspace{1mm}
 
 The parameter: \texttt{bg\_ctrl\_bio\_remin\_RDOM\_photolysis} determines whether RDOM degradation is restricted to the surface layer and occurs only by/associated with photolysis. It can be \texttt{.true.} or \texttt{.false.} and by default is set to:
@@ -12180,13 +12180,13 @@ EXAMPLE.worjh2.PO4Ibasic.SPIN 10000\end{verbatim}\vspace{-1mm}
 This section outlines the next component of the marine iodine cycle, involving phytoplankton, with the two processes:
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item uptate of IO\(^{-}_{3}\)
+\item uptake of IO\(^{-}_{3}\)
 \vspace{1mm}
 \item  remineralization/release of I\(^{-}\)
 \end{enumerate}
 
 \vspace{1mm}
-\noindent The way this cycling in the model works is as follows: First, as plankton biomass is created, alongside C and P (and if selected N, Fe and other trace elements), IO\(^{-}_{3}\) is taken up by the cell, in a specified proportion to carbon (see below). Of this biomass, a proportion is assumed to be exported in particulate organic matter (POM) form beneath the euphotic zone, with the remainder converted to labile dissolved organic matter (DOM) (see: \textit{Ridgwell et al.} [2007a] for details). When either POM or DOM is remineralized and elemental constituents released, rather than returning IO\(^{-}_{3}\) back to solution, it is assumed that the dissolved iodine is in the form of I\(^{-}\). (This also requires an accounting of release of O2, as IO\(^{-}_{3}\) is taken up by the cell and assume to be instantaneously internally reduced.) The result is: (i) a progressive transformation IO\(^{-}_{3}\) \(\rightarrow\) I\(^{-}\) in the surface ocean as DOM is continually created and destroyed, and (ii) a 'nutrient-like' enrichment of I\(^{-}\) in the sub-surface as a consequence of the remineralization of POM.
+\noindent The way this cycling in the model works is as follows: First, as plankton biomass is created, alongside C and P (and if selected N, Fe and other trace elements), IO\(^{-}_{3}\) is taken up by the cell, in a specified proportion to carbon (see below). Of this biomass, a proportion is assumed to be exported in particulate organic matter (POM) form beneath the euphotic zone, with the remainder converted to labile dissolved organic matter (DOM) (see: \textit{Ridgwell et al.} [2007a] for details). When either POM or DOM is remineralized and elemental constituents released, rather than returning IO\(^{-}_{3}\) back to solution, it is assumed that the dissolved iodine is in the form of I\(^{-}\). (This also requires an accounting of release of \(O_{2}\), as IO\(^{-}_{3}\) is taken up by the cell and assume to be instantaneously internally reduced.) The result is: (i) a progressive transformation IO\(^{-}_{3}\) \(\rightarrow\) I\(^{-}\) in the surface ocean as DOM is continually created and destroyed, and (ii) a 'nutrient-like' enrichment of I\(^{-}\) in the sub-surface as a consequence of the remineralization of POM.
 
 An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worjh2.PO4Ibio.SPIN} -- is given. In this, the available parameters (listed under the heading '\texttt{\# --- MISC ---}' and '\texttt{\#\#\# IODINE CYCLE CONTROLS \#\#\#}') controlling the iodine cycle are:
 
@@ -12208,6 +12208,101 @@ An example experiment configuration \textit{user-config} -- \texttt{EXAMPLE.worj
 
 \end{itemize}
 \vspace{1mm}
+
+%------------------------------------------------
+%
+\noindent\rule{4cm}{0.5pt}
+\subsubsection{Iodine cycle parameterization options}
+\vspace{1mm}
+
+Currently there is only a single option for biological update of \(IO^{-}_{3}\) (and subsequent remineralization to \(I^{-}\)). However, here are multiple options for both water column reduction of \(IO^{-}_{3}\) and for the re-oxidation of \(I^{-}\) to \(IO^{-}_{3}\).
+
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+
+\vspace{2mm}
+\item \textbf{Water column reduction of \(IO^{-}_{3}\)}
+
+\vspace{1mm}
+The (case-sensitive) parameter controlling the scheme used for water column \(IO^{-}_{3}\) reduction is \\\texttt{bg\_opt\_bio\_remin\_reduce\_IO3toI}, and the valid options are:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item \texttt{'inhibition'}
+\\(\textbf{not used})
+
+\vspace{1mm}
+\item \texttt{'threshold'}
+\\(see above)
+\\The default value is \texttt{50.0E-6} but is \texttt{30.0E-6} in \textit{Lu et al.} [2018].
+
+\vspace{1mm}
+\item \texttt{'reminSO4'}
+\\In the absence of \(NO^{-}_{3}\) and an explicit link between \(IO^{-}_{3}\) reduction and nitrate reduction -- link to \(SO^{2-}_{4}\) instead.
+\\The idea is to use \(SO^{2-}_{4}\) reduction (\(mol\:kg^{-1}\:timestep^{-1}\) to scale (the rate of) \(IO^{-}_{3}\) reduction (also in units of \(mol\:kg^{-1}\:timestep^{-1}\)).
+\\Note that because \(IO^{-}_{3}\) reductio reduction is \([O_{2}]\) sensitive, there is no need for an addiitonal \([O_{2}]\) inhibition term.
+\\The parameter controlling this link is: \texttt{bg\_par\_bio\_remin\_SO4toIO3}.
+\\The default value is \texttt{2.0E-2} which is derived by approximately matching the global reduction flux in the baseline configuration of the iodine cycle.
+\\Note that the model save level must include \texttt{bg\_ctrl\_bio\_remin\_redox\_save} must as \texttt{.TRUE.}.
+
+\vspace{1mm}
+\item \texttt{'reminSO4lifetime'}
+\\As per \texttt{'reminSO4'} -- the amount of \(SO^{2-}_{4}\) reduction per time-step is also used as a basis, but now this is scaled to a lifetime of \(IO^{-}_{3}\) that is applied to the local ambient concentration of \(IO^{-}_{3}\). (Such that where no \(SO^{2-}_{4}\) reduction occurs, the \(IO^{-}_{3}\) lifetime is effectively infinite.)
+\\This scheme is hence sensitive to the \(IO^{-}_{3}\) inventory as well as implicitly to \([O_{2}]\).
+\\The default value is \texttt{5.0E-7}, which is derived by matching to a mean lifetime, which in turn is derived dividing the global reduction flux in the baseline configuration of the iodine cycle by the \(IO^{-}_{3}\) inventory. However, it should be noted that it is not possible to derive a simple 'lifetime' for \(IO^{-}_{3}\) in the ocean and hence the default value may give rise to a poorly configured iodine cycle.
+\\Note that the model save level must include \texttt{bg\_ctrl\_bio\_remin\_redox\_save} must as \texttt{.TRUE.}.
+
+\vspace{1mm}
+\item \texttt{'NONE'} (including any other option, including an empty string)
+\\No \(IO^{-}_{3}\) reduction.
+
+\end{enumerate}
+
+\vspace{1mm}
+Note that the default parameter setting is \texttt{'NONE'}.
+
+\vspace{2mm}
+\item \textbf{Re-oxidation of \(I^{-}\) to \(IO^{-}_{3}\)}
+
+\vspace{1mm}
+The (case-sensitive) parameter controlling the scheme used for the re-oxidation of \(I^{-}\) to \(IO^{-}_{3}\) is \texttt{bg\_opt\_bio\_remin\_oxidize\_ItoIO3}, and the valid options are:
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item \texttt{'Fennel'}
+\\Applies a rate constant for \(I^{-}\) oxidation to the ambient concentration of \(I^{-}\), in conjunction with a half-saturation for \([O_{2}]\) to provide limitation under anoxic and anoxic conditions.
+\\The rate constant is: \texttt{bg\_par\_bio\_remin\_kItoIO3} in units of \(yr^{-1}\) and has a default value of \(6\:yr^{-1}\) after \textit{Fennel et al.} [2005] (in their example in respect to \(NH^{+}_{4}\) oxidation kinetics).
+\\The \([O_{2}]\) half-saturation constant is: \texttt{bg\_par\_bio\_remin\_cO2\_ItoIO3} and has a default value of \(20.0\: \mu M \: kg^{-1}\) (after \textit{Fennel et al.} [2005]).
+ 
+\vspace{1mm}
+\item \texttt{'lifetime'}
+\\(see above)
+\\The parameter controlling this is: \texttt{bg\_par\_bio\_remin\_Ilifetime}.
+
+\vspace{1mm}
+\item \texttt{'reminO2'}
+\\The reasoning here is that in the absence of explicit \(NH^{+}_{4}\) as a tracer in the model and hence \(NH^{+}_{4}\) oxidation one can scale \(NH^{+}_{4}\) oxidation with DON remin following Martin et al. [2019], or here ... as a general microbial oxidative activity and hence in terms of organic matter\(O_{2}\) consumption.
+\\A parameter scales the consumption of \([O_{2}]\) in organic carbon remineralization (in units of \(mol\:kg^{-1}\:timestep^{-1}\)) to \(I^{-}\) oxidation (also in units of \(mol\:kg^{-1}\:timestep^{-1}\)) -- \texttt{bg\_par\_bio\_remin\_O2toI}
+\\The default value is \texttt{1.0E-4} which is derived by approximately matching the global oxidation flux in the baseline configuration of the iodine cycle.
+\\Note that the model save level must include \texttt{bg\_ctrl\_bio\_remin\_redox\_save} must as \texttt{.TRUE.}.
+
+\vspace{1mm}
+\item \texttt{'reminO2lifetime'}
+\\As per \texttt{'reminO2'}, but now creating a lifetime for \(I^{-}\) in the ocean scaled inversely to \([O_{2}]\) consumption.
+\\The default value is \texttt{1.0E-6}, which is derived by matching to the assumed lifetime setting of \texttt{bg\_par\_bio\_remin\_Ilifetime}.
+\\Note that the model save level must include \texttt{bg\_ctrl\_bio\_remin\_redox\_save} must as \texttt{.TRUE.}.
+
+\vspace{1mm}
+\item \texttt{'NONE'} (including any other option, including an empty string)
+\\No \(I^{-}\) re-oxidation.
+
+\end{enumerate}
+
+
+\end{itemize}
+
 
 %------------------------------------------------
 %
