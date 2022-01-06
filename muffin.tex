@@ -13865,6 +13865,8 @@ The flux-weighted \(\delta^{13}C\) of the sinks (in units of \(Tmol\,C \times \p
 \vspace{2mm}
 \item \textbf{Kerogen weathering plus enhanced \(CO_{2}\) outgassing.}
 \vspace{1mm}
+\\(Note that as of a recent commit, all the weathering parameters needed to balance the system and configure a 2nd-stage spin-up, and provided as part of the \textsf{\footnotesize SEDGEM} output -- file: \\\textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res}.\footnote{But also note that the calculation of the provided  parameter values makes a \(0.6:0.4\) carbonate:silicate weathering ratio assumption as well as that the isotopic composition of volcanic \(CO_{2}\) outgassing is \(-6.0\).})
+\vspace{1mm}
 \\The bulk carbon mass balance is:
 \\\(F_{out(Corg)}+F_{out(CaCO3)}=F_{in(CO2)}+F_{in(Corg)}+F_{in(CaCO3)}\)
 \vspace{1mm}
@@ -13953,7 +13955,11 @@ rg_par_weather_CaSiO3_fracC_d13C=-24.0
 \vspace{1mm}
 In other words -- in this example, we balance the \(0.088 PgCyr^{-1}\) of projected organic carbon burial with an additional \(0.029 PgCyr^{-1}\) of volcanic \(CO_{2}\) outgassing at \(-6\permille\), with the remainder -- \(0.059 PgCyr^{-1}\) -- balanced by kerogen weathering with the same (as organic carbon burial) isotopic composition (\(-24\permille\)). 
 \vspace{1mm}
-\\To put it yet another way -- with the weathering and burial of \(CaCO_{3}\) isotopically balancing, we need to isotopically balance \(5.58Tmolyr^{-1}\) of additional \(CaCO_{3}\) burial sourced (in terms of alkalinity supplied to the ocean) from silicate weathering, with \(8.02Tmolyr^{-1}\) of volcanic \(CO_{2}\) outgassing at \(-6\permille\). We do this by now removing \(2.44Tmolyr^{-1}\) of organic carbon at \(-24\permille\), i.e. \(-6\times8.02=3\times5.58+-24\times2.44\). This  implies that for any model-projected organic carbon burial flux less than \(2.44Tmolyr^{-1}\), the above assumptions are no longer possible and e.g. the isotopic composition of weathered \(CaCO_{3}\) must become increasingly positive and larger than \(3\permille\). For any projected organic carbon burial flux greater than \(2.44Tmolyr^{-1}\), you simply balance the 'excess' burial with kerogen weathering of  identical (to burial) isotopic composition. 
+\\To put it yet another way -- with the weathering and burial of \(CaCO_{3}\) isotopically balancing, we need to isotopically balance \(5.58Tmolyr^{-1}\) of additional \(CaCO_{3}\) burial sourced (in terms of alkalinity supplied to the ocean) from silicate weathering, with \(8.02Tmolyr^{-1}\) of volcanic \(CO_{2}\) outgassing at \(-6\permille\). We do this by now removing \(2.44Tmolyr^{-1}\) of organic carbon at \(-24\permille\), i.e. \(-6\times8.02=3\times5.58+-24\times2.44\). This  implies that for any model-projected organic carbon burial flux less than \(2.44Tmolyr^{-1}\), the above assumptions are no longer possible and e.g. the isotopic composition of weathered \(CaCO_{3}\) must become increasingly positive and larger than \(3\permille\). For any projected organic carbon burial flux greater than \(2.44Tmolyr^{-1}\), you simply balance the 'excess' burial with kerogen weathering of  identical (to burial) isotopic composition.
+
+\vspace{2mm}
+
+Refer to the \textsf{\footnotesize SEDGEM} output file: \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res} for derived weathering parameter values.
 
 \vspace{2mm}
 The end.
