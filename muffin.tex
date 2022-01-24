@@ -452,7 +452,7 @@ where the line:
 \vspace{1mm}
 \\ For using this particular cluster, there are 2 files to edit (both of which of which live in the \texttt{genie-main} directory):
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- as per for \texttt{domino} (except the \texttt{user.mak} line needed is headed \texttt{\#\#\# eevee \#\#\#}).
+\item In \texttt{user.mak} -- as per for \texttt{sterling} (except the \texttt{user.mak} line you need to un-comment is headed \texttt{\#\#\# eevee \#\#\#}).
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
 \\On line  21 -- comment out (with a \texttt{\#}); the word \texttt{nccompare} (not the whole line).
 \end{enumerate}
@@ -555,7 +555,7 @@ $ make cleanall
 Refer to the FAQ section at the end of this book for further clues as why the model installation appears not to be working.\
 
 \textbf{NOTE}: Currently, the netCDXF C library is not installed on the \texttt{eevee}
- cluster, meaning that the test experiment will run, but the comparison against a set fo standard results will not. Hence it will appear to 'fail'.
+ cluster, meaning that the test experiment will run, but the comparison against a set of standard results will not. Hence it will appear to 'fail'.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
@@ -1068,7 +1068,7 @@ It is important to note that there is nothing special about a \textit{re-start} 
 
 \vspace{-2mm}
 \begin{verbatim}
-$ wget http://www.seao2.info/cgenie_output/LAB_0.SPIN.tar.gz
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/LAB_0.SPIN.tar.gz
 \end{verbatim}
 \vspace{-2mm}
 
