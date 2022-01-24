@@ -1021,12 +1021,12 @@ This bit is no particular fun at all, but it is a very handy ‘trick’ for run
 For example -- to run the same experiment as before (\textsf{\footnotesize LAB\_0.EXAMPLE}) for maybe 100 years (or even longer if you wish – I am just pulling factors of 10 out of thin air here) but now submit the experiment as a job to the cluster queue, type (again: SINGLE, CONTINUOUS LINE):
 \vspace{-1mm}
 \small\begin{verbatim}
-$ qsub -q dog.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
+$ qsub -q queue.q -j y -o cgenie_log -V -S /bin/bash runmuffin.sh
   cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 100
 \end{verbatim}\normalsize
 \vspace{-1mm}
 
-Here, the  queue name for this\ particular cluster is \textsf{\footnotesize dog.q}. \uline{The cluster you are actually using will have a different queue name} (e.g. refer to any cluster-specific information that you might have).
+Here, the  queue name for this\ particular cluster is \textsf{\footnotesize queue.q}. \uline{The cluster you are actually using will have a different queue name} (e.g. refer to any cluster-specific information that you might have).
 
 \vspace{1mm}
 Note that now you should omit the ‘\texttt{./}’ bit before \texttt{runmuffin.sh}.
