@@ -1891,9 +1891,7 @@ Secondly -- you could additionally combine this experiment configuration with fr
 
 \vspace{12mm}
 
-\noindent This Chapter comprises 2 different exercises, both employing 'realistic' reconstructions of past continental configuration and climate and designed to explore some of the key controls on global surface climate as well as the spatial pattern of surface temperatures.
-
-The two exercises concern the late Cretaceous and early Eocene climate states, and are somewhat interchangeable.
+\noindent The Chapter address the modelled climates and ocean circulation states at different times during the Phanerozoic. (Past ocean biogeochemical cycles will be addressed in a different chapter.) Included are specific examples of past greenhouse climate states -- the late Cretaceous and early Eocene climate states (which are somewhat interchangeable in terms of the questions you might pose and hence model experiment conducted).
 
 \section*{Background reading (Cretaceous climate)}
 \begin{itemize}
@@ -3019,16 +3017,16 @@ We will consider the following scientific questions as a starting point and then
 \end{enumerate}
 \vspace{1mm}
 
-The associated experiments would ideally be run for several thousand and maybe 5000 years to obtain a new (quasi) steady state of carbon and nutrient cycling in the ocean. But some of the impacts in the ocean and on atmospheric \(pCO_{2}\) will develop relatively rapidly (decades). Hence model experiments could be run for a few 10s of years, or e.g. 100 years, or for a full e.g. 5000 years but periodically downloading and viewing the results as the experiment progresses (and not necessarily waiting until the end of the experiment, or even ever looking at the final state!).
+The associated experiments would ideally be run for several thousand and maybe 5000 years to obtain a complete new (quasi) steady state of carbon and nutrient cycling in the ocean. However, the main impacts in the ocean and on atmospheric \(pCO_{2}\) tend develop relatively rapidly (decades). Hence model experiments could be run for a few 10s of years, or e.g. 100 years, or for a full e.g. 5000 years but periodically downloading and viewing the results as the experiment progresses (and not necessarily waiting until the end of the experiment, or even ever looking at the final state!).
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and are based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).} (note the use of a different \textit{base-config} to previously). To run an e.g. 5000 year experiment (but it need not be this -- see above):
+\noindent All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and are based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).} (note the use of a different \textit{base-config} to previously). To run an e.g. 50 year experiment (but it need not be this -- see above):
 \vspace{-1mm}\begin{verbatim}
 ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASES LABS EXP.7.2
- 5000 EXAMPLE.worbe2.Ridgwelletal1997.SPIN
+ 50 EXAMPLE.worbe2.Ridgwelletal1997.SPIN
 \end{verbatim}\vspace{-1mm}
 (When you run new experiments, remember to copy and rename the provided \textit{user-config} \textsf{\footnotesize EXP.7.2} in order to create new and unique experiments each time.)
 
@@ -3224,7 +3222,7 @@ Key  to having any 'confidence' in both past and future biogeochemical (e.g. car
 
 While the comparison can be made more formally and statistically (with a little \textbf{MATLAB} or \textbf{python} code), much can be gain visually (and indeed this is typically how model-data comparisons are made in the literature). Fortunately, this visual comparison can be made in \textbf{Panoply} and both re-gridded observations and model output, being \textbf{netCDF} format, can be loaded into \textbf{Panoply}. When making visual comparisons, make sure that you use the same scale limits in both plots (these can be set manually). You can also create difference plots of model minus observations. For difference plots -- be careful when changing depth or longitude slices, that you change to the same slice in both model and observations. Note that for difference plots the convention is to use a color-scale that goes from blue (negative) to red (positive) through white (or sometimes, a yellow). Set the magnitude of the scale limits equal so that zero (no difference between model and data) maps onto white (or yellow).
 
-
+You may (and ideally should!) have ideas/thoughts on 'why' the model and observations diverge where they do. These thoughts may well involve processes in the ocean, e.g. is the dissolved oxygenation feature x due to insufficient ro excessive organic matter remineralization in the ocean, or is the surface surface dissolved phosphate concentration in region y excessive/over-depleted due to insufficient/excessive biological productivity? Perhaps the most fundamental purpose or advantage of models is that they provide you a way to test and attempt to answer such questions (which are basically questions of understanding global biogeochemical cycles in the first place and how tracer patterns in the ocean arise). So given a hypothesis for model-data mismatch, you might return to the previous section and see if a model parameter is listed that could be adjusted in value to test your hypothesis. In the 2 vague examples -- changing reminerilization depth or changing a control on biological export, might do. (Just note that the first section of this chapter uses a faster 8-level ocean model configuration, whereas the model-data comparisons are on the basis of a 16-level ocean and so the results of testing parameter changes in an 8-level ocean should be regarded as qualitatively rather than quantitatively comparable.)
 
 %------------------------------------------------
 
@@ -4920,6 +4918,28 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 %------------------------------------------------
 
 \section{Geoengineering}
+
+%----------------------------------------------------------------------------------------
+%       CHAPTER X
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{Jay-Matternes---EOCENE.jpg} % Chapter heading image
+
+\chapter{Biogeochemical cycling in past worlds}\label{ch:paleo2}
+
+\hfill \break
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section*{README}
+
+
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
