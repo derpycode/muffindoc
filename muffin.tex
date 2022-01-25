@@ -451,8 +451,20 @@ where the line:
 \item \textbf{eevee} (UCR cluster).
 \vspace{1mm}
 \\ For using this particular cluster, there are 2 files to edit (both of which of which live in the \texttt{genie-main} directory):
+\vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item In \texttt{user.mak} -- as per for \texttt{sterling} (except the \texttt{user.mak} line you need to un-comment is headed \texttt{\#\#\# eevee \#\#\#}).
+\item In \texttt{user.mak} -- as per for \texttt{sterling} (except the \texttt{user.mak} line you need to un-comment is headed \texttt{\#\#\# eevee \#\#\#}), i.e. to achieve something like:
+\vspace{-1mm}
+\footnotesize\begin{verbatim}
+### DEFAULT ###
+#NETCDF_DIR=/usr/local
+### sterling ###
+#NETCDF_DIR=/share/apps
+### eevee ###
+NETCDF_DIR=/share/apps/netcdf-c-4.4.1.1-fortran-4.4.4
+\end{verbatim}\normalsize
+\vspace{-1mm}
+
 \item In \texttt{makefile} -- as a consequence of a currently incomplete netCDF install, missing are the C libraries for netCDF. This affects only a C program that is compiled to complete the tests (by comparing model output with an archived copy of the expected results). For now, this test must be disabled by:
 \\On line  21 -- comment out (with a \texttt{\#}); the word \texttt{nccompare} (not the whole line).
 \end{enumerate}
@@ -1268,7 +1280,7 @@ For the \textit{time-slice} data: atmospheric and ocean surface temperature and 
 
 HINT: Be careful with the ‘\textsf{\footnotesize Fit to data}’ scaling feature in \textbf{Panoply} – at near complete sea-ice cover, you may find Panoply scaling min and max sea-ice between 99.1 and 99.9\% or something. Specific fixed scale limits (e.g. 0 and 100) can be set instead.
 
-In answering the question (‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’), think about what an appropriate degree of accuracy might be for your experiments. Just because computer models generally calculate to around 16 significant places of precision, does not mean you have 16 significant figures of realism. For instance – how many significant figures is the solar constant quoted to and what do you think is the uncertainty in this? Harder to judge is how the assumed (incorrect) continental configuration creates additional uncertainty, or the simple physics assumed in the ocean or sea-ice, or lack of snow on land …
+In answering the question (‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’), think about what an appropriate degree of precision (rather than accuracy) might be for your experiments. Just because computer models generally calculate to around 16 significant places of precision, does not mean you have 16 significant figures of realism. For instance – how many significant figures is the solar constant quoted to and what do you think is the uncertainty in this? Harder to judge is how the assumed (incorrect) continental configuration creates additional uncertainty, or the simple physics assumed in the ocean or sea-ice, or lack of snow on land …
 
 \vspace{1mm}
 Other questions to think about with regards to numerical modeling (as well as this particular experiment) are:
@@ -1288,10 +1300,17 @@ Other questions to think about with regards to numerical modeling (as well as th
 \end{itemize}
 
 \vspace{1mm}
+\noindent Obviously, associated with the question of 'precision' is: '\textit{How long do I have to run the experiment for?}'
+
+This also has a vague-to-no answer. It depends on the question and what you might judge to be appropriate precision in the context of the various uncertainties ... In other words -- if you can define a sufficient or minimum precision of some property of the system, you only need to run the model as long as needed to achieve this. However, to determine  the precision of the model at any point in time, you need to know the final or equilibrium value. So ideally you would run the model once, for much longer than you think you need to, and then determine how as a function of time, precision increases and error between current state and final steady state decreases.
+
+Here I am crudely equating the concept precision with how far the model is from steady-state. You could think about is in terms of accuracy if you assumed that the steady-state of the model was 'perfect' and deviations from that steady-state (i.e. incomplete spin-up) equates to model 'error'.
+
+\vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent Once you are happy about the controls on the snowball threshold try and answer the supplementary question:
+\noindent Once you are happy about the controls on the snowball threshold try and answer the associated question:
 
 \vspace{2mm}
 \noindent \textit{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
@@ -2905,11 +2924,29 @@ You will need the following \textit{re-starts} files prior to embarking on the e
 
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item [7.2] This is of a basic single (\(PO_{4}\)) nutrient biological export scheme.
+\item [7.1] This is a basic single (\(PO_{4}\)) nutrient biological export scheme.
 \small\begin{verbatim}
 $ wget --no-check-certificate http://www.seao2.info/cgenie_output/ ...
 EXAMPLE.worbe2.Ridgwelletal1997.SPIN.tar.gz
 \end{verbatim}\normalsize
+\vspace{1mm}
+\item [7.2] A single (\(PO_{4}\)) nutrient biological export scheme but in a higher (vertical) resolution ocean.
+\small\begin{verbatim}
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/ ...
+EXAMPLE.worjh2.Caoetal2009.SPIN.tar.gz
+\end{verbatim}\normalsize
+World Ocean\ Atlas modern (\(PO_{4}\)) climatology (re-gridded/interpolated observations), re-gridded to the same ocean grid as \texttt{EXAMPLE.worjh2.Caoetal2009.SPIN}
+\small\begin{verbatim}
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/ ...
+worjh2.p_an.200709.nc
+\end{verbatim}\normalsize
+World Ocean\ Atlas modern (\(O_{2}\)) climatology (re-gridded/interpolated observations), re-gridded to the same ocean grid as \texttt{EXAMPLE.worjh2.Caoetal2009.SPIN}
+\small\begin{verbatim}
+$ wget --no-check-certificate http://www.seao2.info/cgenie_output/ ...
+worjh2.o_an.200709.nc
+\end{verbatim}\normalsize
+
+
 \vspace{1mm}
 \item [7.3] 
 \small \begin{verbatim}
@@ -2938,9 +2975,9 @@ LAB_4.SPIN.tar.gz
 
 %------------------------------------------------
 
-\section{The ocean's biological pump}
+\section*{The ocean's biological pump}
 
-In this Chapter we'll step through some of the facets of the cycle of carbon (and nutrients) in the ocean -- the 'biological pump'. (And then in the following section we'll look at the same processes in a different way via 'geoengineering' and hopefully learn something further about how it all  'works'.)
+In this Chapter we'll step through some of the facets of the cycle of carbon (and nutrients) in the ocean -- the 'biological pump'. And then in a later section we'll look at the same processes but in a different way -- through the lens of 'geoengineering' (and hopefully learn something further about how it all  'works').
 
 \textbf{muffin} incorporates a variety of options for simulating biological export production. To date, these have all been rooted in what is effectively a nutrient mass balance approach to estimating export production, nicely encapsulated by Ernst Maier-Reimer as: “conceptually not a model of biology in the ocean but rather a model of biogenically induced chemical fluxes [from the surface ocean]” [\textit{Maier-Reimer,} 1993]. Hence in schemes of this nature, which we will term ‘biogenic export’, there is no attempt to explicitly account for changes in cell numbers/biomass and hence, nor zooplankton, which will impact a bias particularly in the seasonal time-dependent response of export. Previous biogenic export schemes utilized in  \textbf{muffin}  considered a single nutrient (P limitation) only and took either restoring to observations [Cameron et al., 2005] or explicit P-limitation [Ridgwell et al., 2007a,b] approaches. More recently, additional limitation by iron (P+Fe) has been implemented, while nitrogen cycling (including N fixation and denitrification) and hence P+N limitation, has been implemented and explored in the context of extreme nutrient and oxygen cycle perturbation associated with the Cretaceous Oceanic Anoxic Events [Monteiro et al., 2012; Naafs et al., 2029]. Work currently in development includes the additional consideration of Si limitation (P+Si limitation) control on production of diatoms vs. non-diatoms following \textit{Ridgwell et al.} [2002].
 
@@ -2956,13 +2993,17 @@ Note that a full description of the various biological and ocean interior remine
 
 \section{Single nutrient (PO$_{4}$) cycling and basic controls on biological productivity}
 
-The following exercises  will utilize one of the more basic representations of the biological pump -- one with only a single nutrient (PO$_{4}$) potentially limiting to biological export, considered. The scheme is described in full in \textit{Ridgwell et al.} [2007]\footnote{Ridgwell, A., et al., Marine geochemical data assimilation in an efficient Earth System Model of global biogeochemical cycling, Biogeosci. 4, 87-104 (2007). }.We will consider the following scientific questions as a starting point and then devise some model experiments to address them:
+The following exercises  will utilize one of the more basic representations of the biological pump -- one with only a single nutrient (PO$_{4}$) potentially limiting to biological export, considered. The scheme is described in full in \textit{Ridgwell et al.} [2007]\footnote{Ridgwell, A., et al., Marine geochemical data assimilation in an efficient Earth System Model of global biogeochemical cycling, Biogeosci. 4, 87-104 (2007). }. Note that this specific configuration of the (modern) ocean model accounts only for 8 layers in the ocean (spanning \(0-5000 \) water depth). The limited vertical resolution places additional constraints on the ability of the model to reproduce features such as oxygen minimum zones in the ocean, but enables a much shorter run-time (long time-step in the model). Hence we are making  trade-off between model fidelity (in reproducing observed distribution of tracers in the modern ocean) and speed (and hence the ability to more effectively 'play' with the Earth system in a relatively short amount of real time).
+
+\vspace{1mm}
+
+We will consider the following scientific questions as a starting point and then devise some model experiments to address them:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \item What would the Earth look like with no biological production in the ocean? Specifically: how important is the biological pump in controlling atmospheric \(pCO_{2}\) and how much higher would \(pCO_{2}\) be in the absence of a biological pump in the ocean?
 \vspace{1mm}
-\item Conversely, is the biological pump operating at its maximum efficient in the ocean today, and if not, how much more could atmospheric \(pCO_{2}\) conceivably be lowered.
+\item Conversely, is the biological pump operating at its maximum efficient in the ocean today, and if not, how much more could atmospheric \(pCO_{2}\) conceivably be lowered by increasing its strength/efficiency.
 \vspace{1mm}
 \item How does the biological pump affect the distribution and hence availability of dissolved oxygen in the ocean? (How more oxygenated would the ocean be with no export of organic matter into the ocean interior, and how much more severe would oxygen depletion be if plankton were able to utilize all the nutrients at the ocean surface?)
 \vspace{1mm}
@@ -2972,31 +3013,44 @@ The following exercises  will utilize one of the more basic representations of t
 \vspace{1mm}
 \item What is the role of the calcium carbonate (\(CaCO_{3}\)) 'counter pump'? How much higher is \(pCO_{2}\) in the presence of calcifying organisms in the ocean compared to just organic matter production and cycling?
 \vspace{1mm}
+\item What is the role of large-scale ocean circulation in dictating the cycling of carbon and nutrients and hence setting the patterns of ocean oxygenation. (And how does this manifest as a change in atmospheric \(pCO_{2}\)?)
+\vspace{1mm}
 \item What about feedback with climate -- how does changing global surface temperature (and hence ocean circulation patterns and sea-ice extent) modulate the impact of changes to the biological pump in the ocean? Is the resulting feedback positive or negative (and why)?
 \end{enumerate}
 \vspace{1mm}
 
 The associated experiments would ideally be run for several thousand and maybe 5000 years to obtain a new (quasi) steady state of carbon and nutrient cycling in the ocean. But some of the impacts in the ocean and on atmospheric \(pCO_{2}\) will develop relatively rapidly (decades). Hence model experiments could be run for a few 10s of years, or e.g. 100 years, or for a full e.g. 5000 years but periodically downloading and viewing the results as the experiment progresses (and not necessarily waiting until the end of the experiment, or even ever looking at the final state!).
 
-All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and will be based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).} (and note the use of a different \textit{base-config} to previously):
-\vspace{-2mm}\begin{verbatim}
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent All the experiments will start from the same \textit{re-start}\footnote{As per described in Ridgwell et al. [2007].} and are based on the same \textit{user-config}\footnote{The same \textit{user-config} as used to generate the \textit{re-start} (with the exception that the atmospheric \(CO_{2}\) concentration is no longer prescribed).} (note the use of a different \textit{base-config} to previously). To run an e.g. 5000 year experiment (but it need not be this -- see above):
+\vspace{-1mm}\begin{verbatim}
 ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASES LABS EXP.7.2
  5000 EXAMPLE.worbe2.Ridgwelletal1997.SPIN
-\end{verbatim}\vspace{-2mm}
-(here a 5000 year experiment run-time is given, but it need not be this -- see above). Remember to copy and rename \textsf{\footnotesize EXP.7.2} in order to create new and unique experiments each time.
+\end{verbatim}\vspace{-1mm}
+(When you run new experiments, remember to copy and rename the provided \textit{user-config} \textsf{\footnotesize EXP.7.2} in order to create new and unique experiments each time.)
 
-\pagebreak
+\vspace{1mm}
 
-The first thing to do, is to run an control experiment, for however long you have decided to run all the actual experiment experiments for. (You need not wait for this to finish, but can submit it as a \textit{job} to the cluster and get on with running some real experiment experiments.) The control experiment can simply be derived (copied) from \textsf{\footnotesize EXP.7.2}, with no further alterations needed. In this \textit{user-config}, the value of atmospheric  \(pCO_{2}\) is not prescribed (there is no \textit{forcing} defined) and hence \(pCO_{2}\) is free to respond to any change in parameters. In the case of the control -- there are no changes in the biological pump parameters compared to the \textit{spin-up}, so you should see no (or little) drift in \(pCO_{2}\) occurring.
+Whatever you plan to do re. perturbation experiments to explore the working of the ocean's biological pump, the first thing to do, is to run a \textbf{control experiment}, for however long you have decided to run all the actual experiment experiments for. (You need not wait for this to finish, but can submit it as a \textit{job} to the cluster and get on with running some real experiment experiments.) The control experiment can simply be derived (copied) from \textsf{\footnotesize EXP.7.2}, with no further alterations in parameter values needed. In this \textit{user-config}, the value of atmospheric  \(pCO_{2}\) is not prescribed (there is no \textit{forcing} defined) and hence \(pCO_{2}\) is free to respond to any change in parameters. In the case of the control -- there are no changes in the biological pump parameters compared to the \textit{spin-up}, so you should see no (or little) drift in \(pCO_{2}\) occurring.
 
-Also think about the output you want to view (and how to view it). You are likely to want to look at anomalies vs. the control, as well as absolute patters in the ocean. In the \textit{user-config} -- check that the results/output select 'level' is going to give you the output you are expecting. This is parameter:
+Should you see a substantive drift in the control experiments (e.g. many \(10s\) of \(ppm\) of \(CO_{2}\) in the atmosphere, it will indicate that you have used the wrong \textit{re-start} or have modified the parameters in your control experiment \textit{user-config} compared to those used to generate the \textit{re-start}.
+
+\vspace{1mm}
+
+Also think about the output you want to view (and how to view it). You are likely to want to look at anomalies vs. the control experiment, as well as absolute patters in the ocean. In the \textit{user-config} -- check that the results/output select 'level' is going to give you the output you are expecting. In the example \textit{user-config}, this is specified by:
 \vspace{-1mm}\small\begin{verbatim}
 bg_par_data_save_level=5
 \end{verbatim}\normalsize\vspace{-1mm}
-Refer to Section 14.4 and Appendix I, for more details on how different (2D and 3D) \textit{time-slice} variable fields and \textit{time-series} are selected to be included in the model ouptut. 
+(Refer to Section 14.4 and Appendix I, for more details on how different (2D and 3D) \textit{time-slice} variable fields and \textit{time-series} are selected to be included in the model output.)
 
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
-\noindent In terms of the specific 'questions' above (the numbering system is the same), both w.r.t. what parameters and parameter values to change and well as what to 'look for':
+
+\noindent In terms of the specific 'questions' at the start (the numbering system is the same), both w.r.t. what parameters and parameter values to change and well as what to 'look for':
 
 \begin{enumerate}[noitemsep]
 
@@ -3009,8 +3063,8 @@ bg_par_bio_k0_PO4=1.9582242E-06
 \end{verbatim}\normalsize\vspace{-1mm}
 (in units of \(mol\:PO_{4} \:kg^{-1} \:yr^{-1}\)). Setting this to zero would 'turn off' completely the biological pump, leaving you with a abiotic ocean.
 \\What to look for? The value of atmospheric \(pCO_{2}\). You might also confirm that biological export really is zero.
-
-To obtain these values you can refer to the respective time-series results files. Or, in the summary text file, which for the \textit{re-start} is:
+\vspace{1mm}
+\\To obtain these values you can refer to the respective time-series results files. Or, in the summary text file, which for the \textit{re-start} is:
 \vspace{-1pt}\small\begin{verbatim}
 biogem_year_09999_500_diag_GLOBAL_AVERAGE.res
 \end{verbatim}\normalsize\vspace{-1pt}
@@ -3029,6 +3083,7 @@ The question is then what does the ocean and atmospheric \(pCO_{2}\) look like i
 bg_par_bio_remin_POC_eL1=550.5195
 \end{verbatim}\normalsize\vspace{-1pt}
 Reducing the value of this parameter forces a greater proportion of sinking POM to be remineralized closer to the surface.
+\vspace{1mm}
 \\What to look for? Largely as before -- the summary file is useful for atmospheric \(CO_{2}\), mean ocean {\(O_{2}\)}, and global (biological) export fluxes (as you might expect nutrients released closer to the ocean surface to result in greater surface ocean nutrient supply and hence fuel higher export). You might also consider the spatial patterns of nutrients and dissolved oxygen.
 \\See \textit{Meyer et al.} [2016]\footnote{Meyer, K.M., A. Ridgwell, and J.L. Payne, The influence of the biological pump on ocean chemistry: implications for long-term trends in marine redox chemistry, the global carbon cycle, and the evolution of marine animal ecosystems, Geobiology, DOI: 10.1111/gbi.12176 (2016).} for an example of a study testing these sort of model changes and its implications (and hence ideas of what else to look for, and for 'reasonable' parameter values to test).
 
@@ -3048,14 +3103,28 @@ In both (4) and (5), it may not be obvious which way atmospheric \(pCO_{2}\) res
 bg_par_bio_red_POC_CaCO3=0.044372
 \end{verbatim}\normalsize\vspace{-1pt}
 Setting this zero will effectively turn back the clock \(200Ma\) to a world prior to the evolution of planktic calcifiers (e.g. see: \textit{Ridgwell} [2005]), or conversely, a future world in which they are all driven extinction from ocean acidification ... 
-
-What is the impact on atmospheric \(pCO_{2}\) of setting this to zero? From your knowledge of carbonate chemistry ... why does this happen? You might try e.g. doubling the value (and hence doubling the export of \(CaCO_{3}\) from the surface ocean). As well as \(pCO_{2}\), you might also look at fields of \(ALK\) (or other carbonate chemsitry parameters) in the ocean to see what other geochemical changes occur.
+\vspace{1mm}
+\\What is the impact on atmospheric \(pCO_{2}\) of setting this to zero? From your knowledge of carbonate chemistry ... why does this happen? You might try e.g. doubling the value (and hence doubling the export of \(CaCO_{3}\) from the surface ocean). As well as \(pCO_{2}\), you might also look at fields of \(ALK\) (or other carbonate chemsitry parameters) in the ocean to see what other geochemical changes occur.
 
 Because (rightly or wrongly) in the model, \(CaCO_{3}\) depends on surface ocean \(\Omega\) (w.r.t. calcite) you might explore what happens to \(CaCO_{3}\) production and export under a release of (fossil fuel) \(CO_{2}\) -- simplest here is to use the same re-start, and create and add a forcing to the \textit{user-config} to implement a large pulse or continuous \(CO_{2}\) flux to the atmosphere
 
 \vspace{1mm}
+\item While it is possible to add a freshwater 'hosing' forcing (as used in an earlier Chapter/exercise) to modify large-scale ocean circulation, there is a simpler way just to 'turn off' the AMOC in the standard modern continental configuration of \textbf{muffin}.
+
+The consequence of using the simplified \textbf{EMBM} atmosphere in conjunction with no topography over land, is that the net moisture transport from the Atlantic to the Pacific in the real world, is not reproduced. (This net transport is primarily a consequence of the blocking of Westerly transport moisture across the North American continent by e.g. the Rockies, while low latitude Trade Winds travel relatively topographically unrestricted through Central America, meaning that moisture transport from the Pacific to North Atlantic is partly blocked, while the reverse lower latitude transport is now.) To correct for this, there is a built-in prescribed moisture transport (technically, a negative salinity transport), principally from the North Atlantic to the North Pacific. In the model, there is a scaling parameter for the magnitude this transport ... which can be set to zero ... hence removing the prescribed moisture transport and likely leading to a collapse of the AMOC.
+
+To kill (collapse) (hopefully) the \textbf{AMOC} in the modern continental configuration of \textbf{muffin}, set:
+
+\vspace{-1pt}\small\begin{verbatim}
+ea_28=0.0
+\end{verbatim}\normalsize\vspace{-1pt}
+
+Stuff to look for -- in addition to how the AMOC changes (e.g. plot the stream-function) how do the patterns of \([PO_{4}\)] and \([O_{2}\)], particularly in the deep North Atlantic change? What impact does this have on global export production, and ultimately on atmospheric \(pCO_{2}\)?
+
+\vspace{1mm}
 \item Finally, you might explore how in some (or all) of the above experiments,  a changing climate in response to changing atmospheric \(pCO_{2}\), in turn modulates the impacts through carbon-climate feedback. 
 
+\vspace{1mm}
 By default in the \textit{user-config}, climate-\(CO_{2}\) feedback is disabled:
 \vspace{-1pt}\small\begin{verbatim}
 ea_36=n
@@ -3077,10 +3146,6 @@ And that pretty much wraps up all the main knobs that it is possible to play wit
 %------------------------------------------------
 
 \subsection{Further ideas}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
 
 \noindent You might also play with the 'half saturtaion constant' for nutrient uptake (see \textit{Ridgwell et al.} [2007]):
 \vspace{-1mm}\small\begin{verbatim}
@@ -3138,6 +3203,28 @@ bg_par_bio_remin_DOMlifetime=0.5
 \noindent In addition to the primary environmental properties of atmospheric \(pCO_{2}\) (and climate if you have the feedback enabled), biological export production (and hence the patterns and magnitude of of food sources for marine ecosystems), and dissolved oxygen, you might also look at how the patterns of carbon isotopes (\(\delta^{13}C\)) (particularly of \(DIC\)) change in the ocean. 
 
 How did the different changes in the biological pump that you tested, alter (if at all) the patterns of \(\delta^{13}C\) in the ocean? Can you distinguish between the different biological pump changes, based on \(\delta^{13}C\)? (Carbonate and organic carbon \(\delta^{13}C\) is a key paleoceanographic proxy and one people would ideally like to use in order to reconstruct changes in the past such as in the biological pump.)
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Comparing models and data (observations)}
+
+Key  to having any 'confidence' in both past and future biogeochemical (e.g. carbon, nutrient, oxygen) cycling and climate dynamics and sensitivity to perturbation in a model, is having confidence in the model's ability to adequately reproduce the relevant features of the modern ocean in some direct comparison made with observations. Note that it is not necessary to accurately every single feature in the modern ocean -- the degree to which the model needs  to match observations is going to depend on the question. For example, if a model is only needed for making first order projections of changes in atmospheric \(pCO_{2}\) or \(pO_{2}\), the details of the structure of biogeochemical cycling in the ocean may be less important, as long as the gross partitioning of carbon between deep ocean vs. surface and atmosphere, or  bottom water oxygenation and carbon flux to the sediments, respectively, is reasonable. Other questions such a involving denitrification may require more explicit details of the distribution and intensity of oxygen minimum zones (OMZs) to be able to be reproduced in the modern ocean. However, even in the latter case, if structurally in the model OMZs tend to be structurally (e.g. as a property of the fundamental ocean grid and physics and/or biases in circulation) too weak (too high \([O_{2}])\), it is always possible to adjust denitrification (in this example) to occur at the 'correct' rate by changing parameter values (e.g. of a minimum \([O_{2}])\) value at which denitrification occurs). As long as the same structural biases are present in paleo simulations, there is no reason to believe that projected past ocean denitrification rates would be incorrect. (In fact, this adjusting of parameter values to correct for some bias and achieve an appropriate rate of some process, is ubiquitous throughout all Earth system modelling, including atmospheric physics and particularly cloud formation.)
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent As an example/practice in model-data comparison, the output of a higher vertical resolution ocean model simulation (\(16\) vs. the previous \(8\) levels in the ocean) is provided here (see \textbf{READ.ME} downloads) along with observations of the distributions of \([PO_{4}\)] and \([O_{2}\)] in the modern ocean. The latter (observations) are interpolated and re-gridded to a high (\(1\) degree in lon and lat) resolution grid and available as part of the World Ocean Atlas series of ocean climatologies (both physics and geochemical), and then re-gridded to the same \textbf{muffin} ocean grid as the provided (16 ocean level) experiment (which is the spin-up of \textit{Cao et al.} [2009]).
+
+\vspace{1mm}
+
+While the comparison can be made more formally and statistically (with a little \textbf{MATLAB} or \textbf{python} code), much can be gain visually (and indeed this is typically how model-data comparisons are made in the literature). Fortunately, this visual comparison can be made in \textbf{Panoply} and both re-gridded observations and model output, being \textbf{netCDF} format, can be loaded into \textbf{Panoply}. When making visual comparisons, make sure that you use the same scale limits in both plots (these can be set manually). You can also create difference plots of model minus observations. For difference plots -- be careful when changing depth or longitude slices, that you change to the same slice in both model and observations. Note that for difference plots the convention is to use a color-scale that goes from blue (negative) to red (positive) through white (or sometimes, a yellow). Set the magnitude of the scale limits equal so that zero (no difference between model and data) maps onto white (or yellow).
+
+
 
 %------------------------------------------------
 
