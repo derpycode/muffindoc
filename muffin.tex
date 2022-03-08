@@ -3648,6 +3648,7 @@ In terms of geoengineering, changing the ‘Redfield’ ocean plankton might be 
 \vspace{2mm}
 Kicked off by a classic 1994 \textit{Nature} paper by \textit{Archer and Maier-Reimer} (see: \textit{Kohfeld and Ridgwell} [2009]), one potential means of changing atmospheric \(CO_{2}\) naturally at the last glacial involves changes in the export ratio between \(CaCO_{3}\) (shells) and \(POC\) (particulate organic matter). Such a change in ratio could come about through a variety of ways (e.g., via the 'silica leakage hypothesis' (see: \textit{Kohfeld and Ridgwell} [2009]) and also through the direct effect of \(Fe\) on diatom physiology (see \textit{Watson et al.} [2000] in \textit{Nature} and also Supplemental Information). There are also ideas about an opposite ocean acidification effect, whereby the less acidic glacial (compared to modern) ocean led to increased calcification and \(CaCO_{3}\) export. Note that this response (higher saturation == greater rate of calcification) is encoded into your model configuration – see \textit{Ridgwell et al.} [2007b].
 
+\vspace{1mm}
 In \textbf{muffin}, the \(CaCO_{3}:POC\) rain ratio is controlled (technically: scaled) by the parameter:
 \vspace{-1mm}\small\begin{verbatim}
 bg_par_bio_red_POC_CaCO3=0.0485
@@ -4799,8 +4800,9 @@ As outlined in the Sections: \textit{Choosing a template user-config} and \texti
 \vspace{1mm}
 These changes have been incorporated into an example \textit{user-config} (in the \textsf{\footnotesize genie-userconfigs } sub-directory \textsf{\footnotesize EXAMPLES}: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL.ECOGEM\_NEW.SPIN} (and paired with the \textit{base-config}: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL}), and are:
 
-\vspace{2mm}
 \begin{itemize}[noitemsep]
+
+\vspace{2mm}
 \item Under \texttt{*** REMINERALIZATION ***}:
 \small\vspace{-1mm}\begin{verbatim}
 # set 'instantaneous' water column remineralziation
@@ -4831,13 +4833,7 @@ gm_par_carbchem_Tmax = 45.0
 \end{verbatim}\vspace{-1mm}\normalsize
 which firstly, limits the maximum consumption of any particular reactant by a single reaction, to an imposed lifetime (\(90\:days\)), with the remaining parameters extending the valid temperature range for solubility and geochem constants to \(-2 - 45^{\circ}C\). Note that the valid salinity range is left unchanged.
 
-
 \end{itemize}
-
-
-
-
-
 
 \vspace{1mm}
 \noindent For reference, the original (i.e. as per in \textit{Ward et al.} [2018]) but reformatted, user-config, is provided as: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL.ECOGEM\_NEW.SPIN} (also in the \textsf{\footnotesize genie-userconfigs} sub-directory \textsf{\footnotesize EXAMPLES}).
@@ -4866,6 +4862,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \section*{READ.ME}
 
+\lipsum[1]
 
 %------------------------------------------------
 
@@ -4875,6 +4872,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \section{xxx}
 
+\lipsum[1]
 
 %
 %----------------------------------------------------------------------------------------
@@ -4901,6 +4899,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \section*{READ.ME}
 
+\lipsum[1]
 
 %------------------------------------------------
 
@@ -4910,6 +4909,7 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \section{xxx}
 
+\lipsum[1]
 
 %------------------------------------------------
 
@@ -4918,6 +4918,8 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 %------------------------------------------------
 
 \section{Geoengineering}
+
+\lipsum[1]
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -4931,6 +4933,10 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \hfill \break
 
+\vspace{24mm}
+
+\noindent
+
 %------------------------------------------------
 
 \newpage
@@ -4939,7 +4945,17 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \section*{README}
 
+\lipsum[1]
 
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{xxx}
+
+\lipsum[1]
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
@@ -4952,6 +4968,10 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 \chapter{Geological carbon processes}\label{ch:geological-carbon}
 
 \hfill \break
+
+\vspace{24mm}
+
+\noindent
 
 %------------------------------------------------
 
@@ -13371,24 +13391,21 @@ Also see the \textbf{muffingen} chapter --  Section \ref{sec:configuring_muffin_
 \vspace{1mm}
 \\Now ... you need a \textit{user-config} to define your initial experiment (which will be a \textit{spin-up}).
 \vspace{1mm}
-\\To help you -- again, some example files are provided and referenced in this Section:
-\vspace{1mm}
+\\To help you -- again, some example files are provided and referenced in this Section (\textit{user-config} file-names starting \textsf{\footnotesize EXAMPLE} are found in the \textsf{\footnotesize genie-userconfigs} directory):
+
 \begin{itemize}[noitemsep]
+\vspace{1mm}
 \item \texttt{EXAMPLE.worbe2.RidgwellHargreaves1997\_S36x36.SPIN1}
 \\-- is the initial (1st stage) spin-up from \textit{Ridgwell and Harvreages} [2007].\footnote{Using the \textit{base-config}: \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_sg\_rg.worbe2.BASE}}
-\item \texttt{muffin.CBSR.p\_worbe2.BASES.RidgwellHargreaves1997\_S36x36.SPIN1}
--- is a newer version of the initial spin-up from \textit{Ridgwell and Harvreages} [2007] that uses a paleo directory format for boundary condition files.\footnote{Using the \textit{base-config}: \texttt{muffin.CBSRG.p\_worbe2.BASES}}
+\\(There is also a \textsf{\footnotesize *.SPIN2} 2nd stage spin-up \textit{user-config}.)
+\vspace{1mm}
 \item \texttt{EXAMPLE.worjh2.Archeretal2009.SPIN1}
 \\-- is the initial (1st stage) spin-up used in \textit{Archer et al.} [2009].\footnote{Using the \textit{base-config}: \texttt{cgenie\_eb\_go\_gs\_ac\_bg\_sg\_rg\_itfclsd\_16l\_JH\_BASE}}
-\item \texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POC\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POCPOP\_burial.SPIN1}
-\\-- conceptual worlds with increasing complexity of burial: \(CaCO_{3}\)-only, \(CaCO_{3}\) + \(POC\), and \(CaCO_{3}\) + \(POC\) + \(POP\), respectively.\footnote{All using the \textit{base-config}: \texttt{muffin.CBSRG.fkl\_pp20.BASES}} 
-\\\uline{These are arguably the cleanest and best annotated examples to work from.}
-\item \texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.simple.EXPT}, \\\texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.dunne2007.EXPT}
-\\-- illustrating two different simply organic carbon preservation/burial schemes.\footnote{Using the \textit{base-config}: \texttt{muffin.CBSR.p\_worbe2.BASES}}
+\\(There is also a \textsf{\footnotesize *.SPIN2} 2nd stage spin-up \textit{user-config}.)
 \end{itemize}
 
-\vspace{1mm}
-In the old (non 'paleo') format file structure, you had to specify the resolution of the sediment grid in the \textit{user-config}, plus sediment depth grid and files for defining areas of 'reef' and sediment core save locations, via a block of lines similar to:
+\vspace{2mm}
+In these old (non 'paleo') format file structures, you had to specify the resolution of the sediment grid in the \textit{user-config}, plus sediment depth grid and files for defining areas of 'reef' and sediment core save locations, via a block of lines similar to:
 \vspace{-1mm}\small\begin{verbatim}
 # Sediment grid
 SEDGEMNLONSOPTS='$(DEFINE)SEDGEMNLONS=36'
@@ -13399,10 +13416,25 @@ sg_par_sed_reef_mask_name="worbe2_reef_mask.36x36"
 sg_par_sedcore_save_mask_name="worbe2_save_mask.36x36"
 \end{verbatim}\normalsize\vspace{-1mm}
 (taking as an example: \texttt{EXAMPLE.worbe2.RidgwellHargreaves1997\_S36x36.SPIN1}).
-\\In the newer file structure, the equivalent parameter settings are included in the \textit{base-config} and the files live in the corresponding \textsf{\footnotesize genie-paleo} directory.
 
 \vspace{1mm}
-In addition, you need to define a water depth, above which any seafloor cells not defined as 'reef' in the grid specified by \texttt{sg\_par\_sed\_reef\_mask\_name}, will become 'mud'\footnote{'mud' is a sediment grid cell classification in the model that allows only organic matter preservation and burial (plus detrital), with all carbonate assumed dissolved.}. This depth is set by:
+In the \uline{newer file structure}, the equivalent parameter settings are instead included in the \textit{base-config} and the files referenced live in the corresponding \textsf{\footnotesize genie-paleo} directory.
+
+Corresponding examples of these are new formats are provided (filenames starting \textsf{\footnotesize muffin} and found in \textsf{\footnotesize genie-userconfigs/EXAMPLES}):
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffin.CBSR.p\_worbe2.BASES.RidgwellHargreaves1997\_S36x36.SPIN1}
+-- is a newer version of the initial spin-up from \textit{Ridgwell and Harvreages} [2007] that uses a paleo directory format for boundary condition files (but is otherwise unchanged).\footnote{Using the \textit{base-config}: \texttt{muffin.CBSRG.p\_worbe2.BASES}}
+\\(There is also a \textsf{\footnotesize *.SPIN2} 2nd stage spin-up \textit{user-config}.)
+\vspace{1mm}
+\item \texttt{muffin.CBSR.p\_worjh2.BASES.Archeretal2009.SPIN1}
+\\The 'paleo' format version of \textsf{\footnotesize EXAMPLE.worjh2.Archeretal2009.SPIN1}.
+\\(There is also a \textsf{\footnotesize *.SPIN2} 2nd stage spin-up \textit{user-config}.)
+\end{itemize}
+
+\vspace{2mm}
+In addition to the sediment grid definition, you need to define a water depth, above which any seafloor cells not defined as 'reef' in the grid specified by \texttt{sg\_par\_sed\_reef\_mask\_name}, will become 'mud'\footnote{'mud' is a sediment grid cell classification in the model that allows only organic matter preservation and burial (plus detrital), with all carbonate assumed dissolved.}. This depth is set by:
 \vspace{-1mm}\small\begin{verbatim}
 # max cut-off depth for neritic (non deep sea) sediment grid points
 # NOTE: sediment grid points shallower that this and not defined as reefal cells,
@@ -13415,6 +13447,19 @@ sg_par_sed_Dmax_neritic=0.0
 To change the grid resolution or files -- refer to the sub-section on page \pageref{subsec:run_the_sediments_at_higher_resolution}.
 \\To add or configure areas of 'reef' deposition, refer to the sub-section on page \pageref{subsec:include_shallow_water_depositional_systems}.
 \\To change the assumed mineralogy of reefal carbonate, refer to the sub-section on page \pageref{subsec:specify_a_particular_carbonate_mineralogy}.
+
+\vspace{1mm}
+Finally, the above examples all adopt the basic parameter definitions as per the original papers. However, as detailed below, some of these parameter choices are unnecessary (e.g. duplicating default values) and can be confusing at best.
+
+\begin{itemize}[noitemsep]
+\vspace{1mm}
+\item \texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POC\_burial.SPIN1}, \\\texttt{muffin.CBSRG.fkl\_pp20.BASES.CaCO3POCPOP\_burial.SPIN1}
+\\-- conceptual worlds with increasing complexity of burial: \(CaCO_{3}\)-only, \(CaCO_{3}\) + \(POC\), and \(CaCO_{3}\) + \(POC\) + \(POP\), respectively.\footnote{All using the \textit{base-config}: \texttt{muffin.CBSRG.fkl\_pp20.BASES}} 
+\\\uline{These are arguably the cleanest and best annotated examples to work from.}
+\vspace{1mm}
+\item \texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.simple.EXPT}, \\\texttt{muffin.CBSR.p\_worbe2.BASES.Corg\_burial.dunne2007.EXPT}
+\\-- illustrating two different simply organic carbon preservation/burial schemes.\footnote{Using the \textit{base-config}: \texttt{muffin.CBSR.p\_worbe2.BASES}}
+\end{itemize}
 
 \vspace{2mm}
 \item \textbf{Choosing sediment accumulation/diagenesis options}
@@ -13497,23 +13542,23 @@ which utilizes a non-dimensional profile read in from a file\footnote{Itself, gi
 # scale (maximum) surface biodiffusion rate
 sg_par_sed_mix_k_sur_max=0.15
 \end{verbatim}\normalsize\vspace{-1mm}
-(in units of \(cm^{2}\;yr^{-1}\)).
+in units of \(cm^{2}\;yr^{-1}\) (the default value is \(0.25\)).
 \vspace{1mm}
 \\The alternative bioturbation option:
 \vspace{-1mm}\small\begin{verbatim}
 sg_ctrl_sed_bioturb_Archer=.true.
 \end{verbatim}\normalsize\vspace{-1mm} 
 uses a different depth profile and scales biodiffusion as a function of ambient bottom water \([O_{2}]\) and \(F_{POC}\), following \textit{Archer et al.} [2002].
-\\NOTE: As of a recent commit (\texttt{d569cd6}), the default is: \texttt{sg\_ctrl\_sed\_bioturb\_Archer=.false.} and hence \textit{user-config} files no longer need specify this setting each time.\footnote{The \textit{Archer et al.} [2002] scheme has not in fact been published with to date.}
+\\NOTE: As of a recent commit (\texttt{d569cd6}), the default is: \texttt{\small sg\_ctrl\_sed\_bioturb\_Archer=.false.} and hence \textit{user-config} files no longer \uline{need specify this setting} each time.\footnote{The \textit{Archer et al.} [2002] scheme has not in fact been published with to date.}
 
 \vspace{1mm}
-NOTE: There is also an option: \texttt{sg\_par\_n\_sed\_mix} which prescribes how many sediment layers are mixed often appears in \textit{user-config} files. However, this invariably takes a value of \(20\), which is the default ... and hence also needs not be re-specified.
+NOTE: There is also an option: \texttt{sg\_par\_n\_sed\_mix} which prescribes how many sediment layers are mixed often appears in \textit{user-config} files. However, this invariably takes a value of \(20\), which is the default(!) ... and hence \uline{also needs not be re-specified}.
 
 \vspace{1mm}
-NOTE: Finally ... previous \textit{user-configs} additionally invariably specified a value for the minimum biodiffusion coefficient (\texttt{sg\_par\_sed\_mix\_k\_sur\_max}) when using the \textit{Archer et al.} [2002] scheme. This parameter definition is also redundant.
+NOTE: Finally ... previous \textit{user-configs} additionally invariably specified a value for the minimum biodiffusion coefficient (\texttt{sg\_par\_sed\_mix\_k\_sur\_min}) when using the \textit{Archer et al.} [2002] scheme. This parameter definition is also redundant and \uline{needs not be specified}.
 
 \vspace{1mm}
-In summary -- the simplest description (post commit \texttt{d569cd6}) for implementing bioturbation, is just: 
+In summary -- t\textbf{he simplest description (post commit \texttt{d569cd6}) for implementing bioturbation}, is just: 
 \vspace{-1mm}\small\begin{verbatim}
 # bioturbation
 # NOTE: turn ON bioturbation to capture carbonate compensation dynamics
@@ -15727,6 +15772,94 @@ diag\_geochem & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times
 \textit{diag\_redox\_old} & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- & -- \\\hline
 \end{tabular}
 \end{table}
+
+%----------------------------------------------------------------------------------------
+%
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+
+\chapterimage{muffin_planet.jpg} % Chapter heading image
+
+\chapter{Appendix II -- Tables}\label{ch:appendix-i}
+
+\hfill \break
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Current model capabilities summary}
+
+\begin{table}[h]
+\textbf{\caption{Carbon}\label{tab:tracers1}}
+\begin{tabular}{|p{1.25cm}|p{2.75cm}|p{10.0cm}|}\hline
+\textbf{Tracer} & \textbf{Associated tracer(s)} & \textbf{Description} \\\hline
+\hline
+\(DIC\) (\(CO_{2}\)) & -- & One of the 2 fundamental tracers, that together with temperature and salinity, define aqueous carbonate chemistry.\\
+ &  & The default solution of carbonate chemistry equilibria is as described in \textit{Ridgwell et al.} [2007].\\
+ &  & The default corrections to carbonate dissociated and carbonate solubility constants, for (different-from-modern) \(\frac{Mg}{Ca}\), are briefly summarized in \textit{Panchuk et al.} [2007].\\
+ &  & Updated \(\frac{Mg}{Ca}\) corrections are currently in prep by \textit{Adloff et al.}.\\
+ &  & (and see \(ALK\) below) \\
+ &  \(POC\) & The corresponding particulate organic matter form to \(DIC\) resulting from photosynthesis/marine productivity.\\
+ &  \(DOC\) & The corresponding particulate organic matter form to \(DIC\) resulting from photosynthesis/marine productivity.\\
+ &  & By default, \(DOC\) is created in a fixed ration with \(POC\) (see \textit{Ridgwell et al.} [2007]). An option exists to make \(DOC\) production temperature-dependent in the standard/basic export scheme -- see \textit{Crichton et al.} [2021a].\\
+ &  & By default, \textbf{ECOGEM} assumes a size-dependent production of \(DOC\) that is scaled to achieve a mean production ratio. This ratio can also be made size-independent (\textit{Wilson et al.}, in prep).\\
+ &  \(CaCO_{3}\)  & By default, is created at the ocean surface in a ration with \(POC\) that depends on ambient (calcite) saturation state (to implicitly account for ecology and achieve a plausible modern latitudinal distribution of pelagic carbonate production) -- see \textit{Ridgwell al.} [2007a,b] and \textit{Ridgwell et al.} [2009]. \\
+ &  & For 'paleo' -- typically' either a fixed and spatially-uniform 'rain ratio' value is adopted (see: \textit{Panchuk et al.} [2007], \textit{Ridgwell and Schmidt} [2010]), for pre mid-Mesozoic [\textit{Ridgwell}, 2005], no pelagic \(CaCO_{3}\) production is assumed.\\
+ & \(FeCO_{3}\) (siderite) & Probably is almost never appreciably precipitated from the water column ... see: \textit{van de Velde et al}. [2021].\\
+ & \(CH_{4}\) & Once sulphate is largely depleted (if selected), further organic matter degradation in the water column results in the production of methane. See \textit{Reinhard et al.} [2020].\\\hline
+\(ALK\) & \(SO^{2-}_{4}\leftrightarrow H_{2}S\), \(NO^{-}_{3}\leftrightarrow NH^{+}_{4}\) & \\
+ & \(Ca^{2+}+CO^{2-}_{3}\rightarrow CaCO_{3}\) & \\
+&   & (see: \(DIC\)) \\
+&   & -- \\
+ &   & -- \\\hline
+\(DOC\) & \(DIC\) & (see above) \\
+ & & Note that  \\\hline
+\(^{13}C\) & -- & -- \\\hline
+\(^{14}C\) & -- & -- \\\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\textbf{\caption{Nutrients}\label{tab:tracers1}}
+\begin{tabular}{|p{2.0cm}|p{2.0cm}|p{10.00cm}|}\hline
+\textbf{Tracer} & \textbf{Associated tracer(s)} & \textbf{Description} \\\hline
+\hline
+\(xxx\) & -- & -- \\\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\textbf{\caption{Trace-metals}\label{tab:tracers1}}
+\begin{tabular}{|p{2.0cm}|p{2.0cm}|p{10.00cm}|}\hline
+\textbf{Tracer} & \textbf{Associated tracer(s)} & \textbf{Description} \\\hline
+\hline
+\(xxx\) & -- & -- \\\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\textbf{\caption{(other) Isotopes}\label{tab:tracers1}}
+\begin{tabular}{|p{2.0cm}|p{2.0cm}|p{10.00cm}|}\hline
+\textbf{Tracer} & \textbf{Associated tracer(s)} & \textbf{Description} \\\hline
+\hline
+\(xxx\) & -- & -- \\\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\textbf{\caption{Numerical/preformed}\label{tab:tracers1}}
+\begin{tabular}{|p{2.0cm}|p{2.0cm}|p{10.00cm}|}\hline
+\textbf{Tracer} & \textbf{Associated tracer(s)} & \textbf{Description} \\\hline
+\hline
+\(xxx\) & -- & -- \\\hline
+\end{tabular}
+\end{table}
+
+
 
 %----------------------------------------------------------------------------------------
 %       BIBLIOGRAPHY
