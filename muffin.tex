@@ -215,7 +215,7 @@ NOTE-the-third: In places, instructions may be given for specific programs and c
 
 \subsection*{Required computer hardware}
 
-It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model either on a linux box (e.g. \textbf{Ubuntu}) or on a \textbf{Mac} \footnote{Sets of detailed installation instructions are available in the HOW-TO section of this manual.}\footnote{Note that it is not possible at this time to run \textbf{muffin} under \textbf{Windows} ... at least, not without near infinite pain.} Otherwise, you will need an account on a linux-based server or cluster. In this case, you can use any platform (\textbf{linux}, \textbf{macOS}, \textbf{Windoz}, as well as \textbf{ioS} and \textbf{Android} (which is based on \textbf{linux} in any case)) to connect to the cluster (but see software requirements, below).
+It is  possible to install and run the ‘\textbf{(cGENIE.)muffin}’ Earth system model either on a linux box (e.g. \textbf{Ubuntu}) or on a \textbf{Mac} \footnote{Sets of detailed installation instructions are available in the HOW-TO section of this manual.}\footnote{Note that it is not possible at this time to run \textbf{muffin} under \textbf{Windows} ... at least, not without near infinite pain.} Otherwise, you will need an account on a linux-based server or cluster. In this case, you can use any platform (\textbf{linux}, \textbf{macOS}, \textbf{Windoz}, as well as \textbf{iOS} and \textbf{Android} (which is based on \textbf{linux} in any case)) to connect to the cluster (but see software requirements, below).
 
 %------------------------------------------------
 
@@ -326,7 +326,7 @@ $ ssh username@clustername
 \vspace{-1mm}
 
 where \texttt{clustername}, the cluster (or remote server) name(!) might, for example, be
-\\  \texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
+\\\texttt{catname.ucr.edu}, and enter your  account password (and tell it whether or not you want this password stored, if asked).
 \vspace{1mm}
 \\\textbf{IMPORTANT!} -- When you type in a password in linux, NOTHING appears on the screen, not even \texttt{********} as in common on Windozs. As you type (the password), characters are being entered ... you just cannot see them. Don't panic -- just type in the password (even if you cannot see characters appearing) and hit \textsf{\scriptsize Enter}.
 
@@ -419,12 +419,15 @@ By doing this, you have created your own code repository (and an identical copy 
 \\ For running \textbf{muffin} on this cluster, there is a single file to edit (which lives in the \texttt{genie-main} directory):
 \vspace{1mm}
 \begin{enumerate}[noitemsep]
-\item In the file \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#}. The resulting section of code at the end of \texttt{user.mak}  should then look something like:
+\item In the file \texttt{user.mak} -- at the end of the file, the netCDF path needs to be changed. First comment out\footnote{To 'comment out' a line -- simply add a \texttt{\#} symbol to the very start of the line. When \textbf{muffin} runs, this line will be ignored.} the default setting (with a \texttt{\#} symbol) and then un-comment\footnote{To 'un-comment' a line -- simply remove (delete) the \texttt{\#} symbol from the beginning of the line.} the line under the heading \texttt{\#\#\# domino \#\#\#} (\texttt{domino} was the original name for this  cluster). 
+
+\vspace{1mm}
+The resulting section of code at the end of \texttt{user.mak}  should then look something like:
 \vspace{-1mm}
 \footnotesize\begin{verbatim}
 ### DEFAULT ###
 #NETCDF_DIR=/usr/local
-### sterling ###
+### domino ###
 NETCDF_DIR=/share/apps
 ### eevee ###
 #NETCDF_DIR=/share/apps/netcdf-c-4.4.1.1-fortran-4.4.4
@@ -651,7 +654,7 @@ If unlucky, there will be conflict as your stashed changed are merged back onto 
 
 The overall sequence of configuring and running \textbf{muffin} (job submission to a cluster queue), is shown in Figure \ref{fig:chx-jobcreation}. Refer to this if in any doubt at any point.
 
-At the command-line (\texttt{\$}) in the \textsf{\footnotesize genie-main} directory (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
+At the command-line (\texttt{\$}) and \uline{in the \textsf{\footnotesize genie-main} directory} (not your home directory), you will be entering in a command (\texttt{./runmuffin.sh}) together with a list of parameters that will be passed to the model, and as if by magic the model will run (or sometimes not). The form of the command you are going to be issuing is:
 
 \vspace{-1mm}
 \begin{verbatim}
@@ -659,10 +662,7 @@ $ ./runmuffin.sh #1 #2 #3 #4 (#5)
 \end{verbatim}
 \vspace{-1mm}
 
-\noindent(\uline{don't type it yet}!)
-
-\vspace{1mm}
-The form of the command requires that you must list at least 4 parameters after \texttt{./runmuffin.sh}, separated by S P A C E S and on a single continuous line (even if it ‘wraps’ around across 2 lines of the screen).
+\noindent(\uline{don't type it yet}!) It requires that you must list at least 4 parameters after \texttt{./runmuffin.sh}, separated by S P A C E S and on a single continuous line (even if it ‘wraps’ around across 2 lines of the screen).
 These parameters are:
 
 \vspace{2mm}
@@ -672,7 +672,7 @@ These parameters are:
 \item[\textbf{\#2}] ... is the name of the subdirectory (if any) containing the user configuration (‘\textit{user-config}’) file (i.e., the file containing the specification of a particular experiment).
 \item[\textbf{\#3}] ... is the name of the experiment itself. There must exist a file in the directory specified by parameter \#2 (\texttt{LABS}) with exactly the same name as you enter here for parameter \#3 (i.e. parameter \#3 points to a file in the directory given by parameter \#2).
 \item[\textbf{\#4}] ... is the run length of the experiment in years – this must be entered as an integer.
-\item[\textbf{(\#5)}] ... There is also one optional (5th) parameter (described later).
+\item[\textbf{(\#5)}] ... There is also one optional (5th) parameter (to be described later).
 \end{enumerate}
 
 
@@ -704,7 +704,11 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.worbe2.BASE LABS LAB_0.EXAMPLE 10
 \noindent(\uline{you can try it now}!)
 
 \vspace{2mm}
-REMEMBER: This must be entered on a single CONTINUOUS LINE. The (single) S P A C E S are vital. Take care not to confuse an el (‘\texttt{l}’) with a one (‘\texttt{1}’) when typing this in ... (it is a ‘one’ here).
+\textbf{REMEMBER: This must be entered on a single CONTINUOUS LINE.}
+
+\textbf{The (single) S P A C E S are vital. }
+
+\textbf{ALSO -- take care not to confuse an el (‘\texttt{l}’) with a one (‘\texttt{1}’)  ... (it is a ‘one’ here).}
 
 \newpage
 
@@ -872,6 +876,11 @@ We will primarily consider only results saved by the ocean biogeochemical module
 
 One of the most informative data sets that can be saved is that of the spatial distribution of properties (such as tracers or physical ocean attributes). However, saving full spatial distributions (e.g., a 36\(\times\)36\(\times\)8 array) for any or all of the tracers each and every time-step is clearly not practical; not only in terms of data storage but also because of the detrimental effect that repeated file access has on model run-time.
 Instead, \textbf{BIOGEM} will save the full spatial distribution of tracer properties only at one or more predefined time points (in units of years). These are termed \textit{time-slices}. At the specified time points, a set of spatially-explicit data fields are saved for all the key tracer, flux, and physical characteristics of the system. However, rather than taking an instantaneous snapshot, the time-slice is constructed as an average over a specified integration interval (the default is set to 1.0 years, i.e. an annual average). \textbf{BIOGEM}  assumes that the specified time point represents the mid-point of the (annual) average with the results that output years end up being reported as e.g.,
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
 \small\begin{verbatim}
 0.5
 1.5
@@ -1059,9 +1068,7 @@ A rough rule of thumb is that 8-level ocean \textbf{muffin} @ a horizontal grid 
 \noindent \textbf{NOTE}: It may be that the \textbf{FORTRAN} compiler is not accessible by the computer nodes. The implication of this is that \textit{the \textbf{muffin} executable must be already compiled BEFORE a job is submitted to the queue}. In other words; if you have just changed the model resolution or continental configuration, or number of tracers (i.e. changed the \textit{base-config}) or issued a \texttt{make cleanall} command you MUST briefly run your desired experiment (or equivalent) interactively (i.e., in the shell window) to ensure that everything is correctly compiled. For instance, either run the experiment for a couple of years or start the experiment for the desired full duration, but 'kill it' (\textsf{\small Ctrl-C}) once the experiment is running successfully.
 
 %------------------------------------------------
-
 \newpage
-
 %------------------------------------------------
 
 \section{‘Restarts’}
@@ -1078,18 +1085,18 @@ It is important to note that there is nothing special about a \textit{re-start} 
 
 \noindent To experiment with using a \textit{re-start}, you will first need to download a file that has been created (a pre-run 10,000 year spin-up). To fetch this: Change to the \textsf{\footnotesize cgenie\_output} directory (perhaps by going ‘home’ first (\texttt{cd} \textsf{\small <Enter>}), and then changing to \textsf{\footnotesize cgenie\_output} – refer to linux commands HOW-TO and Figure 1.1), and type:
 
-\vspace{-2mm}
+\vspace{-2mm}\small
 \begin{verbatim}
 $ wget --no-check-certificate http://www.seao2.info/cgenie_output/LAB_0.SPIN.tar.gz
-\end{verbatim}
+\end{verbatim}\normalsize
 \vspace{-2mm}
 
 This downloads an archived/compressed copy of the restart from a location on the interweb. Extract the contents of this archive by typing:
 
-\vspace{-2mm}
+\vspace{-2mm}\small
 \begin{verbatim}
 $ tar xfzv LAB_0.SPIN.tar.gz
-\end{verbatim}
+\end{verbatim}\normalsize
 \vspace{-2mm}
 
 Finally, change directory back to \textsf{\footnotesize cgenie.muffin} and then \textsf{\footnotesize genie-main} so that you are ready to run the model (the model is *always* run from the \textsf{\footnotesize cgenie.muffin/genie-main} directory).
@@ -1107,6 +1114,10 @@ To test out the use this \textit{restart} -- create a new (\textit{user-config})
 \vspace{1mm}
 
 \noindent taking the file \texttt{LAB\_0.EXAMPLE} (which is provided) as a template (no parameter changes need to be made yet). As described earlier -- copy this file and give it a new name -- here, name it: \textsf{\footnotesize LAB\_0.NEW}
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
 
 \vspace{1mm}
 You can then specify the use of the \textit{restart} in your new \textsf{\footnotesize LAB\_0.NEW} experiment:
@@ -1183,7 +1194,9 @@ If ... when you subsequently try and use this \textit{restart} in an experiment,
 
 \section{Brrrrrrrrrrrr – it’s chilly on ... snowball Earth!}
 
-To illustrate how ‘easy’ it can be to configure an Earth system / climate model such as \textbf{muffin} and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of the climate system and see what happens. Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or \(CH_{4}\) in the atmosphere which presumably must have been highly elevated compared to the modern World ... sort of opposite to the problem we have today …
+To illustrate how ‘easy’ it can be to configure an Earth system / climate model such as \textbf{muffin} and explore the behavior of the Earth system and its response to perturbation – you are going to induce an extreme cooling of the climate system and see what happens. 
+
+Solar output was weaker during the late Neoproterozoic, a time when the Earth experienced a series (2 ish) of extreme glaciations. Thus, having a mild climate state to start with must have been dependent on sufficient \(CO_{2}\) and/or \(CH_{4}\) in the atmosphere which presumably must have been highly elevated compared to the modern World ... sort of opposite to the problem we have today …
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
@@ -1194,27 +1207,29 @@ To illustrate how ‘easy’ it can be to configure an Earth system / climate mo
 \small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXAMPLE 100 LAB_1.SPIN
 \end{verbatim}\normalsize
-\noindent \uline{However} ... why not get into the habit of creating new and uniquely named experiments and their associated \textit{user-config} files (no harder than copying it and renaming it -- see earlier). If you keep using the same experiment name, the results will be over-written each time you re-run that experiment, whilst having  2 (or more) experiments running simultaneously with exactly the same name causes havoc as they try and over-write each others results files in a somewhat entertaining but ultimately useless way. So -- copy and rename the file \textsf{\footnotesize LAB\_1.EXAMPLE} to ... \textsf{\footnotesize LAB\_1.EXP1} or whatever (in the subdirectory \textsf{\footnotesize LABS}), and then run your newly created experiment:
+\noindent \uline{However} ... why not get into the habit of creating new and uniquely named experiments and their associated \textit{user-config} files (no harder than copying it and renaming it -- see earlier). If you keep using the same experiment name, the results will be over-written each time you re-run that experiment, whilst having  2 (or more) experiments running simultaneously with exactly the same name causes havoc as they try and over-write each others results files in a somewhat entertaining but ultimately useless way. 
+
+So -- copy and rename the file \textsf{\footnotesize LAB\_1.EXAMPLE} to ... \textsf{\footnotesize LAB\_1.EXP1} or whatever (in the subdirectory \textsf{\footnotesize LABS}), and then run your newly created experiment:
 \vspace{-1mm}
 \small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.woreq1.NONE LABS LAB_1.EXP1 100 LAB_1.SPIN
 \end{verbatim}\normalsize
 
-Remember that because you have changed since the exercises in the previous chapter, running the model first interactively (at the command line) is essential in order for the model code to be re-compiled consistent with the new configuration. i.e. you cannot directly start submitting experiments using the \textit{base-config} \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.woreq1.NONE}, straight-away after having previous run the model using the \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worbe2.BASE} \textit{base-config}. Once you have re-compiled the model with the new \textit{base-config} and starting running (any experiment), you need not re-compile again and can submit as many jobs to the cluster queue as you like, up until you change \textit{base-config} once again.
+Remember that because you have changed \textit{base-config} since the exercises in the previous chapter, running the model first interactively (at the command line) is essential in order for the model code to be re-compiled consistent with the new configuration. i.e. you cannot directly start submitting experiments using the \textit{base-config} \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.woreq1.NONE}, straight-away after having previous run the model using the \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worbe2.BASE} \textit{base-config}. Once you have re-compiled the model with the new \textit{base-config} and starting running (any experiment), you need not re-compile again and can submit as many jobs to the cluster queue as you like, up until you change \textit{base-config} once again.
 
 \vspace{-1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent Overall: your task in this exercise will be to determine the radiative forcing (or p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Read the \textit{Hyde et al.} [2000] paper.)
+\noindent Overall: your task in this exercise will be to determine the radiative forcing (or rather, p\(CO_{2}\) equivalent) threshold required to drive the climate system into a full ice-covered ocean (snowball Earth) state. (Make sure you have read the \textit{Hyde et al.} [2000] paper.)
 
-Useful 2-D (netCDF —- \textbf{Panoply}) variables to view are: surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D NetCDF results file but are likely to be of less interest.
+Useful 2-D (netCDF —- \textbf{Panoply}) variables to view include: surface air temperature and sea-ice extent (and/or thickness). Ocean surface temperature and salinity can be viewed in the 3-D netCDF results file but are likely to be of less interest.
 
 Time-series (ASCII \textsf{\footnotesize .res} files) are useful for providing simple mean indicators of global climate such as global ocean fractional sea-ice covered.
 
 Note that the model configuration of an idealized super-continent you are using and as defined by the \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.woreq1.NONE} \textit{base-config} file, positioned symmetrically about the Equator, is pretty unrealistic. But the further you go back in time, the more uncertain it becomes as to exactly where and in what orientation the continents were. Sometimes modelers have to resort to somewhat idealized experiments if the uncertainties are too great. In addition, one can conduct sensitivity experiments to test whether the continental configuration is important to the results. For instance, \textit{Hoffman and Schrag} [2002] discuss the potential importance of continental configuration, while the entire hypothesis of \textit{Donnadieu et al.} [2004] rests on specific details of the continental configuration being realistic.
 
-For this configuration, the solar constant is set weaker than modern to reflect the fact that the Sun’s output has increased with time and during the Neoproterozoic the solar constant would have been ca. 5\% weaker. This is set by the model \textit{parameter}:
+For this configuration, the solar constant is set weaker than modern to reflect the fact that the Sun’s output has increased with time and during the Neoproterozoic the solar constant would have been ca. 5\% weaker. This is set in the \textit{user-config} file by the model \textit{parameter}:
 
 \vspace{-1mm}
 \begin{verbatim}
@@ -1230,7 +1245,9 @@ ma_genie_solar_constant= 1285.92
 
 \noindent To search for the atmospheric \(CO_{2}\) concentration (or rather, radiative forcing equivalent) that would lead to a ‘snowball Earth’ state in the Neoproterozoic and answer the question:
 ‘How low does \(CO_{2}\) have to be to trigger a ‘snowball’?’
-you are going to edit the experiment file that controls the specific details of the experiment -- the \textit{user-config} file. From the \textsf{\footnotesize genie-userconfigs/LABS} directory, open one of the snowball experiments in your preferred  text editor. At the top of the file you should see something like:
+you are going to edit the experiment file that controls the specific details of the experiment -- the \textit{user-config} file. From the \textsf{\footnotesize genie-userconfigs/LABS} directory, open one of the snowball experiments in your preferred  text editor. 
+
+At the top of the file you should see something like:
 
 \vspace{-2mm}
 \small\begin{verbatim}
@@ -1241,6 +1258,7 @@ you are going to edit the experiment file that controls the specific details of 
 …
 # scaling for atmospheric CO2 radiative forcing, relative to 278 ppm
 ea_radfor_scl_co2=20.0
+…
 \end{verbatim}\normalsize
 \vspace{-2mm}
 
@@ -1263,18 +1281,21 @@ ea_radfor_scl_co2=1.0
 \end{verbatim}
 \vspace{-2mm}
 this would give you a modern\footnote{Technically: the pre-industrial \(CO_{2}\) value rather than ‘modern’ \textit{per se.}} (x1, or 1x278 = 278 ppm) radiative forcing.
-Note: \(CO_{2}\) is not being explicitly modeled in this experiment, but the long-wave radiative forcing associated with a specified concentration of \(CO_{2}\) (in ratio to modern) is being set instead.
+Note: \(CO_{2}\) is not being explicitly modeled in this experiment\footnote{And hence the parameter:
+\\\texttt{\# set no CO2 climate feedback}
+\\\texttt{ea\_36=n}
+\\which tell muffin to ignore the concentration of CO2 in the atmosphere, in case, as here, there isn't one defined ...}, but the long-wave radiative forcing associated with a specified concentration of \(CO_{2}\) (in ratio to modern) is being set instead.
 
-Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher -- your choice) and save the file (with a different filename!). Re-run the experiment until sea-ice extent starts to approach a new steady state. You may want to try  longer simulations than suggested (\textgreater 100 years) if it becomes clear that the model is still far from steady-state by the end of the experiment. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
+Edit the value of \texttt{ea\_radfor\_scl\_co2} (lower or higher -- your choice) and save the file (\uline{with a different filename!}). Re-run the experiment until sea-ice extent starts to approach a new steady state. You may want to try  longer simulations than suggested (\textgreater 100 years) if it becomes clear that the model is still far from steady-state by the end of the experiment. You can judge how close to equilibrium things have got by following (and/or plotting) the evolution of e.g., global surface air temperature or sea-ice extent (both time-series files).
 
-%\vspace{1mm}
-%\noindent\rule{4cm}{0.5pt}
-%\vspace{2mm}
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 \noindent 
 In terms of methodology -- or; 'how am I going to answer the question' -- you will need to run mutilple different model experiments, each with a different value for the radiative forcing parameter, and find out for what value of the parameter, the Earth becomes completely ice-covered. It is your choice whether you change the radiative forcing parameter value, run the experiment, but wait for it to finish before deciding the radiative forcing parameter value to try for the next experiment -- i.e. a sequential approach, or try running multiple different 'guesses' simultaneously by submitting multiple different experiments to the queue. Ideally, each experiment will have a different name.
 
-In each experiment, you want to be assessing how far towards the Equator the sea-ice limit encroaches by viewing some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary lines (assuming that you are running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but are not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little. This is also true for sea-ice area. Sea-ice volume is then the most reliable data (column) to keep track of in the \textit{time-series} output.)
+In each experiment, you want to be assessing how far towards the Equator the sea-ice limit encroaches by viewing some of the \textit{time-series} and \textit{time-slice} files or even the on-screen summary feedback (assuming that you are running interactively rather than via a job submission to the cluster queue). Informative \textit{time-series} variables include (but are not necessarily be limited to): atmospheric temperature and sea-ice cover. (Sea-ice thickness, on account of the simple physics in the model, low resolution and long time-step, can fluctuate a little. This is also true for sea-ice area. Sea-ice volume is then the most reliable data (column) to keep track of in the \textit{time-series} output.)
 
 For the \textit{time-slice} data: atmospheric and ocean surface temperature and particularly sea-ice extent (fractional cover), (2-D biogem \textbf{NetCDF} file) may be informative.
 
@@ -1302,7 +1323,7 @@ Other questions to think about with regards to numerical modeling (as well as th
 \vspace{1mm}
 \noindent Obviously, associated with the question of 'precision' is: '\textit{How long do I have to run the experiment for?}'
 
-This also has a vague-to-no answer. It depends on the question and what you might judge to be appropriate precision in the context of the various uncertainties ... In other words -- if you can define a sufficient or minimum precision of some property of the system, you only need to run the model as long as needed to achieve this. However, to determine  the precision of the model at any point in time, you need to know the final or equilibrium value. So ideally you would run the model once, for much longer than you think you need to, and then determine how as a function of time, precision increases and error between current state and final steady state decreases.
+This also has a vague-to-no answer. It depends on the science question and what you might judge to be appropriate precision in the context of the various uncertainties ... In other words -- if you can define a sufficient or minimum precision of some property of the system, you only need to run the model as long as needed to achieve this. However, to determine  the precision of the model at any point in time, you need to know the final or equilibrium value. So ideally you would run the model once, for much longer than you think you need to, and then determine how as a function of time, precision increases and error between current state and final steady state decreases.
 
 Here I am crudely equating the concept precision with how far the model is from steady-state. You could think about is in terms of accuracy if you assumed that the steady-state of the model was 'perfect' and deviations from that steady-state (i.e. incomplete spin-up) equates to model 'error'.
 
@@ -1310,13 +1331,13 @@ Here I am crudely equating the concept precision with how far the model is from 
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent Once you are happy about the controls on the snowball threshold try and answer the associated question:
+\noindent Once you are happy  with determining snowball threshold, try and answer the associated question:
 
 \vspace{2mm}
-\noindent \textit{How high does the (\(CO_{2}\)) radiative forcing have to be in order to escape from a snowball?}
+\noindent \textit{How high does the (\(CO_{2}\)) radiative forcing have to be in order to \uline{escape} from a snowball?}
 \vspace{2mm}
 
-\noindent Having determined the appropriate radiative forcing value required to create a snowball state, you can use that experiment as a \textit{re-start}, and hence carry out a series of experiments with increasing radiative forcing, all starting from the same within-snowball climate state you have just created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of \textit{Hyde et al.} [2000]. 
+\noindent Having determined the appropriate radiative forcing value required to create a snowball state, you can use that particular experiment as a \textit{re-start}, and hence carry out a series of experiments with increasing radiative forcing, all starting from the same within-snowball climate state you have just created. Defining the radiative forcing / climate path going out of a snowball would complete the hysteresis loop of \textit{Hyde et al.} [2000]. 
 
 Note that a good \textit{re-start} is one for which the experiment did not sit too long in the snowball state before finishing (the more sea-ice thickness you create in the first experiment, the more you are going to have to melt in the next and hence the longer this new series of experiments will take to ruin…). To achieve this, you can fine-tune the number of years the experiment is run, i.e. having determined the appropriate radiative forcing value required to create a snowball state, find out when (in terms of number of years) in the experiment the snowball state first occurred, and then run a new experiment that finishes only a decade or so after the snowball state was initiated.\footnote{You cannot select when the \textit{re-start} is saved – it is always saved at the end of an experiment.}
 
@@ -1387,7 +1408,7 @@ $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.xxxxx.NONE LABS LAB_1.EXAMPLE 100
 Note that you are using a different \textit{base-config} file name: \textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.xxxxx.NONE}
 \\where \textsf{\footnotesize xxxxx} is one of: \textsf{\footnotesize wopol1}, \textsf{\footnotesize wopol2}, \textsf{\footnotesize woreq1}, or \textsf{\footnotesize woreq2}.
 
-\uline{Also note} that \uline{no} \textit{re-starts} are provided for any of these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the \textit{re-start} experiments for to achieve as close to steady-state as you think is ‘sufficient’). Recall again, that \textit{re-starts} are just ‘normal’ experiments that have already been run.
+\uline{Also note} that \uline{no} \textit{re-starts} are provided for any of these configurations. You may (or may not) want to create some (you will need to judge for yourselves how long to run the \textit{re-start} experiments to achieve as close to steady-state as you think is ‘sufficient’). Recall again, that \textit{re-starts} are just ‘normal’ experiments that have already been run.
 Be careful that when changing from one \textit{base-config} to another, the model re-compiles. Simply running the new configuration briefly (for even just a single year) is sufficient to ensure this. Experiments can then be safely submitted to a cluster queue, i.e. do not try and submit an experiment using a different \textit{base-config} straight to the cluster queue without having run it (or a short version of the experiment you want) interactively first (to ensure the model is re-compiled). This is also good practice – checking that a new sort of experiment and/or model configuration works as you intend and without hiccups.
 
 %------------------------------------------------
