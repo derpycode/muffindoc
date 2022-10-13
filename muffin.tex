@@ -2189,16 +2189,10 @@ This Chapter will take you through the generation and exploration (analysis) of 
 \section{Generating fake Worlds}
 
 %------------------------------------------------
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
+%
 \vspace{2mm}
 
-\noindent\textcolor{red}{TO COME ...}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
+To generate 'fake Worlds' (or re-grid from GCM output or utilize existing gridded continental position data) -- refer to the Chapter on 'muffingen'.
 
 %------------------------------------------------
 
@@ -2210,52 +2204,52 @@ This Chapter will take you through the generation and exploration (analysis) of 
 
 %------------------------------------------------
 
-What follows, outlines different ways of visualizing and quantifying ocean circulation in \textbf{muffin}, and coming to a model-empirical understanding of ocean circulation controls.
+There are a variety of different ways of visualizing and quantifying ocean circulation and its controls, in \textbf{muffin}.
 
 %------------------------------------------------
 
 \subsection{Model investigation over-view}
 
-In restricting model-based experiments and derived understanding to   the modern continental configuration (and climate) in \textbf{muffin}, you'd be unlikely to come to any particularly deep or fundamental insights into ocean circulation controls in general. In any case, the modern and future (and recent glacial past) ocean circulation states and dynamics has been picked at endlessly by 1000s of researchers, writing 100,000s of  publications ... and yet still we do not fully understand modern ocean circulation, let along that at the last glacial.
+In not going beyond  the modern continental configuration (and climate system) in \textbf{muffin}, you may not come to any particularly general or fundamental insights into ocean circulation controls. In any case, the modern and future (and recent glacial past) ocean circulation states and dynamics have been picked over by 1000s of researchers, writing 100,000s of  publications ... and yet still we do not necessarily fully understand modern/future ocean circulation, let along that at the time of the last glacial.
 
-A better (more fun) approach is to generalise the problem and consider fundamentally different configurations of ocean basins and climate. This is what you will be doing. But first, some potted advice:
+A broader (or more fun) approach is to generalise the problem and consider fundamentally different configurations of ocean basins and climate. This is what you will be doing. But first, some potted advice:
 
 \vspace{2mm}
 \begin{itemize}[noitemsep]
 \vspace{1mm}
 \item Try and define a hypothesis, or hypotheses, to pursue and test. These need only be very rough at the outset -- you'll likely find that you get new ideas and can either refine your original hypotheses, or come up with new ones, as you start to play with the model and see what is feasible and not feasible in terms of analysis.
 \vspace{1mm}
-\item Create a plan of study -- what sort of experiments, now many, how are they going to be analysed, how do they all fit together in addressing the overarching hypotheses? Again -- it is very likely that your plan will evolve, but try and start out with something to guide you rather than wandering randomly in model world ...
+\item Create a plan of study -- what sort of experiments, now many, how are they going to be analysed, how do they all fit together in addressing the overarching hypotheses? Again -- it is very likely that your plan will evolve as you go along, but try and start out with something to guide you rather than wandering randomly in model world ...
 \vspace{1mm}
-\item For creating and an using different worlds -- create a list or table of the configurations to be explored, and summarize what you are finding. It might be helpful to plan out on paper first, some of the main continental configurations you need to create and then test in the model. (Again, this will evolve.)
+\item For creating and an using different worlds -- write down a list or make a table of the configurations to be explored, why you have chosen them, and then summarize what you are finding. It might be helpful to draw out on paper first the outline of the continental configurations you want, and then create these and run them. (Again, the details of this will very likely evolve.)
 \vspace{1mm}
-\item Once you have some sort of idea what are are going to do -- plan the work. This is important because to run the model to steady state is not trivial. Perhaps plan on having to run the model for 5,000 years\footnote{Even so, you should try running the model much longer to be confident that 5,000 years is OK (and sufficiently close to final equilibrium).} in order to achieve a fully spun up ocean circulation state. You might get away with shorter runs, but know in advance what sort of error this would induce and is it 'important'? Once you have a list and know how long each might take, you can plan out when they will be run on the cluster (presumably on the queue) and when the results will be analysed. Note that it is a virtual certainty that once you have analysed the results of the first set of experiments, you will want something different (and will then need to revise the plana and list of experiments and analysis etc.).
+\item Once you have some sort of idea what are are going to do -- plan the experiments. This is important because to run the model to steady state is not trivial. Perhaps plan on having to run the model for 5,000 years\footnote{Even so, you should try running the model much longer to be confident that 5,000 years is OK (and sufficiently close to final equilibrium).} in order to achieve a fully spun up ocean circulation state. You might get away with shorter runs, but know in advance what sort of error this would induce and whether the error might be 'important' (impact your analysis and conclusions)? Once you have a list and know how long each model experiment might take, you can plan out when they will be run on the cluster (presumably on the queue) and when the results will be analysed. Note that it is a virtual certainty that once you have analysed the results of the first set of experiments, you will want something different (and will then need to revise the plana and list of experiments and analysis etc.).
 \end{itemize}
 \vspace{2mm}
 
-\noindent Overall -- scientific investigations with simplified (and relatively fast) Earth system models tends to become a somewhat iterative undertaking and can involve significant trail-and-error. (This is healthy and to be expected and even enjoyed!) Rarely, can you devise at the outset, a single run or set of experiments, and it turns out this is completely sufficient. If you do not see something you do not understand in the results of the initial model experiments, you are either God (e.g. the Spaghetti Monster or Invisible Pink Unicorn), or not doing it properly. Expect to see things that interest you and lead you off on a tangent (hopefully -- this is how research should be).
+\noindent Overall -- scientific investigations with simplified (and relatively fast) Earth system models tend to become a somewhat iterative undertaking and can involve significant trail-and-error. (This is healthy and to be expected and even enjoyed!) Rarely, can you devise at the outset, a single run or set of experiments, and it turns out this is completely sufficient. If you do not see something you do not understand in the results of the initial model experiments, you are either God (e.g. the Spaghetti Monster or Invisible Pink Unicorn), or not doing it properly. Expect to see things that interest you and lead you off on a tangent (hopefully -- this is how research should be).
 
-Finally -- \uline{note} that in swapping between different continental configurations, \textbf{muffin} currently requires the model executable to be  re-compiled.\footnote{Note that if the \textit{base-config} is the same as the previous experiment, but you have changed a parameter value (in the \textit{user-config}), you do not need to re-compile.} This ... cannot happen on the compute nodes of the cluster if you submit an experiment using a different \textit{base-config}. When changing to a new \textit{base-config}: \uline{first}, run the model briefly interactively (i.e. at the command line). Once it has compiled (and started running), the experiment can be killed (\textsf{ctrl-c}) and now it is good to submit to the queue as a job. In any case, in utilizing a new configuration that you may never have used before, it is good practice to test it first (e.g. watch it run for a short period).
+Finally -- \uline{remember} that in swapping between different continental configurations (and \textit{base-configs}), \textbf{muffin} currently requires the model executable to be  re-compiled.\footnote{Note that if the \textit{base-config} is the same as the previous experiment, but you have changed a parameter value (in the \textit{user-config}), you do not need to re-compile.} This ... cannot happen on the compute nodes of the cluster if you submit an experiment using a different \textit{base-config}. When changing to a new \textit{base-config}: \uline{first}, run the model briefly interactively (i.e. at the command line). Once it has compiled (and started running), the experiment can be killed (\textsf{ctrl-c}) and now it is good to submit to the queue as a job. In any case, in utilizing a new configuration that you may never have used before, it is good practice to test it first (e.g. watch it run for a short period).
 
 %------------------------------------------------
 
 \subsection{Deep-water formation (\& baroclinic circulation)}
 
-The first investigation is to investigate the controls on the strength and large-scale structure of ocean circulation, particularly in terms of the global meridional overturning circulation (MOC), and associated with this -- the primary sites of deep-water formation.
+The first investigation is to explore the controls on the strength and large-scale structure of ocean circulation, particularly in terms of the global meridional overturning circulation (MOC), and associated with this -- where the primary sites of deep-water formation are.
 
-There are presumably 2 key controls to this:
+There are  2 key controls to this:
 
 \vspace{2mm}
 \begin{enumerate}
 \item \textbf{Temperature.}
-\\This is presumably mostly a function of latitude (i.e. the further North or South, the more suitable the site will tend to be for deep-water formation) and to some extent season. There will also be an influence of the prescribed planetary albedo (which includes the effect of clouds) as well as of sea-ice (if it exists).
+\\This is presumably mostly a function of latitude (i.e. the further North or South, the more suitable the site will tend to be for deep-water formation) and to some extent season. There will also be an influence of the prescribed planetary albedo (which includes the effect of clouds) as well as of sea-ice (if it is present).
 \vspace{2mm}
 \item \textbf{Salinity.}
 \\This will generally be controlled by P-minus-E -- the balance between precipitation to the ocean surface as well as fresh-water run-off form the continents, vs. evaporation from the ocean surface. Sea-ice may also be a key factor, in e.g. leading to the (seasonal) rejection of dense salty brine (and removal of freshwater to the forming ice).
 \end{enumerate}
 \vspace{2mm}
 
-In turn, this suggests two sets of 'knobs' in the model that influence the patterns and magnitude of temperature and salinity across the ocean surface:
+In turn, this suggests two sets of 'knobs' in the model that can be modified and that may influence the patterns and magnitude of temperature and salinity across the ocean surface:
 
 \vspace{1mm}
 \begin{enumerate}
@@ -2266,23 +2260,30 @@ In turn, this suggests two sets of 'knobs' in the model that influence the patte
 \vspace{1mm}
 \item \textbf{Global Climate.}
 \\The mean and climate as well as the zonal temperature gradients, together with whether or not sea-ice forms (and how much), will modulate both temperature and salinity patterns at the ocean surface.
-\\The model knobs here are primarily:
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+In turn, the model knobs here are primarily:
+\vspace{1mm}
 \begin{enumerate}
+\vspace{1mm}
 \item Atmospheric \(pCO_{2}\), or in the absence of an explicit carbon cycle, a prescribed radiative forcing:
 \vspace{-2pt}\begin{verbatim}
 ea_radfor_scl_co2=1.0
 \end{verbatim}\vspace{-2pt}
 which here, specifies \(\times1\) \(CO_{2}\) equivalent radiative forcing.
+\vspace{1mm}
 \item One could also adjust the value of the solar constant (here, given with its modern/present-day default value):
 \vspace{-2pt}\begin{verbatim}
 ma_genie_solar_constant=1368.0
 \end{verbatim}\vspace{-2pt}
 which has a subtly different effect form changing \(CO_{2}\) radiative forcing, as radiative forcing has a relatively spatially uniform impact, whereas changing the solar constant has a disproportionate impact towards the Equator (where the incident solar shortwave radiation is the greatest). So changing the solar constant is likely to impact the pole-to-Equator temperature gradient. e.g. see: Lunt, D. J., A. Ridgwell, P. J. Valdes, and A. Seale, Sunshade World.: a fully coupled GCM evaluation of the climatic impacts of geoengineering, GRL 35, L12710, doi:10.1029/2008GL033674 (2008).
+\vspace{1mm}
 \item One could also adjust the planetary albedo, particularly in respect of looking to modify the pole-to-Equator temperature. In the \textbf{muffingen} created configurations, there is an explicit 1D file specifying the zonal (with latitude) planetary albedo profile:
 \vspace{-2pt}\begin{verbatim}
 xxxxxxxx.albd.dat
 \end{verbatim}\vspace{-2pt}
-where \texttt{xxxxxxxx} is the 8-character name of the \textbf{muffingen} created World. It would be a simple matter of editing the values in the file (between the range of 0.0 and 1.0, for  perfectly absorbing, and perfectly reflective, respectively).\footnote{Best to make a copy of the original file before you modify it.} Note that the file data order is North-to-South (going from top to bottom in the file).
+where \texttt{xxxxxxxx} is the 8-character name of the \textbf{muffingen} created World. It would be a simple matter of editing the values in the file (between the range of 0.0 and 1.0, for  perfectly absorbing, and perfectly reflective, respectively).\footnote{Best to make a copy of the original file before you modify it.} \uline{Note that the file data order is North-to-South (going from top to bottom in the file)}.
 \end{enumerate}
 \end{enumerate}
 \vspace{2mm}
@@ -2296,13 +2297,17 @@ with  gateways, and the degree to which this give rise to strong zonal ocean flo
 
 So the question naturally arises: how misaligned does a gateway have to be relative to the prevailing wind stress maximum, before the circumpolar (or circum-equatorial) flow ceases. What about having multiple gateways and their relative alignment, including what happens if one gateway is aligned with Westerly wind stress, and a second with Easterly wind stress -- who 'wins')? Also -- what about sill depths? For the Drake Passage, the ocean floor, while tectonically messy, is generally relatively deep. What happens to ocean circulation with a progressively shallow sill depth?
 
-The 3 key controls in this exercise are then:
+%------------------------------------------------
+\newpage
+%------------------------------------------------
 
-\vspace{2mm}
+The 3 key controls in this exercise are then:
+\vspace{1mm}
+
 \begin{enumerate}
 \vspace{1mm}
 \item \textbf{Gateway alignment.}
-\\The degree of alignment (or latitudinal correspondence) of a gateway with the maximum of the zonal wind stress. (For multiple gateways, what if one aligns with a wind-stress maximum of the opposite sign?)
+\\The  alignment (or latitudinal correspondence) of a gateway with the maximum of the zonal wind stress.
 \vspace{1mm}
 \item \textbf{Gateway width.}
 \\The width of a gateway (and how important this is in exerting control on ocean circulation).
@@ -2312,24 +2317,23 @@ The 3 key controls in this exercise are then:
 \end{enumerate}
 \vspace{2mm}
 
-The importance of the position of the gateways is primarily only in the context of the position of the maxima in the wind-stress field. In theory, the shape of the assumed zonal wind-stress could be altered ... but the wind stress needs to be defined on 2 different ocean grids  ... and this gets messy ...
+There are a number of changes that can be made in the model to explore the importance (or not) of the 3 controls listed above:
+\vspace{1mm}
 
-As before, there are a number of changes that can be made in the model to explore the consequences of varying gateway position and sill depth (and knobs, turned):
-
-\vspace{2mm}
 \begin{enumerate}
 \vspace{1mm}
 \item \textbf{Land-sea mask.}
 \\The model knob is hence how the width and location of gateways has bene defined in the land-sea mask. There is also the question of how many gateways (and their respective position).
 \\As before, this (creating or changing the continental configuration used by \textbf{muffin}) is all done using the \textbf{MATLAB} \textbf{muffingen} program. Any of the given example \textbf{muffingen} configurations: \textsf{drakeworld}, \textsf{eqpasworld}, \textsf{ridgeworld}, or \textsf{waterworld}, could be taken as starting points -- copying and renaming the configuration \textsf{.m} file, as well as the \textsf{.dat} file in the \textsf{INPUT} directory.
 Or start from scratch and a the 'blank' (initially all ocean) example configuration.\vspace{1mm}
+\\Note that a gap between 2 land masses must be \uline{2 or more cells wide}, to count as a gateway and allow barotropic flow in \textbf{muffingen}).
+\vspace{1mm}
 \item \textbf{Ocean bathymetry.}
 \\The bathymetry (ocean floor depth) can be changed to alter the sill depth. The easiest way to do this is probably within the \textbf{muffingen} editor, ensuring the following input parameter setting is set:
 \vspace{-2pt}\begin{verbatim}
 opt_user=true; % [false/true] enable user input to grid
 \end{verbatim}\vspace{-2pt}
-in the configuration \textsf{.m} file. (One might also then 'draw' in the gateways by hand at the same time.)
-\\Note that a gap between 2 land masses must be \uline{2 or more cells wide}, to count as a gateway and allow barotropic flow in \textbf{muffingen}).
+in the configuration \textsf{.m} file.
 \vspace{1mm}
 \item \textbf{Wind stress strength.}
 \\Although it is messy to attempt to edit the profile of the applied wind-stress field, it is possible to scale its impact on ocean circulation lower and higher. The \textbf{muffin} parameter for this is:
@@ -2338,10 +2342,12 @@ go_13=1.531013488769531300
 ea_11=1.531013488769531300
 \end{verbatim}\vspace{-2pt}
 Somewhat bizarrely ... it appears twice ... with different parameter names. Both parameters must be changed to the same value. Place these lines (of the new parameter value assignments) in the \textit{user-config} file for the experiment. Higher values result in a stronger applied wind-stress on the ocean surface.
+\vspace{1mm}
 \\Note that although this is the simplest change to make, it may not have such a clear scientific question associated with it (other than the obvious and trivial).
 \end{enumerate}
-\vspace{2mm}
 
+%------------------------------------------------
+\newpage
 %------------------------------------------------
 
 \subsection{Analysis}
@@ -2349,6 +2355,7 @@ Somewhat bizarrely ... it appears twice ... with different parameter names. Both
 How do you 'judge' the strength and characteristics of deep-water formation, global overturning, and circulation patterns and strength, in general, or their climate (or biogeochemical) impacts? This is not a trivial question. Often, additional ocean tracers are employed in models to generate a quantitative measure of the age of a parcel of water (mean time since it last saw the surface), of some measure of the efficiency of ventilation, or large-scale transport at the surface or at depth.\footnote{We'll see such tracers employed later in the course.} Or rather involved analysis of ocean physics and transport might be employed.
 
 One starting point is to read some of the literature where the climate properties of various hypothetical worlds have been investigated. Such as:
+\vspace{1mm}
 
 \begin{itemize}[noitemsep]
 \item \textit{Marshall et al.} [2007] -- 'Mean Climate and Variability of the Atmosphere and Ocean on an Aquaplanet', \textit{Journal of the Atmospheric Sciences} \textbf{64}.
@@ -2357,6 +2364,7 @@ One starting point is to read some of the literature where the climate propertie
 \item \textit{Smith et al.} [2006] -- 'Global Climate and Ocean Circulation on an Aquaplanet Ocean–Atmosphere General Circulation Model',  \textit{Journal of Climate} \textbf{19}.
 \end{itemize}
 
+\vspace{1mm}
 In addition, the sub-sub-sections that follow outline some simple diagnostics and ways of going about some quantitative analysis.
 
 %------------------------------------------------
@@ -2378,15 +2386,19 @@ This contains a summary of the evolution with time, of the minimum and maximum (
 
 %------------------------------------------------
 
-\subsubsection{Using Panoply}
+\subsubsection{Spatial netCDF fields}
 
 In a physics-only (T + S tracer) configuration of \textbf{muffin} you are  somewhat limited in what you can look at. A good staring point is the previous tutorial on ocean circulation and AMOC stability (in the context of the modern world, climate and continental configuration). For instance, you know already how to plot and visualize the MOC using \textbf{Panoply}. The Atlantic basin and hence the existence of an AMOC, is pretty specific and unique to the modern world, so likely you'll need to focus on the global MOC. (A good starting point is to familiarise yourself with the pattern and intensity of the modern.)
 
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
 For example -- the \small\textsf{drakeworld }\normalsize configuration gives rise to a global MOC pattern as shown in Figure \ref{fig:paleo_drakeworld.opsi}.
 
 \begin{figure}
 \includegraphics[width=0.6\textwidth]{paleo_drakeworld_opsi.pdf}\centering
-\vspace{-6mm}
+\vspace{-0mm}
 \caption{Drakework world overturning circulation.}
 \label{fig:paleo_drakeworld.opsi}
 \end{figure}
@@ -2399,35 +2411,23 @@ Finally in \textbf{Panoply}, you might plot the current field (surface or otherw
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{paleo_drakeworld_v.pdf}\centering
-\vspace{-6mm}
+\vspace{-0mm}
 \caption{Surface current velocity field (arrows) plus speed (color scale).}
 \label{fig:paleo_drakeworld.v}
 \end{figure}
 
 \begin{figure}
 \includegraphics[width=0.5\textwidth]{paleo_drakeworld_psi.pdf}\centering
-\vspace{-6mm}
+\vspace{-0mm}
 \caption{Drakework world barotropic circulation.}
 \label{fig:paleo_drakeworld.psi}
 \end{figure}
 
 %------------------------------------------------
-
-\subsubsection{Using MATLAB ...}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
-
-\noindent\textcolor{red}{TO COME ...}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-\vspace{2mm}
-
+\newpage
 %------------------------------------------------
 
-\subsubsection{Via color tracing}
+\subsection{'Color tracing' of ocean circulation}
 
 Numerical color tracers can be used (as you have seen previously) to trace flow-paths. The default \textit{base-config} files provided as part of the \textbf{muffingen} software, define a configuration with only 2 tracers in the ocean -- T and S. To add red and blue dye tracers, in the \textit{base-config} file, find the section marked:
 
@@ -2472,7 +2472,7 @@ bg_ocn_init_49=0.0
 \end{verbatim}\vspace{-2pt}\normalsize
 \end{enumerate}
 
-To apply a 'red' dye tracer to the ocean, you can employ the same \textit{forcing} as used in the experiments in Chapter 3 -- \texttt{pyyyyz.Fred} and implement this with similar user-config settings:
+To apply a 'red' dye tracer to the ocean, you can employ the same \textit{forcing} as used in the experiments in Chapter 3 -- \texttt{pyyyyz.Fred} and implement this with similar \textit{user-config} settings:
 
 \small\vspace{-2pt}\begin{verbatim}
 #
@@ -2489,7 +2489,7 @@ However, the specific \texttt{i,j,k} (longitude, latitude, ocean depth layer) mo
 
 %------------------------------------------------
 
-\subsubsection{Via age tracing}
+\subsection{'Age tracing' of ocean circulation}
 
 Refer to the 'HOW-TO' in the muffin manual -- 'Add a water mass age tracer':
 
@@ -8270,17 +8270,14 @@ is a little more complicated, and very much depends on exactly what you 'want' f
 
 \subsection{overview of the muffingen software}
 
-\textbf{muffingen} is a collection of \textbf{MATLAB} functions that can create all the configuration files (excluding optional climatic and biogeochemical \textit{forcing} fields) required by the cGENIE (\textbf{muffin}) Earth system model. \textbf{muffingen} is designed to take the output from a fully coupled GCM, particularly of past climates with different continental configurations, and re-grid the output needed by the \textbf{muffin} model, in the form of files of boundary conditions, all  saved  in their respective correct format. However, \textbf{muffingen} can also be used to draw conceptual alternative Earths (in terms of continental configuration). Again, saving the required \textbf{muffin} files in their appropriate formats.
-
-As a \textbf{MATLAB} code, (only) very basic familiarity with using \textbf{MATLAB} at the command line is required. And a copy/license of the \textbf{MATLAB} software ... A sufficient grasp of \textbf{MATLAB} can be gained by going through the following sections/subsections of the \textsf{matlabananas} textbook, which can be found on \href{https://github.com/derpycode/matlabananas}{GitHub} (look for the PDF file compiled form the latex source -- \textsf{BANANAS.pdf}):
-
-\vspace{2mm}
+\textbf{muffingen} is a collection of \textbf{MATLAB}\footnote{As a \textbf{MATLAB} code, (only) very basic familiarity with using \textbf{MATLAB} at the command line is required. And a copy/license of the \textbf{MATLAB} software ... A sufficient grasp of \textbf{MATLAB} can be gained by going through the following sections/subsections of the \textsf{matlabananas} textbook, which can be found on \href{https://github.com/derpycode/matlabananas}{GitHub} (look for the PDF file compiled form the latex source -- \textsf{BANANAS.pdf}):
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \item Section 1.1 -- The \textbf{MATLAB} interface and command line.
 \item Section 1.6 -- Changing directories and file search paths.
 \item Section 2.2 -- Using \textit{functions} ... of which \texttt{muffingen} is one.
 \end{itemize}
-\vspace{2mm}
+} functions that can create all the primary configuration files required by the cGENIE (\textbf{muffin}) Earth system model. \textbf{muffingen} was originally designed to take the output from a fully coupled GCM, particularly of past climates with different continental configurations, and then re-grid the output needed by the \textbf{muffin} model (in the form of files of boundary conditions, all  saved  in their respective correct format). However, \textbf{muffingen} can also be used to 'draw' conceptual alternative Earths (in terms of continental configuration). Again, saving the required \textbf{muffin} files in their appropriate formats.
 
 %------------------------------------------------
 
@@ -8300,7 +8297,7 @@ There are 2 ways to get your mitts on the \textbf{muffingen} code:
 \vspace{1mm}
 \item By downloading an archive file, containing all the code etc. For this -- click on the \textcolor[rgb]{0,0.501961,0}{green} \textsf{\small{Clone or Download}} button, and select \textsf{\small{Download ZIP}}.
 \\You then unpack/unzip the files and directory structure where you want it.
-\\This [archive download] is a perfectly workable way to proceed\footnote{Note that this way, you will be unable to easily update the code with whatever new developments or bug fixes occur in the future, nor can propagate back any code changes that you might have made and might want to become part of the official \textbf{muffingen} code  (i.e. downloading the \textsf{zip} file becomes a one-off installation that loses its formal connection to the GitHub repository).} ...
+\\This [archive download] is the simplest and  perfectly workable way to proceed\footnote{Note that this way, you will be unable to easily update the code with whatever new developments or bug fixes occur in the future, nor can propagate back any code changes that you might have made and might want to become part of the official \textbf{muffingen} code  (i.e. downloading the \textsf{zip} file becomes a one-off installation that loses its formal connection to the GitHub repository).} (and is the recommended option).
 
 \vspace{1mm}
 \item Or you can \textit{clone} the repository to where you intend to run \textbf{muffingen}. Note that you will need a git client installed on your computer. There are GUI clients for git, or this can be done at the command line:
@@ -8332,11 +8329,11 @@ To use the \textbf{cGENIE.muffin} model configuration generator \textbf{muffinge
 \end{verbatim}
 \vspace{-2mm}
 
-\noindent where \texttt{FILENAME} is the name of an ASCII format configuration file (having a \texttt{.m} filename extension) that specifies the required settings (see subsequent section).
+\noindent where \texttt{FILENAME} is the name of an ASCII  (plain text) format configuration file (having a \texttt{.m} filename extension) that specifies the required settings (see subsequent section).
 
-This file (\texttt{FILENAME.m}), must either be present in the directory where you installed \textbf{muffingen} (the directory where e.g. where the file \texttt{muffingen.m} is located) e.g. \textsf{C:\textbackslash muffingen}. In this case, your \textbf{MATLAB} working directory must also be  set to \textsf{C:\textbackslash muffingen}. Or, the \textbf{MATLAB} working directory and the file \texttt{FILENAME.m} can reside elsewhere (both directory locations must be the same however). In this case, you will then 'add' the location of \textbf{muffingen} to \textbf{MATLAB}'s search path by the \textbf{MATLAB} function \texttt{addpath}\footnote{Refer to the \textbf{MATLAB} '\textsf{bananas}' text for the syntax for using \texttt{addpath}.}.
+This file (\texttt{FILENAME.m}), must either be present in the directory where you installed \textbf{muffingen} (the directory where e.g. where the file \texttt{muffingen.m} is located) e.g. \textsf{C:\textbackslash muffingen}. In this case, your \textbf{MATLAB} working directory must also be  set to \textsf{C:\textbackslash muffingen}. Or, the \textbf{MATLAB} working directory and the file \texttt{FILENAME.m} can reside elsewhere. In this case, you will then 'add' the location of \textbf{muffingen} to \textbf{MATLAB}'s search path by the \textbf{MATLAB} function \texttt{addpath}\footnote{Refer to the \textbf{MATLAB} '\textsf{bananas}' text for the syntax for using \texttt{addpath}.}.
 
-The \textbf{muffingen} model configuration generator then starts, and depending on the specific settings in the configuration file, may require no user input, or may require user input, either because this option was requested, or because a re-gridding issue arose that requires manual intervention to resolve. A series of plots are created (and saved) as the configuration generation progresses together with the \textbf{muffin} model configuration files themselves. All the various steps plus details of how the contents of the configuration files are generated are reported at the command line, and saved in a n ASCII format \texttt{*.log} file for future reference.
+The \textbf{muffingen} model configuration generator then starts, and depending on the specific settings in the configuration file, may require no user input, or may require user input (either because this option was requested, or because a re-gridding issue arose that requires manual intervention to resolve). A series of plots are created (and saved) as the configuration generation progresses together with the \textbf{muffin} model configuration files themselves. All the various steps plus details of how the contents of the configuration files are generated are reported at the command line, and saved in a n ASCII format \texttt{*.log} file for future reference.
 
 Depending on the specific configuration file settings (see later), \textbf{muffingen} has 5 main modes of operation, which are summarized as follows (and described in more detail, along with specific examples, below):
 
@@ -8361,7 +8358,7 @@ Depending on the specific configuration file settings (see later), \textbf{muffi
 \end{enumerate}
 
 \vspace{2mm}
-Also depending on the specific options, and particularly whether or not \texttt{opt\_user} is set to \texttt{true}, and editor window will open, firstly for changes to the land-sea mask to be made, then later for the ocean bathymetry to be edited. Finally, a window will open allowing 'island paths' to be edited. The latter may be needed if \textbf{muffingen} cannot unambiguously determine them unaided.
+Also depending on the specific options, and particularly whether or not \texttt{opt\_user} is set to \texttt{true}, an editor window will open, firstly for changes to the land-sea mask to be made, then later for the ocean bathymetry to be edited. Finally, a window will open allowing 'island paths' to be edited. The latter may be needed if \textbf{muffingen} cannot unambiguously determine them unaided.
 
 Once you have successfully run \textbf{muffingen}, copy/transfer the entire  configuration subdirectory (the directory with the same name as whatever you called your 'world')  and its contents, from the \textbf{muffingen} output directory (e.g. \textsf{\small muffingen/OUTPUT.EXAMPLES}) on your local computer, to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
 
@@ -8373,10 +8370,9 @@ Once you have successfully run \textbf{muffingen}, copy/transfer the entire  con
 
 %------------------------------------------------
 
-When \textbf{muffingen} is run, a configuration file with a specified filename\footnote{i.e. the single parameter passed to \textbf{muffingen} when it is invoked at the command line.} is loaded. The configuration file is in a simple plain text (ASCII) format, but is given a \textsf{.m} extension, enabling the values of a number of controlling parameter values to be set directly in \textbf{MATLAB}.\footnote{Note that the parameter filename is passed as a string without the .m extension (which is implicitly assumed). An error message will be generated if the file does not exist or has the incorrect extension.} The configuration file parameters control facets of \textbf{muffingen} behavior such as the primary model of operation, input and output filenames, what types of configuration files you want to generate, as well as there being a number of parameters controlling the finer details of re-gridding and configuration file generation, including whether to enable user-input or not.
+When \textbf{muffingen} is run, a configuration file with a specified filename\footnote{i.e. the single parameter passed to \textbf{muffingen} when it is invoked at the command line.} is loaded. The configuration file has a simple plain text (ASCII) format, but is given a \textsf{.m} extension, enabling the values of a number of controlling parameter values to be set directly in \textbf{MATLAB}.\footnote{Note that the parameter filename is passed as a string without the .m extension (which is implicitly assumed). An error message will be generated if the file does not exist or has the incorrect extension.} The configuration file parameters control facets of \textbf{muffingen} behavior such as the primary mode of operation, input and output filenames, what types of configuration files you want to generate, as well as there being a number of parameters controlling the finer details of re-gridding and configuration file generation, including whether to enable user-input or not.
 
-The configuration files can be edited with the \textbf{MATLAB} editor (indeed, as a \textsf{\small .m} file, they are inherently a \textbf{MATLAB} format file), or any plain text (ASCII) editor. They must have a \textsf{\small .m} filename extension.
-The configuration file is divided up into a series of sections of different parameter options. The main (most commonly used) parameters are summarized as follows (and are more fully described later):
+The configuration files can be edited with the \textbf{MATLAB} editor (indeed, as a \textsf{\small .m} file, they are inherently a \textbf{MATLAB} format file and associated with this program), or any  text editor\footnote{But make sure they retain a \textsf{\small .m} rather than \textsf{\small .txt} filename extension}. The configuration file is divided up into a series of sections of different parameter options. The main (most commonly used) parameters are summarized as follows (and are more fully described later):
 
 \begin{itemize}
 
@@ -8387,19 +8383,22 @@ The configuration file is divided up into a series of sections of different para
 \end{verbatim}\vspace{-2pt}\normalsize
 
 \begin{itemize}[noitemsep]
-\vspace{1mm}
 
+\vspace{1mm}
 \item [] \texttt{par\_wor\_name}
+\vspace{1mm}
 \\Defines the name of the model configuration. This must be a string, \uline{8 characters long}.
 \\e.g. \texttt{par\_wor\_name='my\_world'}
 
+\vspace{1mm}
 \item [] \texttt{par\_gcm}
+\vspace{1mm}
 \\Defines the format of the input. The string is blank for an interactive user-defined world, i.e. \texttt{par\_gcm=''}
 
-
+\vspace{1mm}
 \item [] \texttt{par\_expid}
-\\Defines the name of the GCM experiment if a GCM input is selected, or the '\textsf{\small .k1}' or '\textsf{\small .dat}' files if those respective input formats are selected by the above option.
-\\By default, these files live in the \textsf{\small INPUT.EXAMPLES} sub-directory.
+\vspace{1mm}
+\\Defines the name of the GCM experiment if a GCM input is selected, or the '\textsf{\small .k1}' or '\textsf{\small .dat}' files if those respective input formats are selected by the above option.\footnote{By default, these files live in the \textsf{\small INPUT.EXAMPLES} sub-directory.}
 
 \end{itemize}
 
@@ -8422,21 +8421,28 @@ The configuration file is divided up into a series of sections of different para
 \end{verbatim}\vspace{-2pt}\normalsize
 
 \begin{itemize}[noitemsep]
-\vspace{1mm}
 
+\vspace{1mm}
 \item \texttt{par\_max\_i}
+\vspace{1mm}
 \\Defines the number of grid points in the longitude ('i') direction.
 \\This is typically 36 or 18, e.g. \texttt{par\_max\_i=36}
 
+\vspace{1mm}
 \item \texttt{par\_max\_i}
+\vspace{1mm}
 \\Defines the number of grid points in the latitude ('j') direction.
 \\This is typically 36 or 18 and is typically the same number as for the i direction, e.g. \texttt{par\_max\_j=36}
 
+\vspace{1mm}
 \item \texttt{par\_max\_k}
+\vspace{1mm}
 \\Defines the number of  layers in the ocean circulation model.
 \\This is almost always either 16 or 8, e.g. \texttt{par\_max\_k=16}
 
+\vspace{1mm}
 \item \texttt{opt\_equalarea} [default: \texttt{true}]
+\vspace{1mm}
 \\This specifies whether or not an equal area grid is used/assumed. (A value of \texttt{false} results in the latitude grid being defined in equal increments of latitude).
 
 \end{itemize}
@@ -8450,28 +8456,41 @@ The configuration file is divided up into a series of sections of different para
 \end{verbatim}\vspace{-2pt}\normalsize
 
 \begin{itemize}[noitemsep]
+
 \vspace{1mm}
 \item [] \texttt{par\_max\_D} [default: \texttt{5000.0}]
+\vspace{1mm}
 \\Sets the maximum ocean (scale) depth (in m).
 \\ See subsequent sub-sub-section on 'Ocean depth (and maximum levels)' for further details and usage.
+
+\vspace{1mm}
+For the sediment model re-gridding (you can ignore this is you are not using the \textbf{SEDGEM} module and wanting to simulate marine sediments, and have \texttt{par\_sedsopt=2} selected), there is:
 \vspace{1mm}
 \item [] \texttt{par\_sed\_Dmin} [default: \texttt{1000.0}]
 \\\texttt{par\_sed\_Dmax} [default: \texttt{5000.0}]
-\\Together, set the minimum and maximum depths used in generating a random seafloor topography for \textbf{SEDGEM} (when \texttt{par\_sedsopt=2} is selected).
-\\Note that while \(5000m\) corresponds to the default deepest depth of the ocean circulation model, about \(15\%\) of the modern seafloor lies below this (and mostly shallower than \(6000m\)). So selecting \texttt{6000.0} would arguably enable a better simulation of e.g. the CCD. 
+\vspace{1mm}
+\\which together set the minimum and maximum depths used in generating a random seafloor topography for \textbf{SEDGEM}.\footnote{Note that while \(5000m\) corresponds to the default deepest depth of the ocean circulation model, about \(15\%\) of the modern seafloor lies below this (and mostly shallower than \(6000m\)). So selecting \texttt{6000.0} would arguably enable a better simulation of e.g. the CCD.}
+
 \end{itemize}
 
 \vspace{2mm}
 \item []
 \small\vspace{-2pt}\begin{verbatim}
-% *** CONFIG NAME AND MAIN INPUT SETTINGS *******************************
+% *** OPTIONS -- MAIN ***************************************************
 \end{verbatim}\vspace{-2pt}\normalsize
 
 \begin{itemize}[noitemsep]
-\vspace{1mm}
 
+\vspace{1mm}
 \item [] \texttt{opt\_user} [default: \texttt{true}]
+\vspace{1mm}
 \\Determines whether \textbf{muffingen} pauses and allows user-modification of land-sea mask and ocean depth (and island paths).
+
+\vspace{1mm}
+\item [] \texttt{opt\_plots} [default: \texttt{false}]
+\vspace{1mm}
+\\Determines whether or not to plot all input and re-gridded boundary conditions.\footnote{For GCM-based re-gridded, this can sometimes take some time to do.}
+
 \end{itemize}
 
 \end{itemize}
@@ -8486,10 +8505,10 @@ A series of example configurations are provided in the main \textbf{muffingen} d
 \begin{itemize}[noitemsep]
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_BLANK} -- Starts from a blank ('water-world') all-ocean land-sea mask template. User input (allowing continents and seafloor topography to be 'drawn') is automatically activated whether you want it or not!\footnote{Because it assumes that you are going to go on and draw something ...}\(^{,}\)\footnote{Edit the \textbf{muffingen} code to be able to turn off.}
+\item \textsf{\footnotesize EXAMPLE\_BLANK} -- Starts from a blank ('water-world'), all-ocean (no land) template. User input (allowing continents and seafloor topography to be 'drawn') is automatically activated whether you want it or not!\footnote{Because it assumes that you are going to go on and draw something ...}\(^{,}\)\footnote{Edit the \textbf{muffingen} code to be able to turn off.}
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_BLANK\_deep} -- As above, except with a deeper ocean -- 18 levels with the first 16 spanning 5000.0 m.\footnote{Refer to subsequence explanation re. the details of these parameters.}
+\item \textsf{\footnotesize EXAMPLE\_BLANK\_deep} -- As above, except with a slightly deeper ocean -- 18 levels with the first 16 spanning 5000.0 m.\footnote{Refer to subsequence explanation re. the details of these parameters.} (Simply provided as an example of creating model grids with more depth levels and a deeper maximum depth.)
 
 \vspace{1mm}
 \item \textsf{\footnotesize EXAMPLE\_MASK\_drakeworld} -- The first of a series of 4 conceptual worlds (loosely following the literature). This starts from a land-sea mask (\footnotesize\textsf{wordrake.dat}\normalsize) which is stored in the \textbf{muffingen} subdirectory \footnotesize\textsf{INPUT.EXAMPLES}\normalsize. The land fraction is minimal (as it is trying to reproduce the sort of zero-area numerical barrier used in the literature). This configuration has a barrier to ocean circulation, from the N pole down, with a high southern latitude gateway (a Drake Passage like feature).
@@ -8513,10 +8532,10 @@ A series of example configurations are provided in the main \textbf{muffingen} d
 \item \textsf{\footnotesize EXAMPLE\_K1\_permian} -- Starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, which is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k1 file defines a late Permian continental configuration (and bathymetry). User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_K2\_supercontinent} -- Starts from a simplified version of the muffin model configuration 'k1' topography defining file -- here given  the extension 'k2'. This (\textsf{\footnotesize wppcont1.k2}) is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k2 file defines an idealized pole-to-pole super-continent. User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
+\item \textsf{\footnotesize EXAMPLE\_K1\_SEDGEMonly} -- Similar to \textsf{\footnotesize EXAMPLE\_K1\_permian} -- starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, but only generates the SEDGEM sediment model files (and nothing else).
 
 \vspace{1mm}
-\item \textsf{\footnotesize EXAMPLE\_K1\_SEDGEMonly} -- Similar to \textsf{\footnotesize EXAMPLE\_K1\_permian} -- starts from a muffin model configuration 'k1' topography defining file: \textsf{\footnotesize p0251b.k1}, but only generates the SEDGEM sediment model files (and nothing else).
+\item \textsf{\footnotesize EXAMPLE\_K2\_supercontinent} -- Starts from a simplified version of the muffin model configuration 'k1' topography defining file -- here given  the extension 'k2'. This (\textsf{\footnotesize wppcont1.k2}) is stored in the \textbf{muffingen} subdirectory \texttt{INPUT.EXAMPLES}. The k2 file defines an idealized pole-to-pole super-continent. User modification is enabled by default (so \textbf{MATLAB} pauses for modifications to be made), but this can be disabled (\texttt{opt\_user=false}).
 
 \vspace{1mm}
 \item \textsf{\footnotesize EXAMPLE\_MAT\_present\_bathymetry} -- Takes as input a high resolution topography in a \textbf{MATLAB} \textsf{\footnotesize .mat} file format. In this specific example, the file (subdirectory \texttt{INPUT.EXAMPLES}) inputted is \textsf{\footnotesize present\_bathymetry} (\textsf{\footnotesize .mat}) which describes at \(1^{\circ}\) resolution, the modern plate configurations plus seafloor topography (as negative height).\footnote{The specific grid resolution is defined, and the file loaded and the grid orientation assumed, in the \texttt{LOAD GRID (AXES) DATA} and \texttt{LOAD TOPO \& MASK DATA} sections. Different resolutions and orientations (and file formats) can be dealt with here by editing the code.}
@@ -8529,7 +8548,7 @@ gi_lonce = [-180.0:1.0:180.0];
 gi_latce = [-90.0:1.0:90.0];
 % <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 \end{verbatim}\normalsize
-Non-rectilinear grids are not supported. If you have 3 poles in your grid ... too bad.
+Note that non-rectilinear grids are not supported here. If you have 3 poles in your grid ... too bad.
 
 \end{itemize}
 \vspace{2mm}
@@ -8562,12 +8581,7 @@ Both \textsf{\footnotesize genie-paleo} configuration file sets (sub-directories
 
 \small\begin{itemize}[noitemsep]
 \vspace{1mm}
-\item \textsf{\footnotesize }
-\item \textsf{\footnotesize }
-\item \textsf{\footnotesize }
-\item \textsf{\footnotesize }
-\item \textsf{\footnotesize }
-\item \textsf{\footnotesize }
+\item \textsf{\footnotesize } [TO\ BE\ ADDED]
 \end{itemize}\normalsize
 \vspace{1mm}
 
@@ -8647,12 +8661,12 @@ Other than the rate at which the shelves step down\footnote{(and that the earlie
 %
 \subsection{Modern worlds}
 
-To both help illustrate how the configuration files are organized and accessed for paleo worlds, and to help make modifying older (modern) configurations easier, the 2 basic modern configurations are provided in a genie-paleo format:
+To both help illustrate how the configuration files are organized and accessed for paleo worlds, and to help make modifying older (modern) configurations easier, the 2 basic (published) modern configurations are provided in a 'genie-paleo' format (i.e. the format generated by \textbf{muffingen}):
 \begin{itemize}[noitemsep]
 \vspace{1mm}
-\item \textsf{\footnotesize p\_worbe2} == The 8-level \(36\times36\) ocean configuration of \textit{Ridgwell et al.} [2007] and including the geological carbon cycle (\textbf{SEDGEM}+\textbf{ROKGEM}) configuration files of \textit{Ridgwell and Hargreaves} [2007] (and \textit{Lord et al.} [2015]).
+\item \textsf{\footnotesize p\_worbe2} == The 8-level \(36\times36\) ocean configuration of \textit{Ridgwell et al.} [2007] and including the geological carbon cycle (\textbf{SEDGEM}+\textbf{ROKGEM}) configuration files of \textit{Ridgwell and Hargreaves} [2007] (also: \textit{Lord et al.} [2015]).
 \vspace{1mm}
-\item \textsf{\footnotesize p\_worjh2} ==  The 16-level \(36\times36\) ocean configuration of \textit{Cao et al.} [2009] and including the geological carbon cycle (\textbf{SEDGEM}+\textbf{ROKGEM}) configuration files of \textit{Archer et al.} [2009] (and \textit{Winkelmann et al.} [2015]).
+\item \textsf{\footnotesize p\_worjh2} ==  The 16-level \(36\times36\) ocean configuration of \textit{Cao et al.} [2009] and including the geological carbon cycle (\textbf{SEDGEM}+\textbf{ROKGEM}) configuration files of \textit{Archer et al.} [2009] (also: \textit{Winkelmann et al.} [2015]).
 \end{itemize}
 
 \vspace{2mm}
@@ -8663,6 +8677,8 @@ To both help illustrate how the configuration files are organized and accessed f
 \vspace{1mm}
 \item \textsf{\footnotesize muffin.CBSR.p\_worjh2.BASES.config} plus: \textsf{\footnotesize muffin.CBSR.p\_worjh2.BASES.SPIN1} \\(in: \textsf{\footnotesize genie-userconfig/EXAMPLES}), which runs the first-stage spin-up used in \textit{Archer et al.} [2009] and \textit{Winkelmann et al.} [2015].
 \end{itemize}
+
+as well as some reduced tracer and biogeochemical complexity variants, such as \textsf{\footnotesize muffin.CB ...} and \textsf{\footnotesize muffin.C ...}
 
 \vspace{2mm}
 \noindent To make modified (e.g. wind fields) versions of either of the 2 modern 'paleo' format configurations:
@@ -8690,11 +8706,11 @@ To both help illustrate how the configuration files are organized and accessed f
 
 %------------------------------------------------
 
-Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} function \textsf{\footnotesize muffingen.m}, you are now going to need to create 2 files before you can run any experiments:
+Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} function \textsf{\footnotesize muffingen.m}, you are now going to need to create the 2 key model and experiment configuration files before you can actually run anything\footnote{Note that steps 1c, 1d, and 2 are not independent of each other and need to be consistent -- e.g. if you define Fe co-limitation of biological productivity in step 2, you need to have selected the appropriate tracers in step 1c. And if you specify biological productivity calculated by \textbf{ECOGEM} in step 2, you need to have selected the \textbf{ECOGEM} module in step 1d.}:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item A \textit{base-config}, which includes the parameter settings of your new world.
+\item You need to create a \textit{base-config}, which includes the parameter settings of your new world.
 \\There will there be 4 steps involved in this:
 \begin{enumerate}[noitemsep]
 \item Choosing a template \textit{base-config} file, which specifies appropriate physics parameters.
@@ -8703,22 +8719,20 @@ Having created a new \textbf{muffin} configuration using the \textbf{MATLAB} fun
 \item Ensure that the appropriate science modules are enabled in the \textit{base-config}.
 \end{enumerate}
 \vspace{1mm}
-\item A \textit{user-config}, whether simply to test the configuration or to provide the basis of a series of experiments.
+\item You need to create a \textit{user-config}, whether simply to test the configuration or to provide the basis of a series of experiments.
 \end{enumerate}
 \vspace{1mm}
 
 Templates are provided and more detailed instructions follow. However, note that if you have similar \textit{base-config} and \textit{user-config} files already, then you can simply adapt these. Another option is to utilize \textit{base-config} and \textit{user-config} files associated with any of the published experiments listed in \textsf{\footnotesize genie-userconfigs/MS}, or any of the described \textsf{\footnotesize EXAMPLE.*} example configurations.
 
-Note that steps 1c, 1d, and 2 are not independent of each other and need to be consistent -- e.g. if you define Fe co-limitation of biological productivity in step 2, you need to have selected the appropriate tracers in step 1c. And if you specify biological productivity calculated by \textbf{ECOGEM} in step 2, you need to have selected the \textbf{ECOGEM} module in step 1d.
-
-Finally ...
+\vspace{1mm}
+And then finally ...
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
 \setcounter{enumi}{2}
-\item You will need to ensure that all file are in their correct location in the directory structure.
+\item You will need to ensure that all file are in their correct location in the \textbf{muffin} directory structure.
 \end{enumerate}
 \vspace{1mm}
-
 
 %------------------------------------------------
 %
@@ -8732,7 +8746,8 @@ If you do not want to adapt an existing \textit{base-config} (see suggestions ab
 # PHYSICAL CLIMATE CALIBRATION
 # *******************************************************************
 \end{verbatim}\vspace{-2pt}\normalsize
-The files are:
+
+The available template files are:
 
 \begin{itemize}[noitemsep]
 
@@ -8743,7 +8758,7 @@ The files are:
 
 \pagebreak
 
-The differences are:
+The differences compared to the published usages are:
 \begin{itemize}[noitemsep]
 \vspace{1mm}
 \item The ocean starts warmer (\(5^{\circ}C\))\footnote{These parameters could potentially be increased further (to say ...  \(10^{\circ}C\)).} than the default (\(0^{\circ}C\)). This helps the ocean circulation come to an equilibrium state more rapidly, particularly for greenhouse climates:
@@ -8755,7 +8770,7 @@ go_11=5.0
 \end{verbatim}\vspace{-2pt}\normalsize
 Note that both parameters should be changed together (one sets the Northern Hemisphere temperature, and one the Southern ... or something ...).
 \vspace{1mm}
-\item There is no (salt / freshwater) flux adjustment, enacted by setting the scaling parameter to zero:
+\item There is no (salt / freshwater) flux adjustment, with the scaling parameter set to zero:
 \small\vspace{-2pt}\begin{verbatim}
 # SclFWF -- scale for zero freshwater re-balancing
 ea_28=0.0
@@ -8771,7 +8786,7 @@ gs_11=1000.000
 gs_par_sica_thresh=0.99
 \end{verbatim}\vspace{-2pt}\normalsize
 \vspace{1mm}
-\item Insolation forcing is seasonal:
+\item Insolation forcing is seasonal\footnote{The original tuned 8-level ocean circulation model configuration had no seasonal cycle (options set to \texttt{.false.}).}:
 \small\vspace{-2pt}\begin{verbatim}
 # set seasonal cycle
 ea_dosc=.true.
@@ -8779,7 +8794,6 @@ go_dosc=.true.
 gs_dosc=.true.
 \end{verbatim}\vspace{-2pt}\normalsize
 Note that all the respective parameter for all three physical climate components (ocean circulation model, sea-ice model, EMBM atmosphere) needs to be set.
-\\Note that the orignal tuned 8-level ocean circulation model configuration had no seasonal cycle (\texttt{.false.}).
 \vspace{1mm}
 \item An additional option is provided for toggling between isopycnal/diapycnal (\texttt{.true.}) and horizontal/vertical (\texttt{.false.}) mixing schemes:
 \small\vspace{-2pt}\begin{verbatim}
@@ -8794,8 +8808,7 @@ In all modern and 'realistic' paleo configurations, isopycnal/diapycnal mixing i
 \vspace{1mm}
 \item \textsf{\small BASECONFIG.16lvl.config}
 \vspace{1mm}
-\\This is based on the physics calibration as used in e.g. \textit{Cao et al.} [2009] with the parameters tuned for a 16-level ocean modern world (specifically: \texttt{worjh2}). For fake and paleo worlds with an 16-level ocean, this is the recommended template.\footnote{If you want \uline{exactly} the same physics as per e.g. \textit{Cao et al.} [2009], use: \linebreak\textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASES.config} as a template.}
-\\All the same changes as per for the 8-level ocean circulation model based configuration -- above -- are set:
+\\This is based on the physics calibration as used in e.g. \textit{Cao et al.} [2009] with the parameters tuned for a 16-level ocean modern world (specifically: \texttt{worjh2}). For fake and paleo worlds with an 16-level ocean, this is the recommended template.\footnote{If you want \uline{exactly} the same physics as per e.g. \textit{Cao et al.} [2009], use: \\\textsf{\footnotesize cgenie.eb\_go\_gs\_ac\_bg.worjh2.BASES.config} as a template.} This includes the same changes as per made for the 8-level ocean circulation model based configuration:
 \begin{itemize}[noitemsep]
 \vspace{1mm}
 \item The ocean starts warmer (\(5^{\circ}C\)).
@@ -8818,6 +8831,7 @@ go_diso=.true.
 As per for the 8-level ocean configuration, it is recommended to implement simple horizontal/vertical (\texttt{.false.}) mixing.
 \end{itemize}
 
+\vspace{1mm}
 Finally, it should be noted that compared to the \textit{Cao et al.} [2009] configuration, there is no modification of atmospheric diffusivity over the Southern Ocean and Antarctica, which was added to improve the seasonal sea-ice properties in the Southern Ocean in the \texttt{worjh2} modern configuration.\footnote{The parameters for this were:
 \\\texttt{\# diffusivity scaling factor}
 \\\texttt{ea\_diffa\_scl=0.25}
@@ -8833,8 +8847,9 @@ Finally, it should be noted that compared to the \textit{Cao et al.} [2009] conf
 \noindent\rule{4cm}{0.5pt}
 \subsubsection{1b. Defining your 'world' in the \textit{base-config}}
 
-You are now going to copy-paste in the block of parameters that defines the \textbf{muffingen}-generated world.
+Having chosen a \textit{base-config} file to work with, you are now going to copy-paste in the block of parameters that defines the \textbf{muffingen}-generated world.
 
+\vspace{2mm}
 In the template \textit{base-config} there is a highlighted (\(<<<\;\;\;\;\;>>>\)) line in the  file:
 \footnotesize\vspace{-2pt}\begin{verbatim}
 # *******************************************************************
@@ -8850,8 +8865,9 @@ Copy and paste the contents of the \textbf{muffingen} output file\footnote{In th
 into the template file where indicated -- immediately above, immediately below, or simply replacing the entire \(<<<\;\;\;\;\;>>>\) line.
 
 %------------------------------------------------
+\newpage 
+%------------------------------------------------
 %
-\noindent\rule{4cm}{0.5pt}
 \subsubsection{1c. Defining tracers in the \textit{base-config}}
 
 As per for defining the specific world, there is an explicit section of the template \textit{base-config} that needs to be edited:
@@ -8872,7 +8888,7 @@ GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
 # *******************************************************************
 \end{verbatim}\vspace{-2pt}\normalsize
 
-The template \textit{base-config} files come with just 2 ocean tracers assumed -- temperature and salinity (i.e., there is no carbon cycle or ocean nutrients \textit{etc.} enabled at this point). These are implicit and essential to ocean circulation and hence are not explicitly listed. However, the count of total number of tracers in the ocean (which determines the compiled tracer and tracer-related array size) includes them, i.e.
+The template \textit{base-config} files come with just 2 ocean tracers defined -- temperature and salinity (i.e., there is no carbon cycle or ocean nutrients \textit{etc.} enabled at this point). These are implicit and essential to ocean circulation and hence are not  listed. However, the count of total number of tracers in the ocean (which determines the compiled tracer and tracer-related array size) includes them, i.e.
 
 \footnotesize\vspace{-2pt}\begin{verbatim}
 # Set number of tracers
@@ -8901,21 +8917,26 @@ GOLDSTEINNTRACSOPTS='$(DEFINE)GOLDSTEINNTRACS=2'
 \end{enumerate}
 \vspace{1mm}
 
-A series of template tracer lists, taken from published configurations, are also provided as part of the \textbf{muffingen} release, and are as described below:
+%------------------------------------------------
+\newpage 
+%------------------------------------------------
+
+A series of template tracer lists, taken from published configurations, are also provided:
 
 \begin{itemize}[noitemsep]
 
-\vspace{2mm}
+\vspace{1mm}
 \item \textsf{\small TRACERCONFIG.ABIOTIC.txt}
 \vspace{1mm}
 \\This is rather trivially ... the same as in the \textit{base-config} templates and defines an ocean (and atmosphere) with no biogeochemical tracers, just T and S in the ocean.
-\\You might use this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean (see HOW-TO on diagnosing how the model works).
+\\You might use this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean (see HOW-TO on diagnosing how the model works) which you would do by un-commenting the line that defines 3 total tracers (and comment the line defining just 2), and un-comment the line setting: \textsf{\footnotesize gm\_ocn\_select\_48=.true.}
 
 \vspace{2mm}
 \item \textsf{\small TRACERCONFIG.Ridgwelletal.2007.txt}
 \vspace{1mm}
-\\This is the set of tracers used in \textit{Ridgwell et al.} [2007] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools, and the capability for accounting for sulphate-reduction with dissolved \(O_{2}\) is depleted. Alternative (non-modern) \(Mg/Ca\) ratios are also allowed for.
-\\This is one of the simplest but most versatile tracer sets, particularly for paleo, when simulating \(^{13}C\) may be important. It is usable with any \(PO_{4}\)-only based biological scheme, including \textbf{ECOGEM} with \(Fe\) cell quotas disabled (e.g. as in \textit{Wilson et al.} [2018]). Other past (published) applications include:
+\\This is the set of tracers used in \textit{Ridgwell et al.} [2007] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools, and the capability for accounting for sulphate-reduction with dissolved \(O_{2}\) is depleted.
+\\This is one of the simplest but most versatile tracer sets, particularly for paleo, when simulating \(^{13}C\) may be important. It is usable with any \(PO_{4}\)-only based biological scheme, including \textbf{ECOGEM} with \(Fe\) cell quotas disabled (\textit{Wilson et al.} [2018]). Other publications include:
+\vspace{1mm}
 \begin{itemize}[noitemsep]
 \item \textit{Ridgwell and Schmidt} [2010]
 \item \textit{Ridgwell and Hargreaves} [2007]
@@ -8925,14 +8946,14 @@ A series of template tracer lists, taken from published configurations, are also
 \vspace{2mm}
 \item \textsf{\small TRACERCONFIG.Caoetal.2009.txt}
 \vspace{1mm}
-\\This is the set of tracers used in \textit{Cao et al.} [2009] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools. \\Unlike \textsf{\footnotesize TRACERCONFIG.Ridgwelletal.2007.txt}, there are no \(SO_{4}\) or \(H_{2}S\) tracers defined in the ocean and hence no potential for sulphate-reduction. Excess oxygen consumption then results in the creation and transport (and subsequent destruction) of negative concentrations of \(O_{2}\). Kinetically (and in terms of large-scale patterns of oxygenation), this is very similar to creating and then re-oxidizing hydrogen sulphide -- see Meyer et al. [2016].
+\\This is the set of tracers used in \textit{Cao et al.} [2009] and defines a \(PO_{4}\)-based biological pump, with \(^{13}C\) in all the carbon pools. \\Unlike \textsf{\footnotesize TRACERCONFIG.Ridgwelletal.2007.txt}, there are no \(SO_{4}\) or \(H_{2}S\) tracers defined in the ocean and hence no potential for sulphate-reduction. Excess oxygen consumption then results in the creation and transport (and subsequent destruction) of negative concentrations of \(O_{2}\). Kinetically (and in terms of large-scale patterns of oxygenation), this is very similar to creating and then re-oxidizing hydrogen sulphide -- see \textit{Meyer et al.} [2016].
 \\This set of tracers also includes radiocarbon \(^{14}C\) in all the carbon pools, for diagnosing ocean circulation (and water mass ages). Additionally, both \(CFC-11\) and \(CFC-12\) are included for tracing deep-water formation. See \textit{Cao et al.} [2009] for how these tracers are used.
 
 \vspace{2mm}
 \item \textsf{\small TRACERCONFIG.Odalenetal.2019.txt}
 \vspace{1mm}
 \\This is the set of tracers used in \textit{Odalen et al.} [2019] and defines a biological pump with both \(PO_{4}\) and \(Fe\) co-limitation. There are no \(SO_{4}\) or \(H_{2}S\) tracers defined in the ocean and hence no potential for sulphate-reduction, but \(^{13}C\) is included in all the carbon pools.
-\\This set of tracers includes a variety of numerical/color tracers for diagnosing pre-formed properties -- here of \(DIC\), \(ALK\), \(O_{2}\), \(PO_{4}\), and \(\delta^{13}C\) (see: 'diagnose how the model works' HOW-TO).
+\\This set of tracers includes a variety of numerical/color tracers for diagnosing pre-formed properties \footnote{See: 'diagnose how the model works' HOW-TO} -- here of \(DIC\), \(ALK\), \(O_{2}\), \(PO_{4}\), and \(\delta^{13}C\).
 \\The iron cycle is the original configuration, where 3 separate tracers are included: \(Fe\) (free dissolved iron), \(L\) (free ligands), and \(FeL\) (iron bound to ligands). Because the equilibrium between these tracers is re-solved every time-step (and used to determine the \(Fe\) concentration for scavenging), there is redundancy, and in practice, only 2 tracers are needed. Subsequent iron cycle scheme hence use only 2 tracers (e.g. see: \textsf{\footnotesize TRACERCONFIG.Wardetal.2018.txt}). The 3-tracer scheme was also used in \textit{Tagliabue et al.} [2016].
 
 \vspace{2mm}
@@ -8948,7 +8969,7 @@ A series of template tracer lists, taken from published configurations, are also
 \noindent\rule{4cm}{0.5pt}
 \subsubsection{1d. Enabling science modules in the \textit{base-config}}
 
-The final step in configuring your \textit{base-config} file, is to ensure that all the science modules you wish to include are included (and those you do not want, are not). The template base-config files specify the basic/simply climate system combination of \textbf{GOLDSTEIN} ocean circulation model, \textbf{GOLDSTEIN} sea-ice model, and the \textbf{EMBM} atmospheric model. In addition, the atmospheric geochemistry module (\textbf{ATCHEM}) and the ocean biogeochemsitry module (\textbf{BIOGEM}) are selected. These settings look like:
+The final step in configuring your \textit{base-config} file, is to ensure that all the science modules you wish to include are included (and those you do not want, are not). The template \textit{base-config} files specify the basic/simply climate system combination of \textbf{GOLDSTEIN} ocean circulation model, \textbf{GOLDSTEIN} sea-ice model, and the \textbf{EMBM} atmospheric model. In addition, the atmospheric geochemistry module (\textbf{ATCHEM}) and the ocean biogeochemsitry module (\textbf{BIOGEM}) are selected. These settings look like:
 
 \footnotesize\vspace{-2pt}\begin{verbatim}
 # *******************************************************************
@@ -8968,13 +8989,16 @@ ma_flag_ecogem=.FALSE.
 # *******************************************************************
 \end{verbatim}\vspace{-2pt}\normalsize
 
-\noindent Note that \textbf{ATCHEM} and \textbf{BIOGEM} have to be selected together, as do \textbf{SEDGEM} and \textbf{ROKGEM} (if you want an 'open system because \textbf{ROKGEM} provides the weathering input). \textbf{ECOGEM} is a replacement for the implicit biological export scheme in \textbf{BIOGEM} and hence requires \textbf{BIOGEM} to be selected (and hence also \textbf{ATCHEM}).
+\noindent Note that \textbf{ATCHEM} and \textbf{BIOGEM} have to be selected together, as do \textbf{SEDGEM} and \textbf{ROKGEM} (if you want an 'open system because \textbf{ROKGEM} provides the weathering input). \textbf{ECOGEM} is a replacement for the implicit biological export scheme in \textbf{BIOGEM} and hence requires \textbf{BIOGEM} to be selected (and hence also \textbf{ATCHEM}). If you want the \textbf{ECOGEM} marine ecosystem model, set \texttt{ma\_flag\_ecogem=.TRUE.}
 
-\uline{Remember} -- if you want the ECOGEM marine ecosytem model, to set \texttt{ma\_flag\_ecogem=.TRUE.}
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
 
 %------------------------------------------------
+\newpage 
+%------------------------------------------------
 %
-\noindent\rule{4cm}{0.5pt}
 \subsubsection{2. Choosing a template \textit{user-config}}
 
 The final file creation step is for/of a \textit{user-config} file. Once again -- you could take a published configuration from one of the \textsf{\footnotesize genie-userconfigs/MS} sub-directories or an EXAMPLE, copy and rename it and then edit in any changes you need.
@@ -9020,7 +9044,7 @@ These are all described in detail for \textsf{\footnotesize USERCONFIG.PALEO.BIO
 
 \vspace{2mm}
 
-The template \textit{user-configs} in full, are:
+The provided template \textit{user-config} files are:
 
 \begin{itemize}[noitemsep]
 
@@ -9028,7 +9052,7 @@ The template \textit{user-configs} in full, are:
 \item \textsf{\small USERCONFIG.ABIOTIC.TRACER.SPIN}
 \vspace{1mm}
 \\This is as very basic template for an ocean (and atmosphere) with no carbon cycle.
-\\You might use or adapt this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean\footnote{If so, un-comment the 'optional' parameter setting.} (see HOW-TO on diagnosing how the model works).\\While the template \textit{user-config} could be used with any degree of complexity of tracers, it is designed for use with \textsf{\footnotesize TRACERCONFIG.ABIOTIC.txt}, with or without the 3rd tracer in the \textit{base-config} needed for diagnosing ventilation age: \texttt{gm\_ocn\_select\_4=.true.}
+\\You might use or adapt this if you were only interested in questions of ocean circulation and climate, although even then, you might want to add an age tracer to the ocean\footnote{If so, un-comment the 'optional' parameter setting.} (see HOW-TO on diagnosing how the model works).\\While the template \textit{user-config} could be used with any degree of complexity of tracers, it is designed for use with \textsf{\footnotesize TRACERCONFIG.ABIOTIC.txt}, with or without the 3rd tracer in the \textit{base-config} needed for diagnosing ventilation age: \texttt{gm\_ocn\_select\_48=.true.}
 
 \vspace{2mm}
 \item \textsf{\small USERCONFIG.MODERN.BIOGEM.PO4.SPIN}
@@ -9206,14 +9230,23 @@ Additional recommend changes for sinking and water column remineralziation, reac
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
-\item First, ensure that you have remembered to copy/transfer the entire configuration subdirectory to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
+\item First, ensure that you have remembered to copy/transfer the entire configuration file subdirectory created by \textbf{muffingen}\footnote{Which by default will appear in a directory: \textsf{\footnotesize INPUT.EXAMPLES}} to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
 \vspace{1mm}
 \item Next, your new \textit{base-config} will need to be transferred to: \textsf{\footnotesize cgenie.muffin/genie-main/configs}.
-\\Ensure that it has a \textsf{\footnotesize .config} file extension. Configuration subdirectory to: \textsf{\footnotesize cgenie.muffin/genie-paleo}.
+\\Ensure that it has a \textsf{\footnotesize .config} file extension.
 \vspace{1mm}
-\item Your \textit{user-config} can go 'anywhere' ... ish. Putting it directly in \textsf{\footnotesize genie-userconfigs}\footnote{The directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then just \texttt{/}} may eventually make things over-crowded. Better is to create a sub-directory of \textsf{\footnotesize genie-userconfigs} (or even a sub-directory of this) and place it there.\footnote{If you place the \textit{user-config} file into a sub-directory  \textsf{\footnotesize myexperiments}, the directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then \texttt{myexperiments}}
+\item Your \textit{user-config} can go 'anywhere' ... ish. Putting it directly in \textsf{\footnotesize genie-userconfigs}\footnote{The directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then just \texttt{/}} may eventually make things over-crowded. Better is to create a sub-directory of \textsf{\footnotesize genie-userconfigs} (or even a sub-directory of this) and place it there \footnote{If you place the \textit{user-config} file into a sub-directory  \textsf{\footnotesize myexperiments}, the directory parameter passed to \textsf{\footnotesize runmuffin.sh} is then \texttt{myexperiments}} or simply in: \textsf{\footnotesize genie-userconfigs/LABS}
 \vspace{1mm}
-\item Checking the consistency between the tracers defined in the base-config and the experiment parameter requested in the \textit{user-config} is the trickiest part. Refer to some of the published configurations (best) and/or EXAMPLES for guidance.
+\item Checking the consistency between the tracers defined in the \textit{base-config} and the experiment parameter requested in the \textit{user-config} is the trickiest part. Refer to some of the published configurations (best) and/or EXAMPLES for guidance.
+\vspace{1mm}
+\\Remember that if you don't want any additional tracers, the tracer total line in the \textit{base-config} should be:
+\\\texttt{\small GOLDSTEINNTRACSOPTS='\$(DEFINE)GOLDSTEINNTRACS=2'}
+\vspace{1mm}
+\\If you want a single color (age) tracer, you need:
+\\\texttt{\small GOLDSTEINNTRACSOPTS='\$(DEFINE)GOLDSTEINNTRACS=3'}
+\\\uline{and} the additional line:
+\\\texttt{\small gm\_ocn\_select\_48=.true.     \#   colr -- 'RED numerical (color) tracer'} 
+\vspace{1mm}
 \\ Sometimes it is best simply to start the experiment running and see what happens -- there are checks (not comprehensive) in the code to see if you have the necessary tracers selected. Read any warnings that are reported as the experiment initializes, but often you can ignore these.
 \\\uline{Ensure} that the total number of defined tracers equals the number of selected tracers you have listed (plus temperature and salinity) in the \textit{base-config.}
 \vspace{1mm}
