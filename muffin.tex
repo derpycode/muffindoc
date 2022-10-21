@@ -2134,7 +2134,7 @@ $ ./runmuffin.sh muffin.C.0__rdP1_.r EXAMPLES muffin.C.yyyrdP1_.r.SPIN 100
 \end{verbatim}
 \normalsize\vspace{-2mm}
 
-\noindent ... and of course creating your own distinct name (and copied/re-named \textit{user-config}) for the experiment (which you might also move to a different directory), e.g.
+\noindent ... and of course creating your own \uline{distinct name} (and copied/re-named \textit{user-config}) for the experiment (which you might also move to a different directory), e.g.
 
 \vspace{-2mm}\small
 \begin{verbatim}
@@ -2143,7 +2143,9 @@ $ ./runmuffin.sh muffin.C.0__rdP1_.r LABS experiment_0Ma 100
 \end{verbatim}
 \normalsize\vspace{-2mm}
 
-\noindent (just make sure that the time code in the \textit{base-config} and \textit{re-start} match!)
+\noindent Make sure that the time code in the \textit{base-config} and \textit{re-start} match!
+
+\noindent But also, make sure that your chosen \textit{user-config} name is not the same as the \textit{re-start} name ... (In the example, \textsf{\footnotesize muffin.C.yyyrdP1\_.r.SPIN} is renamed to \textsf{\footnotesize experiment\_0Ma}, and then uses the restart: \textsf{\footnotesize muffin.C.0\_\_rdP1\_.r.SPIN}.)
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
@@ -2290,9 +2292,14 @@ Atmospheric \(pCO2\) also changes with time. Again, \textit{Pohl et al.} [2022] 
 
 So in addition to having pre-industrial radiative forcing (\(x1\)) set for for 0 Ma, you might create some new experiments for some (or all!) of the older time-slices with more appropriate \(CO_{2}\) (or rather: radiative forcing) values. And where are you going to get earlier-in-geological time \(CO_{2}\) values from ... ? Some possibilities (and including tracing down the data-sets provided in association with the publications, although you might simply estimate values from published curves and individual points in publication figures):
 
-\vspace{1mm}
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
 \begin{itemize}[noitemsep]
+\vspace{1mm}
 \item Foster, G., Royer, D. \& Lunt, D. Future climate forcing potentially without precedent in the last 420 million years. \textit{Nat Commun} 8, 14845 (2017). \\\textbf{\href{https://doi.org/10.1038/ncomms14845}{https://doi.org/10.1038/ncomms14845}}
+\vspace{1mm}
 \item D.L. Royer. CO2-forced climate thresholds during the Phanerozoic.
 \textit{Geochimica et Cosmochimica Acta}, 70 (2006), pp. 5665-5675.
 \end{itemize}
@@ -2339,7 +2346,10 @@ Note that these experiment might take some time ... typically, a minimum of abou
 
 
 
-Two example configurations and \textit{re-starts} are given -- one for the late Holocene (effectively, modern (preindustrial)) and one for the last Glacial Maximum (LGM). Both model configurations are derived from fully coupled GCM experiments using the HadCM3 model and hence \textbf{muffin} is forced by 2D stress and speed simulated by the GCM, plus a zonal mean albedo profile. The two configurations\footnote{Note that they differ only minutely in their filename ...} are:
+Two example configurations and \textit{re-starts} are given -- one for the late Holocene (effectively, modern (or preindustrial)), and one for the last Glacial Maximum (LGM) (nominally at \(21ka\)). Both model configurations are derived using \textbf{muffingen} from fully coupled GCM experiments created with the HadCM3 fully coupled GCM, and hence \textbf{muffin} is forced by 2D stress and wind speed, plus a zonal mean albedo profile, all originally simulated by a GCM.
+
+\vspace{1mm}
+The two configurations\footnote{Note that they differ only minutely in their filename ...} are:
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -2350,7 +2360,7 @@ Two example configurations and \textit{re-starts} are given -- one for the late 
 \vspace{-2mm}\begin{verbatim}
 bg_par_ocn_force_scale_val_2=0.30
 \end{verbatim}\vspace{-2mm}
-here -- \(0.30 Sv\).
+i.e. a flux of \(0.30 Sv\).
 \vspace{1mm}
 \item \texttt{muffin.C.GIteiiva.r.SPIN}
 \vspace{1mm}
@@ -2359,16 +2369,17 @@ here -- \(0.30 Sv\).
 \vspace{-2mm}\begin{verbatim}
 bg_par_ocn_force_scale_val_2=0.05
 \end{verbatim}\vspace{-2mm}
-and so -- \(0.05 Sv\).
+i.e. a flux of \(0.05 Sv\).
 \end{enumerate}
 \vspace{1mm}
 
 Both configurations include a number 'age' tracer that records the mean time since a parcel of water last 'saw' the ocean surface -- the ventilation age.
 
-Note that the \textit{user-configs} are not in the sub-directory \textsf{\footnotesize LABS}, but instead in \textsf{\footnotesize EXAMPLES}. You can either copy them to \textsf{\footnotesize LABS} and run as normal, or run them from \textsf{\footnotesize EXAMPLES} by changing the \textit{user-config} sub-directory you specify at the command line when running an experiment (better to copy).
+\vspace{1mm}
+Note that the \textit{user-configs} are not in the sub-directory \textsf{\footnotesize LABS}, but instead in \textsf{\footnotesize EXAMPLES}. You can either copy them to \textsf{\footnotesize LABS} and run as normal, or run them from \textsf{\footnotesize EXAMPLES} by changing the \textit{user-config} sub-directory you specify at the command line when running an experiment (better to copy). Make sure that you change the name of the \textit{user-configs} you run so that they are not the same as the \textit{re-start} experiment names ...
 
 \vspace{1mm}
-You can run the Holocene and LGM experiments on from their corresponding \textit{re-start} (and assuming that you have renamed the \textit{user-configs} to \textsf{\footnotesize experiment\_HOL} and \textsf{\footnotesize experiment\_LGM}, respectively)\footnote{Make sure that you copy and re-name the \textit{user-config} files otherwise you'll over-write the re-starts that you just downloaded!} by:
+You can run the Holocene and LGM experiments on from their corresponding \textit{re-start} (and assuming that you have renamed the \textit{user-configs} to \textsf{\footnotesize experiment\_HOL} and \textsf{\footnotesize experiment\_LGM}, respectively)\footnote{Make sure that you copy and re-name the \textit{user-config} files otherwise you'll over-write the re-starts that you just downloaded!} by e.g.:
 
 \small\vspace{-2pt}\begin{verbatim}
 $ ./runmuffin.sh muffin.C.GIteiiaa.r EXAMPLE experiment_HOL 100 
@@ -2377,13 +2388,17 @@ $ ./runmuffin.sh muffin.C.GIteiiva.r EXAMPLES experiment_LGM 100
         muffin.C.GIteiiva.r.SPIN
 \end{verbatim}\vspace{-2pt}\normalsize
 
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
 Experiments are a little more challenging to really get anything out of because the model steady-state take ca. 5000 or so years to come close to steady-state. Hence it is unlikely that you will see the full impact of any parameter change unless you run an experiment overnight on the queue. 50-100 years would probably the minimum to start to see meaningful adjustments to e.g. ocean circulation.
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.5pt}
 \vspace{2mm}
 
-\noindent There are fewer obvious interesting experiments for the late Holocene configuration and re-start, but you might still explore some perturbations of ocean circulation on the basis that most (almost without exception all) model deglacial/AMOC collapse experiments are run and published based on a modern or slightly modified modern configuration. SO for instance, you might set the flux adjustment that maintains the AMOC to zero:
+\noindent There are fewer obvious interesting experiments for the late Holocene configuration and re-start, but you might still explore some perturbations of ocean circulation on the basis that most (almost without exception all) model de-glacial/AMOC collapse experiments are run and published based on a modern or slightly modified modern configuration. SO for instance, you might set the flux adjustment that maintains the AMOC to zero:
 \vspace{-2mm}\begin{verbatim}
 bg_par_ocn_force_scale_val_2=0.0
 \end{verbatim}\vspace{-2mm}
@@ -2407,23 +2422,24 @@ You might also consider what a slightly strong LGM AMOC might look like in terms
 
 \section{The climate of the early Eocene}
 
-A previously spun-up state of early Eocene climate with cGENIE in a ca. 56 Ma configuration (\texttt{LAB\_5b.SPIN}) is provided as a starting point. A user-config (\texttt{LAB\_5b.EXAMPLE}) that continues on this climate state is run:
-\vspace{-1mm}\begin{verbatim}
+A previously spun-up state of early Eocene   (ca. 56 Ma) climate (\textsf{\footnotesize LAB\_5b.SPIN}) plus example \textit{user-config} (\textsf{\footnotesize LAB\_5b.EXAMPLE}) are provided, and run e.g.:
+\vspace{-1mm}\small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.p0055c.NONE LABS
  LAB_5b.EXAMPLE 10 LAB_5b.SPIN
-\end{verbatim}\vspace{-1mm}
-(Note that once again, for speed, no carbon cycle is selected in this configuration.)
-Again, as per for the late Cretaceous configuration, a configuration that includes the ocean dye (color) tracers is also provided. The corresponding user-config (\texttt{LAB\_5b.colorinjection}) that continues on this climate state can be run as follows:
-\vspace{-1mm}\begin{verbatim}
+\end{verbatim}\normalsize\vspace{-1mm}
+(Note that for speed, no carbon cycle is configured.)
+
+A second configuration is provided that includes the ocean dye (color) tracer. Using the same \textit{re-start}, the corresponding \textit{user-config} (\textsf{\footnotesize LAB\_5b.colorinjection}) for this can be run:
+\vspace{-1mm}\small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.p0055c.rb LABS
  LAB_5b.colorinjection 10 LAB_5b.SPIN
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent What to ‘do’ with this? Again – start by tracing and analyzing the patterns of ocean circulation in the Eocene world, as per how you did for the modern and Cretaceous system. Where does deep water form in the Eocene? Is the surface ocean circulation as expected?
+\noindent What to ‘do’ with this? Again – start by tracing and analyzing the patterns of ocean circulation in the Eocene world, as per how you did for the modern world. Where does deep water form in the Eocene? Is the surface ocean circulation as expected?
 Can you see any patterns emerging? At least in model world – what seems to be dictating the locations of deep water formation? Does overturning and/or surface circulation appear to significantly vary as a function of continental configuration or radiative forcing? If not, why not?
 
 \vspace{1mm}
@@ -2431,8 +2447,7 @@ Can you see any patterns emerging? At least in model world – what seems to be 
 \vspace{2mm}
 
 \noindent But how do you know how close, or not, the model climate is to ‘reality’?
-Available from the website, on the LH side of the page under ‘got data?’ at the bottom (item (7)), are 2 netCDF files containing proxy sea surface temperature (SST) data re-gridded to the cGENIE model grid. One is for pre-PETM SSTs, and one for peak PETM SSTs. (The data are from Dunkley Jones et al. [2013].)
-
+Available from \href{https://www.seao2.info/mymuffin.html}{my website}, on the LH side of the page under ‘got data?’ and at the bottom of the list, are 2 netCDF files containing proxy sea surface temperature (SST) data re-gridded to the cGENIE model grid. One is for pre-PETM SSTs, and one for peak PETM SSTs. (The data are from \textit{Dunkley Jones et al.} [2013].) 
 These netCDF files can be opened and visualized in exactly the same way in exactly the same way as per the cGENIE output files. You’ll see a few (there are not many!) data points, in a sea of grey (which stands for ‘no value’). (Note that it is best to turn data interpolation OFF.)
 
 More useful … is that the data distribution can be combined with the model ocean temperature output field, in a difference map (see earlier for notes on creating difference maps). You can thus visualize the pattern of model-data mismatch. (Note you might want to hit ‘Fit to data’ to autoscale the plot, or simply pick and manually enter a +/- limit for the data plotting, perhaps ensuring it is symmetrical about zero such that red anomalies could represent proxy SST values higher than in the model, and blue point data being lower than in the model.)
@@ -2443,7 +2458,7 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 \noindent\rule{4cm}{0.1mm}
 \vspace{2mm}
 
-\noindent So, starting with the pre-PETM data and given model configuration, make some assessment of how the model fits the data (or not). What might be the reason for the misfit? You might test adding, and adjusting, some of the parameter values controlling surface SST from the Cretaceous climate exercise. Can you reduce the model-data misfit?
+\noindent So, starting with the pre-PETM data and given model configuration, make some assessment of how the model fits the data (or not). What might be the reason for the misfit? You might test adding, and adjusting, some of the parameter values controlling surface SST from the Cretaceous climate exercise (next sub-section). Can you reduce the model-data misfit?
 
 \vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
@@ -2452,19 +2467,19 @@ Furthermore, in the Arrays tab, you can switch to a Zonal Average view rather th
 \noindent Finally, the PETM SST data given in the 2nd netCDF file are from the peak of the PETM. The ocean is rather warmer as compared to just prior to the PETM. Your task is to determine (either using the default model configuration, or your adjusted configuration) much radiative forcing (parameter \texttt{ea\_radfor\_scl\_co2}) and hence \(CO_{2}\) is required to explain this warming?
 
 %------------------------------------------------
-
+%
 \newpage
 
 %------------------------------------------------
 
 \section{The climate of the Cretaceous}
 
-A previously spun-up state of Maastrichtian climate with \textbf{cGENIE.muffin} in a ca. 70 Ma configuration\footnote{Note that for speed, no carbon cycle is selected in this configuration.} (\texttt{LAB\_5.SPIN}) is provided as a starting point. A \textit{user-config} (\texttt{LAB\_5.EXAMPLE}) that continues on this climate state is run:
+A previously spun-up state of Maastrichtian climate with \textbf{muffin} in a ca. 70 Ma configuration\footnote{Note that for speed, no carbon cycle is selected in this configuration.} (\texttt{LAB\_5.SPIN}) is provided as a starting point. A \textit{user-config} (\texttt{LAB\_5.EXAMPLE}) that continues on this climate state is run:
 
-\vspace{-1mm}\small\begin{verbatim}
+\vspace{-2mm}\small\begin{verbatim}
 $ ./runmuffin.sh cgenie.eb_go_gs_ac_bg.p0067f.NONE LABS
  LAB_5.EXAMPLE 10 LAB_5.SPIN
-\end{verbatim}\normalsize\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-2mm}
 
 Your task now is ... ‘simple’: Account for the Cretaceous reduced Equator-to-pole surface temperature gradient (compared to modern), particularly the apparently much warmer poles. Different data-based time-slices (including the Maastrichtian) are provided in \textit{Huber et al.} [2002], although the low latitude \(\delta^{18}O\) based temperatures are now not considered reliable. \textit{Jenkyns et al.} [2004] contains high latitude (Arctic) data for the Maastrichtian. There are proxy-derived latitudinal temperature gradients and model-data studies for earlier in the Cretaceous – the problem is essentially the same.
 
@@ -2472,9 +2487,13 @@ The 2-D NetCDF results file contains the surface air temperature field (and sea-
 
 \textbf{Panoply} will plot the zonal average for you (as used in model-data comparisons – e.g., see Bice and Norris [2002]) – in the Array(s) tab, the Plot can be set to Zonal Averages rather than Map. You can get a smooth curve by selecting Interpolate. Remember you can set (and fix) scales rather than let Panoply auto-scale continually.
 
-The following ‘controls’ over the climate system are provided to you in the form of a list of parameters at the bottom of the \texttt{LAB\_5.EXAMPLE} \textit{user-config} file for editing:
+\vspace{1mm}
+\noindent\rule{4cm}{0.1mm}
+\vspace{2mm}
 
-\vspace{-1mm}\small\begin{verbatim}
+\noindent The following ‘controls’ over the climate system are provided to you in the form of a list of parameters at the bottom of the \texttt{LAB\_5.EXAMPLE} \textit{user-config} file for editing:
+
+\vspace{-1mm}\footnotesize\begin{verbatim}
 # --- MISC -----------------------------------------------
 #
 # === ATMOSPHERE ===
@@ -2496,7 +2515,9 @@ go_13=1.531
 ea_11=1.531
 \end{verbatim}\normalsize\vspace{-1mm}
 
+%------------------------------------------------
 \newpage 
+%------------------------------------------------
 
 Most of these parameters are associated with the radiative forcing of climate or atmospheric transports. The most useful ones are likely to be:
 
