@@ -32,6 +32,15 @@ Figure \ref{fig:LABEL}
 \label{fig:LABEL}
 \end{figure}
 
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.4375]{FILENAME}
+\end{center}
+\vspace{-10pt}
+\caption{CAPTION}
+\label{fig:LABEL}
+\end{figure}
+
 \begin{enumerate}[noitemsep]
 \setlength{\itemindent}{.2in}
 \setcounter{enumi}{4}
