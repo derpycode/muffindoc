@@ -14708,7 +14708,7 @@ From the figures, it is noticeable that the 'simple' scheme, in applying a unifo
 %\noindent\rule{4cm}{0.5pt}
 %\vspace{2mm}
 
-\noindent \textbf{Note that this discussion is largely superseded by the provision of a block of calculated parameter values  in at the end of the file \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res}} that can then just be copy-pasted into the \textit{user-config} in lieu of actually having to 'think'. (But you would be best advised to read through this section anyway.)
+\noindent \textbf{> > Note that this discussion is largely superseded by the provision of a block of calculated parameter values  in at the end of the file \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res}} that can then just be copy-pasted into the \textit{user-config} in lieu of actually having to 'think'. (But you would be best advised to read through this section anyway.)
 \vspace{2mm}
 
 \noindent Finally ... examples are provided as to how to configure a fully 'open system' (excepting that of \(P\)). The command-line usage for these examples is:
@@ -14931,9 +14931,6 @@ However, note that for now, in making this calculation in the model and spitting
 \subsubsection{Set up a (silicate) weathering feedback}\label{subsec:set_up_a_weathering_feedback}
 \vspace{1mm}
 
-\textbf{Note that this discussion is largely superseded by the provision of a block of calculated parameter values  in at the end of the file \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res}} that can then just be copy-pasted into the \textit{user-config} in lieu of actually having to 'think'.
-
-\vspace{2mm}
 \noindent First ... ensure that the system is 'open' (i.e. ocean chemistry can evolve depending on the balance between weathering and burial):
 \vspace{-1mm}\small\begin{verbatim}
 # set an 'OPEN' system
@@ -15024,9 +15021,6 @@ and:
 rg_par_outgas_CO2=4.0E+12
 \end{verbatim}\normalsize\vspace{-1mm}
 
-\vspace{2mm}
-\item A final possibility is to assume volcanic CO$_{2}$ out-gassing, which then constrains the silicate weathering flux component. The carbonate weathering flux then becomes whatever is required to make the total Ca$^{2+}$ weathering flux equal to global CaCO$_{3}$ burial.
-
 \end{enumerate}
 
 \vspace{0mm}
@@ -15049,14 +15043,12 @@ The imbalance between silicate weathering and volcanic CO$_{2}$ out-gassing is g
 \end{enumerate}
 \vspace{1mm}
 
-An exact adjustment can be made for the second and third possibilities, with the easiest being to reduce the out-gassing flux value by the amount of excess weathering. For the first option, a couple of iterations will typically be required in order to determine the new reference temperature value that gives rise to a silicate weathering balance. The second option is the recommended one, with the third being the least recommended.
-Regardless of which of the 3 options, the total weathering flux, given in the BIOGEM time-series file \texttt{biogem\_series\_diag\_weather\_Ca.res}, will now be slightly different from the required burial flux. This either requires that the value of the reference carbonate weathering parameter (\texttt{rg\_par\_weather\_CaCO3}) is now slightly adjusted, or that a slightly different global carbonate burial flux is allowed.
+An exact adjustment can be made for the second and third possibilities, with the easiest being to reduce the out-gassing flux value by the amount of excess weathering. For the first option, a couple of iterations will typically be required in order to determine the new reference temperature value that gives rise to a silicate weathering balance. Regardless of which of the 3 options, the total weathering flux, given in the BIOGEM time-series file \texttt{biogem\_series\_diag\_weather\_Ca.res}, will now be slightly different from the required burial flux. This either requires that the value of the reference carbonate weathering parameter (\texttt{rg\_par\_weather\_CaCO3}) is now slightly adjusted, or that a slightly different global carbonate burial flux is allowed.
 
 \begin{enumerate}
 \vspace{1mm}
 \setcounter{enumi}{3}
-\item You can of course \uline{simply live with} a slightly different (long-term), or drifting (short-term), atmospheric \(CO_{2}\) value. 
-\\This might be your best bet if the difference is small, and/or it doesn't really matter, and/or you did not understand any of the above.
+\item Probably best/easiest, is to simply \textbf{ignore this and live with a slight initial drift in atmospheric \(CO_{2}\)}. If you use the block of calculated parameter values at the end of the file \textsf{\footnotesize seddiag\_misc\_DATA\_GLOBAL.res}} this is what you will get (assuming you have seasonal insolation forcing -- the problem does not exist if there is no seasonality).
 \end{enumerate}
 
 \vspace{1mm}
