@@ -4586,6 +4586,9 @@ In contrast, in this chapter, we are going get started with the '\textbf{ECOGEM}
 Plankton biomass creates a delay term in the system such that the occurrence of warm temperatures in a sunlit surface with abundant nutrients does not guarantee immediate and massive carbon export, because the ecosystem biomass must build up first. This could be important for e.g. the timing of spring blooms.
 
 \vspace{1mm}
+Note that while the experimental configurations are based on those of \textit{Ward et al.} [2018], here we use a slightly different modern continental configuration and physics tuning (and hence ocean circulation state) and a slightly different iron cycle tuning. \textbf{ECOGEM} itself has also been adjusted to reduce the carbon export relative to phosphorous and has photosynthesis suppressed under sea-ice.
+
+\vspace{1mm}
 \noindent\rule{4cm}{0.1mm}
 %------------------------------------------------
 
@@ -4601,9 +4604,9 @@ $ ./runmuffin.sh muffin.CBE.p_worjh2.BASESFeTDTL LABS EXP.8.1 10
 
 The model will run as before ... except slower ... :( as muffin has to calculate plankton growth and ecological interactions in addition to everything else it did previously.
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-%------------------------------------------------
+%\vspace{1mm}
+%\noindent\rule{4cm}{0.1mm}
+%%------------------------------------------------
 
 %------------------------------------------------
 \newpage
@@ -4813,78 +4816,6 @@ Questions:
 \item What affect does a high Z:P ratio have on the biomass of the phytoplankton population?\footnote{For example, in terms of the chlorophyll concentration.}
 \end{itemize}
 
-\vspace{1mm}
-\noindent\rule{4cm}{0.1mm}
-%------------------------------------------------
-
-\subsubsection{The role of iron limitation}
-\vspace{1mm}
-
-Up to this point, we have included both phosphate and iron as limiting nutrients. You might want to know more about the importance (or not) of iron availability in determining patterns of biological productivity.
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-\item You can get a more exact picture of the nutrient limitation terms via the netCDF output variables: \textsf{\footnotesize eco2D\_xGamma\_Fe\_001} and \textsf{\footnotesize eco2D\_xGamma\_P\_001}.
-
-\vspace{1mm}
-These two variables take values of between 0 and 1. A \textsf{\footnotesize 1} indicates that the factor is not limiting to growth. A \textsf{\footnotesize 0} indicates the factor is completely preventing growth.
-\vspace{1mm}
-\begin{itemize}
-\item In what regions are iron and phosphorus more or less limiting to growth? \item In regions where neither is limiting, what other factors might be important?
-\end{itemize}
-
-%------------------------------------------------
-\newpage
-%------------------------------------------------
-%
-\vspace{1mm}
-\item  Plankton stoichiometry plays a critical role in determining which nutrient is most limiting to growth. You can increase the plankton \(Fe:C\) ratio by increasing the minimum and maximum iron quotas. Look at the parameters \texttt{eg\_qminFe\_a} and \texttt{eg\_qmaxFe\_a} in the \textit{user-config} file.
-
-\vspace{1mm}
-\begin{itemize}
-\item What happens to the ecosystem if you increase these parameters by a factor of 2, 5 or 10?
-\item How does a change in these parameters affect the model behaviour?
-\item What has changed in terms of the patterns of nutrient limitation?
-\item What has happened to the concentration of the limiting and non-limiting nutrient?
-\end{itemize}
-
-\vspace{1mm}
-\item[NOTE:] Rather than changing the parameter and subsequently forgetting what you started with ... instead, you might copy/paste a new version of the line in question, and comment out the original by placing a `\texttt{\#}' at the beginning of the line. For example:
-\vspace{-1mm}\small\begin{verbatim}
-#eg_qminFe_a = 3.0e-6
-eg_qminFe_a  = 6.0e-6
-\end{verbatim}\normalsize\vspace{-1mm}
-changes the minimum iron quota by a factor of 2, whilst keeping a record of the original setting (inactivated by the \texttt{\#}). Or, you might do something like:
-\vspace{-1mm}\small\begin{verbatim}
-eg_qminFe_a  = 6.0e-6 # 3.0e-6
-\end{verbatim}\normalsize\vspace{-1mm}
-that reduces the total number of lines you end up with in the \textit{user-config} file.
-
-\vspace{1mm}
-\item Nutrient supply ratios are also important in determining the limiting nutrient.
-\\The \texttt{bg\_par\_det\_Fe\_sol\_exp} parameter determines the solubility of atmospheric iron inputs in seawater. Decreasing the value of \texttt{bg\_par\_det\_Fe\_sol\_exp} will therefore decrease the iron-to-phosphorus supply ratio.
-
-\vspace{1mm}
-\begin{itemize}
-\item What happens to the ecosystem if you decrease \texttt{bg\_par\_det\_Fe\_sol\_exp} by e.g. 10, 20 or 50\%?
-\end{itemize}
-
-\vspace{1mm}
-\item Lastly, you can turn off entirely the iron requirement of plankton:
-\vspace{-1mm}\small\begin{verbatim}
-# include cellular quota: Fe -- no Fe limitation enabled
-eg_useFe                    =.FALSE.
-eg_fquota                   =.FALSE.
-\end{verbatim}\normalsize\vspace{-1mm}
-\vspace{1mm}
-\begin{itemize}
-\item What happens to the patterns of biological productivity as well as global total export?
-\end{itemize}
-
-
-\end{enumerate}
-
 %------------------------------------------------
 \newpage
 %------------------------------------------------
@@ -5044,7 +4975,7 @@ We are now going to switch to a more diverse version of the size-structured ecos
 \vspace{1mm}
 \item Create a new \textit{user-config} and point to the new \textit{ecosystem configuration} file.
 \vspace{1mm}
-\item Run the new model for at least 20 years (this will probably take about 10-15 minutes).
+\item Run the new model for at least 20 years (this will probably take about 10 minutes).
 \end{enumerate}
 
 \vspace{-0mm}
@@ -5444,16 +5375,6 @@ Here we consider a series of examples\footnote{Either published or in the works 
 
 Three examples come  from the Last Glacial Maximum, with direct comparison being made to post glacial time (here, the late Holocene), with the intention to explore the role of climate cooling, altered ocean circulation, and increased iron supply to the ocean in modifying plankton distributions and size structures. Secondly, from around the time of the Paleocene-Eocene Thermal Maximum (PETM) some 55 Myr ago, now both considering a different paleogeography, a warmer ocean, and then transient warming on top of that. And thirdly, marine ecology and carbon cycling in the aftermath of the impact and extinction event at the end of the Cretaceous, some 66 Myr ago, and return to our earlier exploration of what happens if you lose the larger plankton in the ocean.
 
-We start with a published example of modelling ecology in a (past (Eocene)) warmer ocean from \textit{Wilson et al.} [2018]\footnote{Wilson, J.D., F.M. Monteiro, D.N. Schmidt, B.A. Ward, and A. Ridgwell, Linking marine plankton ecosystems and climate: A new modeling approach to the warm early Eocene climate, Paleoceanography and Paleoclimatology, 33, 1439–1452, DOI: 10.1029/2018PA003374 (2018).}.
-
-%------------------------------------------------
-\newpage
-%------------------------------------------------
-%
-\subsection*{Modelling paleo marine ecology}
-
-
-
 %------------------------------------------------
 \newpage
 %------------------------------------------------
@@ -5489,17 +5410,25 @@ Neither of these configurations currently have an ecosystem enabled, but they wi
 \begin{enumerate}[noitemsep]
 
 \vspace{1mm}
-\item \textit{base-config} -- First, you need to enable the \textbf{ECOGEM} module.
+\item \textit{base-config}
+
+\vspace{1mm}
+First, you need to enable the \textbf{ECOGEM} module.
+\vspace{1mm}
 \\At the top of the HOL \textit{base-config} file \textsf{\footnotesize muffin.CB.GIteiiaa.BASESFeTDTL\_Crb}\footnote{And similarly for the LGM one.} you will see the line:
-\vspace{-2mm}\begin{verbatim}
+\vspace{-2mm}\small\begin{verbatim}
 ma_flag_ecogem=.FALSE.
-\end{verbatim}\vspace{-2mm}
+\end{verbatim}\normalsize\vspace{-2mm}
 Simply change this to \texttt{.TRUE.}
 \vspace{6mm}
 \pagebreak
 
 \vspace{1mm}
-\item \textit{user-config} -- Next, some deletions and additions are needed in the \textit{user-config} provided (which only has implicit biological export enabled).
+\item \textit{user-config}
+
+\vspace{1mm}
+Next, some deletions and additions are needed in the \textit{user-config} provided (which only has implicit biological export enabled).
+\vspace{1mm}
 \\In the section of the file under the heading:
 \footnotesize\begin{verbatim}
 #
@@ -5507,12 +5436,13 @@ Simply change this to \texttt{.TRUE.}
 #
 \end{verbatim}\normalsize
 you are going to delete everything there (in that section) and replace it with:
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 # biological scheme ID string
 bg_par_bio_prodopt="NONE"
-\end{verbatim}\vspace{-1mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 The only other thing you need then is a section of code that defines all the \textbf{ECOGEM} ecological parameters.
-\\ Go open file \textsf{\footnotesize wardetal.2018.ECOGEM.SPIN}, which you can find in the \textit{user-config} sub-directory \textsf{\footnotesize MS/wardetal.2018}, and you'll see under the heading:
+\vspace{1mm}
+\\ Go open file \textsf{\footnotesize muffin.CBE.p\_worjh2.BASESFeTDTL.FeMIP.SPIN}, which you can find in the \textit{user-config} sub-directory \textsf{\footnotesize MS/wardetal.2018}, and you'll see under the heading:
 \footnotesize\begin{verbatim}
 #
 # --- ECOGEM ----------------------------------------------------------
@@ -5520,6 +5450,7 @@ The only other thing you need then is a section of code that defines all the \te
 \end{verbatim}\normalsize
 a long list of parameter settings (down to the next section headed \texttt{DATA SAVING}). Simply copy-paste this entire section (including \texttt{ECOGEM} header lines if you like), anywhere in your \textit{user-config} file. At the very end of the file would do just fine.\footnote{Try and ensure that there is blank line at the very end of the file just in case \textbf{muffin} has any problems reading it in.}
 
+\vspace{1mm}
 And lastly ... under:
 \footnotesize\begin{verbatim}
 #
@@ -5528,12 +5459,19 @@ And lastly ... under:
 \end{verbatim}\normalsize
 
 (and the end of the section) add the following lines
-\vspace{-1mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 # kraus-turner mixed layer scheme on (1) or off (0)
 go_imld = 1
-\end{verbatim}\vspace{-1mm}
-This enables a 'mixed layer depth' scheme in the ocean circulation model that \textbf{ECOGEM} needs to calculate light limitation during esp. intervals of high latitude / wintertime deep mixing.
+# set mixed layer to be only diagnosed (for ECOGEM)
+go_ctrl_diagmld=.true.
+# add seaice attenuation of PAR
+eg_ctrl_PARseaicelimit=.true.
+# relative partitioning of C into DOM
+eg_par_beta_POCtoDOC=0.75
+\end{verbatim}\normalsize\vspace{-1mm}
+This enables a 'mixed layer depth' scheme in the ocean circulation model that \textbf{ECOGEM} needs to calculate light limitation during esp. intervals of high latitude / wintertime deep mixing, but then only allows \textbf{ECOGEM} to 'see' the depth and does not allow physical mixing in the ocean. Then limitation of photosynthesis added to sea-ice covered areas. Finally, an adjustment is made ot carbon vs. phosphorous in exported \(POM\).
 
+\vspace{1mm}
 This ... should do-it, i.e. you have added the same tuned ecosystem model as described in \textit{Ward et al.} [2018] to your LGM / HOL \textit{user-configs}.
 
 \end{enumerate}
@@ -5543,13 +5481,17 @@ This ... should do-it, i.e. you have added the same tuned ecosystem model as des
 Now you are ready to run new LGM and HOL experiments, with a full ecosystem in each\footnote{Remembering that presumably both your \textit{base-config} and \textit{user-config} file names are  different as compared to running the non \textbf{ECOGEM} version described in the \textsf{\footnotesize readme}.}.
 \vspace{1mm}
 
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
 Obvious questions to investigate include not only how ecosystems and patterns of biological export may have differed between LGM and HOL, but also how patterns of nutrients (\(PO_{4}\) and \(Fe\)) may have differed ... and also distributions of dissolved \(O_{2}\) in the ocean (and in the interior, rather than across the ocean surface). A water mass ventilation age tracer has also been simulated and the results of this will help in understanding how global circulation patterns differ between the 2 time intervals.
 
 You can also compare between with and without \textbf{ECOGEM} versions as the only thing that changes between pairs of HOL or pairs of LGM experiments is the biological scheme\footnote{Actually, this is not true, as in the \textbf{ECOGEM} enabled experiments, the mixed layer scheme in the coean circulation model is also activated and which has an impact on ocean circulation. You could then create a 3rd set of HOL+LGM experiments, using the basic \textbf{BIOGEM} implicit export biological scheme, but now also setting the \texttt{go\_imld} parameter to a value of \texttt{1}}.
 
 %------------------------------------------------
 \newpage
-\subsection*{The PETM}
+\subsection*{Warm climates of the past}
 
 In this practical we are going to look at the ocean as it \textit{might} have been just over 55 million years ago, at the Paleocene-Eocene Thermal Maximum (PETM) -- in short a lot warmer, and with a somewhat different continental configuration and hence ocean circulation. The exercise is based on a recent 'ECOGENIE' (\textbf{muffin} configured to include \textbf{ECOGEM}) publication\footnote{Wilson, J.D., F.M. Monteiro, D.N. Schmidt, B.A. Ward, and A. Ridgwell, Linking marine plankton ecosystems and climate: A new modeling approach to the warm early Eocene climate, Paleoceanography and Paleoclimatology, 33, 1439–1452, DOI: 10.1029/2018PA003374 (2018).} which you should read first.
 
@@ -5612,6 +5554,7 @@ Conversely, we could run modern at \(\times3 CO_{2}\) and then compare to the \(
 
 \noindent and will also require a 10,000 year long spin-up ... Note that the 2 strategies, while slightly different, are attempting the same thing (i.e. isolating the effect of paleography and ocean circulation from coeval climate change and warming).
 
+\vspace{1mm}
 Finally -- having run some or all of these spin-ups and contrasted the results (focussing on ecological patterns and biological export, but remembering also to assess differences in ocean circulation), you can investigate the impact of geologically rapid warming a-la the PETM, on the system (esp. ecological patterns and biological export plus ocean circulation). There are two immediately obvious possible approaches:
 
 \begin{enumerate}[noitemsep]
@@ -5624,29 +5567,26 @@ Finally -- having run some or all of these spin-ups and contrasted the results (
 
 \vspace{1mm}
 \item Secondly, in the \textit{user-configs}, you might note near the bottom is a \textit{forcing} that determines the value of atmospheric \(CO_{2}\):
-\vspace{-2mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 # specify forcings
 bg_par_forcing_name="pyyyyz.RpCO2_Rp13CO2"
-\end{verbatim}\vspace{-2mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 followed by a line that specifies either \(\times1 CO_{2}\) or \(\times3 CO_{2}\), e.g.
-\vspace{-2mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_atm_force_scale_val_3=278.0E-06
-\end{verbatim}\vspace{-2mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 or
-\vspace{-2mm}\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 bg_par_atm_force_scale_val_3=834.0E-06
-\end{verbatim}\vspace{-2mm}
+\end{verbatim}\normalsize\vspace{-1mm}
 (followed by a line specifying the carbon isotopic composition of the atmosphere).
 
-Similar to as you have seen before for a fossil fuel \(CO_{2}\) emissions \textit{forcing}, there is a file:
-\vspace{1mm}
-\\ \indent \textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}
-\vspace{1mm}
-
-\vspace{8mm}
-\pagebreak
-
-and which has contents as so:
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
+Similar to as you have seen before for a fossil fuel \(CO_{2}\) emissions \\\textsf{\footnotesize biogem\_force\_restore\_atm\_pCO2\_sig.dat}
+which contains:
 \vspace{-1mm}\small\begin{verbatim}
 -START-OF-DATA-
 0.0      1.0
@@ -5810,6 +5750,79 @@ which firstly, limits the maximum consumption of any particular reactant by a si
 
 \vspace{1mm}
 \noindent For reference, the original (i.e. as per in \textit{Ward et al.} [2018]) but reformatted, user-config, is provided as: \textsf{\footnotesize muffin.CB.worlg4.BASESFeTDTL.ECOGEM\_NEW.SPIN} (also in the \textsf{\footnotesize genie-userconfigs} sub-directory \textsf{\footnotesize EXAMPLES}).
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+\section{Further ideas and investigations}
+
+\subsubsection{The role of iron limitation}
+\vspace{1mm}
+
+Up to this point, we have included both phosphate and iron as limiting nutrients. You might want to know more about the importance (or not) of iron availability in determining patterns of biological productivity.
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item You can get a more exact picture of the nutrient limitation terms via the netCDF output variables: \textsf{\footnotesize eco2D\_xGamma\_Fe\_001} and \textsf{\footnotesize eco2D\_xGamma\_P\_001}.
+
+\vspace{1mm}
+These two variables take values of between 0 and 1. A \textsf{\footnotesize 1} indicates that the factor is not limiting to growth. A \textsf{\footnotesize 0} indicates the factor is completely preventing growth.
+\vspace{1mm}
+\begin{itemize}
+\item In what regions are iron and phosphorus more or less limiting to growth? \item In regions where neither is limiting, what other factors might be important?
+\end{itemize}
+
+\vspace{1mm}
+\item  Plankton stoichiometry plays a critical role in determining which nutrient is most limiting to growth. You can increase the plankton \(Fe:C\) ratio by increasing the minimum and maximum iron quotas. Look at the parameters \texttt{eg\_qminFe\_a} and \texttt{eg\_qmaxFe\_a} in the \textit{user-config} file.
+
+\vspace{1mm}
+\begin{itemize}
+\item What happens to the ecosystem if you increase these parameters by a factor of 2, 5 or 10?
+\item How does a change in these parameters affect the model behaviour?
+\item What has changed in terms of the patterns of nutrient limitation?
+\item What has happened to the concentration of the limiting and non-limiting nutrient?
+\end{itemize}
+
+\vspace{1mm}
+\item[NOTE:] Rather than changing the parameter and subsequently forgetting what you started with ... instead, you might copy/paste a new version of the line in question, and comment out the original by placing a `\texttt{\#}' at the beginning of the line. For example:
+\vspace{-1mm}\small\begin{verbatim}
+#eg_qminFe_a = 3.0e-6
+eg_qminFe_a  = 6.0e-6
+\end{verbatim}\normalsize\vspace{-1mm}
+changes the minimum iron quota by a factor of 2, whilst keeping a record of the original setting (inactivated by the \texttt{\#}). Or, you might do something like:
+\vspace{-1mm}\small\begin{verbatim}
+eg_qminFe_a  = 6.0e-6 # 3.0e-6
+\end{verbatim}\normalsize\vspace{-1mm}
+that reduces the total number of lines you end up with in the \textit{user-config} file.
+
+\vspace{1mm}
+\item Nutrient supply ratios are also important in determining the limiting nutrient.
+\\The \texttt{bg\_par\_det\_Fe\_sol\_exp} parameter determines the solubility of atmospheric iron inputs in seawater. Decreasing the value of \texttt{bg\_par\_det\_Fe\_sol\_exp} will therefore decrease the iron-to-phosphorus supply ratio.
+
+\vspace{1mm}
+\begin{itemize}
+\item What happens to the ecosystem if you decrease \texttt{bg\_par\_det\_Fe\_sol\_exp} by e.g. 10, 20 or 50\%?
+\end{itemize}
+
+\vspace{1mm}
+\item Lastly, you can turn off entirely the iron requirement of plankton:
+\vspace{-1mm}\small\begin{verbatim}
+# include cellular quota: Fe -- no Fe limitation enabled
+eg_useFe                    =.FALSE.
+eg_fquota                   =.FALSE.
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+\begin{itemize}
+\item What happens to the patterns of biological productivity as well as global total export?
+\end{itemize}
+
+\end{enumerate}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
 
 %----------------------------------------------------------------------------------------
 %       CHAPTER X
