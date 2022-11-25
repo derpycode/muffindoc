@@ -11660,9 +11660,9 @@ This is a brief guide to installing \textbf{muffin} on a \textbf{Mac}.
 
 % I think XCode automatically comes with Homebrew and command line tools enabled
 \item Get Homebrew by pasting the following at the terminal command line...
-\\ \texttt{/usr/bin/ruby -e
+\\ \texttt{  /bin/bash -c 
 \small
-\\"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+\\"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 \normalsize}
 (\uline{all one line})
 \\Next, type `\texttt{brew doctor}'. This should tell you ``\texttt{your system is ready to brew}''. If it doesn't, see Section \ref{how-to-macports-errors}.
@@ -11671,8 +11671,6 @@ This is a brief guide to installing \textbf{muffin} on a \textbf{Mac}.
 % brew tap homebrew/science % deprecated in homebrew
 \vspace{-5pt}\begin{verbatim}
 brew install cmake
-brew install gcc
-brew install hdf5
 brew install netcdf
 brew install wget
 \end{verbatim}
