@@ -4596,13 +4596,13 @@ Note that while the experimental configurations are based on those of \textit{Wa
 \vspace{1mm}
 
 We will start with the simplest possible configuration of \textbf{ECOGEM}, with just a single (small) phytoplankton class\footnote{i.e. as if the ocean was populated with a small species of phytoplankton (photo-autotroph) and nothing else.}. Run this model at the command line (e.g. for 10 years), as follows:
-\vspace{0mm}\footnotesize\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 $ ./runmuffin.sh muffin.CBE.p_worjh2.BASESFeTDTL LABS EXP.8.1 10 
    muffin.CBE.p_worjh2.BASESFeTDTL.FeMIP.SPIN
-\end{verbatim}\normalsize\vspace{0mm}
-(Here, you are using a new \textit{base-config} -- \textsf{\footnotesize muffin.CBE.p\_worjh2.BASESFeTDTL} -- which as it happens is identical to an iron-enabled configuration used in the previous Chapter, but now with the ecosystem model enabled.)
+\end{verbatim}\normalsize\vspace{-1mm}
+(Here, you are using a new \textit{base-config} -- \textsf{\footnotesize muffin.CBE.p\_worjh2.BASESFeTDTL} -- identical to the iron-enabled configuration used in the previous Chapter, but now with the ecosystem model enabled.)
 
-The model will run as before ... except slower ... :( as muffin has to calculate plankton growth and ecological interactions in addition to everything else it did previously.
+The model will run as before ... except much slower ... :( ... as muffin has to calculate plankton growth and ecological interactions in addition to everything else it did previously.
 
 %\vspace{1mm}
 %\noindent\rule{4cm}{0.1mm}
@@ -4618,7 +4618,7 @@ The model will run as before ... except slower ... :( as muffin has to calculate
 What is 'new'?
 
 \vspace{1mm}
-\noindent Following the same convention as for \textbf{BIOGEM}, \textbf{ECOGEM} \textit{time-slice} output is saved in the subdirectory of your experiment results directory, named \footnotesize\textsf{ECOGEM }\normalsize.\footnote{for this particular example experiment, the full path to the \textbf{ECOGEM} results would be: \\ \scriptsize\textsf{/cgenie\_output/wardetal.2018.ECOGEM.EXAMPLE/ECOGEM/}\normalsize.}
+\noindent Following the same convention as for \textbf{BIOGEM}, \textbf{ECOGEM} \textit{time-slice} output is saved in the subdirectory of your experiment results directory, named \footnotesize\textsf{ecogem }\normalsize.\footnote{for this particular example experiment, the full path to the \textbf{ECOGEM} results would be: \\ \scriptsize\textsf{/cgenie\_output/EXP.8.1/ecogem/}\normalsize.}
 
 \begin{enumerate}[noitemsep]
 \vspace{1mm}
@@ -10310,10 +10310,13 @@ When \textbf{muffingen} writes out the parameter settings (file: \textsf{\footno
 
 \section{Installation related questions}\label{faq:installation}
 
+\vspace{2mm}
+
 %------------------------------------------------
 %
 
 \subsubsection{Stack space}
+\vspace{1mm}
 
 You may encounter issues with regards to the \texttt{ifort} Intel FORTRAN compiler (an maybe others), particularly when using SEDGEM because of the size of the arrays holding sediment information:
 
@@ -10326,10 +10329,13 @@ the program will terminate with a segmentation fault.}''
 \noindent The (a?) solution is to increase the CPU stack space, Try:
 \vspace{-2pt}\begin{verbatim}$ ulimit -s unlimited\end{verbatim}\vspace{-2pt}
 
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
 %------------------------------------------------
 %
 
 \subsubsection{Compiler errors}
+\vspace{1mm}
 
 Recent versions (ca. 10) of \texttt{gcc} (GNU C Compiler) may through up errors when compiling the \textbf{muffin} \textbf{netCDF} library routines -- '\texttt{Error: Rank mismatch ...}'.
 
@@ -10342,6 +10348,51 @@ the line:
 \vspace{-1mm}\small\begin{verbatim}
 FFLAGS += -fallow-argument-mismatch
 \end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+%
+
+\subsubsection{Installation directory}
+\vspace{1mm}
+
+The default installation directory is:
+\vspace{-2pt}\begin{verbatim}~/cgenie.muffin\end{verbatim}\vspace{-2pt}
+but it need not be. To run in\texttt{/NEW\_PATH}:
+\vspace{1mm}
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Lines 26 and 27 of \texttt{user.mak}, change:
+\vspace{-1mm}\small\begin{verbatim}
+GENIE_ROOT        = $(HOME)/cgenie.muffin
+OUT_DIR           = $(HOME)/cgenie_output
+\end{verbatim}\normalsize\vspace{-1mm}
+to:
+\vspace{-1mm}\small\begin{verbatim}
+GENIE_ROOT        = /NEW_PATH/cgenie.muffin
+OUT_DIR           = /NEW_PATH/cgenie_output
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
+\item Lines 31 and 34 of \texttt{user.sh}, change:
+\vspace{-1mm}\small\begin{verbatim}
+CODEDIR=~/cgenie.muffin
+OUTROOT=~/cgenie_output
+ARCHIVEDIR=~/cgenie_archive
+LOGDIR=~/cgenie_log
+\end{verbatim}\normalsize\vspace{-1mm}
+to:
+\vspace{-1mm}\small\begin{verbatim}
+CODEDIR=/NEW_PATH/cgenie.muffin
+OUTROOT=/NEW_PATH/cgenie_output
+ARCHIVEDIR=/NEW_PATH/cgenie_archive
+LOGDIR=/NEW_PATH/cgenie_log
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\end{enumerate}
 
 %------------------------------------------------
 
