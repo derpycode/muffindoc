@@ -10315,6 +10315,83 @@ When \textbf{muffingen} writes out the parameter settings (file: \textsf{\footno
 %------------------------------------------------
 %
 
+\subsubsection{Compiler errors}
+\vspace{1mm}
+
+Recent versions (ca. 10) of \texttt{gcc} (GNU C Compiler) may through up errors when compiling the \textbf{muffin} \textbf{netCDF} library routines -- '\texttt{Error: Rank mismatch ...}'.
+
+\vspace{1mm}
+This can be resolved by adding to \textsf{\footnotesize makefile.arc} (in \textsf{\footnotesize genie-main}):
+\vspace{-1mm}\small\begin{verbatim}
+FFLAGS += -fallow-argument-mismatch
+\end{verbatim}\normalsize\vspace{-1mm}
+
+%\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+%
+
+\subsubsection{Installation directory}
+\vspace{1mm}
+
+The default installation directory is:
+\textsf{\footnotesize \(\sim\)/cgenie.muffin}
+but it need not be. To run in \textsf{\footnotesize /NEW\_PATH}:
+\vspace{1mm}
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item Lines 26 and 27 of \textsf{\footnotesize user.mak}, change:
+\vspace{1mm}
+\vspace{-1mm}\footnotesize\begin{verbatim}
+GENIE_ROOT        = $(HOME)/cgenie.muffin
+OUT_DIR           = $(HOME)/cgenie_output
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+to:
+\vspace{1mm}
+\vspace{-1mm}\footnotesize\begin{verbatim}
+GENIE_ROOT        = /NEW_PATH/cgenie.muffin
+OUT_DIR           = /NEW_PATH/cgenie_output
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\vspace{1mm}
+\item Lines 31 and 34 of \textsf{\footnotesize user.sh}, change:
+\vspace{1mm}
+\vspace{-1mm}\footnotesize\begin{verbatim}
+CODEDIR=~/cgenie.muffin
+OUTROOT=~/cgenie_output
+ARCHIVEDIR=~/cgenie_archive
+LOGDIR=~/cgenie_log
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+to:
+\vspace{1mm}
+\vspace{-1mm}\footnotesize\begin{verbatim}
+CODEDIR=/NEW_PATH/cgenie.muffin
+OUTROOT=/NEW_PATH/cgenie_output
+ARCHIVEDIR=/NEW_PATH/cgenie_archive
+LOGDIR=/NEW_PATH/cgenie_log
+\end{verbatim}\normalsize\vspace{-1mm}
+\vspace{1mm}
+... and, in \textsf{\footnotesize runmuffin.sh}, edit:
+\vspace{1mm}
+\vspace{-1mm}\footnotesize\begin{verbatim}
+#####################################################################
+# CHANGE THIS FOR INSTALLATIONS OTHER THAN IN $HOME
+# SET THE SAME AS IN user.mak AND user.sh
+# set home directory
+HOMEDIR=$HOME
+\end{verbatim}\normalsize\vspace{-1mm}
+
+\end{enumerate}
+
+%\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+%
+%
 \subsubsection{Stack space}
 \vspace{1mm}
 
@@ -10327,72 +10404,7 @@ the program will terminate with a segmentation fault.}''
 
 \vspace{2mm}
 \noindent The (a?) solution is to increase the CPU stack space, Try:
-\vspace{-2pt}\begin{verbatim}$ ulimit -s unlimited\end{verbatim}\vspace{-2pt}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-%------------------------------------------------
-%
-
-\subsubsection{Compiler errors}
-\vspace{1mm}
-
-Recent versions (ca. 10) of \texttt{gcc} (GNU C Compiler) may through up errors when compiling the \textbf{muffin} \textbf{netCDF} library routines -- '\texttt{Error: Rank mismatch ...}'.
-
-\vspace{1mm}
-This can be resolved by adding to \texttt{makefile.arc} (in \texttt{genie-main}), just before:
-\vspace{-1mm}\small\begin{verbatim}
-# === NetCDF paths ===
-\end{verbatim}\normalsize\vspace{-1mm}
-the line:
-\vspace{-1mm}\small\begin{verbatim}
-FFLAGS += -fallow-argument-mismatch
-\end{verbatim}\normalsize\vspace{-1mm}
-
-\vspace{1mm}
-\noindent\rule{4cm}{0.5pt}
-%------------------------------------------------
-%
-
-\subsubsection{Installation directory}
-\vspace{1mm}
-
-The default installation directory is:
-\vspace{-2pt}\begin{verbatim}~/cgenie.muffin\end{verbatim}\vspace{-2pt}
-but it need not be. To run in\texttt{/NEW\_PATH}:
-\vspace{1mm}
-
-\begin{enumerate}[noitemsep]
-
-\vspace{1mm}
-\item Lines 26 and 27 of \texttt{user.mak}, change:
-\vspace{-1mm}\small\begin{verbatim}
-GENIE_ROOT        = $(HOME)/cgenie.muffin
-OUT_DIR           = $(HOME)/cgenie_output
-\end{verbatim}\normalsize\vspace{-1mm}
-to:
-\vspace{-1mm}\small\begin{verbatim}
-GENIE_ROOT        = /NEW_PATH/cgenie.muffin
-OUT_DIR           = /NEW_PATH/cgenie_output
-\end{verbatim}\normalsize\vspace{-1mm}
-
-\vspace{1mm}
-\item Lines 31 and 34 of \texttt{user.sh}, change:
-\vspace{-1mm}\small\begin{verbatim}
-CODEDIR=~/cgenie.muffin
-OUTROOT=~/cgenie_output
-ARCHIVEDIR=~/cgenie_archive
-LOGDIR=~/cgenie_log
-\end{verbatim}\normalsize\vspace{-1mm}
-to:
-\vspace{-1mm}\small\begin{verbatim}
-CODEDIR=/NEW_PATH/cgenie.muffin
-OUTROOT=/NEW_PATH/cgenie_output
-ARCHIVEDIR=/NEW_PATH/cgenie_archive
-LOGDIR=/NEW_PATH/cgenie_log
-\end{verbatim}\normalsize\vspace{-1mm}
-
-\end{enumerate}
+\vspace{-2pt}\small\begin{verbatim}$ ulimit -s unlimited\end{verbatim}\normalsize\vspace{-2pt}
 
 %------------------------------------------------
 
