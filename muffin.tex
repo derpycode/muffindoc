@@ -13868,61 +13868,190 @@ As to 'why' you might want to use this ...
 \subsection*{(general)}
 \vspace{1mm}
 
-Note: All the \textit{forcings} described here assume a newer (simplified) methodology for prescribing \textit{forcings}.\footnote{For details of the 'old', fully 3D spatially-explicit forcing methodology, refer to the \textit{c}GENIE \textit{user-manual}.
-} This methodology is enabled by setting:
-\vspace{-2pt}\small\begin{verbatim}
-bg_ctrl_force_oldformat=.false.
-\end{verbatim}\vspace{-2pt}\normalsize
-This is set automatically as part of the \texttt{runmuffin.sh} shell script\footnote{(but it not the actual default \textit{namelist parameter} setting)}.
+\textit{Forcings}\footnote{All the \textit{forcings} described here assume a newer (simplified) methodology for prescribing \textit{forcings}. This methodology is enabled by setting: \texttt{\scriptsize  bg\_ctrl\_force\_oldformat=.false.} This is set automatically as part of the \texttt{runmuffin.sh} shell script beasue it is not the default parameter value. \\For details of the 'old', fully 3D spatially-explicit forcing methodology, refer to the \textit{c}GENIE \textit{user-manual}} -- means of requiring that a model variable always conforms to a given value (which may be fixed or time-varying) -- a \textit{restoring forcing}, or that a tracer is added or removed from the atmosphere/ocean/sediments at a given rate (which may also be fixed or time-varying) -- a \textit{flux forcing} -- are defined by a set of files in a directory with unique  name. This directory in turn, lives in \textsf{\footnotesize /genie-forcings}.
+
+\vspace{1mm}
+At a minimum, 3 forcing configuration files must be present, which define the \textit{forcing} (if any) of atmosphere, ocean, and sediment tracers:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize configure\_forcings\_atm}
+\item \textsf{\footnotesize configure\_forcings\_ocn}
+\item \textsf{\footnotesize configure\_forcings\_sed}
+\end{itemize}
+\vspace{1mm}
+
+The format of each file is similar, with any selected \textit{forcing} appearing within the ASCII lines:
+
+\vspace{-2mm}\small\begin{verbatim}
+-START-OF-DATA-
+-END-OF-DATA-
+\end{verbatim}\normalsize\vspace{-2mm}
+
+Edits made to the file outside of these 2 tags will not be read\footnote{So notes and annotations can be added if you wish.}. If there is nothing in between the 2 tags, no forcing is specified. Above and below the tags are indicators of column numbers of data that will go in between the tags, and at the end of the file, a list of what each column means. (Because atmosphere, ocean, and sediment tracers have different \textit{forcing} options and possibilities, each will be described separately below.) 
+
+\vspace{1mm}
+In addition to the 3 require forcing configuration files, for every selected \textit{forcing}, at last 1 additional file must be present which specifies how the forcing changes with time. The naming convention for this file is described with respect to each of the atmosphere, ocean, and sediment tracer forcings (below), and its contents are described in full in a further section at the end.
+
+\vspace{1mm}
+Finally, for each forcing that is selected, an optional parameter defining a scaling value (different from the default of \(1.0\))  can be added to the \textit{user-config}. (This is also detailed below.) The name of this parameter is of the form:
+
+\vspace{-2mm}\small\begin{verbatim}
+bg_par_yyy_force_scale_val_xxx
+\end{verbatim}\normalsize\vspace{-2mm}
+
+where \texttt{yyy} is one of: \texttt{atm}, \texttt{ocn}, \texttt{sed}, and \texttt{xxx} is the tracer number (see below).
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+\subsubsection*{Atmosphere tracer forcings}
 
 \vspace{1mm}
 
-Taking the example of the ocean (dissolved tracers): flux and restoring \textit{forcings} are defined in the \textit{forcings} specification file: \texttt{configure\_forcings\_ocn.dat}. As detailed in the notes to this file, there is a flag (\texttt{COLUMN \#6}) which sets the spatial attributes of the \textit{forcing} as follows:
+Gas concentrations in the atmosphere can be restored to some given (time-varying or static) value, or a flux (e.g. \(CO_{2}\)) can be prescribed. 
+
+There are 8 pieces of information required to define an atmosphere forcing\footnote{Defined in the notes at the end of the file.}. For instance, to restore the concentration of atmospheric \(pCO_{2}\):
+
+\vspace{-2mm}\footnotesize\begin{verbatim}
+-START-OF-DATA-
+03  t  0.1  f  t  F   2  01  01  '[carbon dioxide (CO2) partial pressure (atm)]'
+-END-OF-DATA
+\end{verbatim}\normalsize\vspace{-2mm}
+
+\noindent The required columns (space (or tab) separated) are:
+
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{-0.0in}
+\setcounter{enumi}{-1}
+\item TRACER NUMBER -- refer to the tracer definition files in \textsf{\footnotesize /genie-main/data/input} for which number corresponds to which tracer. Also Appendix II.
+\item Include a restoring forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\item Time constant of the restoring in year. [DATA FORMAT: real]
+\\Typically \(0.1\) is adequately 'fast'.
+\item Include flux forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')] 
+\\Note that in special cases of an inversion (data assimilation) it is possible to have both a restoring and a flux forcing of the same tracer.
+\item Scale flux forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\\When defining spatial patterns of  forcings, setting this to \texttt{true} ensure that the total forcing applied is equal to the forcing scaling multiplied by the value in the time-series file. 
+\item Force ocean surface in equilibrium with atmosphere? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\\This is a niche option that has hardly ever been used ... best avoid it ... so set this to \texttt{F} (or \texttt{f}).
+\item Make forcing uniform over this dimension (2 = 2D, 0 = point, ELSE spatially explicit forcing) [DATA FORMAT: integer]
+\\You could, in theory, restore of flux force at a specific location in the atmosphere. However, since currently the atmosphere is homogenized every time-step, there is arguably little point ... So invariably this is set to \texttt{2} (for forcing uniformly across the 2D atmospheric grid).
+\\If you were going to specify a specific location (which you are not), the final 2 data lines (\#\(7\) and \#\(8\)) specify this as an (i,j) location on the \textbf{muffin} grid.
+\end{enumerate}
+
+The final line is not read in and is used to help describe the selected forcing, e.g. by using the real name of the tracer rather than just a number.
+
+\vspace{1mm}
+You can have as many forcings selected simultaneously as you like, with the caveat that if you select an isotopic tracer, you will be warned at run-time if you do not select the corresponding bulk tracer. e.g.
+
+\vspace{-2mm}\footnotesize\begin{verbatim}
+-START-OF-DATA-
+ 03  t  0.1  f  t  F   2  01  01  '[carbon dioxide (CO2) partial pressure (atm)]'
+ 04  t  0.1  f  t  F   2  01  01  '[d13C CO2 (o/oo)]'
+-END-OF-DATA
+\end{verbatim}\normalsize\vspace{-2mm}
+
+\noindent is a restoring forcing of both \(pCO_{2}\) as well as its isotopic composition (\(\delta ^{13}C\)), while the equvalent flux forcing would look like:
+
+\vspace{-2mm}\footnotesize\begin{verbatim}
+-START-OF-DATA-
+ 03  f  0.1  t  t  F   2  01  01  '[carbon dioxide (CO2) partial pressure (atm)]'
+ 04  f  0.1  t  t  F   2  01  01  '[d13C CO2 (o/oo)]'
+-END-OF-DATA
+\end{verbatim}\normalsize\vspace{-2mm}
+
+\noindent and differs only in having \texttt{f} for restoring, and \texttt{t} for flux.
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
+\subsubsection*{Ocean tracer forcings}
+
+\vspace{1mm}
+
+The format of ocean tracer forcings is very similar, with the exception of an additional (i,j,k) location specified for the ocean depth level (assuming a point source of tracer forcing is required), plus an (unusual) specifier for surface-only forcing. In brief, the required columns (space (or tab) separated) are:
+
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{-0.0in}
+\setcounter{enumi}{-1}
+\item TRACER NUMBER -- refer to the tracer definition files in \textsf{\footnotesize /genie-main/data/input} for which number corresponds to which tracer. Also Appendix II.
+\item Include a restoring forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\item Restrict restoring forcing to surface? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\\\uline{This is no longer used} and is replaced with the setting in column \#\(6\)\ (see below). 
+\item Time constant of the restoring in year. [DATA FORMAT: real]
+\item Include flux forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')] 
+\item Scale flux forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\item Force ocean surface in equilibrium with atmosphere? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\\This is a niche option that has hardly ever been used ... best avoid it ... so set this to \texttt{F} (or \texttt{f}).
+\item Make forcing uniform over this dimension (3 == 3D, 2 == 2D, 0 == point, -1 == SURFACE, -2 == BENTHIC, ELSE spatially explicit forcing) [DATA FORMAT: interger]
+\\See below for full explanation.
+\item i grid location of point forcing [DATA FORMAT: interger]
+\item j grid location of point forcing [DATA FORMAT: interger]
+\item k grid location of point forcing [DATA FORMAT: interger]
+\item[---] COLUMN END: TRACER DESCRIPTION
+\\\uline{Not read in.}
+\end{enumerate}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent The flag in column \#\(6\)  sets the spatial attributes of the \textit{forcing} as follows:
 \vspace{1mm}
 \begin{itemize}[noitemsep]
 \item [3] -- '3D' -- force the entire ocean volume \uline{uniformly}
-\item [2] -- '2D' -- force the entire ocean surface \uline{uniformly}
+\item [2] -- '2D' -- force the entire ocean surface \uline{uniformly}\footnote{This is equivalent to specifying \texttt{-2}  and then setting the ocean level (\texttt{k}) as \(16\) (for a 16-level ocean).}
 \item [1] -- [currently there is no option for forcing a single ocean column]
 \item [0] -- '0D' -- force a specified point in the ocean
 \item [-1] -- 'SURFACE' -- force with/to specified surface ocean pattern
 \item [-2] -- 'BENTHIC' -- force with/to specified benthic pattern
-\item [-3] -- 'LEVEL' -- force a specific layer in the ocean with/to specified pattern\footnote{For k=k\_max, this duplicates the SURFACE forcing.}
+\item [-3] -- 'LEVEL' -- force a specific layer in the ocean with/to specified pattern
 \item [-4] -- 'SURFACE+BENTHIC' -- simultaneously force with/to specified (and sperate) surface and benthic pattern
 \end{itemize}
 \vspace{1mm}
-The default (\texttt{3}) is that the forcing is applied uniformly to the entire (3D) ocean volume.
+The default (\texttt{3}) specifies that the forcing is applied uniformly to the entire (3D) ocean volume.
 
 \vspace{1mm}
 
 Options \texttt{3}, \texttt{2}, and \texttt{0}, as: uniform 3D\footnote{Note that here: '3D' does not mean a spatially explicit 3D pattern and hence the original ('old') way of specifying \textit{forcings}, but instead: that the forcing is applied uniformly in 3D space (i.e., is in effect a volume \textit{forcing}).} (volume), uniform 2D (surface), and point forcing, respectively, require no additional (spatial) information and only an additional file specifying the time-dependent information for each forcing need be provided:
-\vspace{-2pt}\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 biogem_force_flux_ocn_xxx_sig.dat
-\end{verbatim}\normalsize\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 for flux forcings, and
-\vspace{-2pt}\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 biogem_force_restore_ocn_xxx_sig.dat
-\end{verbatim}\normalsize\vspace{-2pt}
-where: \texttt{xxx} represents the mnemonic of the tracer (e.g., \texttt{DIC} is dissolved inorganic carbon. \texttt{CH4} is methane, etc.).
+\end{verbatim}\normalsize\vspace{-1mm}
+where: \texttt{xxx} represents the mnemonic\footnote{Note: \uline{Not} the tracer number(!)} of the tracer (e.g., \texttt{DIC} is dissolved inorganic carbon. \texttt{CH4} is methane, etc.).
 
 \vspace{1mm}
 
 Options \texttt{-1} (\texttt{SURFACE}), \texttt{-2} (\texttt{BENTHIC}) \texttt{-3} and  \texttt{-4}, require a 2D field to be provided, in addition to the time-dependent information for each forcing. The grids for both are the same -- i.e., all 'wet' grid points (non dry land) in the model. The filename for these 2D files is of the form:
-\vspace{-2pt}\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 biogem_force_flux_ocn_xxx_SUR.dat
-\end{verbatim}\normalsize\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 for flux forcings, and
-\vspace{-2pt}\small\begin{verbatim}
+\vspace{-1mm}\small\begin{verbatim}
 biogem_force_restore_ocn_xxx_SUR.dat
-\end{verbatim}\normalsize\vspace{-2pt}
+\end{verbatim}\normalsize\vspace{-1mm}
 with \textsf{\footnotesize BEN} for the equivalent BENTHIC, and \textsf{\footnotesize LEV} for LEVEL \textit{forcing} selections.
 
-\newpage 
+\vspace{2mm}
 
 For option \texttt{-3}, the grid level is set via the parameter:
-\vspace{-2pt}\small\begin{verbatim}
+\vspace{-2mm}\small\begin{verbatim}
 bg_par_force_point_k
-\end{verbatim}\normalsize\vspace{-2pt}
-(e.g. bg\_par\_force\_point\_k=7) which by default is \texttt{0}.
+\end{verbatim}\normalsize\vspace{-2mm}
+(e.g. \texttt{bg\_par\_force\_point\_k=7}) which by default is set to \texttt{0} (which in fact is not a valid k-level value ...).
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+\subsubsection*{Sediment tracer forcings}
 
 \vspace{1mm}
 
@@ -13942,6 +14071,118 @@ For option \texttt{-2}, particles are injected into the layer overlying the sedi
 Option \texttt{-5} (chosen to avoid and hence not overlap and be confused with ocean flux options \texttt{-3} and \texttt{-4}), requests that particles are injected into the sub-benthic layer, i.e. the layer immediately above the bottom most layer\footnote{Or the surface layer, for the occasional situation of the benthic layer also being the surface layer (and the ocean only being 1 layer deep).}. Particles to not react in the sub-benthic layer, but at the next time step, settle through the benthic layer and allowing  for a single time-step of reactions (e.g. scavenging) to occur between dissolved tracers in the benthic layer and the injected particles (and prior to settling out of the water column and being incorporated into underlying surface sediments on the time-step after that).
 
 Note that although there is no separate \textit{user-config} scaling factor as exists for ocean and atmosphere flux and restoring forcings, a 2D flux forcing pattern for particulate tracers (options: \texttt{-1}, \texttt{-2}, \texttt{-5}) can still be scaled via the time-series (\textsf{\footnotesize *\_sig.dat}) file, e.g. swapping the value of \texttt{1.0} for \texttt{-1.0} to make the flux negative.
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\noindent Sediment forcings are rarely used except to specify a dust flux to the ocean surface (in turn, to provide dissolved iron), e.g.
+
+\vspace{-2mm}\footnotesize\begin{verbatim}
+ 22  t  F  -1  01  01  '[detrital (refractory) material (wt%)]'
+\end{verbatim}\normalsize\vspace{-2mm}
+ 
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
+
+\subsubsection*{Forcing time-series and forcing value scaling}
+
+\vspace{1mm}
+
+Once the forcing configuration files have been added/edited, you need one forcing time-series file per defined forcing. These are named: \textsf{\footnotesize biogem\_force\_zzz\_yyy\_xxx\_sig}, where:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize zzz} is either \textsf{\footnotesize restore} or \textsf{\footnotesize flux}, and must align with the selection of restoring or flux forcing in the forcing configuration line.
+\\Note that if you have a special inversion forcing configuration with both restoring and flux forcing, you will need 2 time-series files.
+\item \textsf{\footnotesize yyy} corresponds to the type of tracer -- one of:
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize atm}
+\item \textsf{\footnotesize ocn}
+\item \textsf{\footnotesize sed}
+\end{itemize}
+\item \textsf{\footnotesize xxx} is the tracer mnemonic, e.g. \textsf{\footnotesize pCO2}, \textsf{\footnotesize DIC}. Refer to the tracer lists.
+\end{itemize}
+
+\vspace{2mm}
+
+\noindent The format of this file is:
+\vspace{-2mm}\footnotesize\begin{verbatim}
+-START-OF-DATA-
+TIME(1)         VALUE(1)
+TIME(2)         VALUE(2)
+TIME(3)         VALUE(3)
+        ...
+TIME(n-1)       VALUE(n-1)
+TIME(n)         VALUE(n)
+-END-OF-DATA-
+\end{verbatim}\normalsize\vspace{-2mm}
+with the values being linearly interpolated in time between the specified time-points. (Note that only data in between \texttt{\small -START-OF-DATA-} and \texttt{\small -END-OF-DATA-} is read in and e.g. you can add text notes below this if it helps.)
+
+\vspace{1mm}
+
+For example:
+\vspace{-2mm}\footnotesize\begin{verbatim}
+-START-OF-DATA-
+0.0 1.0
+1.0 1.0
+1.0 0.0
+999999.9 0.0
+-END-OF-DATA-
+\end{verbatim}\normalsize\vspace{-2mm}
+defines a unit flux starting at year zero and continuing at the same rate until year 1. At year 1 the flux is reduced instantaneous to zero and held zero until a very long time in the future (here, year 999999.9). (Refer to the fossil fuel \(CO_{2}\) emissions chapter for further examples.)
+
+\vspace{1mm}
+
+In \textbf{muffin}, the units of restoring are \(atm\) (atmospheric tracers) or \(mol\;kg^{-1}\) (ocean), while fluxes have units of \(mol\;yr^{-1}\). For fluxes in particular that can become unwieldy can it can help to scale a simple and generic unit forcing as per in the example, to create the actual flux. This is the purpose of the optional \textit{user-config} parameter \vspace{-2mm}\small\begin{verbatim}
+bg_par_yyy_force_scale_val_xxx
+\end{verbatim}\normalsize\vspace{-2mm}
+(see earlier). 
+
+To create and apply the forcing, muffin multiplies the interpolated value from the time-series by the scaling (\(1.0\) in value by default).
+
+For example, for fossil fuel \(CO_{2}\) emissions flux forcing to the atmosphere, a convenience is to assume the values in the time-series are units of \(PgC\;yr^{-1}\), and then use the scaling parameter to convert \(PgC\;yr^{-1}\) into the \(mol\;yr^{-1}\) than \textbf{muffin} assumes, e.g.
+\vspace{-2mm}\small\begin{verbatim}
+bg_par_atm_force_scale_val_3=8.3333e+013
+\end{verbatim}\normalsize\vspace{-2mm}
+(where \texttt{3} is the atmospheric tracer number for \(pCO_{2}\)).
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+\noindent Complications arise when specifying a spatial pattern of forcing, rather than uniform e.g. entire atmosphere or surface ocean. When a spatial pattern option is defined (see earlier), an additional file is required that defines the spatial pattern on the model grid. (See earlier for an explanation of the file naming convention.)
+
+\vspace{1mm}
+Now, the forcing applied at each grid point, but default, is:
+
+\vspace{1mm}
+\textit{The value in the spatial pattern file at that location \(\times\) the interpolated value in the time-series file \(\times\) the scaling parameter (if set different from \(1.0\))}
+\vspace{1mm}
+
+Often, it is convenient simply to specify a spatial pattern with just \texttt{1}s and \texttt{0}s and not worry about how they sum up and affect the total global flux. In this case, setting:
+\vspace{1mm}
+\begin{enumerate}[noitemsep]
+\setlength{\itemindent}{-0.0in}
+\setcounter{enumi}{4}
+\item Scale flux forcing of tracer? [DATA FORMAT: 'T'/'F' ('t'/'f')]
+\end{enumerate}
+to \texttt{true} re-scales the forcing at each grid point such that the global total is:
+
+\vspace{1mm}
+\textit{The interpolated value in the time-series file \(\times\) the scaling parameter}
+\vspace{1mm}
+
+\vspace{1mm}
+\noindent\rule{4cm}{0.5pt}
+\vspace{2mm}
+
+\subsubsection*{Creating/adapting and/or combining forcings}
+
+\vspace{1mm}
+
+How to create new forcings? The simplest is to take an existing forcing ... copy the directory and \uline{rename} it. Then modify it. Adding additional forcings is as simple as adding a new line to the relevant (atm, ocn, sed) forcing configuration file, and then ensuring that a corresponding time-series file is also added. The line in the forcing configuration file, and the corresponding time-series file, can simply be copied from a different existing forcing (and then edited if need be). 
 
 %------------------------------------------------
 %
@@ -17035,7 +17276,29 @@ diag\_geochem & -- & -- & -- & -- & \(\times\) & \(\times\) & -- & -- & \(\times
 
 %------------------------------------------------
 
-\section{Current model capabilities summary}
+\section{Defined tracers}
+
+The possible tracers that can be selected in \textbf{muffin} are defined in 3 files that live in \textsf{\footnotesize /genie-main/data/input}:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\item \textsf{\footnotesize tracer\_define.atm}
+\item \textsf{\footnotesize tracer\_define.ocn}
+\item \textsf{\footnotesize tracer\_define.sed}
+\end{itemize}
+
+
+\subsection{Atmospheric (gaseous) tracers}
+
+
+
+%------------------------------------------------
+
+\newpage
+
+%------------------------------------------------
+
+\section{Tracer relationships}
 
 \begin{table}[h]
 \textbf{\caption{Carbon}\label{tab:tracers1}}
