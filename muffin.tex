@@ -12682,6 +12682,176 @@ and are \texttt{.true.} by default.
 To set an annual average insolation forcing with no seasonality, simply set these to \texttt{.false.}
 
 \noindent\rule{4cm}{0.5pt}
+\newpage
+
+%------------------------------------------------
+
+\subsection{HOW-TO ... orbit}
+\vspace{2mm}
+
+Note that the original muffin code of calculating the time-varying (orbitally-driven) seasonal insolaton (and indeed, annual average insolation) was incorrect (although for low eccentricity orbital such as modern (and LGM), the impact of the incorrect code was relatively small).
+
+To preserve full backwards compatibility, in the \textbf{muffin} release, the corrected code is not selected by default (see below). Only corrected code (and no full backwards compatibility) will appear in a future code release.
+
+Below are instruction for using the new code for either a static (fixed) orbital configuation (1), or time-varying orbital parameters (2).
+
+%------------------------------------------------
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+
+%------------------------------------------------
+%
+\subsubsection*{1. Specifying a fixed orbital configuration}
+\vspace{1mm}
+
+The parameters and their modern values to prescribe a fixed orbital configuration are:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item \small\begin{verbatim}
+ea_opt_orbit_old=.false. 
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osce=0.0167
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_oscobl=0.409093
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osclonperi=1.796257
+\end{verbatim}\normalsize
+\end{itemize}
+\vspace{1mm}
+
+\noindent which specify, respectively:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item new orbital radiative code flag 
+\item eccentricity
+\item obliquity (in radians)
+\item true longitude of perihelion (in radians)
+\end{itemize}
+\vspace{1mm}
+
+\noindent To specify an alternative (different from modern) orbital configuration, such as for the the last glacial maximum (21 ka)\footnote{Taken from: \href{https://pmip2.lsce.ipsl.fr/design/boundary.shtml}{PMIP2} experiment boundary conditions.}, you would add to the \textit{user-config}:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item \small\begin{verbatim}
+ea_opt_orbit_old=.false.
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osce=0.018994
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_oscobl=0.4005
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osclonperi=1.9970
+\end{verbatim}\normalsize
+\end{itemize}
+\vspace{1mm}
+
+\noindent For comparison, the mid-Holocene (6 ka) parameter set\footnote{Taken from: \href{https://pmip2.lsce.ipsl.fr/design/boundary.shtml}{PMIP2} experiment boundary conditions.} is:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item \small\begin{verbatim}
+ea_opt_orbit_old=.false. 
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osce=0.018682
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_oscobl=0.4207
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osclonperi=0.0152
+\end{verbatim}\normalsize
+\end{itemize}
+\vspace{1mm}
+
+The new orbital radiative forcing code (flagged with \verb|ea_opt_orbit_old=.false.|), available since cgenie.muffin \textbf{commit 7ab755e}, calculates the daily mean amount of insolation at each latitude using input for the three canonical orbital parameters. In an older version, other parameters (below) were needed as input which required the user to convert the parameters offline to a different format. The older version also contained some incorrect equations. Using the old (incorrect) orbits code is NOT RECOMMENDED but an option is available to use the old code in case anyone wishes to recreate previously run simulations.
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+%
+The old parameters and default values are:
+
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item \small\begin{verbatim}
+ea_opt_orbit_old=.true. 
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osce=0.0167
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_oscsob=0.397789
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_oscgam=1.352631
+\end{verbatim}\normalsize
+\item \small\begin{verbatim}
+ea_par_orbit_osctau0=-0.5
+\end{verbatim}\normalsize
+\end{itemize}
+\vspace{1mm}
+
+\noindent which specify, respectively:
+\vspace{1mm}
+\begin{itemize}[noitemsep]
+\setlength{\itemindent}{.2in}
+\item old orbital radiative code flag 
+\item eccentricity
+\item sine of obliquity 
+\item mean longitude of perihelion (in radians)
+\item date of perihelion from January 1st (in days)
+\end{itemize}
+\vspace{1mm}
+
+%------------------------------------------------
+\noindent\rule{4cm}{0.5pt}
+%------------------------------------------------
+%
+\subsubsection*{Specifying time-varying orbits}
+\vspace{1mm}
+
+For model simulations over long timescales you might want to consider the effects of changes with time in the astronomical forcing. In this case, the amount of daily mean insolation at each latitude can vary as a function of eccentricity, obliquity and (climatic) precession, as opposed to under a fixed insolation pattern. Such transient forcing can be applied in \textbf{muffin} by adding the following set of parameter settings to the \textit{user-config} file:
+\vspace{-1mm}\small\begin{verbatim}
+# Flag new orbit code
+ea_opt_orbit_old=.false.
+# Call orbit_radfor: Applies astronomical forcing
+ea_38 = "y"
+# Specify the type of orbital forcing: 0 (default), 1 (time-varying)
+ea_39 = 1
+# Number of data points in orbits file
+ea_40 = 1001
+# Interval between data points in units of goldstein time steps
+ea_41 = 96000
+# filename for orbital parameters
+ea_42 = "orbits_La2004_1Myr_new.dat"
+\end{verbatim}\normalsize\vspace{-1mm}
+
+In this specific example, a file: \footnotesize\textsf{orbits\_La2004\_1Myr\_new.dat }\normalsize is specified, which provides the astronomical solution for the past 1 million year based on the astronomical solution of \textit{Laskar} (2004) in time-steps of 1,000 years.\footnote{The data file \textsf{.dat} can be found in sub-directory: \textsf{genie-embm/data/input}} For 1 million year in time-steps of 1,000 years, there are 1,000,000 / 1,000 = 1,000 data points (+ 1 for year zero) = 1,001 data points total. The value of parameter \texttt{ea\_40} needs to be set equal to this value, i.e. prescribing how many data points are present in the file specified by  \texttt{ea\_42}.
+
+The file contains four columns for, respectively, time, eccentricity (osce), obliquity (oscobl), and true longitude of perihelion (osclonperi) -- consistent with those of the fixed orbital configuration described above. Note that the file containing the astronomical solution is read in reverse
+order, i.e. from the bottom to the top. Thus, for file \footnotesize\textsf{orbits\_La2004\_1Myr\_new.dat}\normalsize, the values for eccentricity and obliquity used for the first 1000 year of the simulation, are 0.03576 and 0.41239, corresponding to the astronomical solution 1 million year ago. 
+
+To change the time slice that you would like to simulate (for example from 500 ka to recent), simply copy the astronomical solution into a new text file and remove the last 500 lines so that the simulation begins with the solution at 500 ka\footnote{Don't forget to update parameter ea\_40!}.
+
+The value for parameter \texttt{ea\_41} depends on the resolution of the model that is used. By default, for a 16-level ocean circulation model configuration, \textbf{muffin} employs 96  time-steps per year in the \textbf{GOLDSTEIN} ocean circulation model component. When the astronomical solution is provided as one orbital value per \(1000\) years, this equates to \(1000\times96=96000\) \textbf{GOLDSTEIN} time steps. For lower resolution configurations of \textbf{muffin}, \textbf{GOLDSTEIN} may be operating on \(48\) time steps per year, which means that \texttt{ea\_41} need to be changed to \(48000\) (when the astronomical solution is provided \(1000\) year time steps).
+
+\uline{Important}. When using one of the paleo configurations of \textbf{muffin} defined in the \textsf{\footnotesize genie-paleo } directory, the file containing the astronomical solution must be present in that directory. For all other configurations, the file lives in \footnotesize\textsf{genie-embm/data/input}\normalsize. A warning message will be generated and the \textbf{muffin} will exit if the file is not found in the correct directory.
+
+Here too, an option is included to use an old (incorrect!) version of the orbits code. Using the old orbits code is NOT RECOMMENDED but an option is available to use it in case anyone wishes to recreate previously run simulations. To do so, use the parameters as above but set \verb|ea_opt_orbit_old=.true.| and apply the old orbits file:  \footnotesize\textsf{orbits\_La2004\_1Myr.dat }\normalsize. The old orbit input file requires FIVE columns of input parameters, for respectively: time, eccentricity (osce), sine of obliquity (oscsob), mean longitude of perihelion (oscgam), and date of perihelion (osctau). The values for oscgam and osctau need to be calculated offline from the true longitude of perihelion (see Berger, 1978).
 
 %------------------------------------------------
 %
