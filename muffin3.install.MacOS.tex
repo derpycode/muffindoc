@@ -1,0 +1,218 @@
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt,twoside]{article}
+\usepackage[paper=letterpaper,portrait=true,margin=1.5cm,ignorehead,footnotesep=1cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{paralist}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{wasysym}
+\usepackage{enumitem}
+
+\linespread{1.1}
+\setlength{\pltopsep}{2.5pt}
+\setlength{\plparsep}{2.5pt}
+\setlength{\partopsep}{2.5pt}
+\setlength{\parskip}{2.5pt}
+
+\setitemize{noitemsep}
+\setenumerate{noitemsep}
+
+%\addtolength{\oddsidemargin}{1.0cm}
+%\addtolength{\bottommargin}{1.0cm}
+
+\title{\textit{muffin} (branch: \textbf{master.python3}) installation HOW-TO\vspace{-8mm}}
+\author{}
+\date{\today}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+% --- BEGIN DOCUMENT --------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+% --- cupcate ---------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\noindent This is a brief guide to installing \textbf{cGENIE.muffin} (branch: \textbf{master.python3}) under \textbf{MacOS}. 
+
+These instructions are valid for a fresh install of MAC OS intel and M1/M2 chip distributions. For a different distribution or more established installation, different or fewer respectively components may be needed to be installed and may require a little trial-and-error.
+
+Instructions are given step-by-step, although not all the components need be installed in this order. Note that the various \textbf{netCDF} component version numbers may not be the current releases. The most recent versions can almost certainly be substituted (but not tested here) with the caveat that you may not be able to mix-and-match very old with very new libraries.
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\subsection{Preparation}
+\vspace{1mm}
+
+Get hold of a computer with \textbf{MacOS} installed on it. Make sure you have plugged in the network cable. Log in. Obtain a strong cup of coffee.
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\subsection{Installation}
+
+\begin{enumerate}[noitemsep]
+
+\vspace{1mm}
+\item First of all, you will need \textbf{XCode}, which can be downloaded from the app store, or here:
+\vspace{1mm}
+\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads}
+\vspace{1mm}
+After installing XCode, it is necessary to enable command line tools, by entering at the command line:
+\vspace{-2pt}
+\begin{verbatim}
+xcode-select –install
+\end{verbatim}
+\vspace{-2pt}
+
+\vspace{1mm}
+\item Get \textbf{Homebrew} by pasting the following -- ALL AS ONE LINE --- at the terminal command line:
+\vspace{-2pt}
+\begin{verbatim}
+/usr/bin/ruby -e /bin/bash -c 
+   "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+\end{verbatim}
+\vspace{-2pt}
+
+Next, type:
+\vspace{-2pt}
+\begin{verbatim}
+brew doctor
+\end{verbatim}
+\vspace{-2pt}
+This should tell you “your system is ready to brew”.\footnote{If it doesn’t, see Section 21.6.} 
+
+\vspace{1mm}
+\item Install \textbf{Fortran}, \textbf{C++}, \textbf{netCDF}, and some other useful libraries at the command line (using \textbf{Homebrew}) as follows:
+\vspace{-2pt}
+\begin{verbatim}
+brew install cmake
+brew install gcc
+brew install hdf5
+brew install netcdf
+brew install netcdf-fortran
+brew install netcdf-cxx
+brew install wget
+\end{verbatim}
+\vspace{-2pt}
+
+\vspace{1mm}
+\item Check your \textbf{netCDF} version number and path to the installed libraries (you will need this info shortly ...) by entering:
+\vspace{-2pt}
+\begin{verbatim}
+brew info netcdf
+\end{verbatim}
+\vspace{-2pt}
+This will return several lines, but the key one gives the \textbf{netCDF} path and should look like something like\footnote{For the example of a install with version \textbf{4.9.2\_1}}:
+\vspace{-2pt}
+\begin{verbatim}
+/usr/local/Cellar/netcdf/4.9.2_1 (84 files, 6.2MB)
+\end{verbatim}
+\vspace{-2pt}
+
+\vspace{1mm}
+\item Get hold of a current copy of the muffin code:
+\vspace{-2pt}
+\begin{verbatim}
+git clone https://github.com/derpycode/cgenie.muffin
+\end{verbatim}
+\vspace{-2pt}
+
+\end{enumerate}
+
+%------------------------------------------------
+\vspace{-1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\noindent That is is for the basic installation!
+
+%------------------------------------------------
+\vspace{-1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\subsection{Configuration}
+
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{5}
+
+\vspace{1mm}
+\item From the directory \textsf{cgenie.muffin}, switch to a code branch that can accommodate all types of Apple silicon:
+\vspace{-2pt}
+\begin{verbatim}
+git branch master.python3
+\end{verbatim}
+\vspace{-2pt}
+
+\vspace{1mm}
+\item To configure your installation, change to the directory: \textsf{cgenie.muffin/genie-main} and then edit the file: \textsf{user.mak} as follows:
+
+\begin{itemize}
+
+\vspace{1mm}
+\item Under: 
+\vspace{-2pt}
+\begin{verbatim}
+# === Machine type (LINUX/SLOARIS/SGI) ===
+\end{verbatim}
+\vspace{-2pt}
+comment out (add a \texttt{\#}) the default setting
+\vspace{-2pt}
+\begin{verbatim}
+MACHINE=LINUX
+\end{verbatim}
+and then un-comment (remove the \texttt{\#}) from one of the following 2 lines, depending on whether you have an older (intel processor) or newer (M1 or M2 chip) Mac:
+\vspace{-2pt}
+\begin{verbatim}
+#MACHINE=OSX	# Intel processor
+#MACHINE=OSX_M	# Apple silicon (M1, M2 etc.)
+\end{verbatim}
+\vspace{-2pt}
+
+\vspace{1mm}
+\item At the end of \textsf{user.mak}, comment out the default \textbf{netCDF} library setting, and then un-comment the line: 
+\vspace{-2pt}
+\begin{verbatim}
+#NETCDF_DIR=/usr/local/Cellar/netcdf/4.9.2_1
+\end{verbatim}
+\vspace{-2pt}
+\uline{and} edit this setting if your \textbf{netCDF} library location is different (see above). 
+\\If you find yourself experiencing vexing \textbf{netCDF} library feeling, you can also cross your fingers and try:
+\vspace{-2pt}
+\begin{verbatim}
+NETCDF_DIR=/usr/local
+\end{verbatim}
+\vspace{-2pt}
+
+\end{itemize}
+
+\vspace{1mm}
+\item Finally, to test the code installation – from \textsf{cgenie.muffin/genie-main} type:
+\vspace{-2pt}
+\begin{verbatim}
+make testbiogem
+\end{verbatim}
+\vspace{-2pt}
+This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. 
+
+\end{enumerate}
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.2mm}
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+% --- END DOCUMENT ----------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\end{document}

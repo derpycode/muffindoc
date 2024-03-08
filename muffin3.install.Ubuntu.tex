@@ -1,0 +1,279 @@
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\documentclass[10pt,twoside]{article}
+\usepackage[paper=letterpaper,portrait=true,margin=1.5cm,ignorehead,footnotesep=1cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{paralist}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{wasysym}
+\usepackage{enumitem}
+
+\linespread{1.1}
+\setlength{\pltopsep}{2.5pt}
+\setlength{\plparsep}{2.5pt}
+\setlength{\partopsep}{2.5pt}
+\setlength{\parskip}{2.5pt}
+
+\setitemize{noitemsep}
+\setenumerate{noitemsep}
+
+%\addtolength{\oddsidemargin}{1.0cm}
+%\addtolength{\bottommargin}{1.0cm}
+
+\title{\textit{muffin} (branch: \textbf{master.python3}) installation HOW-TO\vspace{-8mm}}
+\author{}
+\date{\today}
+\usepackage[normalem]{ulem}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+% --- BEGIN DOCUMENT --------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\maketitle
+
+%----------------------------------------------------------------------------------------
+% --- cupcate ---------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\noindent This is a brief guide to installing \textbf{cGENIE.muffin} (branch: \textbf{master.python3}) under \textbf{Ubuntu}. 
+
+These instructions are valid for a fresh install of \textbf{Ubuntu} distribution version 22.04 LTS ('Jammy Jellyfish'). For a different distribution or more established installation, different or fewer respectively components may be needed to be installed and may require a little trial-and-error.
+
+Instructions are given step-by-step, although not all the components need be installed in this order. Note that the various \textbf{netCDF} component version numbers may not be the current releases. The most recent versions can almost certainly be substituted (but not tested here) with the caveat that you may not be able to mix-and-match very old with very new libraries.
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\subsection{Preparation}
+\vspace{1mm}
+
+Get hold of a computer with \textbf{Ubuntu} installed on it. Make sure you have plugged in the network cable. Log in. Obtain a strong cup of coffee.
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\subsection{Installation}
+\vspace{1mm}
+
+\begin{enumerate}[noitemsep]
+
+\vspace{4pt}
+\item \textbf{Get the code!}
+\vspace{2pt}
+\\You may as well start off by cloning\footnote{If your system does not know what \textbf{git} is (it should be present by default on Ubuntu 22.04): \texttt{sudo apt install git}} the \textbf{muffin} code (although you could equally do this last).
+
+From your home directory:
+\vspace{-2pt}
+\begin{verbatim}
+git clone https://github.com/derpycode/cgenie.muffin.git
+\end{verbatim}
+
+\end{enumerate}
+
+\vspace{4pt}
+
+\noindent Then ... the following installation steps\footnote{They need not be installed in this order (and some may already exist on your system).}  are in approximately the order you would encounter if you went straight to running the model test (\texttt{make testbiogem}) only having cloned the code-base and not accomplished anything particularly constructive.
+
+%------------------------------------------------
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{1}
+
+\item \textbf{make}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install make
+\end{verbatim}
+
+\vspace{4pt}
+\item \textbf{gfortran} [FORTRAN compiler]
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install gfortran
+\end{verbatim}
+
+\end{enumerate}
+%------------------------------------------------
+
+... and then stupid XML support, a 'xml2-config utility' (and the 'libxml2 development package') ... just because ... and then followed by a cascade of library dependencies ...
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+%------------------------------------------------
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{3}
+
+\item \textbf{xsltproc} ['\textit{a command line tool for applying XSLT style-sheets to XML documents}']\footnote{In the \textbf{cupcake} release we do not need this :)} 
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install xsltproc
+\end{verbatim}
+
+\vspace{2pt}
+\item \textbf{libxml2-dev}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install libxml2-dev
+\end{verbatim}
+
+\vspace{2pt}
+\item \textbf{m4}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install m4
+\end{verbatim}
+
+\vspace{2pt}
+\item \textbf{libcurl4-openssl-dev}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install libcurl4-openssl-dev
+\end{verbatim}
+
+\vspace{2pt}
+\item \textbf{libz-dev}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install libz-dev
+\end{verbatim}
+
+\vspace{2pt}
+\item \textbf{libhdf5-dev}
+\vspace{-2pt}
+\begin{verbatim}
+sudo apt install libhdf5-dev
+\end{verbatim}
+
+(If your system cannot find the \texttt{libhdf5-dev} package, try: \texttt{sudo apt update -y} first)
+
+\end{enumerate}
+%------------------------------------------------
+
+\noindent Now(!) you are ready for \textbf{netCDF}. These libraries come rather inconveniently in multiple parts ... first we need to install the main \textbf{netCDF} \textbf{C} libraries and then the \textbf{FORTRAN} libraries that depend on the \textbf{C} libraries\footnote{The examples given are for the most recent versions of the libraries. For details/most recent version, see: \textit{https://www.unidata.ucar.edu/software/netcdf/}}\footnote{(From some random convenient download/temporary directory.)} \footnote{In \textbf{master.python3}, you no longer need the \textbf{C++} libraries :o)}. 
+
+\vspace{2pt}
+
+%------------------------------------------------
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{9}
+
+\vspace{4pt}
+\item \textbf{netcdf-c} [netCDF C libraries]
+
+\vspace{-2pt}
+\begin{verbatim}
+wget https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz
+tar xzf netcdf-c-4.9.2.tar.gz
+cd netcdf-c-4.9.2
+./configure
+\end{verbatim}
+At this point, you may well see: '\textit{configure: error: Can't find or link to the hdf5 library. Use --disable-hdf5, or see config.log for errors}' because the \textbf{ndf5} libraries you have just only just installed, mysteriously cannot be located ... You need to add their paths, e.g., for Ubuntu 22.04:
+\vspace{-2pt}
+\begin{verbatim}
+export LDFLAGS="-L/usr/lib/x86_64-linux-gnu/hdf5/serial/lib"
+export CFLAGS="-I/usr/lib/x86_64-linux-gnu/hdf5/serial/include"
+\end{verbatim}
+(If you need to find where \textbf{hdf5} is hiding: \texttt{dpkg -L libhdf5-dev}).
+\vspace{2pt}
+\\Repeat \texttt{./configure} if necessary and continue:
+\vspace{-2pt}
+\begin{verbatim}
+make check
+sudo make install
+\end{verbatim}
+\vspace{-2pt}
+(\texttt{cd ..})
+
+\end{enumerate}
+%------------------------------------------------
+
+\noindent For the next step, it can be that the libraries you have just installed cannot be 'found'. You can force an update of the library link cache by:
+\vspace{-2pt}
+\begin{verbatim}
+sudo ldconfig
+\end{verbatim}
+
+%------------------------------------------------
+\newpage
+%------------------------------------------------
+
+%------------------------------------------------
+\begin{enumerate}[noitemsep]
+\setcounter{enumi}{10}
+
+\item \textbf{netcdf-fortran} [netCDF FORTRAN libraries]
+
+\vspace{-2pt}
+\begin{verbatim}
+wget https://downloads.unidata.ucar.edu/ ...
+   ... netcdf-fortran/4.6.1/netcdf-fortran-4.6.1.tar.gz
+tar xzf netcdf-fortran-4.6.1.tar.gz
+cd netcdf-fortran-4.6.1
+./configure
+make check
+sudo make install
+\end{verbatim}
+\vspace{-2pt}
+(\texttt{cd ..})
+
+\end{enumerate}
+%------------------------------------------------
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+\noindent That is is for the basic installation!
+
+%------------------------------------------------
+\vspace{-1mm}\noindent\rule{4cm}{0.1mm}
+%------------------------------------------------
+
+%------------------------------------------------
+%
+\subsection{Testing muffin}
+
+First, from \texttt{cgenie.muffin} make sure that you are on the correct branch:
+\vspace{-5pt}\begin{verbatim}
+git checkout master.python3
+\end{verbatim}\vspace{-5pt}
+
+\vspace{2mm}
+
+\noindent To test the code installation -- change directory to \texttt{cgenie.muffin/genie-main} and type:
+\vspace{-5pt}\begin{verbatim}
+make testbiogem
+\end{verbatim}\vspace{-5pt}
+This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. 
+
+\vspace{2mm}
+
+\noindent If when running \texttt{make testbiogem} you run into issues, specifically: libraries that cannot be 'found', try forcing an update of the library link cache (the not found libraries may be links to the 'real' library and somehow this link is not working/found):
+\vspace{-2pt}
+\begin{verbatim}
+sudo ldconfig
+\end{verbatim}
+
+If you are still unsuccessful at this point ... double-check the software and directory environment settings in \texttt{user.mak} (or \texttt{user.sh}) and for a \textbf{netCDF} error, check the value of the \texttt{NETCDF\_DIR} environment variable. (Refer to the FAQ section for addition fault-finding tips.) If environment variables are changed: before re-trying the test, you will need to type:
+\vspace{-5pt}\begin{verbatim}
+make cleanall
+\end{verbatim}\vspace{-5pt}
+
+%------------------------------------------------
+\vspace{1mm}\noindent\rule{4cm}{0.2mm}
+%------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+% --- END DOCUMENT ----------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+
+\end{document}
