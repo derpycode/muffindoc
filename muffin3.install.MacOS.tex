@@ -67,12 +67,12 @@ Get hold of a computer with \textbf{MacOS} installed on it. Make sure you have p
 \vspace{1mm}
 \item First of all, you will need \textbf{XCode}, which can be downloaded from the app store, or here:
 \vspace{1mm}
-\\\href{https://developer.apple.com/xcode/downloads}{https://developer.apple.com/xcode/downloads}
+\\\href{https://developer.apple.com/xcode/}{https://developer.apple.com/xcode/} (and then \textsf{-> download})
 \vspace{1mm}
-After installing XCode, it is necessary to enable command line tools, by entering at the command line:
+\\After installing \textbf{XCode}, it is necessary to enable command line tools, by entering at the command line:
 \vspace{-2pt}
 \begin{verbatim}
-xcode-select –install
+xcode-select --install
 \end{verbatim}
 \vspace{-2pt}
 
@@ -203,7 +203,15 @@ NETCDF_DIR=/usr/local
 make testbiogem
 \end{verbatim}
 \vspace{-2pt}
-This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured. 
+This compiles a carbon cycle enabled configuration of \textbf{muffin} and runs a short test, comparing the results against those of a pre-run experiment (also downloaded alongside the model source code). It serves to check that you have the software environment correctly configured.
+\vspace{1mm}
+\\If you get \textbf{netCDF} related errors, try running:
+\vspace{-2pt}
+\begin{verbatim}
+make cleanall
+\end{verbatim}
+\vspace{-2pt}
+first and then re-try \textsf{make testbiogem}.
 
 \end{enumerate}
 
